@@ -1,2 +1,2 @@
 # jupiter-gravity
-Jupiter Gravity will allow for local governments to store, digitally archive, and make available all public records.
+Jupiter Gravity will allow for any organization to build custom blockchain apps. Please see the wiki for installation, setup and user guide.
