@@ -1,0 +1,29 @@
+module.exports = function(app, passport, React, ReactDOMServer) {
+    var session = require('express-session');
+    var flash = require('connect-flash');
+    var controller = require('../config/controller.js');
+
+    //===========================================================
+    // This constains constants needed to connect with Jupiter
+    //===========================================================
+
+    var axios = require('axios');
+
+    //Loads Gravity module
+    var gravity = require('../config/gravity.js');
+
+
+    const {{page_name}}Page = require('../views/{{view_file_name}}.jsx');
+
+
+    app.get('/{{view_file_name}}'{{#if authentication}}, controller.isLoggedIn{{/if}}, (req, res) => {
+        var messages = req.session.flash;
+        req.session.flash = null;
+
+        var {{view_file_name}}_page = ReactDOMServer.renderToString(
+            React.createElement({{page_name}}Page, { name: '{{app_name}} - {{original_name}}'{{#if authentication}}, user: req.user , validation: req.session.jup_key{{/if}}, dashboard: {{dashboard}}, messages: messages })
+        );
+
+        res.send({{view_file_name}}_page);
+    });
+}
