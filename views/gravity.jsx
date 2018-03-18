@@ -89,8 +89,8 @@ class GravityPage extends React.Component{
                             </div>
                             <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                               <div className="mx-auto my-5">
-                                <p>Visit our Documentation available on the <a href="https://github.com/SigwoTechnologies/jupiter-gravity/wiki">GitHub Wiki</a></p>
-                                <p>View some of your introduction tutorials <a href="https://youbtube.com/channel/UC9YAEY69bAXKPalqCAkqDbQ?">here</a></p>
+                                <p>Visit our Documation available on the <a href="#">GitHub Wiki</a></p>
+                                <p>View some of your introduction tutorials <a href="#">here</a></p>
                               </div>
                             </div>
                             <div className="tab-pane fade" id="next" role="tabpanel" aria-labelledby="next-tab">
