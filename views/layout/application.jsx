@@ -32,7 +32,8 @@ export default class ApplicationLayout extends React.Component {
 		<span className="nav-link-text"> Account</span>
 	      </a>
 	    </li>
-	    {false && 'Generated plop links go here'}
+	    <li className="nav-item"><a className="nav-link" href="/my_garage"><i className="fa fa-table fa-fw"></i> My Garage</a></li>
+    {false && 'Generated plop links go here'}
           <li className="nav-item">
             <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
               <a className="nav-link" href="#">
@@ -212,7 +213,7 @@ export default class ApplicationLayout extends React.Component {
 
                     <script src="vendor/metisMenu/metisMenu.min.js"></script>
 
-                    <script src="dist/js/sb-admin-2.js"></script>
+                    <script src="js/sb-admin-2.js"></script>
 
                     <script src="js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
                 </body>
