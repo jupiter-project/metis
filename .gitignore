@@ -15,8 +15,8 @@ package-lock.json
 /public/js/bundle.min.js
 
 #Ignore other generated files
-/public/css/*
-/public/js/*
+#/public/css/*
+#/public/js/*
 
 /node_modules/*
 /bower_components/*
