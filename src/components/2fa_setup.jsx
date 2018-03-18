@@ -84,26 +84,21 @@ class TwoFAForm extends React.Component {
     render(){
         var registration_form=
         <form>
-            <div className="panel panel-primary">
-              <div className="panel-heading text-center lead">
+            <div className="card col-md-8 col-lg-8 mx-auto p-0 text-left">
+              <div className="card-header">
                 Two-factor authentication
               </div>
 
-              <div className="form-group">
-                  <div className="">
-                    <p>You have indicated you would like to signup for two-factor authentication. If you would like to proceed,
-                        please click on the button below.
+              <div className="card-body">
+                  <div className="form-group">
+                    <h4>Click Enable to set up your Two-factor Authentication for your account.
+                    </h4>
+                    <p className="text-muted">Once enabled, you will be asked to verify security before access is granted.
                     </p>
-                    <p>Once you set up two-factor authentication, you will need to provide a
-                        verification code everytime you wish to login or perform account actions.
-                    </p>
-
-                    <br />
-                    <button className="btn btn-primary" onClick={this.start2fa.bind(this)}>Enable two-factor authentication</button>
-                    <form method="POST" action="/update_2fa_settings">
+                    <form className="text-right" method="POST" action="/update_2fa_settings">
                         <input type="hidden" name="enable_2fa" value={false} />
-                        <br />
-                        <button className="btn btn-danger" type="submit">Cancel</button>
+                        <button className="btn btn-primary m-2" onClick={this.start2fa.bind(this)}>Enable</button>
+                        <button className="btn btn-danger m-2" type="submit">Cancel</button>
                     </form>
                   </div>
               </div>
