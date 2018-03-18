@@ -16,9 +16,23 @@
         "gravity:app:model": "plop model",
         "gravity:app:page": "plop page"
     },
-    "author": "lemaster",
-              "kyle-h",
-              "sigwo"
+    "authors": [
+        {
+            "name": "lemasters",
+            "email": "",
+            "url": ""
+        },
+        {
+            "name": "kyle-h",
+            "email": "",
+            "url": ""
+        },
+        {
+            "name": "sigwo",
+            "email": "",
+            "url": ""
+        }
+    ],
     "license": "MIT",
     "dependencies": {
         "axios": "^0.16.2",
