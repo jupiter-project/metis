@@ -268,7 +268,7 @@ class SignupForm extends React.Component{
             </form>
 
         var generated_account=
-            <div className="form-group">
+            <div className="">
                 <div className="">
                   <h4>Your new passphrase:</h4>
                   <form className="form-group">
@@ -277,15 +277,15 @@ class SignupForm extends React.Component{
                 </div>
                 <div className="">
                   <h4>Acount Details:</h4>
-                  <div className="form-group details">
-                    <input className="form-control" value={this.state.firstname} onChange={this.handleChange.bind(this, 'firstname')} placeholder="First name" type="text"/>
-                    <input className="form-control" value={this.state.lastname} onChange={this.handleChange.bind(this, 'lastname')} placeholder="Last name" type="text"/>
+                  <div className="form-group">
+                    <input className="form-control mb-2" value={this.state.firstname} onChange={this.handleChange.bind(this, 'firstname')} placeholder="First name" type="text"/>
+                    <input className="form-control mb-2" value={this.state.lastname} onChange={this.handleChange.bind(this, 'lastname')} placeholder="Last name" type="text"/>
                     <input className="form-control" value={this.state.email} onChange={this.handleChange.bind(this, 'email')} placeholder="Email address" type="email"/>
                   </div>
                 </div>
                   <div className="form-group">
                       <h4>Enable 2FA Security:</h4>
-                      <div className="yn-button">
+                      <div className="text-center">
 
                           <button className={"btn" + (this.state.enable_two_fa == true ? ' btn-success active' : ' btn-default')} onClick={this.update2FA.bind(this, 'true')}>Yes</button>
                           <button className={"btn btn-default" +  (this.state.enable_two_fa == false ? '  btn-danger active' : ' btn-default')} onClick={this.update2FA.bind(this, 'false')}>No</button>
@@ -320,8 +320,8 @@ class SignupForm extends React.Component{
         var signup_form=
             <form className="jupiter-form">
                 {this.state.jup_account_created == true ? generated_account :
-                    <div className="form-group signup">
-                      <div className="form-group paragraph">
+                    <div className="">
+                      <div className="">
                         <p>Gravity is a platform designed to give you quick and easy access to the Jupiter blockchain.</p>
                         <p>Access to the blockchain requires a secure passphrase. This passphrase should be written down and kept in a safe palce.
                         Once you are ready to sign up, click the button below.</p>

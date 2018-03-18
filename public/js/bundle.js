@@ -11627,42 +11627,40 @@ var TwoFAForm = function (_React$Component) {
                 null,
                 _react2.default.createElement(
                     'div',
-                    { className: 'panel panel-primary' },
+                    { className: 'card col-md-8 col-lg-8 mx-auto p-0 text-left' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'panel-heading text-center lead' },
+                        { className: 'card-header' },
                         'Two-factor authentication'
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'form-group' },
+                        { className: 'card-body' },
                         _react2.default.createElement(
                             'div',
-                            { className: '' },
+                            { className: 'form-group' },
                             _react2.default.createElement(
-                                'p',
+                                'h4',
                                 null,
-                                'You have indicated you would like to signup for two-factor authentication. If you would like to proceed, please click on the button below.'
+                                'Click Enable to set up your Two-factor Authentication for your account.'
                             ),
                             _react2.default.createElement(
                                 'p',
-                                null,
-                                'Once you set up two-factor authentication, you will need to provide a verification code everytime you wish to login or perform account actions.'
-                            ),
-                            _react2.default.createElement('br', null),
-                            _react2.default.createElement(
-                                'button',
-                                { className: 'btn btn-primary', onClick: this.start2fa.bind(this) },
-                                'Enable two-factor authentication'
+                                { className: 'text-muted' },
+                                'Once enabled, you will be asked to verify security before access is granted.'
                             ),
                             _react2.default.createElement(
                                 'form',
-                                { method: 'POST', action: '/update_2fa_settings' },
+                                { className: 'text-right', method: 'POST', action: '/update_2fa_settings' },
                                 _react2.default.createElement('input', { type: 'hidden', name: 'enable_2fa', value: false }),
-                                _react2.default.createElement('br', null),
                                 _react2.default.createElement(
                                     'button',
-                                    { className: 'btn btn-danger', type: 'submit' },
+                                    { className: 'btn btn-primary m-2', onClick: this.start2fa.bind(this) },
+                                    'Enable'
+                                ),
+                                _react2.default.createElement(
+                                    'button',
+                                    { className: 'btn btn-danger m-2', type: 'submit' },
                                     'Cancel'
                                 )
                             )
@@ -28869,7 +28867,7 @@ var SignupForm = function (_React$Component) {
 
             var generated_account = _react2.default.createElement(
                 'div',
-                { className: 'form-group' },
+                { className: '' },
                 _react2.default.createElement(
                     'div',
                     { className: '' },
@@ -28898,9 +28896,9 @@ var SignupForm = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'form-group details' },
-                        _react2.default.createElement('input', { className: 'form-control', value: this.state.firstname, onChange: this.handleChange.bind(this, 'firstname'), placeholder: 'First name', type: 'text' }),
-                        _react2.default.createElement('input', { className: 'form-control', value: this.state.lastname, onChange: this.handleChange.bind(this, 'lastname'), placeholder: 'Last name', type: 'text' }),
+                        { className: 'form-group' },
+                        _react2.default.createElement('input', { className: 'form-control mb-2', value: this.state.firstname, onChange: this.handleChange.bind(this, 'firstname'), placeholder: 'First name', type: 'text' }),
+                        _react2.default.createElement('input', { className: 'form-control mb-2', value: this.state.lastname, onChange: this.handleChange.bind(this, 'lastname'), placeholder: 'Last name', type: 'text' }),
                         _react2.default.createElement('input', { className: 'form-control', value: this.state.email, onChange: this.handleChange.bind(this, 'email'), placeholder: 'Email address', type: 'email' })
                     )
                 ),
@@ -28914,7 +28912,7 @@ var SignupForm = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'yn-button' },
+                        { className: 'text-center' },
                         _react2.default.createElement(
                             'button',
                             { className: "btn" + (this.state.enable_two_fa == true ? ' btn-success active' : ' btn-default'), onClick: this.update2FA.bind(this, 'true') },
@@ -28977,10 +28975,10 @@ var SignupForm = function (_React$Component) {
                 { className: 'jupiter-form' },
                 this.state.jup_account_created == true ? generated_account : _react2.default.createElement(
                     'div',
-                    { className: 'form-group signup' },
+                    { className: '' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'form-group paragraph' },
+                        { className: '' },
                         _react2.default.createElement(
                             'p',
                             null,
