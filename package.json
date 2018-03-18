@@ -5,9 +5,6 @@
     "private": true,
     "main": "index.js",
     "scripts": {
-	"tstart": "webpack && node server.js",
-        "tbuild": "npm run clean && npm run mkdir && npm run build:html && npm run build:css && npm run build:js",
-        "tdev": "webpack-dev-server --inline --hot --content-base build --history-api-fallback",
         "test": "node server.js",
         "start": "webpack && node server.js",
         "gravity:db": "node -e \"require(process.env.PWD+'/config/gravity.js').loadTables('console');\"",
@@ -92,7 +89,6 @@
         "gulp-sass": "^3.1.0",
         "gulp-uglify": "^1.5.4",
         "json-loader": "^0.5.7",
-	"open": "0.0.5",
         "plop": "^1.9.0",
         "webpack": "^3.3.0",
         "webpack-glob": "^2.0.2"

@@ -6,11 +6,6 @@ require('babel-register')({
     presets: ['react']
 });
 
-// open Gravity-App in browser
-var open = require("open");
-open("http://localhost:4000/");
-// /open
-
 //Loads Express and creates app object
 const express = require('express');
 const app = express();
