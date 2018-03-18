@@ -1,7 +1,7 @@
 {
     "name": "gravity",
     "version": "1.0.0",
-    "description": "",
+    "description": "Gravity interacts directly with the Jupiter blockchain, encrypting and securing your information in individually permissible messaging data.",
     "private": true,
     "main": "index.js",
     "scripts": {
