@@ -32,9 +32,7 @@ export default class ApplicationLayout extends React.Component {
 		<span className="nav-link-text"> Account</span>
 	      </a>
 	    </li>
-	    <li className="nav-item"><a className="nav-link" href="/my_garage"><i className="fa fa-table fa-fw"></i> My Garage</a></li>
-    {false && 'Generated plop links go here'}
-          <li className="nav-item">
+	    {false && 'Generated plop links go here'}
             <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
               <a className="nav-link" href="#">
                 <i className="fa fa-fw fa-question-circle"></i>
@@ -53,7 +51,6 @@ export default class ApplicationLayout extends React.Component {
                 <span className="nav-link-text"> Contact Us</span>
               </a>
             </li>
-          </li>
         </ul>
 
         var logged_header=
@@ -89,7 +86,6 @@ export default class ApplicationLayout extends React.Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarResponsive">
               <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li className="nav-item">
                   <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
                     <a className="nav-link" href="#">
                       <i className="fa fa-fw fa-dashboard"></i>
@@ -108,7 +104,6 @@ export default class ApplicationLayout extends React.Component {
                       <span className="nav-link-text"> Contact Us</span>
                     </a>
                   </li>
-                </li>
               </ul>
               <ul className="navbar-nav sidenav-toggler">
                 <li className="nav-item">
@@ -189,7 +184,7 @@ export default class ApplicationLayout extends React.Component {
                       </div>
                     </footer>
 
-                    <div className="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                    <div className="modal fade show" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                       <div className="modal-dialog" role="document">
                         <div className="modal-content">
                           <div className="modal-header">
