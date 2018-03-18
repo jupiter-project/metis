@@ -1,5 +1,5 @@
 {
-    "name": "tracker",
+    "name": "gravity",
     "version": "1.0.0",
     "description": "",
     "private": true,
@@ -16,8 +16,10 @@
         "gravity:app:model": "plop model",
         "gravity:app:page": "plop page"
     },
-    "author": "",
-    "license": "ISC",
+    "author": "lemaster",
+              "kyle-h",
+              "sigwo"
+    "license": "MIT",
     "dependencies": {
         "axios": "^0.16.2",
         "babel-preset-stage-0": "^6.24.1",
