@@ -100,10 +100,6 @@ app.get('/*',  (req, res) => {
 
 });
 
-// open Gravity-App in browser
-var open = require("open");
-open("http://localhost:4000/");
-
 //Tells server to listen to port 4000 when app is initialized
 app.listen(4000, function() {
     console.log('App running on port 4000');
