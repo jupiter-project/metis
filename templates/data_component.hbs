@@ -142,7 +142,8 @@ class DataRow extends React.Component {
                     <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
                     {{/ifCond}}
                     {{#ifCond this 'Text'}}
-                    <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
+                    <textarea placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')}>
+                    </textarea><br />
                     {{/ifCond}}
                     {{#ifCond this 'Email'}}
                     <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
@@ -393,10 +394,10 @@ class {{component_name}}Component extends React.Component {
                     {{@key}}: true,
                     {{/ifCond}}
                     {{#ifCond this 'Text'}}
-                    {{@key}}: true,
+                    {{@key}}: '',
                     {{/ifCond}}
                     {{#ifCond this 'Email'}}
-                    {{@key}}: true,
+                    {{@key}}: '',
                     {{/ifCond}}
                     {{/each}}
                     submitted: false
@@ -441,45 +442,48 @@ class {{component_name}}Component extends React.Component {
             <div className="container-fluid">
                 <h1 className="page-title"></h1>
 
-                <div className="row">
-                    <div className="col-lg-6 col-md-6">
-                        <div className="panel panel-primary">
-                            <div className="panel-heading text-center lead">
+                <div className="">
+                    <div className="">
+                        <div className="card col-md-8 col-lg-8 p-0 mx-auto my-4">
+                            <div className="card-header">
                                 Record {{model_name}}
                             </div>
-                            <div className="form-group row">
-                                {{#each attributes}}
-                                <div className="col-lg-6 col-md-6">
-                                    <label>{{@key}}</label>
-                                    {{#ifCond this 'String'}}
-                                    <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
-                                    {{/ifCond}}
-                                    {{#ifCond this 'Text'}}
-                                    <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
-                                    {{/ifCond}}
-                                    {{#ifCond this 'Email'}}
-                                    <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
-                                    {{/ifCond}}
-                                    {{#ifCond this 'Cryptocurrency'}}
-                                    <input type="number" step="0.00000001"  value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
-                                    {{/ifCond}}
-                                    {{#ifCond this 'Integer'}}
-                                    <input type="number" step="1"  value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
-                                    {{/ifCond}}
-                                    {{#ifCond this 'Boolean'}}
-                                    <div className="status-toggle">
-                                        <label className={"switch"}>
-                                            <input type="checkbox" onChange={this.{{@key}}Update.bind(this)} checked={this.state.{{@key}}==true ? true : false}  />
-                                            <span className={"slider round"}></span>
-                                        </label><br />
-                                    </div>   
-                                    {{/ifCond}}
+                            <div className="card-body form-group">
+                                <div className="row p-2">
+                                    {{#each attributes}}
+                                    <div className="col-lg-12 col-md-12">
+                                        <label>{{@key}}</label>
+                                        {{#ifCond this 'String'}}
+                                        <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
+                                        {{/ifCond}}
+                                        {{#ifCond this 'Text'}}
+                                        <textarea placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')}>
+                                        </textarea><br />
+                                        {{/ifCond}}
+                                        {{#ifCond this 'Email'}}
+                                        <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
+                                        {{/ifCond}}
+                                        {{#ifCond this 'Cryptocurrency'}}
+                                        <input type="number" step="0.00000001"  value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
+                                        {{/ifCond}}
+                                        {{#ifCond this 'Integer'}}
+                                        <input type="number" step="1"  value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
+                                        {{/ifCond}}
+                                        {{#ifCond this 'Boolean'}}
+                                        <div className="status-toggle">
+                                            <label className={"switch"}>
+                                                <input type="checkbox" onChange={this.{{@key}}Update.bind(this)} checked={this.state.{{@key}}==true ? true : false}  />
+                                                <span className={"slider round"}></span>
+                                            </label><br />
+                                        </div>   
+                                        {{/ifCond}}
+                                    </div>
+                                    {{/each}}
                                 </div>
-                                <div className="clearfix"></div>
-                                {{/each}}
-                                <br />
-                                <div className="col-lg-12 col-md-12 col-xs-12 text-center">
-                                    <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...':'Save'}</button>
+                                <div className="row p-3">
+                                    <div className="col-lg-12 col-md-12 col-xs-12 text-center">
+                                        <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...':'Save'}</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -14,25 +14,25 @@ export default class ApplicationLayout extends React.Component {
         var links_list=
 
         <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
-	    <li className="nav-item p-2 bg-secondary rounded">
-	      <div className="text-center">
-		<h4 className="text-white">Account ID</h4>
-		<a className="nav-link small" href="#">{this.props.data.user != null ? this.props.data.user.record.account : null}</a>
-	      </div>
-	    </li>
-	    <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Charts">
-	      <a className="nav-link" href="/">
-		<i className="fa fa-fw fa-dashboard"></i>
-		<span className="nav-link-text"> Dashboard</span>
-	      </a>
-	    </li>
-	    <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
-	      <a className="nav-link" href="/account">
-		<i className="fa fa-fw fa-table"></i>
-		<span className="nav-link-text"> Account</span>
-	      </a>
-	    </li>
-	    {false && 'Generated plop links go here'}
+            <li className="nav-item p-2 bg-secondary rounded">
+              <div className="text-center">
+                <h4 className="text-white">Account ID</h4>
+                <a className="nav-link small" href="#">{this.props.data.user != null ? this.props.data.user.record.account : null}</a>
+              </div>
+            </li>
+            <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Charts">
+              <a className="nav-link" href="/">
+                <i className="fa fa-fw fa-dashboard"></i>
+                <span className="nav-link-text"> Dashboard</span>
+              </a>
+            </li>
+            <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
+              <a className="nav-link" href="/account">
+                <i className="fa fa-fw fa-table"></i>
+                <span className="nav-link-text"> Account</span>
+              </a>
+            </li>
+            {false && 'Generated plop links go here'}
             <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
               <a className="nav-link" href="#">
                 <i className="fa fa-fw fa-question-circle"></i>
@@ -160,6 +160,7 @@ export default class ApplicationLayout extends React.Component {
                     <link href="css/sb-admin.css" rel="stylesheet" />
                 </head>
                 <body className="fixed-nav sticky-footer bg-dark" id="page-top">
+                    <span id="toastrMessages"></span>
                     <div id={this.props.data.dashboard == true ? 'wrapper' : 'unlogged-wrapper'}>
                         {
                             this.props.data.dashboard== true ? logged_header : unlogged_header
@@ -179,7 +180,7 @@ export default class ApplicationLayout extends React.Component {
                     <footer className="sticky-footer">
                       <div className="container">
                         <div className="text-center">
-                          <small>Copyright © Sigwo Technologies 2018</small>
+                          <small>Copyright © Your Sigwo Technologies 2018</small>
                         </div>
                       </div>
                     </footer>
@@ -206,9 +207,6 @@ export default class ApplicationLayout extends React.Component {
 
                     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-                    <script src="vendor/metisMenu/metisMenu.min.js"></script>
-
-                    <script src="js/sb-admin-2.js"></script>
 
                     <script src="js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
                 </body>

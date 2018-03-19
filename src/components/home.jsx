@@ -23,6 +23,7 @@ class HomeComponent extends React.Component {
             
               <div className="container">
                 <h1 className="text-center mt-3 mb-5">Welcome to the Gravity Platform</h1>
+
               </div>
             
         )

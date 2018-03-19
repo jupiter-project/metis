@@ -183,9 +183,8 @@ module.exports = function(passport) {
             var user;
             gravity.getUser(account, req.body['jupkey'])
                 .then(response => {
-                    console.log(response);
                     if(response.error){
-                        return done(null, false, req.flash('loginMessage', 'Account is not registered'));
+                        return done(null, false, req.flash('loginMessage', 'Account is not registered or has not been confirmed in the blockchain'));
                     }
 
                     var data = JSON.parse(response.user);
@@ -203,9 +202,9 @@ module.exports = function(passport) {
                     }
                 })
                 .catch(err => {
-                    console.log("It's getting here");
+                    console.log("Unable to query your user list. Please make sure you have a users table in your database.");
                     console.log(err);
-                    return done(err);
+                    return done(null, false, req.flash('loginMessage', 'Login Error'));
                 })
         }
     ));

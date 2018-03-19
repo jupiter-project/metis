@@ -84,21 +84,26 @@ class TwoFAForm extends React.Component {
     render(){
         var registration_form=
         <form>
-            <div className="card col-md-8 col-lg-8 mx-auto p-0 text-left">
-              <div className="card-header">
+            <div className="panel panel-primary">
+              <div className="panel-heading text-center lead">
                 Two-factor authentication
               </div>
 
-              <div className="card-body">
-                  <div className="form-group">
-                    <h4>Click Enable to set up your Two-factor Authentication for your account.
-                    </h4>
-                    <p className="text-muted">Once enabled, you will be asked to verify security before access is granted.
+              <div className="form-group">
+                  <div className="">
+                    <p>You have indicated you would like to signup for two-factor authentication. If you would like to proceed,
+                        please click on the button below.
                     </p>
-                    <form className="text-right" method="POST" action="/update_2fa_settings">
+                    <p>Once you set up two-factor authentication, you will need to provide a
+                        verification code everytime you wish to login or perform account actions.
+                    </p>
+
+                    <br />
+                    <button className="btn btn-primary" onClick={this.start2fa.bind(this)}>Enable two-factor authentication</button>
+                    <form method="POST" action="/update_2fa_settings">
                         <input type="hidden" name="enable_2fa" value={false} />
-                        <button className="btn btn-primary m-2" onClick={this.start2fa.bind(this)}>Enable</button>
-                        <button className="btn btn-danger m-2" type="submit">Cancel</button>
+                        <br />
+                        <button className="btn btn-danger" type="submit">Cancel</button>
                     </form>
                   </div>
               </div>
@@ -108,8 +113,8 @@ class TwoFAForm extends React.Component {
         </form>
 
         var verification_form=
-            <form className="row">
-                <div className="col-xs-offset-0 col-xs-12 col-sm-offset-4 col-sm-4">
+            <form className="row p-2">
+                <div className="offset-xs-0 col-xs-12 offset-sm-4 col-sm-4">
                     <input type="text" className="form-control" value={this.state.verification_code} onChange={this.handleUpdate.bind(this)} /><br />
                     <br />
                     <button type="submit" className="btn btn-primary" onClick={this.verifyCode.bind(this)}>Verify code</button>
@@ -119,13 +124,13 @@ class TwoFAForm extends React.Component {
             </form>
 
         var qrcode_to_scan=
-            <div>
+            <div className="text-center">
                 <p>Scan the authentication QR-code below with Google Authenticator and enter the received code to complete the two-factor authentication setup.</p>
                 <img src={this.state.qrcode_url} className="qr-code-image" />
-                <p>Once you have scanned the barcode, enter the authetization code below to complete the two Factor
+                <div className="container-fluid text-center">Once you have scanned the barcode, enter the authetization code below to complete the two Factor
                     authentication setup
                     {verification_form}
-                </p>
+                </div>
             </div>
 
         return(

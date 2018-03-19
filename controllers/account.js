@@ -202,9 +202,9 @@ module.exports = function(app, passport, React, ReactDOMServer) {
     app.post('/verify_code', controller.onlyLoggedIn, (req, res) => {
         var verification_code = req.body.verification_code;
         var user_secret_key = req.user.record.secret_key;
-        console.log(verification_code);
-        console.log(user_secret_key);
-        console.log(req.user);
+        //console.log(verification_code);
+        //console.log(user_secret_key);
+        //console.log(req.user);
         //verify that the user token matches what it should be at this moment
         var speakeasy = require('speakeasy');
         var verified = speakeasy.totp.verify({
@@ -212,7 +212,7 @@ module.exports = function(app, passport, React, ReactDOMServer) {
             encoding: 'base32',
             token: verification_code
         });
-        console.log(verified)
+        //console.log(verified)
 
         if (verified == true) {
             req.session.twofa_pass = true
@@ -276,6 +276,7 @@ module.exports = function(app, passport, React, ReactDOMServer) {
         var twofa_enabled = params.enable_2fa == 'true' ? true : false;
         data.twofa_enabled = twofa_enabled;
         data.public_key = req.session.public_key;
+        var response_message= '';
 
         var User = require('../models/user');
         var user = new User(data);
@@ -284,25 +285,44 @@ module.exports = function(app, passport, React, ReactDOMServer) {
             req.flash('loginMessage', 'Begining 2FA authentication')
             req.session.twofa_enabled = true;
             req.session.twofa_completed = false;
+            user.record.twofa_enabled = true;
+            user.record.twofa_completed= false;
         } else {
             req.session.twofa_enabled = false;
-            req.flash('loginMessage', '2FA authentication disabled')
+            req.flash('loginMessage', '2FA authentication disabled. It might take a few minutes for the change to be confirmed in the blockchain')
+            user.record.twofa_enabled = false;
+            user.record.twofa_completed= false;
+            user.record.secret_key=null;
         }
         //res.send({ success: false, message: 'Information entered did not passed validation' });
-
-        if (twofa_enabled) {
-            res.redirect('/settings');
+        console.log(user.record);
+        /*if (twofa_enabled) {
+            //console.log('This thing trigered');
+            //res.redirect('/settings');
         } else if (user.record.twofa_enabled == false) {
-            res.redirect('/settings');
-        } else {
-            user.update()
+            //console.log('This is the other trigered');
+            //res.redirect('/settings');
+        }*/
+        //res.redirect('/settings');
+        user.update()
                 .then(response => {
-                    res.send({ success: true, message: 'Account info saved to blockchain', record: user.record });
+                    //console.log(user);
+                    //console.log(response);
+                    //res.send({ success: true, message: response_message, record: user.record });
+                    if (twofa_enabled) {
+                        //console.log('This thing trigered');
+                        res.redirect('/2fa_setup');
+                    } else if (user.record.twofa_enabled == false) {
+                        //console.log('This is the other trigered');
+                        res.redirect('/settings');
+                    }
                 })
                 .catch(err => {
                     console.log(err);
-                    res.send(err);
-                })
-        }
+                    //res.send(err);
+                    res.redirect('/settings');
+
+        });
+        
     });
 }

@@ -15,15 +15,14 @@ package-lock.json
 /public/js/bundle.min.js
 
 #Ignore other generated files
-#/public/css/*
-#/public/js/*
+/public/css/
+/public/js/
 
-/node_modules/*
-/bower_components/*
+/node_modules
+/bower_components
 
 # Ignore package-lock
 package-lock.json
 
-# Ignore Gravity settings files
 .env
 .gravity.js

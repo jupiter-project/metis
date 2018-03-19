@@ -207,18 +207,18 @@ module.exports = function(plop) {
             },
             {
                 type: 'input',
+                name: 'page_name',
+                message: "How will you name the page that will display your model's records?"
+            },
+            {
+                type: 'input',
                 name: 'multiple_records',
                 message: "Will you use your model to record multiple records? ('y' or 'n')"
             },
             {
                 type: 'input',
-                name: 'page_name',
-                message: "How will you name the page  that will display your model's records?"
-            },
-            {
-                type: 'input',
                 name: 'dashboard',
-                message: "Will you upload a dashboard on this model's view? ('y' or 'n')"
+                message: "Will you upload a dashboard in this model's view? ('y' or 'n')"
             }
         ],
         actions: function(data) {
@@ -250,7 +250,9 @@ module.exports = function(plop) {
                 var records = data.model_name.replace(' ', '_').toLowerCase() + 's';
             } else {
                 var multiple_records = false;
-                var records = data.model_name.replace(' ', '_').toLowerCase();
+               // var records = data.model_name.replace(' ', '_').toLowerCase();
+               var records = data.model_name.replace(' ', '_').toLowerCase() + 's';
+
             }
 
             var table_name = data.model_name.replace(' ', '_').toLowerCase() + 's';
@@ -282,8 +284,8 @@ module.exports = function(plop) {
                 },
                 {
                     type: 'add',
-                    path: 'src/components/' + view_file_name + '.jsx',
-                    templateFile: 'templates/data_component.hbs'
+                    path: 'controllers/' + view_file_name + '.js',
+                    templateFile: 'templates/data_controller.hbs'
                 },
                 {
                     type: 'add',
@@ -295,14 +297,14 @@ module.exports = function(plop) {
             if (multiple_records) {
                 actions.push({
                     type: 'add',
-                    path: 'controllers/' + view_file_name + '.js',
-                    templateFile: 'templates/data_controller_multiple.hbs'
+                    path: 'src/components/' + view_file_name + '.jsx',
+                    templateFile: 'templates/data_component.hbs'
                 });
             } else {
                 actions.push({
                     type: 'add',
-                    path: 'controllers/' + view_file_name + '.js',
-                    templateFile: 'templates/data_controller_single.hbs'
+                    path: 'src/components/' + view_file_name + '.jsx',
+                    templateFile: 'templates/data_component_single.hbs'
                 });
             }
 

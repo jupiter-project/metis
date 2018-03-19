@@ -18,11 +18,11 @@ class LoginForm extends React.Component{
     }
 
     componentDidMount() {
-        if (this.props.messages != null && this.props.messages.loginMessage != null){
+        /*if (this.props.messages != null && this.props.messages.loginMessage != null){
             this.props.messages.loginMessage.map(function(message){
                 toastr.error(message);
             });
-        }
+        }*/
     }
 
     handleChange(event){

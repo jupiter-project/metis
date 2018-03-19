@@ -28,7 +28,6 @@ class TwoFAVerificationForm extends React.Component {
 
     verifyCode(event){
         event.preventDefault();
-        console.log('Code is being verified');
         var axios= require('axios');
         var that= this;
 
@@ -36,6 +35,7 @@ class TwoFAVerificationForm extends React.Component {
             verification_code: this.state.verification_code,
             id: this.props.user._id
         }).then(function(response){
+            //console.log(response);
             if(response.data.status=='success'){
                 window.location.replace('/');
             }else{
@@ -53,8 +53,8 @@ class TwoFAVerificationForm extends React.Component {
 
         var verification_form=
             <form>
-                <div className="row">
-                    <div className="col-xs-offset-0 col-xs-12 col-sm-offset-4 col-sm-4">
+                <div className="row r-2">
+                    <div className="offset-xs-0 col-xs-12 offset-sm-4 col-sm-4">
                         <input type="text" className="form-control" value={this.state.verification_code} onChange={this.handleUpdate.bind(this)} /><br />
                         <br />
                         <button type="submit" className="btn btn-primary" onClick={this.verifyCode.bind(this)}>Verify code</button>

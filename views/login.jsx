@@ -22,7 +22,6 @@ class LoginPage extends React.Component{
                             </div>
                             <div className="text-center">
                                 <a className="d-block small mt-3" href="/signup">Register an Account</a>
-                                <a className="d-block small" href="forgot-password.html">Forgot Password?</a>
                             </div>
                         </div>
                     </div>
