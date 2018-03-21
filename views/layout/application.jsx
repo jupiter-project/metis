@@ -12,7 +12,7 @@ export default class ApplicationLayout extends React.Component {
 
     render(){
         var links_list=
-
+        
         <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
             <li className="nav-item p-2 bg-secondary rounded">
               <div className="text-center">
@@ -69,10 +69,33 @@ export default class ApplicationLayout extends React.Component {
                 </li>
               </ul>
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <a className="nav-link" data-toggle="modal" data-target="#exampleModal">
-                    <i className="fa fa-fw fa-sign-in"></i> Log out
+              <li className="nav-item dropdown">
+                  <a className="nav-link dropdown-toggle mr-lg-2" id="profileDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i className="fa fa-fw fa-user"></i> My Profile
                   </a>
+                  <div className="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                      <h6 className="dropdown-header">Logged in as: (FIRSTNAME)</h6>
+                      <div className="dropdown-divider"></div>
+                      <a className="dropdown-item" href="/">
+                          My Dashboard
+                      </a>
+                      <a className="dropdown-item" href="/account">
+                          My Account
+                      </a>
+                      <a className="dropdown-item" href="#">
+                          My Statistics
+                      </a>
+                      <div className="dropdown-divider"></div>
+                      <a className="dropdown-item small" href="#">
+                          Help
+                      </a>
+                      <a className="dropdown-item small" href="/settings">
+                          Settings
+                      </a>
+                      <a className="dropdown-item small" href="/logout">
+                        Sign out
+                      </a>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -90,18 +113,6 @@ export default class ApplicationLayout extends React.Component {
                     <a className="nav-link" href="#">
                       <i className="fa fa-fw fa-dashboard"></i>
                       <span className="nav-link-text"> Getting Started</span>
-                    </a>
-                  </li>
-                  <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Charts">
-                    <a className="nav-link" href="#">
-                      <i className="fa fa-fw fa-area-chart"></i>
-                      <span className="nav-link-text"> Gravity Docs</span>
-                    </a>
-                  </li>
-                  <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
-                    <a className="nav-link" href="#">
-                      <i className="fa fa-fw fa-table"></i>
-                      <span className="nav-link-text"> Contact Us</span>
                     </a>
                   </li>
               </ul>
@@ -180,7 +191,7 @@ export default class ApplicationLayout extends React.Component {
                     <footer className="sticky-footer">
                       <div className="container">
                         <div className="text-center">
-                          <small>Copyright © Sigwo Technologies 2018</small>
+                          <small>Copyright © Your Sigwo Technologies 2018</small>
                         </div>
                       </div>
                     </footer>
@@ -204,10 +215,14 @@ export default class ApplicationLayout extends React.Component {
                     </div>
 
                     <script src="vendor/jquery/jquery.min.js"></script>
-
-                    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-
-
+                    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                    <script src="vendor/chart.js/Chart.min.js"></script>
+                    <script src="vendor/datatables/jquery.dataTables.js"></script>
+                    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+                    <script src="js/sb-admin.min.js"></script>
+                    <script src="js/sb-admin-datatables.min.js"></script>
+                    <script src="js/sb-admin-charts.min.js"></script>
                     <script src="js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
                 </body>
             </html>
