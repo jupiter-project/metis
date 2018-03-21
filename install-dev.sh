@@ -36,7 +36,7 @@ echo "$PWD"
 npm install
 echo "."
 echo "Installation Complete"
-echo "Gravity is now installed, run 'sudo npm start' to launch the Gravity Platform"
+echo "Gravity is now installed, run 'npm start' to launch the Gravity Platform"
 echo "."
 echo "."
 exec bash
