@@ -91,62 +91,59 @@ class SettingsOptions extends React.Component {
 
         return(
             <div className="container-fluid">
-                <h1 className="page-title"></h1>
+                <h1 className="page-title text-center">My Settings</h1>
+                
                 <div className="row">
-                    <div className="col-lg-12 col-md-12">
-                        <div className="panel panel-primary">
-                            <div className="panel-heading text-center lead">
-                                My Settings
-                            </div>
-                                <div className="form-group row">
-                                    <div className="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 text-center">
-                                        <label>2 Factor Authentication:</label>
-                                        <div>
-                                            {
-                                                this.props.user.record.twofa_enabled==true && 
-                                                this.props.user.record.twofa_completed==true ?
-                                                <div>
-                                                    <p className="alert alert-success">Enabled</p>
-                                                    <form method="POST" action="/update_2fa_settings">
-                                                        <input type="hidden" name="enable_2fa" value="false" />
-                                                        <button className="btn btn-warning" type="submit">Disable Two Factor Authentication</button>
-                                                    </form>
-                                                </div>:
-                                                null
-                                            }                                        
-                                            {
-                                                this.props.user.record.twofa_enabled==true && 
-                                                this.props.user.record.twofa_completed===false ?
-                                                <p className="alert alert-danger">Started but not completed</p>:
-                                                null
-                                            }
-                                            {
-                                                this.props.user.record.twofa_enabled==false  ?
-                                                <div>
-                                                    <p className="alert alert-warning">Not enabled</p>
-                                                    <form method="POST" action="/update_2fa_settings">
-                                                        <input type="hidden" name="enable_2fa" value="true" />
-                                                        <button className="btn btn-warning" type="submit">Enable Two Factor Authentication</button>
-                                                    </form>
-                                                </div>:
-                                                null
-                                            }
-                                        </div>
-                                        <br />
+                    <div className="card mx-auto my-5 p-0">
+                        <div className="col-md-12 col-lg-12">
+                            <div className="card-body text-center">
+                                <div className="">
+                                    <h2>2 Factor Authentication:</h2>
+                                    <div>
+                                        {
+                                            this.props.user.record.twofa_enabled==true && 
+                                            this.props.user.record.twofa_completed==true ?
+                                            <div>
+                                                <p className="alert alert-success">Enabled</p>
+                                                <form method="POST" action="/update_2fa_settings">
+                                                    <input type="hidden" name="enable_2fa" value="false" />
+                                                    <button className="btn btn-warning" type="submit">Disable Two Factor Authentication</button>
+                                                </form>
+                                            </div>:
+                                            null
+                                        }                                        
+                                        {
+                                            this.props.user.record.twofa_enabled==true && 
+                                            this.props.user.record.twofa_completed===false ?
+                                            <p className="alert alert-danger">Started but not completed</p>:
+                                            null
+                                        }
+                                        {
+                                            this.props.user.record.twofa_enabled==false  ?
+                                            <div>
+                                                <p className="alert alert-warning">Not enabled</p>
+                                                <form method="POST" action="/update_2fa_settings">
+                                                    <input type="hidden" name="enable_2fa" value="true" />
+                                                    <button className="btn btn-warning" type="submit">Enable Two Factor Authentication</button>
+                                                </form>
+                                            </div>:
+                                            null
+                                        }
                                     </div>
-                                    <div className="clearfix"></div>
+                                    <br />
+                                </div>
 
-                                    <div className="col-lg-12 col-md-12 text-center">
-                                        <label>Api Key:</label>
-                                        <p>Use the below api key if using an external application or bot to record into the blockchain through your account</p>
-                                        <div className="row text-center">
-                                            <p className="col-md-offset-2 col-md-8 alert alert-info auth-hash">{this.state.api_key}</p>
-                                        </div>
-                                        <div className="row text-center">
-                                            <button className="btn btn-success" onClick={this.updateApiKey.bind(this)}>Create new api key</button>
-                                        </div>
+                                <h2>Api Key:</h2>
+                                <div>
+                                    <p>Use the below api key if using an external application or bot to record into the blockchain through your account</p>
+                                    <div className="text-center">
+                                        <p className="alert alert-info auth-hash">{this.state.api_key}</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <button className="btn btn-success" type="submit" onClick={this.updateApiKey.bind(this)}>Create new api key</button>
                                     </div>
                                 </div>
+                            </div>
 
                         </div>
 

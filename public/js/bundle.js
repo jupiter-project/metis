@@ -28479,29 +28479,28 @@ var SettingsOptions = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'container-fluid' },
-                _react2.default.createElement('h1', { className: 'page-title' }),
+                _react2.default.createElement(
+                    'h1',
+                    { className: 'page-title text-center' },
+                    'My Settings'
+                ),
                 _react2.default.createElement(
                     'div',
                     { className: 'row' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-lg-12 col-md-12' },
+                        { className: 'card mx-auto my-5 p-0' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'panel panel-primary' },
+                            { className: 'col-md-12 col-lg-12' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'panel-heading text-center lead' },
-                                'My Settings'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'form-group row' },
+                                { className: 'card-body text-center' },
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 text-center' },
+                                    { className: '' },
                                     _react2.default.createElement(
-                                        'label',
+                                        'h2',
                                         null,
                                         '2 Factor Authentication:'
                                     ),
@@ -28554,15 +28553,14 @@ var SettingsOptions = function (_React$Component) {
                                     ),
                                     _react2.default.createElement('br', null)
                                 ),
-                                _react2.default.createElement('div', { className: 'clearfix' }),
+                                _react2.default.createElement(
+                                    'h2',
+                                    null,
+                                    'Api Key:'
+                                ),
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'col-lg-12 col-md-12 text-center' },
-                                    _react2.default.createElement(
-                                        'label',
-                                        null,
-                                        'Api Key:'
-                                    ),
+                                    null,
                                     _react2.default.createElement(
                                         'p',
                                         null,
@@ -28570,19 +28568,19 @@ var SettingsOptions = function (_React$Component) {
                                     ),
                                     _react2.default.createElement(
                                         'div',
-                                        { className: 'row text-center' },
+                                        { className: 'text-center' },
                                         _react2.default.createElement(
                                             'p',
-                                            { className: 'col-md-offset-2 col-md-8 alert alert-info auth-hash' },
+                                            { className: 'alert alert-info auth-hash' },
                                             this.state.api_key
                                         )
                                     ),
                                     _react2.default.createElement(
                                         'div',
-                                        { className: 'row text-center' },
+                                        { className: 'text-center' },
                                         _react2.default.createElement(
                                             'button',
-                                            { className: 'btn btn-success', onClick: this.updateApiKey.bind(this) },
+                                            { className: 'btn btn-success', type: 'submit', onClick: this.updateApiKey.bind(this) },
                                             'Create new api key'
                                         )
                                     )
