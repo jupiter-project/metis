@@ -874,7 +874,7 @@ class Gravity {
                     if (response.data.signatureHash != null) {
                         resolve(true);
                     } else {
-                        console.log('Cannot send Jupiter to new account, Jupiter issuer has insuficient balance!')
+                        console.log('Cannot send Jupiter to new account, Jupiter issuer has insufficient balance!')
                         reject(response.data);
                     }
                 })
@@ -1179,7 +1179,7 @@ class Gravity {
                 if(response.minimumTableBalance==true){
                     eventEmitter.emit('verified_balance');
                 }else{
-                    console.log('Error in creating new table: Insuficient app balance.');
+                    console.log('Error in creating new table: Insufficient app balance.');
                     console.log('A minimum of '+parseInt((self.jupiter_data.minimumTableBalance)/(10**self.jupiter_data.moneyDecimals)) +' JUP is required to create a table with Gravity');
                     eventEmitter.emit('insufficient_balance');
                 }
@@ -1208,7 +1208,7 @@ class Gravity {
 
         rl.question('What is the name of the app?\n', (answer) => {
             appname = answer;
-            rl.question('Please provide an encryption password for your jupiter data:\n', (answer) => {
+            rl.question('Please provide an encryption password for your Jupiter data:\n', (answer) => {
                 password = answer;
                 rl.question('What is the url/ip address of your Jupiter server?\n', (answer) => {
                     server = answer;
@@ -1221,7 +1221,7 @@ class Gravity {
                     console.log("Please verify the data you entered:");
                     console.log(current_data);
                     console.log('');
-                    rl.question("You are about to create a Jupiter account which will hold your gravity app's data. Is the information provided above accurate? Is so, press ENTER", (answer) => {
+                    rl.question("You are about to create a Jupiter account which will hold your Gravity app's data. Is the information provided above accurate? Is so, press ENTER", (answer) => {
                         passphrase = methods.generate_passphrase();
 
                         axios.get(server + '/nxt?requestType=getAccountId&secretPhrase=' + passphrase)
@@ -1263,8 +1263,8 @@ class Gravity {
                                                 return console.log(err);
                                             }
                                             console.log('\nSuccess! .gravity and .env files generated!')
-                                            console.log('\nPlease write down the passphrase and account number assigned to your app as well as the password assigned for encryption(See .env or .gravity files). If you loose your passphrase or your encryption password, you will loose access to your saved data');
-                                            console.log('\nIn order to begin saving data into the Jupiter Blockchain, you will need to obtain Jupiter assets from:[address_of_url]');
+                                            console.log('\nPlease write down the passphrase and account number assigned to your app as well as the password assigned for encryption(See .env or .gravity files). If you lose your passphrase or your encryption password, you will loose access to your saved data');
+                                            console.log('\nIn order to begin saving data into the Jupiter Blockchain, you will need to obtain Jupiter assets from:', configuration.JUPITERSERVER);
                                             rl.close();
                                         });
                                     });
