@@ -63,7 +63,7 @@ class GravityPage extends React.Component{
                                       <td className={this.props.requirements.passphrase ? "text-success":"text-danger"}>{this.props.requirements.passphrase ? 'Connected' : 'Missing'}</td>
                                     </tr>
                                     <tr>
-                                      <th scope="row">Appplication Address</th>
+                                      <th scope="row">Application Address</th>
                                       <td className={this.props.requirements.address ? "text-success":"text-danger"}>{this.props.requirements.address ? 'Connected' : 'Missing'}</td>
                                     </tr>
                                     <tr>
