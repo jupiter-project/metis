@@ -33,7 +33,7 @@ class LoginForm extends React.Component{
 
     logIn(event){
         event.preventDefault();
-        //toastr.info('Loggin in now!');
+        //toastr.info('Logging in now!');
         console.log('Authentication submitted!');
         var events= require('events');
         var eventEmitter = new events.EventEmitter();
