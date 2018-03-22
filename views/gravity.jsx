@@ -88,7 +88,7 @@ class GravityPage extends React.Component{
                             </div>
                             <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                               <div className="card bg-light p-2">
-                                <p>Visit our Documation available on the <a href="#">GitHub Wiki</a></p>
+                                <p>Visit our Documation available on the <a href="https://github.com/SigwoTechnologies/jupiter-gravity/wiki">GitHub Wiki</a></p>
                                 <p>View some of your introduction tutorials <a href="#">here</a></p>
                               </div>
                             </div>
