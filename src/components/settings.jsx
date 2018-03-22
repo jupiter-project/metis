@@ -53,7 +53,7 @@ class SettingsOptions extends React.Component {
         event.preventDefault();
         console.log('Updating api key');
         var page = this;
-        if (confirm('Creating a new api key will delete your previous one. Any external apps or services using your previous key will need to be updated. Are you sure you wish to continue?')){
+        if (confirm('Creating a new API Key will delete your previous one. Any external apps or services using your previous key will need to be updated. Are you sure you wish to continue?')){
             axios.post('/update_api_key',{
                 id: this.props.user._id,
                 api_key: this.props.user.record.api_key
@@ -63,13 +63,13 @@ class SettingsOptions extends React.Component {
                     page.setState({
                         api_key: response.data.api_key
                     });
-                    toastr.success('Api Key updated!');
+                    toastr.success('API Key updated!');
                 }else{
-                    toastr.error('There was an error with updating your api key');
+                    toastr.error('There was an error with updating your API Key');
                     console.log(response.data.error);
                 }
             }).catch(function(error){
-                toastr.error('There was an error with updating your api key');
+                toastr.error('There was an error with updating your API Key');
                 console.log(error);
             });
         }
@@ -94,12 +94,12 @@ class SettingsOptions extends React.Component {
                 <h1 className="page-title text-center">My Settings</h1>
                 
                 <div className="row">
-                    <div className="card mx-auto my-5 p-0">
-                        <div className="col-md-12 col-lg-12">
-                            <div className="card-body text-center">
-                                <div className="">
-                                    <h2>2 Factor Authentication:</h2>
-                                    <div>
+                    <div className="mx-auto my-4">
+                        <div className="">
+                            <div className="text-center">
+                                <div className="card rounded">
+                                    <h3 className="card-header bg-dark text-light">Authentication</h3>
+                                    <div className="card-body col-md-8 mx-auto">
                                         {
                                             this.props.user.record.twofa_enabled==true && 
                                             this.props.user.record.twofa_completed==true ?
@@ -107,7 +107,7 @@ class SettingsOptions extends React.Component {
                                                 <p className="alert alert-success">Enabled</p>
                                                 <form method="POST" action="/update_2fa_settings">
                                                     <input type="hidden" name="enable_2fa" value="false" />
-                                                    <button className="btn btn-warning" type="submit">Disable Two Factor Authentication</button>
+                                                    <button className="btn btn-warning" type="submit">Disable 2FA</button>
                                                 </form>
                                             </div>:
                                             null
@@ -124,7 +124,7 @@ class SettingsOptions extends React.Component {
                                                 <p className="alert alert-warning">Not enabled</p>
                                                 <form method="POST" action="/update_2fa_settings">
                                                     <input type="hidden" name="enable_2fa" value="true" />
-                                                    <button className="btn btn-warning" type="submit">Enable Two Factor Authentication</button>
+                                                    <button className="btn btn-warning" type="submit">Enable 2FA</button>
                                                 </form>
                                             </div>:
                                             null
@@ -133,14 +133,16 @@ class SettingsOptions extends React.Component {
                                     <br />
                                 </div>
 
-                                <h2>Api Key:</h2>
-                                <div>
-                                    <p>Use the below api key if using an external application or bot to record into the blockchain through your account</p>
-                                    <div className="text-center">
-                                        <p className="alert alert-info auth-hash">{this.state.api_key}</p>
-                                    </div>
-                                    <div className="text-center">
-                                        <button className="btn btn-success" type="submit" onClick={this.updateApiKey.bind(this)}>Create new api key</button>
+                                <div className="card rounded my-4">
+                                    <h3 className="card-header bg-dark text-light">API Key</h3>
+                                    <div className="card-body col-md-8 p-3 mx-auto">
+                                        <p>Use the below API Key if using an external application or bot to record into the blockchain through your account</p>
+                                        <div className="text-center">
+                                            <p className="alert alert-info auth-hash">{this.state.api_key}</p>
+                                        </div>
+                                        <div className="text-center">
+                                            <button className="btn btn-success" type="submit" onClick={this.updateApiKey.bind(this)}>Create new API Key</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

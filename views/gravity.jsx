@@ -30,23 +30,23 @@ class GravityPage extends React.Component{
         return(
             <ApplicationLayout data={this.props}>
               <div className="">
-                <div className="">
-                  <div className="">
+                <div className="row">
+                  <div className="col-sm-12 col-md-12 col-lg-8 mx-auto">
                     <h1 className="text-center mt-3 mb-5">Welcome to the Gravity Platform</h1>
-                    <div className="card">
+                    <div className="card rounded p-2 bg-dark">
                       <div className="">
-                        <ul className="nav nav-tabs nav-justified nav-fill" id="myTab" role="tablist">
+                        <ul className="nav nav-tabs nav-fill h5" id="myTab" role="tablist">
                           <li className="nav-item">
-                            <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Server Status</a>
+                            <a className="nav-link text-primary active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Server Status</a>
                           </li>
                           <li className="nav-item">
-                            <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Getting Started</a>
+                            <a className="nav-link text-primary" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Getting Started</a>
                           </li>
                           <li className="nav-item">
-                            <a className="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Documentation</a>
+                            <a className="nav-link text-primary" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Documentation</a>
                           </li>
                           <li className="nav-item">
-                            <a className="nav-link" id="next-tab" data-toggle="tab" href="#next" role="tab" aria-controls="next" aria-selected="false">What's Next?</a>
+                            <a className="nav-link text-primary" id="next-tab" data-toggle="tab" href="#next" role="tab" aria-controls="next" aria-selected="false">What's Next?</a>
                           </li>
                         </ul>
                       </div>
@@ -54,7 +54,6 @@ class GravityPage extends React.Component{
                         <div className="card-body">
                           <div className="tab-content" id="myTabContent">
                             <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                              <div className="h4 my-4 text-center">Gravity Server Status:</div>
                               <div className="card p-0">
                                 <table className="table mb-0">
                                   <tbody>
@@ -79,7 +78,7 @@ class GravityPage extends React.Component{
                               </div>
                             </div>
                             <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                              <div className="p-2">
+                              <div className="card bg-light p-2">
                                 <p>Application Structure</p>
                                 <p>Public Assets</p>
                                 <p>Bootstrap Theme</p>
@@ -88,13 +87,13 @@ class GravityPage extends React.Component{
                               </div>
                             </div>
                             <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                              <div className="mx-auto my-5">
+                              <div className="card bg-light p-2">
                                 <p>Visit our Documation available on the <a href="#">GitHub Wiki</a></p>
                                 <p>View some of your introduction tutorials <a href="#">here</a></p>
                               </div>
                             </div>
                             <div className="tab-pane fade" id="next" role="tabpanel" aria-labelledby="next-tab">
-                              <div className="p-2">
+                              <div className="card bg-light p-2">
                                 <p>Generate a blank page</p>
                                 <p>Customize the templates</p>
                                 <p>Modify the conent</p>
