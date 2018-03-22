@@ -74,7 +74,7 @@ export default class ApplicationLayout extends React.Component {
                       <i className="fa fa-fw fa-user"></i> My Profile
                   </a>
                   <div className="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-                      <h6 className="dropdown-header">Logged in as: (FIRSTNAME)</h6>
+                      <h6 className="dropdown-header">Logged in as: {this.props.data.user != null ? this.props.data.user.record.firstname : null}</h6>
                       <div className="dropdown-divider"></div>
                       <a className="dropdown-item" href="/">
                           My Dashboard
