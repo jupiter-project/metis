@@ -191,7 +191,7 @@ export default class ApplicationLayout extends React.Component {
                     <footer className="sticky-footer">
                       <div className="container">
                         <div className="text-center">
-                          <small>Copyright © Your Sigwo Technologies 2018</small>
+                          <small>Copyright © Sigwo Technologies 2018</small>
                         </div>
                       </div>
                     </footer>
