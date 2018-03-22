@@ -34,19 +34,19 @@ export default class ApplicationLayout extends React.Component {
             </li>
             {false && 'Generated plop links go here'}
             <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/gravity">
                 <i className="fa fa-fw fa-question-circle"></i>
                 <span className="nav-link-text"> Getting Started</span>
               </a>
             </li>
             <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Charts">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="https://github.com/SigwoTechnologies/jupiter-gravity/wiki" target="_blank">
                 <i className="fa fa-fw fa-area-chart"></i>
                 <span className="nav-link-text"> Gravity Docs</span>
               </a>
             </li>
             <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/gravity#contact-tab">
                 <i className="fa fa-fw fa-table"></i>
                 <span className="nav-link-text"> Contact Us</span>
               </a>
@@ -110,7 +110,7 @@ export default class ApplicationLayout extends React.Component {
             <div className="collapse navbar-collapse" id="navbarResponsive">
               <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
                   <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="/gravity">
                       <i className="fa fa-fw fa-dashboard"></i>
                       <span className="nav-link-text"> Getting Started</span>
                     </a>
@@ -170,7 +170,7 @@ export default class ApplicationLayout extends React.Component {
                     <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
                     <link href="css/sb-admin.css" rel="stylesheet" />
                 </head>
-                <body className="fixed-nav sticky-footer bg-dark" id="page-top">
+                <body className="sticky-footer bg-dark fixed-nav" id="page-top">
                     <span id="toastrMessages"></span>
                     <div id={this.props.data.dashboard == true ? 'wrapper' : 'unlogged-wrapper'}>
                         {
@@ -220,9 +220,9 @@ export default class ApplicationLayout extends React.Component {
                     <script src="vendor/chart.js/Chart.min.js"></script>
                     <script src="vendor/datatables/jquery.dataTables.js"></script>
                     <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+                    <script src="vendor/chart.js/Chart.min.js"></script>
+                    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
                     <script src="js/sb-admin.min.js"></script>
-                    <script src="js/sb-admin-datatables.min.js"></script>
-                    <script src="js/sb-admin-charts.min.js"></script>
                     <script src="js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
                 </body>
             </html>

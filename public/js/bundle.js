@@ -27466,31 +27466,102 @@ var AccountComponent = function (_React$Component) {
                 'div',
                 { className: '' },
                 _react2.default.createElement(
+                    'h1',
+                    { className: 'page-title text-center' },
+                    'My Account'
+                ),
+                _react2.default.createElement(
                     'div',
-                    { className: 'card card-register mx-auto' },
+                    { className: 'row' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'card-header bg-dark text-white' },
-                        'Account information'
-                    ),
-                    this.state.account_editing_mode == true ? _react2.default.createElement(
-                        'form',
-                        { className: 'card-body' },
+                        { className: 'card card-register mx-auto my-4' },
                         _react2.default.createElement(
-                            'div',
-                            { className: 'form-row' },
+                            'h3',
+                            { className: 'card-header bg-dark text-white' },
+                            'Account information'
+                        ),
+                        this.state.account_editing_mode == true ? _react2.default.createElement(
+                            'form',
+                            { className: 'card-body' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-row' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'col-md-6 col-lg-6 p-3' },
+                                        _react2.default.createElement(
+                                            'label',
+                                            { htmlFor: 'inputFirstName' },
+                                            'First Name'
+                                        ),
+                                        _react2.default.createElement('input', { value: this.state.firstname, onChange: this.handleChange.bind(this, 'firstname'), type: 'name', className: 'form-control', id: 'inputFirstName' })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'col-md-6 col-lg-6 p-3' },
+                                        _react2.default.createElement(
+                                            'label',
+                                            { htmlFor: 'inputLastName' },
+                                            'Last Name'
+                                        ),
+                                        _react2.default.createElement('input', { value: this.state.lastname, onChange: this.handleChange.bind(this, 'lastname'), type: 'name', className: 'form-control', id: 'inputLastName' })
+                                    )
+                                )
+                            ),
                             _react2.default.createElement(
                                 'div',
                                 { className: 'form-group' },
                                 _react2.default.createElement(
+                                    'label',
+                                    { htmlFor: 'inputEmailAddress' },
+                                    'Email Address'
+                                ),
+                                _react2.default.createElement('input', { value: this.state.email, onChange: this.handleChange.bind(this, 'email'), type: 'email', className: 'form-control', id: 'inputEmailAddress' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-row' },
+                                _react2.default.createElement(
                                     'div',
-                                    { className: 'col-md-6' },
+                                    { className: 'col' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-success', onClick: this.updateAccountInfo.bind(this), disabled: this.state.submitted },
+                                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
+                                        ' ',
+                                        this.state.submitted ? 'Saving...' : 'Save'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'col text-right' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-danger ml-auto', onClick: this.switch_mode.bind(this, 'account') },
+                                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
+                                        '  Cancel'
+                                    )
+                                )
+                            )
+                        ) : _react2.default.createElement(
+                            'form',
+                            { className: 'card-body' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-row' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-6' },
                                     _react2.default.createElement(
                                         'label',
                                         { htmlFor: 'inputFirstName' },
                                         'First Name'
                                     ),
-                                    _react2.default.createElement('input', { value: this.state.firstname, onChange: this.handleChange.bind(this, 'firstname'), type: 'name', className: 'form-control', id: 'inputFirstName' })
+                                    _react2.default.createElement('input', { value: this.state.saved_firstname, type: 'name', className: 'form-control', id: 'inputFirstName', disabled: true })
                                 ),
                                 _react2.default.createElement(
                                     'div',
@@ -27500,102 +27571,40 @@ var AccountComponent = function (_React$Component) {
                                         { htmlFor: 'inputLastName' },
                                         'Last Name'
                                     ),
-                                    _react2.default.createElement('input', { value: this.state.lastname, onChange: this.handleChange.bind(this, 'lastname'), type: 'name', className: 'form-control', id: 'inputLastName' })
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'label',
-                                { htmlFor: 'inputEmailAddress' },
-                                'Email Address'
-                            ),
-                            _react2.default.createElement('input', { value: this.state.email, onChange: this.handleChange.bind(this, 'email'), type: 'email', className: 'form-control', id: 'inputEmailAddress' })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-row' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col' },
-                                _react2.default.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-success', onClick: this.updateAccountInfo.bind(this), disabled: this.state.submitted },
-                                    _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
-                                    ' ',
-                                    this.state.submitted ? 'Saving...' : 'Save'
+                                    _react2.default.createElement('input', { value: this.state.saved_lastname, type: 'name', className: 'form-control', id: 'inputLastName', disabled: true })
                                 )
                             ),
                             _react2.default.createElement(
                                 'div',
-                                { className: 'col text-right' },
-                                _react2.default.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-danger ml-auto', onClick: this.switch_mode.bind(this, 'account') },
-                                    _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
-                                    '  Cancel'
-                                )
-                            )
-                        )
-                    ) : _react2.default.createElement(
-                        'form',
-                        { className: 'card-body' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-row' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'form-group col-md-6' },
+                                { className: 'form-group' },
                                 _react2.default.createElement(
                                     'label',
-                                    { htmlFor: 'inputFirstName' },
-                                    'First Name'
+                                    { htmlFor: 'inputEmailAddress' },
+                                    'Email Address'
                                 ),
-                                _react2.default.createElement('input', { value: this.state.saved_firstname, type: 'name', className: 'form-control', id: 'inputFirstName', disabled: true })
+                                _react2.default.createElement('input', { value: this.state.saved_email, type: 'email', className: 'form-control', id: 'inputEmailAddress', disabled: true })
                             ),
                             _react2.default.createElement(
                                 'div',
-                                { className: 'form-group col-md-6' },
+                                { className: 'form-row' },
                                 _react2.default.createElement(
-                                    'label',
-                                    { htmlFor: 'inputLastName' },
-                                    'Last Name'
+                                    'div',
+                                    { className: 'col' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-default', onClick: this.switch_mode.bind(this, 'account') },
+                                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
+                                        ' Edit'
+                                    )
                                 ),
-                                _react2.default.createElement('input', { value: this.state.saved_lastname, type: 'name', className: 'form-control', id: 'inputLastName', disabled: true })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'label',
-                                { htmlFor: 'inputEmailAddress' },
-                                'Email Address'
-                            ),
-                            _react2.default.createElement('input', { value: this.state.saved_email, type: 'email', className: 'form-control', id: 'inputEmailAddress', disabled: true })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-row' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col' },
                                 _react2.default.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-default', onClick: this.switch_mode.bind(this, 'account') },
-                                    _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
-                                    ' Edit'
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col text-right' },
-                                _react2.default.createElement(
-                                    'button',
-                                    { type: 'button', className: 'btn btn-default ml-auto', disabled: true },
-                                    'Cancel'
+                                    'div',
+                                    { className: 'col text-right' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-default ml-auto', disabled: true },
+                                        'Cancel'
+                                    )
                                 )
                             )
                         )
@@ -28441,7 +28450,7 @@ var SettingsOptions = function (_React$Component) {
             event.preventDefault();
             console.log('Updating api key');
             var page = this;
-            if (confirm('Creating a new api key will delete your previous one. Any external apps or services using your previous key will need to be updated. Are you sure you wish to continue?')) {
+            if (confirm('Creating a new API Key will delete your previous one. Any external apps or services using your previous key will need to be updated. Are you sure you wish to continue?')) {
                 axios.post('/update_api_key', {
                     id: this.props.user._id,
                     api_key: this.props.user.record.api_key
@@ -28450,13 +28459,13 @@ var SettingsOptions = function (_React$Component) {
                         page.setState({
                             api_key: response.data.api_key
                         });
-                        toastr.success('Api Key updated!');
+                        toastr.success('API Key updated!');
                     } else {
-                        toastr.error('There was an error with updating your api key');
+                        toastr.error('There was an error with updating your API Key');
                         console.log(response.data.error);
                     }
                 }).catch(function (error) {
-                    toastr.error('There was an error with updating your api key');
+                    toastr.error('There was an error with updating your API Key');
                     console.log(error);
                 });
             }
@@ -28479,35 +28488,34 @@ var SettingsOptions = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'container-fluid' },
-                _react2.default.createElement('h1', { className: 'page-title' }),
+                _react2.default.createElement(
+                    'h1',
+                    { className: 'page-title text-center' },
+                    'My Settings'
+                ),
                 _react2.default.createElement(
                     'div',
                     { className: 'row' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-lg-12 col-md-12' },
+                        { className: 'mx-auto my-4' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'panel panel-primary' },
+                            { className: '' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'panel-heading text-center lead' },
-                                'My Settings'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'form-group row' },
+                                { className: 'text-center' },
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 text-center' },
+                                    { className: 'card rounded' },
                                     _react2.default.createElement(
-                                        'label',
-                                        null,
-                                        '2 Factor Authentication:'
+                                        'h3',
+                                        { className: 'card-header bg-dark text-light' },
+                                        'Authentication'
                                     ),
                                     _react2.default.createElement(
                                         'div',
-                                        null,
+                                        { className: 'card-body col-md-8 mx-auto' },
                                         this.props.user.record.twofa_enabled == true && this.props.user.record.twofa_completed == true ? _react2.default.createElement(
                                             'div',
                                             null,
@@ -28523,7 +28531,7 @@ var SettingsOptions = function (_React$Component) {
                                                 _react2.default.createElement(
                                                     'button',
                                                     { className: 'btn btn-warning', type: 'submit' },
-                                                    'Disable Two Factor Authentication'
+                                                    'Disable 2FA'
                                                 )
                                             )
                                         ) : null,
@@ -28547,43 +28555,46 @@ var SettingsOptions = function (_React$Component) {
                                                 _react2.default.createElement(
                                                     'button',
                                                     { className: 'btn btn-warning', type: 'submit' },
-                                                    'Enable Two Factor Authentication'
+                                                    'Enable 2FA'
                                                 )
                                             )
                                         ) : null
                                     ),
                                     _react2.default.createElement('br', null)
                                 ),
-                                _react2.default.createElement('div', { className: 'clearfix' }),
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'col-lg-12 col-md-12 text-center' },
+                                    { className: 'card rounded my-4' },
                                     _react2.default.createElement(
-                                        'label',
-                                        null,
-                                        'Api Key:'
-                                    ),
-                                    _react2.default.createElement(
-                                        'p',
-                                        null,
-                                        'Use the below api key if using an external application or bot to record into the blockchain through your account'
+                                        'h3',
+                                        { className: 'card-header bg-dark text-light' },
+                                        'API Key'
                                     ),
                                     _react2.default.createElement(
                                         'div',
-                                        { className: 'row text-center' },
+                                        { className: 'card-body col-md-8 p-3 mx-auto' },
                                         _react2.default.createElement(
                                             'p',
-                                            { className: 'col-md-offset-2 col-md-8 alert alert-info auth-hash' },
-                                            this.state.api_key
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'row text-center' },
+                                            null,
+                                            'Use the below API Key if using an external application or bot to record into the blockchain through your account'
+                                        ),
                                         _react2.default.createElement(
-                                            'button',
-                                            { className: 'btn btn-success', onClick: this.updateApiKey.bind(this) },
-                                            'Create new api key'
+                                            'div',
+                                            { className: 'text-center' },
+                                            _react2.default.createElement(
+                                                'p',
+                                                { className: 'alert alert-info auth-hash' },
+                                                this.state.api_key
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'text-center' },
+                                            _react2.default.createElement(
+                                                'button',
+                                                { className: 'btn btn-success', type: 'submit', onClick: this.updateApiKey.bind(this) },
+                                                'Create new API Key'
+                                            )
                                         )
                                     )
                                 )
