@@ -33,7 +33,7 @@ class GravityPage extends React.Component{
                 <div className="row">
                   <div className="col-sm-12 col-md-12 col-lg-8 mx-auto">
                     <h1 className="text-center mt-3 mb-5">Welcome to the Gravity Platform</h1>
-                    <div className="card rounded p-2">
+                    <div className="card rounded">
                       <div className="">
                         <ul className="nav nav-tabs nav-fill h5" id="myTab" role="tablist">
                           <li className="nav-item">

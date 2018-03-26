@@ -23,6 +23,10 @@ $green: #28a745 !default;
 $teal: #20c997 !default;
 $cyan: #17a2b8 !default;
 
+.navbar-dark {
+    background-color: #2E3944!default;
+}
+
 // Spacing Variables
 // Change below variable if the height of the navbar changes
 $navbar-base-height: 56px;
