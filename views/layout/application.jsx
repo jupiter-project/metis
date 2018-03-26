@@ -28,12 +28,11 @@ export default class ApplicationLayout extends React.Component {
             </li>
             <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
               <a className="nav-link" href="/account">
-                <i className="fa fa-fw fa-address-card"></i>
+                <i className="fa fa-fw fa-table"></i>
                 <span className="nav-link-text"> Account</span>
               </a>
             </li>
-            <li className="nav-item"><a className="nav-link" href="/my_investments"><i className="fa fa-table fa-fw"></i> My Investments</a></li>
-    {false && 'Generated plop links go here'}
+            {false && 'Generated plop links go here'}
             <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
               <a className="nav-link" href="/gravity">
                 <i className="fa fa-fw fa-question-circle"></i>
@@ -48,7 +47,7 @@ export default class ApplicationLayout extends React.Component {
             </li>
             <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
               <a className="nav-link" href="/gravity#contact-tab">
-                <i className="fa fa-fw fa-info"></i>
+                <i className="fa fa-fw fa-table"></i>
                 <span className="nav-link-text"> Contact Us</span>
               </a>
             </li>
@@ -75,7 +74,7 @@ export default class ApplicationLayout extends React.Component {
                       <i className="fa fa-fw fa-user"></i> My Profile
                   </a>
                   <div className="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-                      <h6 className="dropdown-header">Logged in as: </h6>
+                      <h6 className="dropdown-header">Logged in as: (FIRSTNAME)</h6>
                       <div className="dropdown-divider"></div>
                       <a className="dropdown-item" href="/">
                           My Dashboard
@@ -104,7 +103,7 @@ export default class ApplicationLayout extends React.Component {
 
         var unlogged_header=
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-            <a className="navbar-brand" href="#"><img className="img" src="../img/sigwo-sheild2.png" height="48px" width="auto" /> Sigwo Technologies</a>
+            <a className="navbar-brand" href="#">Gravity</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -140,7 +139,7 @@ export default class ApplicationLayout extends React.Component {
         </nav>
 
         var logged_wrapper=
-        <div className="content-wrapper" id="page-wrapper">
+        <div className="content-wrapper">
           <div className="container">
             {this.props.children}
           </div> 
@@ -148,7 +147,7 @@ export default class ApplicationLayout extends React.Component {
         
 
         var unlogged_wrapper=
-        <div className="content-wrapper" id="page-wrapper">
+        <div className="content-wrapper">
           <div className="container">
             {this.props.children}
           </div>
@@ -169,7 +168,7 @@ export default class ApplicationLayout extends React.Component {
                     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
                     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
                     <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
-                    <link href="css/sb-admin.min.css" rel="stylesheet" />
+                    <link href="css/sb-admin.css" rel="stylesheet" />
                 </head>
                 <body className="sticky-footer bg-dark fixed-nav" id="page-top">
                     <span id="toastrMessages"></span>
@@ -221,9 +220,9 @@ export default class ApplicationLayout extends React.Component {
                     <script src="vendor/chart.js/Chart.min.js"></script>
                     <script src="vendor/datatables/jquery.dataTables.js"></script>
                     <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+                    <script src="vendor/chart.js/Chart.min.js"></script>
+                    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
                     <script src="js/sb-admin.min.js"></script>
-                    <script src="js/sb-admin-datatables.min.js"></script>
-                    <script src="js/sb-admin-charts.min.js"></script>
                     <script src="js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
                 </body>
             </html>
