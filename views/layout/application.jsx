@@ -139,7 +139,7 @@ export default class ApplicationLayout extends React.Component {
         </nav>
 
         var logged_wrapper=
-        <div className="content-wrapper">
+        <div className="content-wrapper" id="page-wrapper">
           <div className="container">
             {this.props.children}
           </div> 
@@ -147,7 +147,7 @@ export default class ApplicationLayout extends React.Component {
         
 
         var unlogged_wrapper=
-        <div className="content-wrapper">
+        <div className="content-wrapper" id="page-wrapper">
           <div className="container">
             {this.props.children}
           </div>
@@ -168,7 +168,7 @@ export default class ApplicationLayout extends React.Component {
                     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
                     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
                     <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
-                    <link href="css/sb-admin.css" rel="stylesheet" />
+                    <link href="css/sb-admin.min.css" rel="stylesheet" />
                 </head>
                 <body className="sticky-footer bg-dark fixed-nav" id="page-top">
                     <span id="toastrMessages"></span>
@@ -220,9 +220,9 @@ export default class ApplicationLayout extends React.Component {
                     <script src="vendor/chart.js/Chart.min.js"></script>
                     <script src="vendor/datatables/jquery.dataTables.js"></script>
                     <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-                    <script src="vendor/chart.js/Chart.min.js"></script>
-                    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
                     <script src="js/sb-admin.min.js"></script>
+                    <script src="js/sb-admin-datatables.min.js"></script>
+                    <script src="js/sb-admin-charts.min.js"></script>
                     <script src="js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
                 </body>
             </html>

@@ -33,7 +33,7 @@ class GravityPage extends React.Component{
                 <div className="row">
                   <div className="col-sm-12 col-md-12 col-lg-8 mx-auto">
                     <h1 className="text-center mt-3 mb-5">Welcome to the Gravity Platform</h1>
-                    <div className="card rounded p-2 bg-dark">
+                    <div className="card rounded p-2">
                       <div className="">
                         <ul className="nav nav-tabs nav-fill h5" id="myTab" role="tablist">
                           <li className="nav-item">
@@ -78,7 +78,7 @@ class GravityPage extends React.Component{
                               </div>
                             </div>
                             <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                              <div className="card bg-light p-2">
+                              <div className="card p-2">
                                 <p>Application Structure</p>
                                 <p>Public Assets</p>
                                 <p>Bootstrap Theme</p>
@@ -87,13 +87,13 @@ class GravityPage extends React.Component{
                               </div>
                             </div>
                             <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                              <div className="card bg-light p-2">
+                              <div className="card p-2">
                                 <p>Visit our Documation available on the <a href="#">GitHub Wiki</a></p>
                                 <p>View some of your introduction tutorials <a href="#">here</a></p>
                               </div>
                             </div>
                             <div className="tab-pane fade" id="next" role="tabpanel" aria-labelledby="next-tab">
-                              <div className="card bg-light p-2">
+                              <div className="card p-2">
                                 <p>Generate a blank page</p>
                                 <p>Customize the templates</p>
                                 <p>Modify the conent</p>

@@ -90,8 +90,7 @@ gulp.task('js', ['js:minify']);
 // Default task
 gulp.task('default', ['css', 'js', 'vendor']);
 // Dev task
-gulp.task('dev', ['css', 'js', 'pug'], function() {
-  gulp.watch('public/pug/**/*', ['pug']);
+gulp.task('dev', ['css', 'js'], function() {
   gulp.watch('public/scss/**/*.scss', ['css']);
   gulp.watch('public/js/*.js', ['js']);
 });
