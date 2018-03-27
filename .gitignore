@@ -16,7 +16,7 @@ package-lock.json
 
 #Ignore other generated files
 /public/css/
-/public/js/
+
 
 /node_modules
 /bower_components
