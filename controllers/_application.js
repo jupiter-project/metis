@@ -145,7 +145,6 @@ module.exports = function(app, passport, React, ReactDOMServer) {
                 //new_account_created = true;
                 //bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
                 var accountRS = response.data.accountRS;
-                console.log(error);
                 res.send({
                     success: true,
                     account: accountRS,
@@ -154,6 +153,7 @@ module.exports = function(app, passport, React, ReactDOMServer) {
                 });
             })
             .catch(function(error) {
+                console.log(error);
                 res.send({
                     success: false,
                     message: 'There was an error in verifying the passphrase with the Blockchain'
