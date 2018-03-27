@@ -145,6 +145,7 @@ module.exports = function(app, passport, React, ReactDOMServer) {
                 //new_account_created = true;
                 //bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
                 var accountRS = response.data.accountRS;
+                console.log(error);
                 res.send({
                     success: true,
                     account: accountRS,
