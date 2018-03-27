@@ -1,5 +1,11 @@
-.navbar {
+.navbar-dark {
   background-color: #2E3944 !important;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #2E3944 !important;
+  border-color: #2E3944 !important;
 }
 
 * {

@@ -15,7 +15,7 @@ class LoginPage extends React.Component{
                 
                 <div className="container" id="login-container">
                     <div className="card card-login mx-auto mt-5">
-                        <div className="card-header">Login</div>
+                        <div className="card-header bg-dark text-light">Login</div>
                         <div className="card-body">
                             <div id="login-form">
                             

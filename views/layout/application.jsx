@@ -55,7 +55,7 @@ export default class ApplicationLayout extends React.Component {
 
         var logged_header=
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-            <a className="navbar-brand" href="#">Gravity</a>
+            <a className="navbar-brand" href="#"><img className="img" src="../img/sigwo-sheild2.png" height="48px" width="auto" /> Sigwo Technologies</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -103,7 +103,7 @@ export default class ApplicationLayout extends React.Component {
 
         var unlogged_header=
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-            <a className="navbar-brand" href="#">Gravity</a>
+            <a className="navbar-brand" href="#"><img className="img" src="../img/sigwo-sheild2.png" height="48px" width="auto" /> Sigwo Technologies</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -220,9 +220,9 @@ export default class ApplicationLayout extends React.Component {
                     <script src="vendor/chart.js/Chart.min.js"></script>
                     <script src="vendor/datatables/jquery.dataTables.js"></script>
                     <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-                    <script src="vendor/chart.js/Chart.min.js"></script>
-                    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
                     <script src="js/sb-admin.min.js"></script>
+                    <script src="js/sb-admin-datatables.min.js"></script>
+                    <script src="js/sb-admin-charts.min.js"></script>
                     <script src="js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
                 </body>
             </html>

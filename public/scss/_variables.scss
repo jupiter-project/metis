@@ -24,7 +24,13 @@ $teal: #20c997 !default;
 $cyan: #17a2b8 !default;
 
 .navbar-dark {
-    background-color: #2E3944!default;
+    background-color: #2E3944!important;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #2E3944!important;
+    border-color: #2E3944!important;
 }
 
 // Spacing Variables
