@@ -14,7 +14,7 @@ class SignupPage extends React.Component{
             <ApplicationLayout data={this.props}>
                 <div className="container" id="login-container">
                     <div className="card card-login mx-auto mt-5">
-                        <div className="card-header">Login</div>
+                        <div className="card-header bg-dark text-light">Sign Up</div>
                         <div className="card-body">
                             <div id="signup-form">
                             
