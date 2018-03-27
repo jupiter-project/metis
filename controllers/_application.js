@@ -155,8 +155,7 @@ module.exports = function(app, passport, React, ReactDOMServer) {
             .catch(function(error) {
                 res.send({
                     success: false,
-                    message: 'There was an error in verifying the passphrase with the Blockchain',
-                    error: error
+                    message: 'There was an error in verifying the passphrase with the Blockchain'
                 });
             });
     });
