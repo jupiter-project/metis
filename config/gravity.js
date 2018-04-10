@@ -16,8 +16,8 @@ class Gravity {
             server: process.env.JUPITERSERVER,
             feeNQT: 500,
             deadline: 60,
-            minimumTableBalance: 100000000,
-            minimumAppBalance: 1000000000,
+            minimumTableBalance: 100000,
+            minimumAppBalance: 1000000,
             moneyDecimals: 8
         };
         this.generate_passphrase = methods.generate_passphrase;
