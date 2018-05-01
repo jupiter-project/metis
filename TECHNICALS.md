@@ -1,4 +1,4 @@
-Gravity Development Guidelines
+Gravity Development Guidelines (Formatting in progress)
 	
 	This is a document meant to educate and aid developers on the use of the Gravity development framework, providing guidelines on how to customize and further develop it. This guide will be updated as more features are added.
 
