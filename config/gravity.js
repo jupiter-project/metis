@@ -17,7 +17,7 @@ class Gravity {
             feeNQT: 500,
             deadline: 60,
             minimumTableBalance: 100000,
-            minimumAppBalance: 1000000,
+            minimumAppBalance: 100000,
             moneyDecimals: 8
         };
         this.generate_passphrase = methods.generate_passphrase;
@@ -254,7 +254,7 @@ class Gravity {
                 })
                 .catch(function(error) {
                     console.log(error);
-                    reject({ success: false, error: error });
+                    reject({ success: false, error: 'There was an error loading records' });
                 });
         });
     }
@@ -836,7 +836,7 @@ class Gravity {
                     })
                     .catch(error =>{
                         console.log(error);
-                        reject({ success: false, message: 'There was an error obtaining account Jupiter balance', error: error });
+                        reject({ success: false, message: 'There was an error obtaining account Jupiter balance' });
                     });
             });
 
@@ -848,13 +848,13 @@ class Gravity {
                 })
             .catch(function(error) {
                     console.log(error);
-                    reject({ success: false, message: 'There was an error obtaining account Jupiter balance', error: error });
+                    reject({ success: false, message: 'There was an error obtaining account Jupiter balance' });
                 })
 
         });
     }
 
-    sendMoney(recipient, amount = 100000000, sender = this.sender) {
+    sendMoney(recipient, amount = this.jupiter_data.minimumTableBalance/10, sender = this.sender) {
         //This is the variable that will be used to send Jupiter from the app address to the address
         // that will be used as a database table or will serve a purpose in the Gravity infrastructure
         var self = this;
@@ -931,7 +931,7 @@ class Gravity {
                         })
                         .catch(function(error) {
                             console.log(error);
-                            reject({ success: false, message: 'There was an error', error: error });
+                            reject({ success: false, message: 'There was an error' });
                         });
                 } else {
                     resolve({
@@ -975,7 +975,7 @@ class Gravity {
                 .catch(function(error) {
                     console.log(error);
                     console.log('There was an error in address creation');
-                    reject({ success: false, message: 'There was an error creating a new Jupiter address', error: error });
+                    reject({ success: false, message: 'There was an error creating a new Jupiter address' });
                 })
 
         });
@@ -1040,7 +1040,7 @@ class Gravity {
                         .catch(err => {
                             console.log(err)
                             rl.close();
-                            reject({ success: false, message: 'Unable to send Jupiter to new table address', jupiter_response: response.data });
+                            reject({ success: false, message: 'Unable to send Jupiter to new table address'});
                         });
             });
 
@@ -1078,7 +1078,7 @@ class Gravity {
                         console.log('There was an error');
                         console.log(error);
                         rl.close();
-                        reject({ success: false, message: 'There was an error', error: error });
+                        reject({ success: false, message: 'There was an error'});
                     });
 
                 var table_list_update_url = self.jupiter_data.server + '/nxt?requestType=sendMessage&secretPhrase=' + gravity.APP_ACCOUNT +
