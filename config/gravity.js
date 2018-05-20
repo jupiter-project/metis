@@ -821,12 +821,12 @@ class Gravity {
                             var minimumAppBalance=false;
                             var minimumTableBalance=false;
 
-                            if(response.data.balanceNQT > self.jupiter_data.minimumAppBalance){
+                            if(response.data.balanceNQT >= self.jupiter_data.minimumAppBalance){
                                 minimumAppBalance= true;
                                 
                             }
 
-                            if(response.data.balanceNQT > self.jupiter_data.minimumTableBalance){
+                            if(response.data.balanceNQT >= self.jupiter_data.minimumTableBalance){
                                 minimumTableBalance= true;
                             }
 
@@ -854,11 +854,18 @@ class Gravity {
         });
     }
 
-    sendMoney(recipient, amount = this.jupiter_data.minimumTableBalance/10, sender = this.sender) {
+    sendMoney(recipient, transfer_amount = null, sender = this.sender) {
         //This is the variable that will be used to send Jupiter from the app address to the address
         // that will be used as a database table or will serve a purpose in the Gravity infrastructure
+        var amount= transfer_amount;
         var self = this;
-        var feeNQT = 100;
+        const feeNQT = 100;
+        const table_creation= 500+250;
+
+        if(amount == null){
+            amount= this.jupiter_data.minimumTableBalance-feeNQT-table_creation;
+        }
+
         if (this.sender == null || this.sender == undefined) {
             let gravity = require('../.gravity.js');
             var sender_address = gravity.APP_ACCOUNT;
