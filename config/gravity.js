@@ -356,8 +356,9 @@ class Gravity {
 
             eventEmitter.on('database_retrieved', function() {
                 for (var obj in database) {
-                    if (database[obj]['attachment']['encryptedMessage']['data'] != null && database[obj]['senderRS'] == records_address) {
+                    if (database[obj]['attachment']['encryptedMessage'] && database[obj]['attachment']['encryptedMessage']['data'] != null && database[obj]['senderRS'] == records_address) {
                         if (scope.show_pending != undefined && scope.show_pending > 0) {
+                            
 
                             if (database[obj]['confirmations'] <= scope.show_pending) {
                                 pending_records.push(obj['transaction'])
