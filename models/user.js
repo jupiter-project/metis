@@ -123,6 +123,38 @@ class User extends Model {
         var generated_phrase = methods.generate_keywords();
         return bcrypt.hashSync(generated_phrase, bcrypt.genSaltSync(8), null);
     }
+
+    findById(){
+        var self= this;
+        return new Promise(function(resolve, reject) {
+            if(self.record && self.record.id== process.env.APP_ACCOUNT_ID){
+                self.record={
+                    id: process.env.APP_ACCOUNT_ID,
+                    account: process.env.APP_ACCOUNT_ADDRESS,
+                    email: process.env.APP_EMAIL,
+                    firstname: 'Admin',
+                    lastname: '',
+                    secret_key: null,
+                    twofa_enabled: false,
+                    twofa_completed: false,
+                    public_key: process.env.APP_PUBLIC_KEY,
+                    api_key: process.env.APP_API_KEY,
+                    admin: true
+                }
+                resolve(true);
+            }else{
+                self.last()
+                .then(res => {
+                    var record= res.record;
+                    self.record= record;
+                    resolve(true);
+                })
+                .catch(error=>{
+                    reject(error);
+                });
+            }
+        });
+    }
 }
 
 module.exports = User;

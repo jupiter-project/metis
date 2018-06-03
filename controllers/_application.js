@@ -243,18 +243,4 @@ module.exports = function(app, passport, React, ReactDOMServer) {
         res.send({ success: true, result: seedphrase, message: 'Passphrase generated' });
     });
 
-    app.get('/admin/api/:table', (req, res) => {
-
-        gravity.getAllVersions(req.params['table'])
-            .then(function(response) {
-                res.send({ success: true, data: response });
-                //var users = response.records;
-                //gravity.sort_by_date(users, 'user_record', 'date')
-                //res.send({ success: true, users: users, total_users_number: response.records_found });
-            })
-            .catch(function(error) {
-                console.log(error);
-                res.send({ success: false, errors: error });
-            });
-    })
 }

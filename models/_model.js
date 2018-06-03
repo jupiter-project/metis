@@ -493,6 +493,66 @@ class Model {
             }
         });
     }
+
+
+    findAll(){
+        var record_list=[]
+        var self= this;
+        var created_at;
+
+        return new Promise(function(resolve, reject) {
+
+            gravity.getAllRecords(self.table)
+            .then(function(response) {
+                const records= response.records;
+                const collection={};
+                const collection_list=[];
+
+                /**
+                 * {
+                    id: self.id,
+                    versions: record_list,
+                    date: created_at
+                }
+                 */
+                
+                for (var x in records){
+                    var this_record= records[x];
+
+                    if(collection[this_record.id]==undefined){
+                        var record_record= JSON.parse(this_record[self.model+'_record']);
+                        record_record.date= this_record.date;
+
+                        collection[this_record.id]={
+                            id: this_record.id,
+                            versions: [record_record]
+                        }
+                    }else{
+                        var record_record= JSON.parse(this_record[self.model+'_record']);
+                        record_record.date= this_record.date;
+
+                        this_record[self.model+'_record']=record_record;
+                        collection[this_record.id].versions.push(record_record);
+                    }
+                }
+
+                for (var key in collection){
+                    var data_object=collection[key];
+                    //This sorts dates in versions, assigns date to overall record and pushes it to final version of list
+                    gravity.sortByDate(data_object.versions);
+                    data_object.date=data_object.versions[data_object.versions.length-1].date;
+                    collection_list.push(data_object);
+                }
+                //This sorts final list by last update
+                gravity.sortByDate(collection_list);
+                resolve({ success: true, records: collection_list, params: self.model_params });
+            })
+            .catch(function(error) {
+                console.log(error);
+                reject({ success: false, errors: error });
+            });   
+        });
+    }
 }
 
 module.exports = Model;

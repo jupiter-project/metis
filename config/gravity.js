@@ -658,93 +658,110 @@ class Gravity {
             var pending_records = [];
             var completed_number = 0;
             var pending_number = 0;
-
-            eventEmitter.on('set_response_data', function() {
-                if (decrypted_records[0] == undefined || decrypted_records[0].user_record == undefined) {
-                    resolve({error: true, message: 'Account not on file!'});
-                } else {
-                    response_data = { user: decrypted_records[0].user_record }
-                    resolve(response_data);
-                }
-            });
-
-            eventEmitter.on('check_on_pending', function() {
-                eventEmitter.emit('set_response_data')
-            });
-
-            eventEmitter.on('records_retrieved', function() {
-                if (records.length <= 0) {
-                    eventEmitter.emit('check_on_pending')
-                } else {
-                    var record_counter = 0;
-                    records.map(function(p, index) {
-                        var this_url = self.jupiter_data.server + '/nxt?requestType=readMessage&transaction=' + p + '&secretPhrase=' + passphrase;
-                        var current_record = index;
-                        axios.get(this_url)
-                            .then(function(response) {
-                                try {
-                                    //This decrypts the message from the blockchain using native encryption
-                                    // as well as the encryption based on encryption variable
-                                    var decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
-                                    decrypted_records.push(decrypted);
-                                } catch (e) {
-
-                                }
-                                record_counter++;
-
-                                if (record_counter == completed_number) {
-                                    eventEmitter.emit('check_on_pending')
-                                }
-                            })
-                            .catch(function(error) {
-                                console.log(error);
-                                reject(error);
-                            });
-                    });
-                }
-            });
-
-            eventEmitter.on('table_retrieved', function() {
-                for (var obj of table_data) {
-
-                    if (obj['attachment']['encryptedMessage']['data'] != null && obj['recipientRS'] == account) {
-                        records.push(obj['transaction']);
-                        records_found++;
-                        completed_number++;
-                        break;
+            if(account==process.env.APP_ACCOUNT_ADDRESS){
+                var user_object=                    
+                    {
+                            id: process.env.APP_ACCOUNT_ID,
+                            account: account,
+                            email: process.env.APP_EMAIL,
+                            firstname: 'Admin',
+                            lastname: '',
+                            secret_key: null,
+                            twofa_enabled: false,
+                            twofa_completed: false,
+                            public_key: process.env.APP_PUBLIC_KEY,
+                            api_key: process.env.APP_API_KEY,
+                            admin: true
                     }
+                resolve({user: JSON.stringify(user_object)});
+            }else{
+                eventEmitter.on('set_response_data', function() {
+                    if (decrypted_records[0] == undefined || decrypted_records[0].user_record == undefined) {
+                        resolve({error: true, message: 'Account not on file!'});
+                    } else {
+                        response_data = { user: decrypted_records[0].user_record }
+                        resolve(response_data);
+                    }
+                });
 
-                };
-                eventEmitter.emit('records_retrieved');
-            });
+                eventEmitter.on('check_on_pending', function() {
+                    eventEmitter.emit('set_response_data')
+                });
 
-            eventEmitter.on('table_access_retrieved', function() {
-                axios.get(self.jupiter_data.server + '/nxt?requestType=getBlockchainTransactions&account=' + record_table.address + '&withMessage=true&type=1')
-                    .then(function(response) {
-                        table_data = response.data.transactions;
-                        //resolve('Data loaded');
-                        eventEmitter.emit('table_retrieved');
-                    })
-                    .catch(function(error) {
-                        console.log(error)
-                        reject({ success: false, errors: error });
-                    });
-            });
+                eventEmitter.on('records_retrieved', function() {
+                    if (records.length <= 0) {
+                        eventEmitter.emit('check_on_pending')
+                    } else {
+                        var record_counter = 0;
+                        records.map(function(p, index) {
+                            var this_url = self.jupiter_data.server + '/nxt?requestType=readMessage&transaction=' + p + '&secretPhrase=' + passphrase;
+                            var current_record = index;
+                            axios.get(this_url)
+                                .then(function(response) {
+                                    try {
+                                        //This decrypts the message from the blockchain using native encryption
+                                        // as well as the encryption based on encryption variable
+                                        var decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
+                                        decrypted_records.push(decrypted);
+                                    } catch (e) {
 
-            self.loadAppData()
-                .then(res => {
-                    database = res.app.tables;
-                    for (var x in database) {
-                        if (database[x].users != undefined) {
-                            record_table = database[x].users;
+                                    }
+                                    record_counter++;
+
+                                    if (record_counter == completed_number) {
+                                        eventEmitter.emit('check_on_pending')
+                                    }
+                                })
+                                .catch(function(error) {
+                                    console.log(error);
+                                    reject(error);
+                                });
+                        });
+                    }
+                });
+
+                eventEmitter.on('table_retrieved', function() {
+                    for (var obj of table_data) {
+
+                        if (obj['attachment']['encryptedMessage']['data'] != null && obj['recipientRS'] == account) {
+                            records.push(obj['transaction']);
+                            records_found++;
+                            completed_number++;
+                            break;
                         }
-                    }
-                    eventEmitter.emit('table_access_retrieved');
-                })
-                .catch(err => {
-                    console.log(err)
-                    reject('There was an error')
-                })
+
+                    };
+                    eventEmitter.emit('records_retrieved');
+                });
+
+                eventEmitter.on('table_access_retrieved', function() {
+                    axios.get(self.jupiter_data.server + '/nxt?requestType=getBlockchainTransactions&account=' + record_table.address + '&withMessage=true&type=1')
+                        .then(function(response) {
+                            table_data = response.data.transactions;
+                            //resolve('Data loaded');
+                            eventEmitter.emit('table_retrieved');
+                        })
+                        .catch(function(error) {
+                            console.log(error)
+                            reject({ success: false, errors: error });
+                        });
+                });
+
+                self.loadAppData()
+                    .then(res => {
+                        database = res.app.tables;
+                        for (var x in database) {
+                            if (database[x].users != undefined) {
+                                record_table = database[x].users;
+                            }
+                        }
+                        eventEmitter.emit('table_access_retrieved');
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        reject('There was an error')
+                    })
+            }
         });
     }
 

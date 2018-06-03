@@ -18,7 +18,7 @@ module.exports = function(passport) {
 
     //Used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        console.log('Deserializer being called');
+        //console.log('Deserializer being called');
         var user = new User({id: id});
 
         user.findById()
@@ -62,7 +62,6 @@ module.exports = function(passport) {
                         twofa_enabled: (params.twofa_enabled == 'true' ? true : false),
                         twofa_completed: false,
                         public_key: params.public_key
-
                     }
 
                     //We verify the user data here
@@ -186,7 +185,7 @@ module.exports = function(passport) {
                     if(response.error){
                         return done(null, false, req.flash('loginMessage', 'Account is not registered or has not been confirmed in the blockchain'));
                     }
-
+                    console.log(response);
                     var data = JSON.parse(response.user);
                     data.public_key = req.body['public_key'];
                     user = new User(data);
