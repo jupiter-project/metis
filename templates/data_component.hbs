@@ -402,7 +402,7 @@ class {{component_name}}Component extends React.Component {
                     {{/each}}
                     submitted: false
                 })
-                toastr.success('{{model_name}} record submitted to the blockchain.');
+                toastr.success('{{model_name}} record submitted to the blockchain. It might take a few minutes for record to be shown below.');
             }else{
                 //console.log(response.data);
                 //toastr.error(response.data.message);
@@ -496,7 +496,7 @@ class {{component_name}}Component extends React.Component {
                             {{#each attributes}}
                             <th>{{@key}}</th>
                             {{/each}}
-                            <th>Created On</th>
+                            <th>Created on</th>
                             <th></th>
                         </tr>
                     </thead>

@@ -833,7 +833,7 @@ class Gravity {
 
                         }else{
                             if (process.env.PRODUCTION == undefined || process.env.PRODUCTION != 'True') {
-                                console.log('Balance: '+(parseFloat(response.data.balanceNQT)/(10**self.jupiter_data.moneyDecimals))+' JUP');
+                                console.log('Balance: '+(parseFloat(response.data.balanceNQT)/(10**self.jupiter_data.moneyDecimals))+' JUP.');
                                 
                             }
                             var minimumAppBalance=false;
@@ -1204,7 +1204,7 @@ class Gravity {
                 if(response.minimumTableBalance==true){
                     eventEmitter.emit('verified_balance');
                 }else{
-                    console.log('Error in creating new table: Insufficient app balance.');
+                    console.log('Error in creating new table: insufficient table balance.');
                     console.log('A minimum of '+parseInt((self.jupiter_data.minimumTableBalance)/(10**self.jupiter_data.moneyDecimals)) +' JUP is required to create a table with Gravity');
                     eventEmitter.emit('insufficient_balance');
                 }
@@ -1235,18 +1235,18 @@ class Gravity {
             appname = answer;
             rl.question('Please provide an encryption password for your Jupiter data:\n', (answer) => {
                 password = answer;
-                rl.question('What is the url/ip address of your Jupiter server?\n', (answer) => {
+                rl.question('What is the IP address/URL of your Jupiter server?\n', (answer) => {
                     server = answer;
 
                     var current_data = {
                         "Name of the app": appname,
                         "Password  for encryption": password,
-                        "Server URL": server
+                        "Jupiter Server": server
                     }
                     console.log("Please verify the data you entered:");
                     console.log(current_data);
                     console.log('');
-                    rl.question("You are about to create a Jupiter account which will hold your Gravity app's data. Is the information provided above accurate? Is so, press ENTER", (answer) => {
+                    rl.question("You are about to create a Jupiter account which will hold your Gravity app's data. Is the information provided above accurate? Is so, press ENTER. If not, press CTRL+C to cancel and rerun command.\n", (answer) => {
                         passphrase = methods.generate_passphrase();
 
                         axios.get(server + '/nxt?requestType=getAccountId&secretPhrase=' + passphrase)

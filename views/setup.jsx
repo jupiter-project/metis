@@ -13,7 +13,7 @@ class SetupPage extends React.Component {
         return(
             <ApplicationLayout data={this.props}>
                 <div className="text-center">
-                    <h1 className="text-center">2FA Authentication</h1>
+                    <h1 className="text-center">Two-factor authentication</h1>
                     <hr />
                     <div id="2fa-setup-area">
 

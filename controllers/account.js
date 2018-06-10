@@ -107,28 +107,30 @@ module.exports = function(app, passport, React, ReactDOMServer) {
     // UPDATE User's api key
     //===============================================================================
     app.post('/update_api_key', (req, res) => {
-        var mongoose = require('mongoose');
-        const User = require("../models/user");
+        var data = req.user.record;
+        data.public_key = req.session.public_key;
 
-        User.findById(req.body.id, (err, user) => {
-            if (err) {
+        var User = require('../models/user');
+        var user = new User(data);
+        //res.send({ success: false, message: 'Information entered did not passed validation' });
+        console.log(req.body);
+        console.log(user.record);
+        if (user.record.api_key == req.body.api_key) {
+            user.record.api_key = user.generateKey();
+            console.log(user.record.api_key);
+
+            user.update()
+            .then(response => {
+                res.send({ success: true, status: 'success', message: 'Api key updated', api_key: user.record.api_key });
+            })
+            .catch(err => {
                 console.log(err);
-                res.send({ success: false, status: 'error', error: err })
-            } else {
-                if (user.api.generated_key == req.body.api_key) {
-                    user.api.generated_key = user.generateKey();
-                    user.save((err, user) => {
-                        if (err) {
-                            console.log(err);
-                            res.send({ success: false, status: 'error', error: err })
-                        }
-                        res.send({ success: true, status: 'success', api_key: user.api.generated_key });
-                    });
-                } else {
-                    res.send({ success: false, status: 'error', error: 'Api key provided in request is incorrect' })
-                }
-            }
-        });
+                res.send({success: false, message: 'There was an error updating api key'});
+            })
+            
+        } else {
+            res.send({ success: false, status: 'error', error: 'Api key provided in request is incorrect' })
+        }
     });
 
     //=======================================================
@@ -166,7 +168,7 @@ module.exports = function(app, passport, React, ReactDOMServer) {
 
         var check_code = ReactDOMServer.renderToString(
             React.createElement(VerificationPage, {
-                name: 'Gravity - Two Factor Verification',
+                name: 'Gravity - Two-factor authentication',
                 user: req.user,
                 messages: messages,
                 dashboard: true
@@ -282,14 +284,14 @@ module.exports = function(app, passport, React, ReactDOMServer) {
         var user = new User(data);
         //console.log(user)
         if (twofa_enabled) {
-            req.flash('loginMessage', 'Begining 2FA authentication')
+            req.flash('loginMessage', 'Begining 2FA')
             req.session.twofa_enabled = true;
             req.session.twofa_completed = false;
             user.record.twofa_enabled = true;
             user.record.twofa_completed= false;
         } else {
             req.session.twofa_enabled = false;
-            req.flash('loginMessage', '2FA authentication disabled. It might take a few minutes for the change to be confirmed in the blockchain')
+            req.flash('loginMessage', '2FA disable update sent to the blockchain. It might take a few minutes for the change to be confirmed.')
             user.record.twofa_enabled = false;
             user.record.twofa_completed= false;
             user.record.secret_key=null;

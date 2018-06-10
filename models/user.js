@@ -120,8 +120,10 @@ class User extends Model {
         return bcrypt.compareSync(accounthash, this.record.accounthash);
     }
     generateKey() {
-        var generated_phrase = methods.generate_keywords();
-        return bcrypt.hashSync(generated_phrase, bcrypt.genSaltSync(8), null);
+        const generated_phrase = methods.generate_keywords();
+        const unfiltered_key= bcrypt.hashSync(generated_phrase, bcrypt.genSaltSync(8), null);
+
+        return unfiltered_key;
     }
 
     findById(){

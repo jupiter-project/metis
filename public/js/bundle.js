@@ -11632,11 +11632,6 @@ var TwoFAForm = function (_React$Component) {
                     { className: 'panel panel-primary' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'panel-heading text-center lead' },
-                        'Two-factor authentication'
-                    ),
-                    _react2.default.createElement(
-                        'div',
                         { className: 'form-group' },
                         _react2.default.createElement(
                             'div',
@@ -11644,12 +11639,12 @@ var TwoFAForm = function (_React$Component) {
                             _react2.default.createElement(
                                 'p',
                                 null,
-                                'You have indicated you would like to signup for two-factor authentication. If you would like to proceed, please click on the button below.'
+                                'You have indicated you would like to add an extra layer of security to your account via two-factor authentication. If you would like to proceed, please click on the button below.'
                             ),
                             _react2.default.createElement(
                                 'p',
                                 null,
-                                'Once you set up two-factor authentication, you will need to provide a verification code everytime you wish to login or perform account actions.'
+                                'Once you have enabled two-factor authentication, you will need to provide a verification code every time you wish to login.'
                             ),
                             _react2.default.createElement('br', null),
                             _react2.default.createElement(
@@ -11700,13 +11695,13 @@ var TwoFAForm = function (_React$Component) {
                 _react2.default.createElement(
                     'p',
                     null,
-                    'Scan the authentication QR-code below with Google Authenticator and enter the received code to complete the two-factor authentication setup.'
+                    'Scan the QR-code below with Google Authenticator.'
                 ),
                 _react2.default.createElement('img', { src: this.state.qrcode_url, className: 'qr-code-image' }),
                 _react2.default.createElement(
                     'div',
                     { className: 'container-fluid text-center' },
-                    'Once you have scanned the barcode, enter the authetization code below to complete the two Factor authentication setup',
+                    'Once you have scanned the QR-code, enter the 6-digit authentication code in the field below and click on the \u201CVerify code\u201D button.',
                     verification_form
                 )
             );
@@ -27308,6 +27303,11 @@ var TwoFAVerificationForm = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'offset-xs-0 col-xs-12 offset-sm-4 col-sm-4' },
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            'Please put in your 6-digit authentication code.'
+                        ),
                         _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.verification_code, onChange: this.handleUpdate.bind(this) }),
                         _react2.default.createElement('br', null),
                         _react2.default.createElement('br', null),
@@ -28826,7 +28826,7 @@ var SettingsOptions = function (_React$Component) {
                                     _react2.default.createElement(
                                         'h3',
                                         { className: 'card-header bg-dark text-light' },
-                                        'Authentication'
+                                        'Two-factor authentication'
                                     ),
                                     _react2.default.createElement(
                                         'div',
@@ -28891,7 +28891,7 @@ var SettingsOptions = function (_React$Component) {
                                         _react2.default.createElement(
                                             'p',
                                             null,
-                                            'Use the below API Key if using an external application or bot to record into the blockchain through your account'
+                                            'Use the API key below if you\u2019re using an external application or bot to record info into the blockchain through your account.'
                                         ),
                                         _react2.default.createElement(
                                             'div',

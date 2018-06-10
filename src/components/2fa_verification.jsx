@@ -55,6 +55,7 @@ class TwoFAVerificationForm extends React.Component {
             <form>
                 <div className="row r-2">
                     <div className="offset-xs-0 col-xs-12 offset-sm-4 col-sm-4">
+                        <p>Please put in your 6-digit authentication code.</p>
                         <input type="text" className="form-control" value={this.state.verification_code} onChange={this.handleUpdate.bind(this)} /><br />
                         <br />
                         <button type="submit" className="btn btn-primary" onClick={this.verifyCode.bind(this)}>Verify code</button>

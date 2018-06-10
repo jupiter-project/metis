@@ -203,7 +203,7 @@ module.exports = function(plop) {
             {
                 type: 'input',
                 name: 'attributes',
-                message: "What are your model's attributes?"
+                message: "What are your model's attributes? See Jupiter documentation for proper format."
             },
             {
                 type: 'input',
@@ -213,12 +213,12 @@ module.exports = function(plop) {
             {
                 type: 'input',
                 name: 'multiple_records',
-                message: "Will you use your model to record multiple records? ('y' or 'n')"
+                message: "Will you use your model to record multiple records? ('y' or 'n')."
             },
             {
                 type: 'input',
                 name: 'dashboard',
-                message: "Will you upload a dashboard in this model's view? ('y' or 'n')"
+                message: "Will you upload a dashboard in this model's view? ('y' or 'n')."
             }
         ],
         actions: function(data) {

@@ -98,7 +98,7 @@ class SettingsOptions extends React.Component {
                         <div className="">
                             <div className="text-center">
                                 <div className="card rounded">
-                                    <h3 className="card-header bg-dark text-light">Authentication</h3>
+                                    <h3 className="card-header bg-dark text-light">Two-factor authentication</h3>
                                     <div className="card-body col-md-8 mx-auto">
                                         {
                                             this.props.user.record.twofa_enabled==true && 
@@ -136,7 +136,7 @@ class SettingsOptions extends React.Component {
                                 <div className="card rounded my-4">
                                     <h3 className="card-header bg-dark text-light">API Key</h3>
                                     <div className="card-body col-md-8 p-3 mx-auto">
-                                        <p>Use the below API Key if using an external application or bot to record into the blockchain through your account</p>
+                                        <p>Use the API key below if you’re using an external application or bot to record info into the blockchain through your account.</p>
                                         <div className="text-center">
                                             <p className="alert alert-info auth-hash">{this.state.api_key}</p>
                                         </div>

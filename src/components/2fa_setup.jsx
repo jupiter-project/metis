@@ -85,17 +85,13 @@ class TwoFAForm extends React.Component {
         var registration_form=
         <div>
             <div className="panel panel-primary">
-              <div className="panel-heading text-center lead">
-                Two-factor authentication
-              </div>
-
               <div className="form-group">
                   <div className="">
-                    <p>You have indicated you would like to signup for two-factor authentication. If you would like to proceed,
+                    <p>You have indicated you would like to add an extra layer of security to your account via two-factor authentication. If you would like to proceed,
                         please click on the button below.
                     </p>
-                    <p>Once you set up two-factor authentication, you will need to provide a
-                        verification code everytime you wish to login or perform account actions.
+                    <p>
+                        Once you have enabled two-factor authentication, you will need to provide a verification code every time you wish to login.
                     </p>
 
                     <br />
@@ -125,10 +121,10 @@ class TwoFAForm extends React.Component {
 
         var qrcode_to_scan=
             <div className="text-center">
-                <p>Scan the authentication QR-code below with Google Authenticator and enter the received code to complete the two-factor authentication setup.</p>
+                <p>Scan the QR-code below with Google Authenticator.</p>
                 <img src={this.state.qrcode_url} className="qr-code-image" />
-                <div className="container-fluid text-center">Once you have scanned the barcode, enter the authetization code below to complete the two Factor
-                    authentication setup
+                <div className="container-fluid text-center">
+                    Once you have scanned the QR-code, enter the 6-digit authentication code in the field below and click on the “Verify code” button.
                     {verification_form}
                 </div>
             </div>
