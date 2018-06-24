@@ -1,3 +1,3 @@
 module.exports = {
-    'url': 'mongodb://localhost/sigvest_tracker'
-}
+  url: 'mongodb://localhost/sigvest_tracker',
+};

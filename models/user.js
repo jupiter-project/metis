@@ -141,7 +141,8 @@ class User extends Model {
                     twofa_completed: false,
                     public_key: process.env.APP_PUBLIC_KEY,
                     api_key: process.env.APP_API_KEY,
-                    admin: true
+                    admin: true,
+                    secret: process.env.APP_ACCOUNT,
                 }
                 resolve(true);
             }else{

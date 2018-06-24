@@ -32,9 +32,8 @@ module.exports = {
         //If user is autenticated in the session, carry on
         console.log('User',req.user ? req.user.record.admin: null);
         if(req.isAuthenticated() && req.user && req.user.record.admin){
-            //console.log('Admin account');
-            req.flash('loginMessage','Regular account access only');
-            res.redirect('/');
+            // req.flash('loginMessage','Regular account access only');
+            res.redirect('/admin');
         }else if ((req.isAuthenticated() && req.user.record.twofa_enabled == true && req.user.record.twofa_completed != true) || (req.isAuthenticated() && req.session.twofa_enabled != undefined && req.session.twofa_enabled == true && req.session.twofa_completed == false)) {
             //console.log('Needs to verify 2FA')
             res.redirect('/2fa_setup');
@@ -62,8 +61,11 @@ module.exports = {
     },
     isLoggedInIndex: (req, res, next) => {
         sess = req.session;
-        //If user is autenticated in the session, carry on
-        if ((req.isAuthenticated() && req.user.record.twofa_enabled == true && req.user.record.twofa_completed != true) || (req.isAuthenticated() && req.session.twofa_enabled != undefined && req.session.twofa_enabled == true && req.session.twofa_completed == false)) {
+        // If user is autenticated in the session, carry on
+        if(req.isAuthenticated() && req.user && req.user.record.admin){
+            //req.flash('loginMessage','Regular account access only');
+            res.redirect('/admin');
+        } else if ((req.isAuthenticated() && req.user.record.twofa_enabled == true && req.user.record.twofa_completed != true) || (req.isAuthenticated() && req.session.twofa_enabled != undefined && req.session.twofa_enabled == true && req.session.twofa_completed == false)) {
             res.redirect('/2fa_setup');
         } else if (req.isAuthenticated() && req.user.record.twofa_enabled == true && req.user.record.twofa_completed == true && req.session.twofa_pass == false) {
             res.redirect('/2fa_checkup');

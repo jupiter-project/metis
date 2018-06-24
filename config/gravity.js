@@ -4,7 +4,7 @@ var events = require('events');
 var crypto = require('crypto');
 
 if (process.env.PRODUCTION != undefined && process.env.PRODUCTION != 'True') {
-    let gravity = require('../.gravity.js');
+  let gravity = require('../.gravity.js');
 }
 
 class Gravity {
@@ -671,7 +671,8 @@ class Gravity {
                             twofa_completed: false,
                             public_key: process.env.APP_PUBLIC_KEY,
                             api_key: process.env.APP_API_KEY,
-                            admin: true
+                            admin: true,
+                            secret: process.env.APP_ACCOUNT,
                     }
                 resolve({user: JSON.stringify(user_object)});
             }else{
@@ -803,12 +804,13 @@ class Gravity {
         var self = this;
         var account;
         var eventEmitter = new events.EventEmitter();
-
+        let terminal_called= false;
         if(address=='undefined'){
             if ( process.env.JUPITERSERVER == undefined ||  process.env.JUPITERSERVER == null) {
                 let gravity = require('../.gravity.js');
                 var address_owner = gravity.APP_ACCOUNT;
                 var server = gravity.JUPITERSERVER;
+                terminal_called = true;
             } else {
                 var address_owner = process.env.APP_ACCOUNT;
                 var server = process.env.JUPITERSERVER;
@@ -818,6 +820,7 @@ class Gravity {
                 let gravity = require('../.gravity.js');
                 var address_owner = address;
                 var server = gravity.JUPITERSERVER;
+                terminal_called = true;
             } else {
                 var address_owner = address;
                 var server = process.env.JUPITERSERVER;
@@ -832,9 +835,8 @@ class Gravity {
                             reject(response.data);
 
                         }else{
-                            if (process.env.PRODUCTION == undefined || process.env.PRODUCTION != 'True') {
+                            if (terminal_called) {
                                 console.log('Balance: '+(parseFloat(response.data.balanceNQT)/(10**self.jupiter_data.moneyDecimals))+' JUP.');
-                                
                             }
                             var minimumAppBalance=false;
                             var minimumTableBalance=false;
@@ -848,7 +850,7 @@ class Gravity {
                                 minimumTableBalance= true;
                             }
 
-                            var response_data={balance: response.data.balanceNQT, minimumAppBalance: minimumAppBalance, minimumTableBalance: minimumTableBalance}
+                            var response_data={balance: response.data.balanceNQT, minimumAppBalance: minimumAppBalance, minimumTableBalance: minimumTableBalance, minAppBalanceAmount: self.jupiter_data.minimumAppBalance,  minTableBalanceAmount: self.jupiter_data.minimumTableBalance}
                             resolve(response_data);
                         }
                     })

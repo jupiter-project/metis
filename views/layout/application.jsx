@@ -161,14 +161,14 @@ export default class ApplicationLayout extends React.Component {
                     <meta charSet="utf-8" />
                     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+                    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
                     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
                     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
-                    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-                    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
-                    <link href="css/sb-admin.css" rel="stylesheet" />
+                    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+                    <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+                    <link href="/css/sb-admin.css" rel="stylesheet" />
                 </head>
                 <body className="sticky-footer bg-dark fixed-nav" id="page-top">
                     <span id="toastrMessages"></span>
@@ -214,16 +214,16 @@ export default class ApplicationLayout extends React.Component {
                       </div>
                     </div>
 
-                    <script src="vendor/jquery/jquery.min.js"></script>
-                    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-                    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-                    <script src="vendor/chart.js/Chart.min.js"></script>
-                    <script src="vendor/datatables/jquery.dataTables.js"></script>
-                    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-                    <script src="js/sb-admin.min.js"></script>
-                    <script src="js/sb-admin-datatables.min.js"></script>
-                    <script src="js/sb-admin-charts.min.js"></script>
-                    <script src="js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
+                    <script src="/vendor/jquery/jquery.min.js"></script>
+                    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+                    <script src="/vendor/chart.js/Chart.min.js"></script>
+                    <script src="/vendor/datatables/jquery.dataTables.js"></script>
+                    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+                    <script src="/js/sb-admin.min.js"></script>
+                    <script src="/js/sb-admin-datatables.min.js"></script>
+                    <script src="/js/sb-admin-charts.min.js"></script>
+                    <script src="/js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
                 </body>
             </html>
         )
