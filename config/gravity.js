@@ -1264,7 +1264,8 @@ class Gravity {
                                         APP_ACCOUNT_ADDRESS: address,
                                         APP_PUBLIC_KEY: public_key,
                                         ENCRYPT_ALGORITHM: "aes-128-cbc",
-                                        ENCRYPT_PASSWORD: password
+                                        ENCRYPT_PASSWORD: password,
+                                        APP_ACCOUNT_ID: public_key
                                     }
                                     var env_variables_in_string = '';
                                     var env_variables = configuration;
