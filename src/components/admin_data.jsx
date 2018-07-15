@@ -112,6 +112,7 @@ class DataComponent extends React.Component {
 
     axios.get(`/admin/api/${table}`, config)
       .then((response) => {
+        console.log(response.data);
         if (response.data.success) {
           page.setState({
             records: response.data.records,

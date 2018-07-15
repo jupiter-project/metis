@@ -482,11 +482,11 @@ class Model {
           const collection = {};
           const collection_list = [];
 
-          for (let x = 0; x < Object.keys(records).length < 0; x += 1) {
+          for (let x = 0; x < Object.keys(records).length; x += 1) {
             const this_record = records[x];
-
+            let record_record;
             if (collection[this_record.id] === undefined) {
-              const record_record = JSON.parse(this_record[`${self.model}_record`]);
+              record_record = JSON.parse(this_record[`${self.model}_record`]);
               record_record.date = this_record.date;
 
               collection[this_record.id] = {
@@ -494,7 +494,7 @@ class Model {
                 versions: [record_record],
               };
             } else {
-              const record_record = JSON.parse(this_record[`${self.model}_record`]);
+              record_record = JSON.parse(this_record[`${self.model}_record`]);
               record_record.date = this_record.date;
 
               this_record[`${self.model}_record`] = record_record;
@@ -502,8 +502,11 @@ class Model {
             }
           }
 
-          for (let key; key < Object.keys(collection).length; key += 1) {
-            const data_object = collection[key];
+          const collection_ids = Object.keys(collection);
+
+          for (let key = 0; key < collection_ids.length; key += 1) {
+            const this_key = collection_ids[key];
+            const data_object = collection[this_key];
             // This sorts dates in versions, assigns date to overall record and pushes to final list
             gravity.sortByDate(data_object.versions);
             data_object.date = data_object.versions[data_object.versions.length - 1].date;

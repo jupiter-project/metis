@@ -28306,6 +28306,7 @@ var DataComponent = function (_React$Component3) {
       });
 
       _axios2.default.get('/admin/api/' + table, config).then(function (response) {
+        console.log(response.data);
         if (response.data.success) {
           page.setState({
             records: response.data.records,
