@@ -82,46 +82,44 @@ class TableComponent extends React.Component {
     const data = table[state.name];
     return (
         <div className="">
-          
-
-              <div className="card">
-                <div className="card-header" id={"heading" + this.state.name}>
-                  <div className="row mb-0">
-                    <div className="col-3">
-                      <h6>{this.state.name}</h6>
-                    </div>
-                    <div className="col-3 col-xs-12">
-                      <h6>{this.state.balance}</h6>
-                    </div>
-                    <div className="col-3 col-xs-12">
-                      <h6 className="text-danger">Low Balance</h6>
-                    </div>
-                    <div className="col-3 col-xs-12 text-right">
-                      <button className="btn btn-info" type="button" data-toggle="collapse" data-target={"#collapse" + this.state.name} aria-controls={"collapse" + this.state.name}>
-                        + more details
-                      </button>
-                    </div>
-                  </div>
+          <div className="card">
+            <div className="card-header" id={"heading" + this.state.name}>
+              <div className="row mb-0">
+                <div className="col-3">
+                  <h6>{this.state.name}</h6>
                 </div>
-
-                <div id={"collapse" + this.state.name} className="collapse" aria-labelledby={"heading" + this.state.name} data-parent="#accordionExample">
-                  <div className="card-body">
-                    <div className="">
-                        <p><strong>Address:</strong> {data.address}</p>
-                        <p><strong>Passphrase:</strong> {state.show_passphrase
-                          ? <span>{data.passphrase} <button className="btn btn-danger" onClick={this.showPassphrase.bind(this)}>Hide</button></span>
-                          : <button className="btn btn-default" onClick={this.showPassphrase.bind(this)}>Show passphrase</button>
-                        }</p>
-                        <p><strong>Public Key:</strong> {data.public_key}</p>
-                        <p><strong>Current balance: </strong>
-                          <span className={state.low_balance ? 'alert alert-warning' : 'alert alert-info'}>
-                            {state.balance / (10 ** 8)} JUP
-                          </span>
-                        </p>
-                    </div>
-                  </div>
+                <div className="col-3 col-xs-12">
+                  <h6>{this.state.balance}</h6>
+                </div>
+                <div className="col-3 col-xs-12">
+                  <h6 className="text-danger">Low Balance</h6>
+                </div>
+                <div className="col-3 col-xs-12 text-right">
+                  <button className="btn btn-info" type="button" data-toggle="collapse" data-target={"#collapse" + this.state.name} aria-controls={"collapse" + this.state.name}>
+                    + more details
+                  </button>
                 </div>
               </div>
+            </div>
+
+            <div id={"collapse" + this.state.name} className="collapse" aria-labelledby={"heading" + this.state.name} data-parent="#accordionExample">
+              <div className="card-body">
+                <div className="">
+                    <p><strong>Address:</strong> {data.address}</p>
+                    <p><strong>Passphrase:</strong> {state.show_passphrase
+                      ? <span>{data.passphrase} <button className="btn btn-danger" onClick={this.showPassphrase.bind(this)}>Hide</button></span>
+                      : <button className="btn btn-default" onClick={this.showPassphrase.bind(this)}>Show passphrase</button>
+                    }</p>
+                    <p><strong>Public Key:</strong> {data.public_key}</p>
+                    <p><strong>Current balance: </strong>
+                      <span className={state.low_balance ? 'alert alert-warning' : 'alert alert-info'}>
+                        {state.balance / (10 ** 8)} JUP
+                      </span>
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     );
   }
@@ -245,35 +243,40 @@ class AdminComponent extends React.Component {
 
     return (
         <div className="">
-              <div className="row">
-                <div className="col-12">
-                  <h2 className="text-center my-4">App Summary</h2>
-                  <hr />
-                </div>
-                <div className="col-12 col-md-6">
-                  <h4>App Address:</h4>
-                  <span className="bg-warning rounded h4 p-1">{props.user.record.account}</span>
-                </div>
-                <div className="col-12 col-md-6 text-right">
-                  <p>
-                    <strong>Current balance: </strong>
-                    {state.balances && state.balances.balance
-                      ? (state.balances.balance / (10 ** 8)) : 0} JUP<br />
-                    <strong>Required app balance: </strong>
-                    {state.balances && state.balances.minAppBalanceAmount
-                      ? (state.balances.minAppBalanceAmount / (10 ** 8)) : 0} JUP<br />
-                    <strong>Required Table balance: </strong>
-                    {state.balances && state.balances.minTableBalanceAmount
-                      ? (state.balances.minTableBalanceAmount / (10 ** 8)) : 0} JUP
-                  </p>
-                </div>
-              </div>
-                
-            <hr />
+          <div className="card p-4 my-3">
             <div className="row">
-              <div className="col-12 col-md-12 col-xs-12">
-                <div className="card p-4">
-                  <h3 className="text-center my-4">Current App Tables</h3>
+              <div className="col-12">
+                <h2 className="text-center my-4">App Summary</h2>
+              </div>
+              <div className="col-12 col-md-6 my-4">
+                <h4>App Address:</h4>
+                <span className="bg-warning rounded h4 p-1">{props.user.record.account}</span>
+              </div>
+              <div className="col-12 col-md-6 text-right my-auto">
+                <p>
+                  <strong>Current balance: </strong>
+                  {state.balances && state.balances.balance
+                    ? (state.balances.balance / (10 ** 8)) : 0} JUP<br />
+                  <strong>Required app balance: </strong>
+                  {state.balances && state.balances.minAppBalanceAmount
+                    ? (state.balances.minAppBalanceAmount / (10 ** 8)) : 0} JUP
+                </p>
+              </div>
+            </div>
+          </div>
+              
+          <div className="row">
+            <div className="col-12 col-md-12 col-xs-12">
+              <div className="card mt-2 mb-5">
+                <div className="card-header">
+                    <h3>Current App Tables</h3>
+                    <h5>
+                      <strong>Required Table balance: </strong>
+                        {state.balances && state.balances.minTableBalanceAmount
+                          ? (state.balances.minTableBalanceAmount / (10 ** 8)) : 0} JUP
+                    </h5>
+                </div>
+                <div className="card-body">
                   <div className="row">
                     <div className="col-3 col-xs-12">
                       <h5>Name</h5>
@@ -295,6 +298,7 @@ class AdminComponent extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
         </div>
     );
   }
