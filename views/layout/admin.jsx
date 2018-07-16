@@ -56,18 +56,14 @@ export default class ApplicationLayout extends React.Component {
         var logged_header=
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <a className="navbar-brand" href="#"><img className="img" src="../img/sigwo-sheild2.png" height="48px" width="auto" /> Sigwo Technologies</a>
+            <a className="nav-link text-light" id="sidenavToggler">
+              <i className="fa fa-fw fa-angle-left"></i>
+            </a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarResponsive">
               {links_list}
-              <ul className="navbar-nav sidenav-toggler">
-                <li className="nav-item">
-                  <a className="nav-link text-center" id="sidenavToggler">
-                    <i className="fa fa-fw fa-angle-left"></i>
-                  </a>
-                </li>
-              </ul>
               <ul className="navbar-nav ml-auto">
               <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle mr-lg-2" id="profileDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -180,6 +176,7 @@ export default class ApplicationLayout extends React.Component {
                             <div className="content-wrapper" id="page-wrapper">
                               <div className="container">
                                 {this.props.children}
+                                <div className="background-image"></div>
                               </div>
                             </div>:
                             unlogged_wrapper

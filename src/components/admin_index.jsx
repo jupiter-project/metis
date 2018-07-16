@@ -39,6 +39,7 @@ class TableComponent extends React.Component {
       balance: 0,
       low_balance: true,
       show_passphrase: false,
+      expanded: false
     };
   }
 
@@ -49,6 +50,12 @@ class TableComponent extends React.Component {
   showPassphrase() {
     this.setState({
       show_passphrase: !this.state.show_passphrase,
+    });
+  }
+
+  expanded() {
+    this.setState({
+      expanded: !this.state.expanded,
     });
   }
 
@@ -83,7 +90,7 @@ class TableComponent extends React.Component {
     return (
         <div className="">
           <div className="card">
-            <div className="card-header" id={"heading" + this.state.name}>
+            <div className="card-header">
               <div className="row mb-0">
                 <div className="col-3">
                   <h6>{this.state.name}</h6>
@@ -95,14 +102,14 @@ class TableComponent extends React.Component {
                   <h6 className="text-danger">Low Balance</h6>
                 </div>
                 <div className="col-3 col-xs-12 text-right">
-                  <button className="btn btn-info" type="button" data-toggle="collapse" data-target={"#collapse" + this.state.name} aria-controls={"collapse" + this.state.name}>
-                    + more details
+                  <button onClick={this.expanded.bind(this)} className="btn btn-info" type="button" data-toggle="collapse" data-target={"#heading" + this.state.name} aria-expanded="false" aria-controls={"heading" + this.state.name}>
+                    {this.state.expanded ? ' - ' : ' + '} more details
                   </button>
                 </div>
               </div>
             </div>
 
-            <div id={"collapse" + this.state.name} className="collapse" aria-labelledby={"heading" + this.state.name} data-parent="#accordionExample">
+            <div id={"heading" + this.state.name} className="collapse">
               <div className="card-body">
                 <div className="">
                     <p><strong>Address:</strong> {data.address}</p>
@@ -266,7 +273,7 @@ class AdminComponent extends React.Component {
           </div>
               
           <div className="row">
-            <div className="col-12 col-md-12 col-xs-12">
+            <div className="col-12 col-md-10 mx-auto">
               <div className="card mt-2 mb-5">
                 <div className="card-header">
                     <h3>Current App Tables</h3>

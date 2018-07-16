@@ -31,13 +31,13 @@ class GravityPage extends React.Component{
             <ApplicationLayout data={this.props}>
               <div className="">
                 <div className="row">
-                  <div className="col-sm-12 col-md-12 col-lg-8 mx-auto">
-                    <h1 className="text-center mt-3 mb-5">Welcome to the Gravity Platform</h1>
-                    <div className="card rounded">
+                  <h1 className="mx-auto text-light my-5 py-3">Welcome to Gravity</h1>
+                  <div className="col-12 col-md-10 mx-auto card p-3">
+                    <div className="card p-0 rounded">
                       <div className="">
                         <ul className="nav nav-tabs nav-fill h5" id="myTab" role="tablist">
                           <li className="nav-item">
-                            <a className="nav-link text-primary active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Server Status</a>
+                            <a className="nav-link text-primary active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">App Status</a>
                           </li>
                           <li className="nav-item">
                             <a className="nav-link text-primary" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Getting Started</a>

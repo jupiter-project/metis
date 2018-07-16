@@ -7,12 +7,21 @@ html {
 
 body {
   overflow-x: hidden;
+  
+  
+}
+
+.background-image {
+  background-image:
+      linear-gradient(rgba(110, 110, 110, 0.85), rgba(60, 60, 60, 0.4)),
+      url("/img/bg.jpg");
 }
 
 body.sticky-footer {
   margin-bottom: $sticky-footer-height;
   .content-wrapper {
     min-height: calc(100vh - #{$sticky-footer-height} - #{$navbar-base-height});
+    color: black;
   }
 }
 
@@ -39,7 +48,7 @@ body.fixed-nav {
   text-align: center;
 
   color: white;
-  background: fade-out($gray-800, .5);
+  background: transparent;
 
   line-height: 45px;
   &:focus,
@@ -47,7 +56,7 @@ body.fixed-nav {
     color: white;
   }
   &:hover {
-    background: $gray-800;
+    background: transparent;
   }
   i {
     font-weight: 800;
