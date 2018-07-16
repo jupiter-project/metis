@@ -539,7 +539,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var _prodInvariant = __webpack_require__(3);
 
 var DOMProperty = __webpack_require__(17);
-var ReactDOMComponentFlags = __webpack_require__(66);
+var ReactDOMComponentFlags = __webpack_require__(67);
 
 var invariant = __webpack_require__(1);
 
@@ -761,12 +761,6 @@ module.exports = ExecutionEnvironment;
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(203);
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1149,6 +1143,12 @@ module.exports = ReactComponentTreeHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(203);
+
+/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1203,7 +1203,7 @@ module.exports = { debugTool: debugTool };
 "use strict";
 
 
-var bind = __webpack_require__(91);
+var bind = __webpack_require__(92);
 var isBuffer = __webpack_require__(204);
 
 /*global toString:true*/
@@ -1598,9 +1598,9 @@ module.exports = ReactCurrentOwner;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var CallbackQueue = __webpack_require__(70);
+var CallbackQueue = __webpack_require__(71);
 var PooledClass = __webpack_require__(19);
-var ReactFeatureFlags = __webpack_require__(71);
+var ReactFeatureFlags = __webpack_require__(72);
 var ReactReconciler = __webpack_require__(24);
 var Transaction = __webpack_require__(34);
 
@@ -2346,7 +2346,7 @@ var warning = __webpack_require__(2);
 var canDefineProperty = __webpack_require__(31);
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-var REACT_ELEMENT_TYPE = __webpack_require__(61);
+var REACT_ELEMENT_TYPE = __webpack_require__(62);
 
 var RESERVED_PROPS = {
   key: true,
@@ -2857,8 +2857,8 @@ exports.toSJIS = function toSJIS (kanji) {
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Version = __webpack_require__(97)
-var Regex = __webpack_require__(98)
+var Version = __webpack_require__(98)
+var Regex = __webpack_require__(99)
 
 /**
  * Numeric mode encodes data from the decimal digit set (0 - 9)
@@ -3043,7 +3043,7 @@ exports.from = function from (value, defaultValue) {
 
 var _assign = __webpack_require__(4);
 
-var ReactBaseClasses = __webpack_require__(59);
+var ReactBaseClasses = __webpack_require__(60);
 var ReactChildren = __webpack_require__(103);
 var ReactDOMFactories = __webpack_require__(107);
 var ReactElement = __webpack_require__(18);
@@ -3058,9 +3058,9 @@ var createFactory = ReactElement.createFactory;
 var cloneElement = ReactElement.cloneElement;
 
 if (process.env.NODE_ENV !== 'production') {
-  var lowPriorityWarning = __webpack_require__(39);
+  var lowPriorityWarning = __webpack_require__(40);
   var canDefineProperty = __webpack_require__(31);
-  var ReactElementValidator = __webpack_require__(63);
+  var ReactElementValidator = __webpack_require__(64);
   var didWarnPropTypesDeprecated = false;
   createElement = ReactElementValidator.createElement;
   createFactory = ReactElementValidator.createFactory;
@@ -3389,11 +3389,11 @@ module.exports = ReactReconciler;
 
 
 
-var DOMNamespaces = __webpack_require__(46);
+var DOMNamespaces = __webpack_require__(47);
 var setInnerHTML = __webpack_require__(36);
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
-var setTextContent = __webpack_require__(75);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(48);
+var setTextContent = __webpack_require__(76);
 
 var ELEMENT_NODE_TYPE = 1;
 var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
@@ -3509,7 +3509,7 @@ module.exports = DOMLazyTree;
 
 
 
-var isArray = __webpack_require__(57)
+var isArray = __webpack_require__(58)
 
 var K_MAX_LENGTH = 0x7fffffff
 
@@ -3974,10 +3974,10 @@ module.exports = Buffer
 
 
 var EventPluginHub = __webpack_require__(28);
-var EventPluginUtils = __webpack_require__(40);
+var EventPluginUtils = __webpack_require__(41);
 
-var accumulateInto = __webpack_require__(67);
-var forEachAccumulated = __webpack_require__(68);
+var accumulateInto = __webpack_require__(68);
+var forEachAccumulated = __webpack_require__(69);
 var warning = __webpack_require__(2);
 
 var getListener = EventPluginHub.getListener;
@@ -4114,11 +4114,11 @@ module.exports = EventPropagators;
 var _prodInvariant = __webpack_require__(3);
 
 var EventPluginRegistry = __webpack_require__(33);
-var EventPluginUtils = __webpack_require__(40);
-var ReactErrorUtils = __webpack_require__(41);
+var EventPluginUtils = __webpack_require__(41);
+var ReactErrorUtils = __webpack_require__(42);
 
-var accumulateInto = __webpack_require__(67);
-var forEachAccumulated = __webpack_require__(68);
+var accumulateInto = __webpack_require__(68);
+var forEachAccumulated = __webpack_require__(69);
 var invariant = __webpack_require__(1);
 
 /**
@@ -4391,7 +4391,7 @@ module.exports = EventPluginHub;
 
 var SyntheticEvent = __webpack_require__(16);
 
-var getEventTarget = __webpack_require__(42);
+var getEventTarget = __webpack_require__(43);
 
 /**
  * @interface UIEvent
@@ -5044,9 +5044,9 @@ module.exports = TransactionImpl;
 
 
 var SyntheticUIEvent = __webpack_require__(29);
-var ViewportMetrics = __webpack_require__(74);
+var ViewportMetrics = __webpack_require__(75);
 
-var getEventModifierState = __webpack_require__(44);
+var getEventModifierState = __webpack_require__(45);
 
 /**
  * @interface MouseEvent
@@ -5119,12 +5119,12 @@ module.exports = SyntheticMouseEvent;
 
 
 var ExecutionEnvironment = __webpack_require__(6);
-var DOMNamespaces = __webpack_require__(46);
+var DOMNamespaces = __webpack_require__(47);
 
 var WHITESPACE_TEST = /^[ \r\n\t\f]/;
 var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(48);
 
 // SVG temp container for IE lacking innerHTML
 var reusableSVGContainer;
@@ -5348,10 +5348,10 @@ var _assign = __webpack_require__(4);
 
 var EventPluginRegistry = __webpack_require__(33);
 var ReactEventEmitterMixin = __webpack_require__(152);
-var ViewportMetrics = __webpack_require__(74);
+var ViewportMetrics = __webpack_require__(75);
 
 var getVendorPrefixedEventName = __webpack_require__(153);
-var isEventSupported = __webpack_require__(43);
+var isEventSupported = __webpack_require__(44);
 
 /**
  * Summary of `ReactBrowserEventEmitter` event handling:
@@ -5660,6 +5660,483 @@ module.exports = ReactBrowserEventEmitter;
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+ * Toastr
+ * Copyright 2012-2015
+ * Authors: John Papa, Hans Fjällemark, and Tim Ferrell.
+ * All Rights Reserved.
+ * Use, reproduction, distribution, and modification of this code is subject to the terms and
+ * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
+ *
+ * ARIA Support: Greta Krafsig
+ *
+ * Project: https://github.com/CodeSeven/toastr
+ */
+/* global define */
+(function (define) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(221)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ($) {
+        return (function () {
+            var $container;
+            var listener;
+            var toastId = 0;
+            var toastType = {
+                error: 'error',
+                info: 'info',
+                success: 'success',
+                warning: 'warning'
+            };
+
+            var toastr = {
+                clear: clear,
+                remove: remove,
+                error: error,
+                getContainer: getContainer,
+                info: info,
+                options: {},
+                subscribe: subscribe,
+                success: success,
+                version: '2.1.4',
+                warning: warning
+            };
+
+            var previousToast;
+
+            return toastr;
+
+            ////////////////
+
+            function error(message, title, optionsOverride) {
+                return notify({
+                    type: toastType.error,
+                    iconClass: getOptions().iconClasses.error,
+                    message: message,
+                    optionsOverride: optionsOverride,
+                    title: title
+                });
+            }
+
+            function getContainer(options, create) {
+                if (!options) { options = getOptions(); }
+                $container = $('#' + options.containerId);
+                if ($container.length) {
+                    return $container;
+                }
+                if (create) {
+                    $container = createContainer(options);
+                }
+                return $container;
+            }
+
+            function info(message, title, optionsOverride) {
+                return notify({
+                    type: toastType.info,
+                    iconClass: getOptions().iconClasses.info,
+                    message: message,
+                    optionsOverride: optionsOverride,
+                    title: title
+                });
+            }
+
+            function subscribe(callback) {
+                listener = callback;
+            }
+
+            function success(message, title, optionsOverride) {
+                return notify({
+                    type: toastType.success,
+                    iconClass: getOptions().iconClasses.success,
+                    message: message,
+                    optionsOverride: optionsOverride,
+                    title: title
+                });
+            }
+
+            function warning(message, title, optionsOverride) {
+                return notify({
+                    type: toastType.warning,
+                    iconClass: getOptions().iconClasses.warning,
+                    message: message,
+                    optionsOverride: optionsOverride,
+                    title: title
+                });
+            }
+
+            function clear($toastElement, clearOptions) {
+                var options = getOptions();
+                if (!$container) { getContainer(options); }
+                if (!clearToast($toastElement, options, clearOptions)) {
+                    clearContainer(options);
+                }
+            }
+
+            function remove($toastElement) {
+                var options = getOptions();
+                if (!$container) { getContainer(options); }
+                if ($toastElement && $(':focus', $toastElement).length === 0) {
+                    removeToast($toastElement);
+                    return;
+                }
+                if ($container.children().length) {
+                    $container.remove();
+                }
+            }
+
+            // internal functions
+
+            function clearContainer (options) {
+                var toastsToClear = $container.children();
+                for (var i = toastsToClear.length - 1; i >= 0; i--) {
+                    clearToast($(toastsToClear[i]), options);
+                }
+            }
+
+            function clearToast ($toastElement, options, clearOptions) {
+                var force = clearOptions && clearOptions.force ? clearOptions.force : false;
+                if ($toastElement && (force || $(':focus', $toastElement).length === 0)) {
+                    $toastElement[options.hideMethod]({
+                        duration: options.hideDuration,
+                        easing: options.hideEasing,
+                        complete: function () { removeToast($toastElement); }
+                    });
+                    return true;
+                }
+                return false;
+            }
+
+            function createContainer(options) {
+                $container = $('<div/>')
+                    .attr('id', options.containerId)
+                    .addClass(options.positionClass);
+
+                $container.appendTo($(options.target));
+                return $container;
+            }
+
+            function getDefaults() {
+                return {
+                    tapToDismiss: true,
+                    toastClass: 'toast',
+                    containerId: 'toast-container',
+                    debug: false,
+
+                    showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
+                    showDuration: 300,
+                    showEasing: 'swing', //swing and linear are built into jQuery
+                    onShown: undefined,
+                    hideMethod: 'fadeOut',
+                    hideDuration: 1000,
+                    hideEasing: 'swing',
+                    onHidden: undefined,
+                    closeMethod: false,
+                    closeDuration: false,
+                    closeEasing: false,
+                    closeOnHover: true,
+
+                    extendedTimeOut: 1000,
+                    iconClasses: {
+                        error: 'toast-error',
+                        info: 'toast-info',
+                        success: 'toast-success',
+                        warning: 'toast-warning'
+                    },
+                    iconClass: 'toast-info',
+                    positionClass: 'toast-top-right',
+                    timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
+                    titleClass: 'toast-title',
+                    messageClass: 'toast-message',
+                    escapeHtml: false,
+                    target: 'body',
+                    closeHtml: '<button type="button">&times;</button>',
+                    closeClass: 'toast-close-button',
+                    newestOnTop: true,
+                    preventDuplicates: false,
+                    progressBar: false,
+                    progressClass: 'toast-progress',
+                    rtl: false
+                };
+            }
+
+            function publish(args) {
+                if (!listener) { return; }
+                listener(args);
+            }
+
+            function notify(map) {
+                var options = getOptions();
+                var iconClass = map.iconClass || options.iconClass;
+
+                if (typeof (map.optionsOverride) !== 'undefined') {
+                    options = $.extend(options, map.optionsOverride);
+                    iconClass = map.optionsOverride.iconClass || iconClass;
+                }
+
+                if (shouldExit(options, map)) { return; }
+
+                toastId++;
+
+                $container = getContainer(options, true);
+
+                var intervalId = null;
+                var $toastElement = $('<div/>');
+                var $titleElement = $('<div/>');
+                var $messageElement = $('<div/>');
+                var $progressElement = $('<div/>');
+                var $closeElement = $(options.closeHtml);
+                var progressBar = {
+                    intervalId: null,
+                    hideEta: null,
+                    maxHideTime: null
+                };
+                var response = {
+                    toastId: toastId,
+                    state: 'visible',
+                    startTime: new Date(),
+                    options: options,
+                    map: map
+                };
+
+                personalizeToast();
+
+                displayToast();
+
+                handleEvents();
+
+                publish(response);
+
+                if (options.debug && console) {
+                    console.log(response);
+                }
+
+                return $toastElement;
+
+                function escapeHtml(source) {
+                    if (source == null) {
+                        source = '';
+                    }
+
+                    return source
+                        .replace(/&/g, '&amp;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#39;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;');
+                }
+
+                function personalizeToast() {
+                    setIcon();
+                    setTitle();
+                    setMessage();
+                    setCloseButton();
+                    setProgressBar();
+                    setRTL();
+                    setSequence();
+                    setAria();
+                }
+
+                function setAria() {
+                    var ariaValue = '';
+                    switch (map.iconClass) {
+                        case 'toast-success':
+                        case 'toast-info':
+                            ariaValue =  'polite';
+                            break;
+                        default:
+                            ariaValue = 'assertive';
+                    }
+                    $toastElement.attr('aria-live', ariaValue);
+                }
+
+                function handleEvents() {
+                    if (options.closeOnHover) {
+                        $toastElement.hover(stickAround, delayedHideToast);
+                    }
+
+                    if (!options.onclick && options.tapToDismiss) {
+                        $toastElement.click(hideToast);
+                    }
+
+                    if (options.closeButton && $closeElement) {
+                        $closeElement.click(function (event) {
+                            if (event.stopPropagation) {
+                                event.stopPropagation();
+                            } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
+                                event.cancelBubble = true;
+                            }
+
+                            if (options.onCloseClick) {
+                                options.onCloseClick(event);
+                            }
+
+                            hideToast(true);
+                        });
+                    }
+
+                    if (options.onclick) {
+                        $toastElement.click(function (event) {
+                            options.onclick(event);
+                            hideToast();
+                        });
+                    }
+                }
+
+                function displayToast() {
+                    $toastElement.hide();
+
+                    $toastElement[options.showMethod](
+                        {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
+                    );
+
+                    if (options.timeOut > 0) {
+                        intervalId = setTimeout(hideToast, options.timeOut);
+                        progressBar.maxHideTime = parseFloat(options.timeOut);
+                        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+                        if (options.progressBar) {
+                            progressBar.intervalId = setInterval(updateProgress, 10);
+                        }
+                    }
+                }
+
+                function setIcon() {
+                    if (map.iconClass) {
+                        $toastElement.addClass(options.toastClass).addClass(iconClass);
+                    }
+                }
+
+                function setSequence() {
+                    if (options.newestOnTop) {
+                        $container.prepend($toastElement);
+                    } else {
+                        $container.append($toastElement);
+                    }
+                }
+
+                function setTitle() {
+                    if (map.title) {
+                        var suffix = map.title;
+                        if (options.escapeHtml) {
+                            suffix = escapeHtml(map.title);
+                        }
+                        $titleElement.append(suffix).addClass(options.titleClass);
+                        $toastElement.append($titleElement);
+                    }
+                }
+
+                function setMessage() {
+                    if (map.message) {
+                        var suffix = map.message;
+                        if (options.escapeHtml) {
+                            suffix = escapeHtml(map.message);
+                        }
+                        $messageElement.append(suffix).addClass(options.messageClass);
+                        $toastElement.append($messageElement);
+                    }
+                }
+
+                function setCloseButton() {
+                    if (options.closeButton) {
+                        $closeElement.addClass(options.closeClass).attr('role', 'button');
+                        $toastElement.prepend($closeElement);
+                    }
+                }
+
+                function setProgressBar() {
+                    if (options.progressBar) {
+                        $progressElement.addClass(options.progressClass);
+                        $toastElement.prepend($progressElement);
+                    }
+                }
+
+                function setRTL() {
+                    if (options.rtl) {
+                        $toastElement.addClass('rtl');
+                    }
+                }
+
+                function shouldExit(options, map) {
+                    if (options.preventDuplicates) {
+                        if (map.message === previousToast) {
+                            return true;
+                        } else {
+                            previousToast = map.message;
+                        }
+                    }
+                    return false;
+                }
+
+                function hideToast(override) {
+                    var method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
+                    var duration = override && options.closeDuration !== false ?
+                        options.closeDuration : options.hideDuration;
+                    var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
+                    if ($(':focus', $toastElement).length && !override) {
+                        return;
+                    }
+                    clearTimeout(progressBar.intervalId);
+                    return $toastElement[method]({
+                        duration: duration,
+                        easing: easing,
+                        complete: function () {
+                            removeToast($toastElement);
+                            clearTimeout(intervalId);
+                            if (options.onHidden && response.state !== 'hidden') {
+                                options.onHidden();
+                            }
+                            response.state = 'hidden';
+                            response.endTime = new Date();
+                            publish(response);
+                        }
+                    });
+                }
+
+                function delayedHideToast() {
+                    if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+                        intervalId = setTimeout(hideToast, options.extendedTimeOut);
+                        progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
+                        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+                    }
+                }
+
+                function stickAround() {
+                    clearTimeout(intervalId);
+                    progressBar.hideEta = 0;
+                    $toastElement.stop(true, true)[options.showMethod](
+                        {duration: options.showDuration, easing: options.showEasing}
+                    );
+                }
+
+                function updateProgress() {
+                    var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
+                    $progressElement.width(percentage + '%');
+                }
+            }
+
+            function getOptions() {
+                return $.extend({}, getDefaults(), toastr.options);
+            }
+
+            function removeToast($toastElement) {
+                if (!$container) { $container = getContainer(); }
+                if ($toastElement.is(':visible')) {
+                    return;
+                }
+                $toastElement.remove();
+                $toastElement = null;
+                if ($container.children().length === 0) {
+                    $container.remove();
+                    previousToast = undefined;
+                }
+            }
+
+        })();
+    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+}(__webpack_require__(222)));
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -5726,7 +6203,7 @@ module.exports = lowPriorityWarning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5742,7 +6219,7 @@ module.exports = lowPriorityWarning;
 
 var _prodInvariant = __webpack_require__(3);
 
-var ReactErrorUtils = __webpack_require__(41);
+var ReactErrorUtils = __webpack_require__(42);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -5956,7 +6433,7 @@ module.exports = EventPluginUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6038,7 +6515,7 @@ module.exports = ReactErrorUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6076,7 +6553,7 @@ function getEventTarget(nativeEvent) {
 module.exports = getEventTarget;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6139,7 +6616,7 @@ function isEventSupported(eventNameSuffix, capture) {
 module.exports = isEventSupported;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6185,7 +6662,7 @@ function getEventModifierState(nativeEvent) {
 module.exports = getEventModifierState;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6204,9 +6681,9 @@ var Danger = __webpack_require__(137);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactInstrumentation = __webpack_require__(11);
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(48);
 var setInnerHTML = __webpack_require__(36);
-var setTextContent = __webpack_require__(75);
+var setTextContent = __webpack_require__(76);
 
 function getNodeAfter(parentNode, node) {
   // Special case for text components, which return [open, close] comments
@@ -6415,7 +6892,7 @@ module.exports = DOMChildrenOperations;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6438,7 +6915,7 @@ var DOMNamespaces = {
 module.exports = DOMNamespaces;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6473,7 +6950,7 @@ var createMicrosoftUnsafeLocalFunction = function (func) {
 module.exports = createMicrosoftUnsafeLocalFunction;
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6489,8 +6966,8 @@ module.exports = createMicrosoftUnsafeLocalFunction;
 
 var _prodInvariant = __webpack_require__(3);
 
-var ReactPropTypesSecret = __webpack_require__(79);
-var propTypesFactory = __webpack_require__(64);
+var ReactPropTypesSecret = __webpack_require__(80);
+var propTypesFactory = __webpack_require__(65);
 
 var React = __webpack_require__(22);
 var PropTypes = propTypesFactory(React.isValidElement);
@@ -6615,7 +7092,7 @@ module.exports = LinkedValueUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6663,7 +7140,7 @@ module.exports = ReactComponentEnvironment;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6734,7 +7211,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6779,7 +7256,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 module.exports = shouldUpdateReactComponent;
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6841,7 +7318,7 @@ var KeyEscapeUtils = {
 module.exports = KeyEscapeUtils;
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7079,7 +7556,7 @@ module.exports = ReactUpdateQueue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7454,7 +7931,7 @@ module.exports = validateDOMNesting;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7507,7 +7984,7 @@ function getEventCharCode(nativeEvent) {
 module.exports = getEventCharCode;
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7530,10 +8007,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(92);
+    adapter = __webpack_require__(93);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(92);
+    adapter = __webpack_require__(93);
   }
   return adapter;
 }
@@ -7607,7 +8084,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -7618,7 +8095,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 exports.L = { bit: 1 }
@@ -7674,7 +8151,7 @@ exports.from = function from (value, defaultValue) {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7691,12 +8168,12 @@ exports.from = function from (value, defaultValue) {
 var _prodInvariant = __webpack_require__(23),
     _assign = __webpack_require__(4);
 
-var ReactNoopUpdateQueue = __webpack_require__(60);
+var ReactNoopUpdateQueue = __webpack_require__(61);
 
 var canDefineProperty = __webpack_require__(31);
 var emptyObject = __webpack_require__(32);
 var invariant = __webpack_require__(1);
-var lowPriorityWarning = __webpack_require__(39);
+var lowPriorityWarning = __webpack_require__(40);
 
 /**
  * Base class helpers for the updating state of a component.
@@ -7821,7 +8298,7 @@ module.exports = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7920,7 +8397,7 @@ module.exports = ReactNoopUpdateQueue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7943,7 +8420,7 @@ var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol
 module.exports = REACT_ELEMENT_TYPE;
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7987,7 +8464,7 @@ function getIteratorFn(maybeIterable) {
 module.exports = getIteratorFn;
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8009,15 +8486,15 @@ module.exports = getIteratorFn;
 
 
 var ReactCurrentOwner = __webpack_require__(14);
-var ReactComponentTreeHook = __webpack_require__(8);
+var ReactComponentTreeHook = __webpack_require__(7);
 var ReactElement = __webpack_require__(18);
 
 var checkReactTypeSpec = __webpack_require__(108);
 
 var canDefineProperty = __webpack_require__(31);
-var getIteratorFn = __webpack_require__(62);
+var getIteratorFn = __webpack_require__(63);
 var warning = __webpack_require__(2);
-var lowPriorityWarning = __webpack_require__(39);
+var lowPriorityWarning = __webpack_require__(40);
 
 function getDeclarationErrorAddendum() {
   if (ReactCurrentOwner.current) {
@@ -8246,7 +8723,7 @@ module.exports = ReactElementValidator;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8272,7 +8749,7 @@ module.exports = function(isValidElement) {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8291,7 +8768,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8312,7 +8789,7 @@ var ReactDOMComponentFlags = {
 module.exports = ReactDOMComponentFlags;
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8374,7 +8851,7 @@ module.exports = accumulateInto;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8408,7 +8885,7 @@ function forEachAccumulated(arr, cb, scope) {
 module.exports = forEachAccumulated;
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8444,7 +8921,7 @@ function getTextContentAccessor() {
 module.exports = getTextContentAccessor;
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8567,7 +9044,7 @@ module.exports = PooledClass.addPoolingTo(CallbackQueue);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8592,7 +9069,7 @@ var ReactFeatureFlags = {
 module.exports = ReactFeatureFlags;
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8718,7 +9195,7 @@ var inputValueTracking = {
 module.exports = inputValueTracking;
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8772,7 +9249,7 @@ function isTextInputElement(elem) {
 module.exports = isTextInputElement;
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8800,7 +9277,7 @@ var ViewportMetrics = {
 module.exports = ViewportMetrics;
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8855,7 +9332,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = setTextContent;
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8885,7 +9362,7 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9043,7 +9520,7 @@ var CSSProperty = {
 module.exports = CSSProperty;
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9282,7 +9759,7 @@ module.exports = DOMPropertyOperations;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9302,7 +9779,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9318,7 +9795,7 @@ module.exports = ReactPropTypesSecret;
 
 var _assign = __webpack_require__(4);
 
-var LinkedValueUtils = __webpack_require__(48);
+var LinkedValueUtils = __webpack_require__(49);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactUpdates = __webpack_require__(15);
 
@@ -9506,7 +9983,7 @@ module.exports = ReactDOMSelect;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9524,8 +10001,8 @@ var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
 var ReactCompositeComponent = __webpack_require__(159);
-var ReactEmptyComponent = __webpack_require__(83);
-var ReactHostComponent = __webpack_require__(84);
+var ReactEmptyComponent = __webpack_require__(84);
+var ReactHostComponent = __webpack_require__(85);
 
 var getNextDebugID = __webpack_require__(162);
 var invariant = __webpack_require__(1);
@@ -9639,7 +10116,7 @@ module.exports = instantiateReactComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9683,7 +10160,7 @@ module.exports = ReactNodeTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9716,7 +10193,7 @@ ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 module.exports = ReactEmptyComponent;
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9788,7 +10265,7 @@ module.exports = ReactHostComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9809,7 +10286,7 @@ var REACT_ELEMENT_TYPE = __webpack_require__(163);
 
 var getIteratorFn = __webpack_require__(164);
 var invariant = __webpack_require__(1);
-var KeyEscapeUtils = __webpack_require__(52);
+var KeyEscapeUtils = __webpack_require__(53);
 var warning = __webpack_require__(2);
 
 var SEPARATOR = '.';
@@ -9968,7 +10445,7 @@ module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10049,7 +10526,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10066,8 +10543,8 @@ module.exports = EventListener;
 var ReactDOMSelection = __webpack_require__(176);
 
 var containsNode = __webpack_require__(178);
-var focusNode = __webpack_require__(76);
-var getActiveElement = __webpack_require__(88);
+var focusNode = __webpack_require__(77);
+var getActiveElement = __webpack_require__(89);
 
 function isInDocument(node) {
   return containsNode(document.documentElement, node);
@@ -10175,7 +10652,7 @@ var ReactInputSelection = {
 module.exports = ReactInputSelection;
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10217,7 +10694,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10241,19 +10718,19 @@ var ReactCurrentOwner = __webpack_require__(14);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDOMContainerInfo = __webpack_require__(193);
 var ReactDOMFeatureFlags = __webpack_require__(194);
-var ReactFeatureFlags = __webpack_require__(71);
+var ReactFeatureFlags = __webpack_require__(72);
 var ReactInstanceMap = __webpack_require__(30);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactMarkupChecksum = __webpack_require__(195);
 var ReactReconciler = __webpack_require__(24);
-var ReactUpdateQueue = __webpack_require__(53);
+var ReactUpdateQueue = __webpack_require__(54);
 var ReactUpdates = __webpack_require__(15);
 
 var emptyObject = __webpack_require__(32);
-var instantiateReactComponent = __webpack_require__(81);
+var instantiateReactComponent = __webpack_require__(82);
 var invariant = __webpack_require__(1);
 var setInnerHTML = __webpack_require__(36);
-var shouldUpdateReactComponent = __webpack_require__(51);
+var shouldUpdateReactComponent = __webpack_require__(52);
 var warning = __webpack_require__(2);
 
 var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
@@ -10759,7 +11236,7 @@ module.exports = ReactMount;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10773,7 +11250,7 @@ module.exports = ReactMount;
 
 
 
-var ReactNodeTypes = __webpack_require__(82);
+var ReactNodeTypes = __webpack_require__(83);
 
 function getHostComponentFromComposite(inst) {
   var type;
@@ -10792,7 +11269,7 @@ function getHostComponentFromComposite(inst) {
 module.exports = getHostComponentFromComposite;
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10810,7 +11287,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10821,7 +11298,7 @@ var settle = __webpack_require__(207);
 var buildURL = __webpack_require__(209);
 var parseHeaders = __webpack_require__(210);
 var isURLSameOrigin = __webpack_require__(211);
-var createError = __webpack_require__(93);
+var createError = __webpack_require__(94);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(212);
 
 module.exports = function xhrAdapter(config) {
@@ -10998,7 +11475,7 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11023,7 +11500,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11035,7 +11512,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11061,10 +11538,10 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ECLevel = __webpack_require__(58)
+var ECLevel = __webpack_require__(59)
 
 var EC_BLOCKS_TABLE = [
 // L  M  Q  H
@@ -11202,14 +11679,14 @@ exports.getTotalCodewordsCount = function getTotalCodewordsCount (version, error
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Utils = __webpack_require__(20)
-var ECCode = __webpack_require__(96)
-var ECLevel = __webpack_require__(58)
+var ECCode = __webpack_require__(97)
+var ECLevel = __webpack_require__(59)
 var Mode = __webpack_require__(21)
-var isArray = __webpack_require__(57)
+var isArray = __webpack_require__(58)
 
 // Generator polynomial used to encode version information
 var G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0)
@@ -11381,7 +11858,7 @@ exports.getEncodedBits = function getEncodedBits (version) {
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports) {
 
 var numeric = '[0-9]+'
@@ -11416,7 +11893,7 @@ exports.testAlphanumeric = function testAlphanumeric (str) {
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports) {
 
 function hex2rgba (hex) {
@@ -11498,490 +11975,13 @@ exports.qrToImageData = function qrToImageData (imgData, qr, margin, scale, colo
 
 
 /***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
- * Toastr
- * Copyright 2012-2015
- * Authors: John Papa, Hans Fjällemark, and Tim Ferrell.
- * All Rights Reserved.
- * Use, reproduction, distribution, and modification of this code is subject to the terms and
- * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
- *
- * ARIA Support: Greta Krafsig
- *
- * Project: https://github.com/CodeSeven/toastr
- */
-/* global define */
-(function (define) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(243)], __WEBPACK_AMD_DEFINE_RESULT__ = (function ($) {
-        return (function () {
-            var $container;
-            var listener;
-            var toastId = 0;
-            var toastType = {
-                error: 'error',
-                info: 'info',
-                success: 'success',
-                warning: 'warning'
-            };
-
-            var toastr = {
-                clear: clear,
-                remove: remove,
-                error: error,
-                getContainer: getContainer,
-                info: info,
-                options: {},
-                subscribe: subscribe,
-                success: success,
-                version: '2.1.4',
-                warning: warning
-            };
-
-            var previousToast;
-
-            return toastr;
-
-            ////////////////
-
-            function error(message, title, optionsOverride) {
-                return notify({
-                    type: toastType.error,
-                    iconClass: getOptions().iconClasses.error,
-                    message: message,
-                    optionsOverride: optionsOverride,
-                    title: title
-                });
-            }
-
-            function getContainer(options, create) {
-                if (!options) { options = getOptions(); }
-                $container = $('#' + options.containerId);
-                if ($container.length) {
-                    return $container;
-                }
-                if (create) {
-                    $container = createContainer(options);
-                }
-                return $container;
-            }
-
-            function info(message, title, optionsOverride) {
-                return notify({
-                    type: toastType.info,
-                    iconClass: getOptions().iconClasses.info,
-                    message: message,
-                    optionsOverride: optionsOverride,
-                    title: title
-                });
-            }
-
-            function subscribe(callback) {
-                listener = callback;
-            }
-
-            function success(message, title, optionsOverride) {
-                return notify({
-                    type: toastType.success,
-                    iconClass: getOptions().iconClasses.success,
-                    message: message,
-                    optionsOverride: optionsOverride,
-                    title: title
-                });
-            }
-
-            function warning(message, title, optionsOverride) {
-                return notify({
-                    type: toastType.warning,
-                    iconClass: getOptions().iconClasses.warning,
-                    message: message,
-                    optionsOverride: optionsOverride,
-                    title: title
-                });
-            }
-
-            function clear($toastElement, clearOptions) {
-                var options = getOptions();
-                if (!$container) { getContainer(options); }
-                if (!clearToast($toastElement, options, clearOptions)) {
-                    clearContainer(options);
-                }
-            }
-
-            function remove($toastElement) {
-                var options = getOptions();
-                if (!$container) { getContainer(options); }
-                if ($toastElement && $(':focus', $toastElement).length === 0) {
-                    removeToast($toastElement);
-                    return;
-                }
-                if ($container.children().length) {
-                    $container.remove();
-                }
-            }
-
-            // internal functions
-
-            function clearContainer (options) {
-                var toastsToClear = $container.children();
-                for (var i = toastsToClear.length - 1; i >= 0; i--) {
-                    clearToast($(toastsToClear[i]), options);
-                }
-            }
-
-            function clearToast ($toastElement, options, clearOptions) {
-                var force = clearOptions && clearOptions.force ? clearOptions.force : false;
-                if ($toastElement && (force || $(':focus', $toastElement).length === 0)) {
-                    $toastElement[options.hideMethod]({
-                        duration: options.hideDuration,
-                        easing: options.hideEasing,
-                        complete: function () { removeToast($toastElement); }
-                    });
-                    return true;
-                }
-                return false;
-            }
-
-            function createContainer(options) {
-                $container = $('<div/>')
-                    .attr('id', options.containerId)
-                    .addClass(options.positionClass);
-
-                $container.appendTo($(options.target));
-                return $container;
-            }
-
-            function getDefaults() {
-                return {
-                    tapToDismiss: true,
-                    toastClass: 'toast',
-                    containerId: 'toast-container',
-                    debug: false,
-
-                    showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
-                    showDuration: 300,
-                    showEasing: 'swing', //swing and linear are built into jQuery
-                    onShown: undefined,
-                    hideMethod: 'fadeOut',
-                    hideDuration: 1000,
-                    hideEasing: 'swing',
-                    onHidden: undefined,
-                    closeMethod: false,
-                    closeDuration: false,
-                    closeEasing: false,
-                    closeOnHover: true,
-
-                    extendedTimeOut: 1000,
-                    iconClasses: {
-                        error: 'toast-error',
-                        info: 'toast-info',
-                        success: 'toast-success',
-                        warning: 'toast-warning'
-                    },
-                    iconClass: 'toast-info',
-                    positionClass: 'toast-top-right',
-                    timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
-                    titleClass: 'toast-title',
-                    messageClass: 'toast-message',
-                    escapeHtml: false,
-                    target: 'body',
-                    closeHtml: '<button type="button">&times;</button>',
-                    closeClass: 'toast-close-button',
-                    newestOnTop: true,
-                    preventDuplicates: false,
-                    progressBar: false,
-                    progressClass: 'toast-progress',
-                    rtl: false
-                };
-            }
-
-            function publish(args) {
-                if (!listener) { return; }
-                listener(args);
-            }
-
-            function notify(map) {
-                var options = getOptions();
-                var iconClass = map.iconClass || options.iconClass;
-
-                if (typeof (map.optionsOverride) !== 'undefined') {
-                    options = $.extend(options, map.optionsOverride);
-                    iconClass = map.optionsOverride.iconClass || iconClass;
-                }
-
-                if (shouldExit(options, map)) { return; }
-
-                toastId++;
-
-                $container = getContainer(options, true);
-
-                var intervalId = null;
-                var $toastElement = $('<div/>');
-                var $titleElement = $('<div/>');
-                var $messageElement = $('<div/>');
-                var $progressElement = $('<div/>');
-                var $closeElement = $(options.closeHtml);
-                var progressBar = {
-                    intervalId: null,
-                    hideEta: null,
-                    maxHideTime: null
-                };
-                var response = {
-                    toastId: toastId,
-                    state: 'visible',
-                    startTime: new Date(),
-                    options: options,
-                    map: map
-                };
-
-                personalizeToast();
-
-                displayToast();
-
-                handleEvents();
-
-                publish(response);
-
-                if (options.debug && console) {
-                    console.log(response);
-                }
-
-                return $toastElement;
-
-                function escapeHtml(source) {
-                    if (source == null) {
-                        source = '';
-                    }
-
-                    return source
-                        .replace(/&/g, '&amp;')
-                        .replace(/"/g, '&quot;')
-                        .replace(/'/g, '&#39;')
-                        .replace(/</g, '&lt;')
-                        .replace(/>/g, '&gt;');
-                }
-
-                function personalizeToast() {
-                    setIcon();
-                    setTitle();
-                    setMessage();
-                    setCloseButton();
-                    setProgressBar();
-                    setRTL();
-                    setSequence();
-                    setAria();
-                }
-
-                function setAria() {
-                    var ariaValue = '';
-                    switch (map.iconClass) {
-                        case 'toast-success':
-                        case 'toast-info':
-                            ariaValue =  'polite';
-                            break;
-                        default:
-                            ariaValue = 'assertive';
-                    }
-                    $toastElement.attr('aria-live', ariaValue);
-                }
-
-                function handleEvents() {
-                    if (options.closeOnHover) {
-                        $toastElement.hover(stickAround, delayedHideToast);
-                    }
-
-                    if (!options.onclick && options.tapToDismiss) {
-                        $toastElement.click(hideToast);
-                    }
-
-                    if (options.closeButton && $closeElement) {
-                        $closeElement.click(function (event) {
-                            if (event.stopPropagation) {
-                                event.stopPropagation();
-                            } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
-                                event.cancelBubble = true;
-                            }
-
-                            if (options.onCloseClick) {
-                                options.onCloseClick(event);
-                            }
-
-                            hideToast(true);
-                        });
-                    }
-
-                    if (options.onclick) {
-                        $toastElement.click(function (event) {
-                            options.onclick(event);
-                            hideToast();
-                        });
-                    }
-                }
-
-                function displayToast() {
-                    $toastElement.hide();
-
-                    $toastElement[options.showMethod](
-                        {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
-                    );
-
-                    if (options.timeOut > 0) {
-                        intervalId = setTimeout(hideToast, options.timeOut);
-                        progressBar.maxHideTime = parseFloat(options.timeOut);
-                        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
-                        if (options.progressBar) {
-                            progressBar.intervalId = setInterval(updateProgress, 10);
-                        }
-                    }
-                }
-
-                function setIcon() {
-                    if (map.iconClass) {
-                        $toastElement.addClass(options.toastClass).addClass(iconClass);
-                    }
-                }
-
-                function setSequence() {
-                    if (options.newestOnTop) {
-                        $container.prepend($toastElement);
-                    } else {
-                        $container.append($toastElement);
-                    }
-                }
-
-                function setTitle() {
-                    if (map.title) {
-                        var suffix = map.title;
-                        if (options.escapeHtml) {
-                            suffix = escapeHtml(map.title);
-                        }
-                        $titleElement.append(suffix).addClass(options.titleClass);
-                        $toastElement.append($titleElement);
-                    }
-                }
-
-                function setMessage() {
-                    if (map.message) {
-                        var suffix = map.message;
-                        if (options.escapeHtml) {
-                            suffix = escapeHtml(map.message);
-                        }
-                        $messageElement.append(suffix).addClass(options.messageClass);
-                        $toastElement.append($messageElement);
-                    }
-                }
-
-                function setCloseButton() {
-                    if (options.closeButton) {
-                        $closeElement.addClass(options.closeClass).attr('role', 'button');
-                        $toastElement.prepend($closeElement);
-                    }
-                }
-
-                function setProgressBar() {
-                    if (options.progressBar) {
-                        $progressElement.addClass(options.progressClass);
-                        $toastElement.prepend($progressElement);
-                    }
-                }
-
-                function setRTL() {
-                    if (options.rtl) {
-                        $toastElement.addClass('rtl');
-                    }
-                }
-
-                function shouldExit(options, map) {
-                    if (options.preventDuplicates) {
-                        if (map.message === previousToast) {
-                            return true;
-                        } else {
-                            previousToast = map.message;
-                        }
-                    }
-                    return false;
-                }
-
-                function hideToast(override) {
-                    var method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
-                    var duration = override && options.closeDuration !== false ?
-                        options.closeDuration : options.hideDuration;
-                    var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
-                    if ($(':focus', $toastElement).length && !override) {
-                        return;
-                    }
-                    clearTimeout(progressBar.intervalId);
-                    return $toastElement[method]({
-                        duration: duration,
-                        easing: easing,
-                        complete: function () {
-                            removeToast($toastElement);
-                            clearTimeout(intervalId);
-                            if (options.onHidden && response.state !== 'hidden') {
-                                options.onHidden();
-                            }
-                            response.state = 'hidden';
-                            response.endTime = new Date();
-                            publish(response);
-                        }
-                    });
-                }
-
-                function delayedHideToast() {
-                    if (options.timeOut > 0 || options.extendedTimeOut > 0) {
-                        intervalId = setTimeout(hideToast, options.extendedTimeOut);
-                        progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
-                        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
-                    }
-                }
-
-                function stickAround() {
-                    clearTimeout(intervalId);
-                    progressBar.hideEta = 0;
-                    $toastElement.stop(true, true)[options.showMethod](
-                        {duration: options.showDuration, easing: options.showEasing}
-                    );
-                }
-
-                function updateProgress() {
-                    var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
-                    $progressElement.width(percentage + '%');
-                }
-            }
-
-            function getOptions() {
-                return $.extend({}, getDefaults(), toastr.options);
-            }
-
-            function removeToast($toastElement) {
-                if (!$container) { $container = getContainer(); }
-                if ($toastElement.is(':visible')) {
-                    return;
-                }
-                $toastElement.remove();
-                $toastElement = null;
-                if ($container.children().length === 0) {
-                    $container.remove();
-                    previousToast = undefined;
-                }
-            }
-
-        })();
-    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-}(__webpack_require__(244)));
-
-
-/***/ }),
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(102);
-__webpack_require__(240);
-__webpack_require__(241);
 __webpack_require__(242);
+__webpack_require__(243);
+__webpack_require__(244);
 __webpack_require__(245);
 __webpack_require__(246);
 __webpack_require__(247);
@@ -12007,6 +12007,18 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(10);
 
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _toastr = __webpack_require__(39);
+
+var _toastr2 = _interopRequireDefault(_toastr);
+
+var _qrcode = __webpack_require__(223);
+
+var _qrcode2 = _interopRequireDefault(_qrcode);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12016,206 +12028,200 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var TwoFAForm = function (_React$Component) {
-    _inherits(TwoFAForm, _React$Component);
+  _inherits(TwoFAForm, _React$Component);
 
-    function TwoFAForm(props) {
-        _classCallCheck(this, TwoFAForm);
+  function TwoFAForm(props) {
+    _classCallCheck(this, TwoFAForm);
 
-        var _this = _possibleConstructorReturn(this, (TwoFAForm.__proto__ || Object.getPrototypeOf(TwoFAForm)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (TwoFAForm.__proto__ || Object.getPrototypeOf(TwoFAForm)).call(this, props));
 
-        _this.state = {
-            twofa_enabled: _this.props.user.record.twofa_enabled == true ? true : false,
-            response_message: '',
-            authentication_requested: false,
-            two_factor_completed: _this.props.user.record.twofa_completed == true ? true : false,
-            qrcode_url: '',
-            secret_key: _this.props.user.record.secret_key,
-            verification_code: '',
-            verification_response: ''
-        };
-        _this.start2fa = _this.start2fa.bind(_this);
-        _this.handleUpdate = _this.handleUpdate.bind(_this);
-        _this.verifyCode = _this.verifyCode.bind(_this);
+    _this.state = {
+      twofa_enabled: _this.props.user.record.twofa_enabled || false,
+      response_message: '',
+      authentication_requested: false,
+      two_factor_completed: _this.props.user.record.twofa_completed || false,
+      qrcode_url: '',
+      secret_key: _this.props.user.record.secret_key,
+      verification_code: '',
+      verification_response: ''
+    };
 
-        return _this;
+    _this.start2fa = _this.start2fa.bind(_this);
+    _this.handleUpdate = _this.handleUpdate.bind(_this);
+    _this.verifyCode = _this.verifyCode.bind(_this);
+    return _this;
+  }
+
+  _createClass(TwoFAForm, [{
+    key: 'handleUpdate',
+    value: function handleUpdate(event) {
+      this.setState({
+        verification_code: event.target.value
+      });
     }
+  }, {
+    key: 'verifyCode',
+    value: function verifyCode(event) {
+      event.preventDefault();
 
-    _createClass(TwoFAForm, [{
-        key: 'handleUpdate',
-        value: function handleUpdate(event) {
-            this.setState({
-                verification_code: event.target.value
-            });
+      _axios2.default.post('/verify_code_and_save', {
+        verification_code: this.state.verification_code,
+        id: this.props.user.id
+      }).then(function (response) {
+        if (response.data.status === 'success') {
+          window.location.replace('/');
+        } else {
+          _toastr2.default.error(response.data.message);
         }
-    }, {
-        key: 'verifyCode',
-        value: function verifyCode(event) {
-            event.preventDefault();
-            var axios = __webpack_require__(7);
-            var that = this;
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: 'start2fa',
+    value: function start2fa(event) {
+      event.preventDefault();
+      var self = this;
 
-            axios.post('/verify_code_and_save', {
-                verification_code: this.state.verification_code,
-                id: this.props.user._id
-            }).then(function (response) {
-                console.log(response.data);
-
-                if (response.data.status == 'success') {
-                    window.location.replace('/');
-                } else {
-                    toastr.error(response.data.message);
-                }
-            }).catch(function (error) {
-                console.log(error);
+      _axios2.default.post('/start2fa', {
+        id: this.props.user.record.id
+      }).then(function (response) {
+        if (response.data.status === 'error') {
+          console.log('There was an error');
+        } else if (response.data.status === 'success') {
+          console.log(response.data);
+          _qrcode2.default.toDataURL(response.data.secret, function (err, image_data) {
+            if (err) {
+              _toastr2.default.error('Error retrieving QR code');
+            }
+            self.setState({
+              authentication_requested: true,
+              qrcode_url: image_data
             });
+          });
         }
-    }, {
-        key: 'start2fa',
-        value: function start2fa(event) {
-            event.preventDefault();
-
-            var axios = __webpack_require__(7);
-            var QRCode = __webpack_require__(221);
-            var that = this;
-
-            axios.post('/start2fa', {
-                id: this.props.user.record.id
-            }).then(function (response) {
-                if (response.data.status == 'error') {
-                    console.log('There was an error');
-                } else if (response.data.status == 'success') {
-                    console.log(response.data);
-                    QRCode.toDataURL(response.data.secret, function (err, image_data) {
-                        that.setState({
-                            authentication_requested: true,
-                            qrcode_url: image_data
-                        });
-                    });
-                }
-            }).catch(function (error) {
-                console.log(error);
-                that.setState({
-                    response_message: 'There was an error'
-                });
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var registration_form = _react2.default.createElement(
-                'form',
+      }).catch(function (error) {
+        console.log(error);
+        self.setState({
+          response_message: 'There was an error'
+        });
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var registration_form = _react2.default.createElement(
+        'form',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'panel panel-primary' },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'div',
+              { className: '' },
+              _react2.default.createElement(
+                'p',
                 null,
-                _react2.default.createElement(
-                    'div',
-                    { className: 'panel panel-primary' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'form-group' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: '' },
-                            _react2.default.createElement(
-                                'p',
-                                null,
-                                'You have indicated you would like to add an extra layer of security to your account via two-factor authentication. If you would like to proceed, please click on the button below.'
-                            ),
-                            _react2.default.createElement(
-                                'p',
-                                null,
-                                'Once you have enabled two-factor authentication, you will need to provide a verification code every time you wish to login.'
-                            ),
-                            _react2.default.createElement('br', null),
-                            _react2.default.createElement(
-                                'button',
-                                { className: 'btn btn-primary', onClick: this.start2fa.bind(this) },
-                                'Enable two-factor authentication'
-                            ),
-                            _react2.default.createElement(
-                                'form',
-                                { method: 'POST', action: '/update_2fa_settings' },
-                                _react2.default.createElement('input', { type: 'hidden', name: 'enable_2fa', value: false }),
-                                _react2.default.createElement('br', null),
-                                _react2.default.createElement(
-                                    'button',
-                                    { className: 'btn btn-danger', type: 'submit' },
-                                    'Cancel'
-                                )
-                            )
-                        )
-                    )
-                ),
+                'You have indicated you would like to add an extra layer of security to your account via two-factor authentication. If you would like to proceed, please click on the button below.'
+              ),
+              _react2.default.createElement(
+                'p',
+                null,
+                'Once you have enabled two-factor authentication, you will need to provide a verification code every time you wish to login.'
+              ),
+              _react2.default.createElement('br', null),
+              _react2.default.createElement(
+                'button',
+                { className: 'btn btn-primary', onClick: this.start2fa.bind(this) },
+                'Enable two-factor authentication'
+              ),
+              _react2.default.createElement(
+                'form',
+                { method: 'POST', action: '/update_2fa_settings' },
+                _react2.default.createElement('input', { type: 'hidden', name: 'enable_2fa', value: false }),
                 _react2.default.createElement('br', null),
-                this.state.response_message
-            );
-
-            var verification_form = _react2.default.createElement(
-                'form',
-                { className: 'row p-2' },
                 _react2.default.createElement(
-                    'div',
-                    { className: 'offset-xs-0 col-xs-12 offset-sm-4 col-sm-4' },
-                    _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.verification_code, onChange: this.handleUpdate.bind(this) }),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement(
-                        'button',
-                        { type: 'submit', className: 'btn btn-primary', onClick: this.verifyCode.bind(this) },
-                        'Verify code'
-                    ),
-                    _react2.default.createElement('br', null),
-                    this.state.response_message
+                  'button',
+                  { className: 'btn btn-danger', type: 'submit' },
+                  'Cancel'
                 )
-            );
+              )
+            )
+          )
+        ),
+        _react2.default.createElement('br', null),
+        this.state.response_message
+      );
 
-            var qrcode_to_scan = _react2.default.createElement(
-                'div',
-                { className: 'text-center' },
-                _react2.default.createElement(
-                    'p',
-                    null,
-                    'Scan the QR-code below with Google Authenticator.'
-                ),
-                _react2.default.createElement('img', { src: this.state.qrcode_url, className: 'qr-code-image' }),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'container-fluid text-center' },
-                    'Once you have scanned the QR-code, enter the 6-digit authentication code in the field below and click on the \u201CVerify code\u201D button.',
-                    verification_form
-                )
-            );
+      var verification_form = _react2.default.createElement(
+        'form',
+        { className: 'row p-2' },
+        _react2.default.createElement(
+          'div',
+          { className: 'offset-xs-0 col-xs-12 offset-sm-4 col-sm-4' },
+          _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.verification_code, onChange: this.handleUpdate.bind(this) }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'button',
+            { type: 'submit', className: 'btn btn-primary', onClick: this.verifyCode.bind(this) },
+            'Verify code'
+          ),
+          _react2.default.createElement('br', null),
+          this.state.response_message
+        )
+      );
 
-            return _react2.default.createElement(
-                'div',
-                null,
-                this.state.secret_key != null && this.state.secret_key != '' && this.state.twofa_completed == true ? _react2.default.createElement(
-                    'div',
-                    null,
-                    'Your already have a secret key on file',
-                    _react2.default.createElement('br', null),
-                    verification_form,
-                    _react2.default.createElement('br', null),
-                    this.state.verification_response
-                ) : _react2.default.createElement(
-                    'div',
-                    null,
-                    this.state.authentication_requested == true ? qrcode_to_scan : registration_form
-                )
-            );
-        }
-    }]);
+      var qrcode_to_scan = _react2.default.createElement(
+        'div',
+        { className: 'text-center' },
+        _react2.default.createElement(
+          'p',
+          null,
+          'Scan the QR-code below with Google Authenticator.'
+        ),
+        _react2.default.createElement('img', { src: this.state.qrcode_url, className: 'qr-code-image' }),
+        _react2.default.createElement(
+          'div',
+          { className: 'container-fluid text-center' },
+          'Once you have scanned the QR-code, enter the 6-digit authentication code in the field below and click on the \u201CVerify code\u201D button.',
+          verification_form
+        )
+      );
 
-    return TwoFAForm;
+      return _react2.default.createElement(
+        'div',
+        null,
+        this.state.secret_key != null && this.state.secret_key !== '' && this.state.twofa_completed === true ? _react2.default.createElement(
+          'div',
+          null,
+          'Your already have a secret key on file',
+          _react2.default.createElement('br', null),
+          verification_form,
+          _react2.default.createElement('br', null),
+          this.state.verification_response
+        ) : _react2.default.createElement(
+          'div',
+          null,
+          this.state.authentication_requested === true ? qrcode_to_scan : registration_form
+        )
+      );
+    }
+  }]);
+
+  return TwoFAForm;
 }(_react2.default.Component);
 
-;
+var TwofaExport = function TwofaExport() {
+  if (document.getElementById('2fa-setup-area') != null) {
+    var element = document.getElementById('props');
+    var props = JSON.parse(element.getAttribute('data-props'));
 
-var TwofaExport = function TwofaExport(element, props) {
-    if (document.getElementById('2fa-setup-area') != null) {
-        var element = document.getElementById('props');
-        var props = JSON.parse(element.getAttribute('data-props'));
-
-        (0, _reactDom.render)(_react2.default.createElement(TwoFAForm, { user: props.user, messages: props.messages }), document.getElementById('2fa-setup-area'));
-    }
+    (0, _reactDom.render)(_react2.default.createElement(TwoFAForm, { user: props.user, messages: props.messages }), document.getElementById('2fa-setup-area'));
+  }
 };
 
 module.exports = TwofaExport();
@@ -12548,9 +12554,9 @@ module.exports = PooledClass;
 var _prodInvariant = __webpack_require__(23);
 
 var ReactCurrentOwner = __webpack_require__(14);
-var REACT_ELEMENT_TYPE = __webpack_require__(61);
+var REACT_ELEMENT_TYPE = __webpack_require__(62);
 
-var getIteratorFn = __webpack_require__(62);
+var getIteratorFn = __webpack_require__(63);
 var invariant = __webpack_require__(1);
 var KeyEscapeUtils = __webpack_require__(106);
 var warning = __webpack_require__(2);
@@ -12796,7 +12802,7 @@ var ReactElement = __webpack_require__(18);
  */
 var createDOMFactory = ReactElement.createFactory;
 if (process.env.NODE_ENV !== 'production') {
-  var ReactElementValidator = __webpack_require__(63);
+  var ReactElementValidator = __webpack_require__(64);
   createDOMFactory = ReactElementValidator.createFactory;
 }
 
@@ -12976,7 +12982,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(8);
+  ReactComponentTreeHook = __webpack_require__(7);
 }
 
 var loggedTypeFailures = {};
@@ -13018,7 +13024,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(8);
+            ReactComponentTreeHook = __webpack_require__(7);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -13103,7 +13109,7 @@ module.exports = ReactPropTypesSecret;
 var _require = __webpack_require__(18),
     isValidElement = _require.isValidElement;
 
-var factory = __webpack_require__(64);
+var factory = __webpack_require__(65);
 
 module.exports = factory(isValidElement);
 
@@ -13126,7 +13132,7 @@ var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 var assign = __webpack_require__(4);
 
-var ReactPropTypesSecret = __webpack_require__(65);
+var ReactPropTypesSecret = __webpack_require__(66);
 var checkPropTypes = __webpack_require__(113);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
@@ -13674,7 +13680,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(1);
   var warning = __webpack_require__(2);
-  var ReactPropTypesSecret = __webpack_require__(65);
+  var ReactPropTypesSecret = __webpack_require__(66);
   var loggedTypeFailures = {};
 }
 
@@ -13756,13 +13762,13 @@ module.exports = '15.6.2';
 
 
 
-var _require = __webpack_require__(59),
+var _require = __webpack_require__(60),
     Component = _require.Component;
 
 var _require2 = __webpack_require__(18),
     isValidElement = _require2.isValidElement;
 
-var ReactNoopUpdateQueue = __webpack_require__(60);
+var ReactNoopUpdateQueue = __webpack_require__(61);
 var factory = __webpack_require__(116);
 
 module.exports = factory(Component, isValidElement, ReactNoopUpdateQueue);
@@ -14762,13 +14768,13 @@ module.exports = onlyChild;
 
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDefaultInjection = __webpack_require__(119);
-var ReactMount = __webpack_require__(89);
+var ReactMount = __webpack_require__(90);
 var ReactReconciler = __webpack_require__(24);
 var ReactUpdates = __webpack_require__(15);
 var ReactVersion = __webpack_require__(197);
 
 var findDOMNode = __webpack_require__(198);
-var getHostComponentFromComposite = __webpack_require__(90);
+var getHostComponentFromComposite = __webpack_require__(91);
 var renderSubtreeIntoContainer = __webpack_require__(199);
 var warning = __webpack_require__(2);
 
@@ -15430,7 +15436,7 @@ var _assign = __webpack_require__(4);
 
 var PooledClass = __webpack_require__(19);
 
-var getTextContentAccessor = __webpack_require__(69);
+var getTextContentAccessor = __webpack_require__(70);
 
 /**
  * This helper class stores information about text content of a target node,
@@ -15610,10 +15616,10 @@ var ReactDOMComponentTree = __webpack_require__(5);
 var ReactUpdates = __webpack_require__(15);
 var SyntheticEvent = __webpack_require__(16);
 
-var inputValueTracking = __webpack_require__(72);
-var getEventTarget = __webpack_require__(42);
-var isEventSupported = __webpack_require__(43);
-var isTextInputElement = __webpack_require__(73);
+var inputValueTracking = __webpack_require__(73);
+var getEventTarget = __webpack_require__(43);
+var isEventSupported = __webpack_require__(44);
+var isTextInputElement = __webpack_require__(74);
 
 var eventTypes = {
   change: {
@@ -16110,7 +16116,7 @@ module.exports = ReactOwner;
 
 var ReactInvalidSetStateWarningHook = __webpack_require__(129);
 var ReactHostOperationHistoryHook = __webpack_require__(130);
-var ReactComponentTreeHook = __webpack_require__(8);
+var ReactComponentTreeHook = __webpack_require__(7);
 var ExecutionEnvironment = __webpack_require__(6);
 
 var performanceNow = __webpack_require__(131);
@@ -16983,7 +16989,7 @@ module.exports = HTMLDOMPropertyConfig;
 
 
 
-var DOMChildrenOperations = __webpack_require__(45);
+var DOMChildrenOperations = __webpack_require__(46);
 var ReactDOMIDOperations = __webpack_require__(141);
 
 /**
@@ -17382,7 +17388,7 @@ module.exports = getMarkupWrap;
 
 
 
-var DOMChildrenOperations = __webpack_require__(45);
+var DOMChildrenOperations = __webpack_require__(46);
 var ReactDOMComponentTree = __webpack_require__(5);
 
 /**
@@ -17426,17 +17432,17 @@ var _prodInvariant = __webpack_require__(3),
 var AutoFocusUtils = __webpack_require__(143);
 var CSSPropertyOperations = __webpack_require__(144);
 var DOMLazyTree = __webpack_require__(25);
-var DOMNamespaces = __webpack_require__(46);
+var DOMNamespaces = __webpack_require__(47);
 var DOMProperty = __webpack_require__(17);
-var DOMPropertyOperations = __webpack_require__(78);
+var DOMPropertyOperations = __webpack_require__(79);
 var EventPluginHub = __webpack_require__(28);
 var EventPluginRegistry = __webpack_require__(33);
 var ReactBrowserEventEmitter = __webpack_require__(38);
-var ReactDOMComponentFlags = __webpack_require__(66);
+var ReactDOMComponentFlags = __webpack_require__(67);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDOMInput = __webpack_require__(154);
 var ReactDOMOption = __webpack_require__(155);
-var ReactDOMSelect = __webpack_require__(80);
+var ReactDOMSelect = __webpack_require__(81);
 var ReactDOMTextarea = __webpack_require__(156);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactMultiChild = __webpack_require__(157);
@@ -17445,10 +17451,10 @@ var ReactServerRenderingTransaction = __webpack_require__(166);
 var emptyFunction = __webpack_require__(13);
 var escapeTextContentForBrowser = __webpack_require__(37);
 var invariant = __webpack_require__(1);
-var isEventSupported = __webpack_require__(43);
-var shallowEqual = __webpack_require__(50);
-var inputValueTracking = __webpack_require__(72);
-var validateDOMNesting = __webpack_require__(54);
+var isEventSupported = __webpack_require__(44);
+var shallowEqual = __webpack_require__(51);
+var inputValueTracking = __webpack_require__(73);
+var validateDOMNesting = __webpack_require__(55);
 var warning = __webpack_require__(2);
 
 var Flags = ReactDOMComponentFlags;
@@ -18438,7 +18444,7 @@ module.exports = ReactDOMComponent;
 
 var ReactDOMComponentTree = __webpack_require__(5);
 
-var focusNode = __webpack_require__(76);
+var focusNode = __webpack_require__(77);
 
 var AutoFocusUtils = {
   focusDOMComponent: function () {
@@ -18463,7 +18469,7 @@ module.exports = AutoFocusUtils;
 
 
 
-var CSSProperty = __webpack_require__(77);
+var CSSProperty = __webpack_require__(78);
 var ExecutionEnvironment = __webpack_require__(6);
 var ReactInstrumentation = __webpack_require__(11);
 
@@ -18760,7 +18766,7 @@ module.exports = camelize;
 
 
 
-var CSSProperty = __webpack_require__(77);
+var CSSProperty = __webpack_require__(78);
 var warning = __webpack_require__(2);
 
 var isUnitlessNumber = CSSProperty.isUnitlessNumber;
@@ -19125,8 +19131,8 @@ module.exports = getVendorPrefixedEventName;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var DOMPropertyOperations = __webpack_require__(78);
-var LinkedValueUtils = __webpack_require__(48);
+var DOMPropertyOperations = __webpack_require__(79);
+var LinkedValueUtils = __webpack_require__(49);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactUpdates = __webpack_require__(15);
 
@@ -19417,7 +19423,7 @@ var _assign = __webpack_require__(4);
 
 var React = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactDOMSelect = __webpack_require__(80);
+var ReactDOMSelect = __webpack_require__(81);
 
 var warning = __webpack_require__(2);
 var didWarnInvalidOptionChildren = false;
@@ -19542,7 +19548,7 @@ module.exports = ReactDOMOption;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var LinkedValueUtils = __webpack_require__(48);
+var LinkedValueUtils = __webpack_require__(49);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactUpdates = __webpack_require__(15);
 
@@ -19705,7 +19711,7 @@ module.exports = ReactDOMTextarea;
 
 var _prodInvariant = __webpack_require__(3);
 
-var ReactComponentEnvironment = __webpack_require__(49);
+var ReactComponentEnvironment = __webpack_require__(50);
 var ReactInstanceMap = __webpack_require__(30);
 var ReactInstrumentation = __webpack_require__(11);
 
@@ -20155,10 +20161,10 @@ module.exports = ReactMultiChild;
 
 var ReactReconciler = __webpack_require__(24);
 
-var instantiateReactComponent = __webpack_require__(81);
-var KeyEscapeUtils = __webpack_require__(52);
-var shouldUpdateReactComponent = __webpack_require__(51);
-var traverseAllChildren = __webpack_require__(85);
+var instantiateReactComponent = __webpack_require__(82);
+var KeyEscapeUtils = __webpack_require__(53);
+var shouldUpdateReactComponent = __webpack_require__(52);
+var traverseAllChildren = __webpack_require__(86);
 var warning = __webpack_require__(2);
 
 var ReactComponentTreeHook;
@@ -20169,7 +20175,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(8);
+  ReactComponentTreeHook = __webpack_require__(7);
 }
 
 function instantiateChild(childInstances, child, name, selfDebugID) {
@@ -20177,7 +20183,7 @@ function instantiateChild(childInstances, child, name, selfDebugID) {
   var keyUnique = childInstances[name] === undefined;
   if (process.env.NODE_ENV !== 'production') {
     if (!ReactComponentTreeHook) {
-      ReactComponentTreeHook = __webpack_require__(8);
+      ReactComponentTreeHook = __webpack_require__(7);
     }
     if (!keyUnique) {
       process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -20314,12 +20320,12 @@ var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
 var React = __webpack_require__(22);
-var ReactComponentEnvironment = __webpack_require__(49);
+var ReactComponentEnvironment = __webpack_require__(50);
 var ReactCurrentOwner = __webpack_require__(14);
-var ReactErrorUtils = __webpack_require__(41);
+var ReactErrorUtils = __webpack_require__(42);
 var ReactInstanceMap = __webpack_require__(30);
 var ReactInstrumentation = __webpack_require__(11);
-var ReactNodeTypes = __webpack_require__(82);
+var ReactNodeTypes = __webpack_require__(83);
 var ReactReconciler = __webpack_require__(24);
 
 if (process.env.NODE_ENV !== 'production') {
@@ -20328,8 +20334,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 var emptyObject = __webpack_require__(32);
 var invariant = __webpack_require__(1);
-var shallowEqual = __webpack_require__(50);
-var shouldUpdateReactComponent = __webpack_require__(51);
+var shallowEqual = __webpack_require__(51);
+var shouldUpdateReactComponent = __webpack_require__(52);
 var warning = __webpack_require__(2);
 
 var CompositeTypes = {
@@ -21217,7 +21223,7 @@ module.exports = ReactCompositeComponent;
 var _prodInvariant = __webpack_require__(3);
 
 var ReactPropTypeLocationNames = __webpack_require__(161);
-var ReactPropTypesSecret = __webpack_require__(79);
+var ReactPropTypesSecret = __webpack_require__(80);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -21230,7 +21236,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(8);
+  ReactComponentTreeHook = __webpack_require__(7);
 }
 
 var loggedTypeFailures = {};
@@ -21272,7 +21278,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(8);
+            ReactComponentTreeHook = __webpack_require__(7);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -21426,8 +21432,8 @@ module.exports = getIteratorFn;
 
 
 
-var KeyEscapeUtils = __webpack_require__(52);
-var traverseAllChildren = __webpack_require__(85);
+var KeyEscapeUtils = __webpack_require__(53);
+var traverseAllChildren = __webpack_require__(86);
 var warning = __webpack_require__(2);
 
 var ReactComponentTreeHook;
@@ -21438,7 +21444,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(8);
+  ReactComponentTreeHook = __webpack_require__(7);
 }
 
 /**
@@ -21454,7 +21460,7 @@ function flattenSingleChildIntoContext(traverseContext, child, name, selfDebugID
     var keyUnique = result[name] === undefined;
     if (process.env.NODE_ENV !== 'production') {
       if (!ReactComponentTreeHook) {
-        ReactComponentTreeHook = __webpack_require__(8);
+        ReactComponentTreeHook = __webpack_require__(7);
       }
       if (!keyUnique) {
         process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -21602,7 +21608,7 @@ module.exports = ReactServerRenderingTransaction;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ReactUpdateQueue = __webpack_require__(53);
+var ReactUpdateQueue = __webpack_require__(54);
 
 var warning = __webpack_require__(2);
 
@@ -21948,13 +21954,13 @@ module.exports = {
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var DOMChildrenOperations = __webpack_require__(45);
+var DOMChildrenOperations = __webpack_require__(46);
 var DOMLazyTree = __webpack_require__(25);
 var ReactDOMComponentTree = __webpack_require__(5);
 
 var escapeTextContentForBrowser = __webpack_require__(37);
 var invariant = __webpack_require__(1);
-var validateDOMNesting = __webpack_require__(54);
+var validateDOMNesting = __webpack_require__(55);
 
 /**
  * Text nodes violate a couple assumptions that React makes about components:
@@ -22184,13 +22190,13 @@ module.exports = ReactDefaultBatchingStrategy;
 
 var _assign = __webpack_require__(4);
 
-var EventListener = __webpack_require__(86);
+var EventListener = __webpack_require__(87);
 var ExecutionEnvironment = __webpack_require__(6);
 var PooledClass = __webpack_require__(19);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactUpdates = __webpack_require__(15);
 
-var getEventTarget = __webpack_require__(42);
+var getEventTarget = __webpack_require__(43);
 var getUnboundedScrollPosition = __webpack_require__(173);
 
 /**
@@ -22384,11 +22390,11 @@ module.exports = getUnboundedScrollPosition;
 
 var DOMProperty = __webpack_require__(17);
 var EventPluginHub = __webpack_require__(28);
-var EventPluginUtils = __webpack_require__(40);
-var ReactComponentEnvironment = __webpack_require__(49);
-var ReactEmptyComponent = __webpack_require__(83);
+var EventPluginUtils = __webpack_require__(41);
+var ReactComponentEnvironment = __webpack_require__(50);
+var ReactEmptyComponent = __webpack_require__(84);
 var ReactBrowserEventEmitter = __webpack_require__(38);
-var ReactHostComponent = __webpack_require__(84);
+var ReactHostComponent = __webpack_require__(85);
 var ReactUpdates = __webpack_require__(15);
 
 var ReactInjection = {
@@ -22421,13 +22427,13 @@ module.exports = ReactInjection;
 
 var _assign = __webpack_require__(4);
 
-var CallbackQueue = __webpack_require__(70);
+var CallbackQueue = __webpack_require__(71);
 var PooledClass = __webpack_require__(19);
 var ReactBrowserEventEmitter = __webpack_require__(38);
-var ReactInputSelection = __webpack_require__(87);
+var ReactInputSelection = __webpack_require__(88);
 var ReactInstrumentation = __webpack_require__(11);
 var Transaction = __webpack_require__(34);
-var ReactUpdateQueue = __webpack_require__(53);
+var ReactUpdateQueue = __webpack_require__(54);
 
 /**
  * Ensures that, when possible, the selection range (currently selected text
@@ -22604,7 +22610,7 @@ module.exports = ReactReconcileTransaction;
 var ExecutionEnvironment = __webpack_require__(6);
 
 var getNodeForCharacterOffset = __webpack_require__(177);
-var getTextContentAccessor = __webpack_require__(69);
+var getTextContentAccessor = __webpack_require__(70);
 
 /**
  * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -23300,12 +23306,12 @@ module.exports = SVGDOMPropertyConfig;
 var EventPropagators = __webpack_require__(27);
 var ExecutionEnvironment = __webpack_require__(6);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactInputSelection = __webpack_require__(87);
+var ReactInputSelection = __webpack_require__(88);
 var SyntheticEvent = __webpack_require__(16);
 
-var getActiveElement = __webpack_require__(88);
-var isTextInputElement = __webpack_require__(73);
-var shallowEqual = __webpack_require__(50);
+var getActiveElement = __webpack_require__(89);
+var isTextInputElement = __webpack_require__(74);
+var shallowEqual = __webpack_require__(51);
 
 var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
 
@@ -23491,7 +23497,7 @@ module.exports = SelectEventPlugin;
 
 var _prodInvariant = __webpack_require__(3);
 
-var EventListener = __webpack_require__(86);
+var EventListener = __webpack_require__(87);
 var EventPropagators = __webpack_require__(27);
 var ReactDOMComponentTree = __webpack_require__(5);
 var SyntheticAnimationEvent = __webpack_require__(184);
@@ -23507,7 +23513,7 @@ var SyntheticUIEvent = __webpack_require__(29);
 var SyntheticWheelEvent = __webpack_require__(192);
 
 var emptyFunction = __webpack_require__(13);
-var getEventCharCode = __webpack_require__(55);
+var getEventCharCode = __webpack_require__(56);
 var invariant = __webpack_require__(1);
 
 /**
@@ -23842,9 +23848,9 @@ module.exports = SyntheticFocusEvent;
 
 var SyntheticUIEvent = __webpack_require__(29);
 
-var getEventCharCode = __webpack_require__(55);
+var getEventCharCode = __webpack_require__(56);
 var getEventKey = __webpack_require__(188);
-var getEventModifierState = __webpack_require__(44);
+var getEventModifierState = __webpack_require__(45);
 
 /**
  * @interface KeyboardEvent
@@ -23927,7 +23933,7 @@ module.exports = SyntheticKeyboardEvent;
 
 
 
-var getEventCharCode = __webpack_require__(55);
+var getEventCharCode = __webpack_require__(56);
 
 /**
  * Normalization of deprecated HTML5 `key` values
@@ -24083,7 +24089,7 @@ module.exports = SyntheticDragEvent;
 
 var SyntheticUIEvent = __webpack_require__(29);
 
-var getEventModifierState = __webpack_require__(44);
+var getEventModifierState = __webpack_require__(45);
 
 /**
  * @interface TouchEvent
@@ -24225,7 +24231,7 @@ module.exports = SyntheticWheelEvent;
 
 
 
-var validateDOMNesting = __webpack_require__(54);
+var validateDOMNesting = __webpack_require__(55);
 
 var DOC_NODE_TYPE = 9;
 
@@ -24407,7 +24413,7 @@ var ReactCurrentOwner = __webpack_require__(14);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactInstanceMap = __webpack_require__(30);
 
-var getHostComponentFromComposite = __webpack_require__(90);
+var getHostComponentFromComposite = __webpack_require__(91);
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 
@@ -24465,7 +24471,7 @@ module.exports = findDOMNode;
 
 
 
-var ReactMount = __webpack_require__(89);
+var ReactMount = __webpack_require__(90);
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
 
@@ -24486,7 +24492,7 @@ module.exports = ReactMount.renderSubtreeIntoContainer;
 
 var DOMProperty = __webpack_require__(17);
 var EventPluginRegistry = __webpack_require__(33);
-var ReactComponentTreeHook = __webpack_require__(8);
+var ReactComponentTreeHook = __webpack_require__(7);
 
 var warning = __webpack_require__(2);
 
@@ -24600,7 +24606,7 @@ module.exports = ReactDOMUnknownPropertyHook;
 
 
 
-var ReactComponentTreeHook = __webpack_require__(8);
+var ReactComponentTreeHook = __webpack_require__(7);
 
 var warning = __webpack_require__(2);
 
@@ -24648,7 +24654,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 
 var DOMProperty = __webpack_require__(17);
-var ReactComponentTreeHook = __webpack_require__(8);
+var ReactComponentTreeHook = __webpack_require__(7);
 
 var warning = __webpack_require__(2);
 
@@ -24737,9 +24743,9 @@ module.exports = ReactDOMInvalidARIAHook;
 
 
 var utils = __webpack_require__(12);
-var bind = __webpack_require__(91);
+var bind = __webpack_require__(92);
 var Axios = __webpack_require__(205);
-var defaults = __webpack_require__(56);
+var defaults = __webpack_require__(57);
 
 /**
  * Create an instance of Axios
@@ -24772,9 +24778,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(95);
+axios.Cancel = __webpack_require__(96);
 axios.CancelToken = __webpack_require__(219);
-axios.isCancel = __webpack_require__(94);
+axios.isCancel = __webpack_require__(95);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -24822,7 +24828,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(56);
+var defaults = __webpack_require__(57);
 var utils = __webpack_require__(12);
 var InterceptorManager = __webpack_require__(214);
 var dispatchRequest = __webpack_require__(215);
@@ -24934,7 +24940,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(93);
+var createError = __webpack_require__(94);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -25353,8 +25359,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(12);
 var transformData = __webpack_require__(216);
-var isCancel = __webpack_require__(94);
-var defaults = __webpack_require__(56);
+var isCancel = __webpack_require__(95);
+var defaults = __webpack_require__(57);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -25506,7 +25512,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(95);
+var Cancel = __webpack_require__(96);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -25599,2841 +25605,6 @@ module.exports = function spread(callback) {
 
 /***/ }),
 /* 221 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var QRCode = __webpack_require__(222)
-var CanvasRenderer = __webpack_require__(238)
-var SvgRenderer = __webpack_require__(239)
-
-function renderCanvas (renderFunc, canvas, text, opts, cb) {
-  var argsNum = arguments.length - 1
-  if (argsNum < 2) {
-    throw new Error('Too few arguments provided')
-  }
-
-  if (argsNum === 2) {
-    cb = text
-    text = canvas
-    canvas = opts = undefined
-  } else if (argsNum === 3) {
-    if (canvas.getContext && typeof cb === 'undefined') {
-      cb = opts
-      opts = undefined
-    } else {
-      cb = opts
-      opts = text
-      text = canvas
-      canvas = undefined
-    }
-  }
-
-  if (typeof cb !== 'function') {
-    throw new Error('Callback required as last argument')
-  }
-
-  try {
-    var data = QRCode.create(text, opts)
-    cb(null, renderFunc(data, canvas, opts))
-  } catch (e) {
-    cb(e)
-  }
-}
-
-exports.create = QRCode.create
-exports.toCanvas = renderCanvas.bind(null, CanvasRenderer.render)
-exports.toDataURL = renderCanvas.bind(null, CanvasRenderer.renderToDataURL)
-
-// only svg for now.
-exports.toString = renderCanvas.bind(null, function (data, _, opts) {
-  return SvgRenderer.render(data, opts)
-})
-
-/**
- * Legacy API
- */
-exports.qrcodedraw = function () {
-  return {
-    draw: exports.toCanvas
-  }
-}
-
-
-/***/ }),
-/* 222 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Buffer = __webpack_require__(26)
-var Utils = __webpack_require__(20)
-var ECLevel = __webpack_require__(58)
-var BitBuffer = __webpack_require__(223)
-var BitMatrix = __webpack_require__(224)
-var AlignmentPattern = __webpack_require__(225)
-var FinderPattern = __webpack_require__(226)
-var MaskPattern = __webpack_require__(227)
-var ECCode = __webpack_require__(96)
-var ReedSolomonEncoder = __webpack_require__(228)
-var Version = __webpack_require__(97)
-var FormatInfo = __webpack_require__(231)
-var Mode = __webpack_require__(21)
-var Segments = __webpack_require__(232)
-var isArray = __webpack_require__(57)
-
-/**
- * QRCode for JavaScript
- *
- * modified by Ryan Day for nodejs support
- * Copyright (c) 2011 Ryan Day
- *
- * Licensed under the MIT license:
- *   http://www.opensource.org/licenses/mit-license.php
- *
-//---------------------------------------------------------------------
-// QRCode for JavaScript
-//
-// Copyright (c) 2009 Kazuhiko Arase
-//
-// URL: http://www.d-project.com/
-//
-// Licensed under the MIT license:
-//   http://www.opensource.org/licenses/mit-license.php
-//
-// The word "QR Code" is registered trademark of
-// DENSO WAVE INCORPORATED
-//   http://www.denso-wave.com/qrcode/faqpatent-e.html
-//
-//---------------------------------------------------------------------
-*/
-
-/**
- * Add finder patterns bits to matrix
- *
- * @param  {BitMatrix} matrix  Modules matrix
- * @param  {Number}    version QR Code version
- */
-function setupFinderPattern (matrix, version) {
-  var size = matrix.size
-  var pos = FinderPattern.getPositions(version)
-
-  for (var i = 0; i < pos.length; i++) {
-    var row = pos[i][0]
-    var col = pos[i][1]
-
-    for (var r = -1; r <= 7; r++) {
-      if (row + r <= -1 || size <= row + r) continue
-
-      for (var c = -1; c <= 7; c++) {
-        if (col + c <= -1 || size <= col + c) continue
-
-        if ((r >= 0 && r <= 6 && (c === 0 || c === 6)) ||
-          (c >= 0 && c <= 6 && (r === 0 || r === 6)) ||
-          (r >= 2 && r <= 4 && c >= 2 && c <= 4)) {
-          matrix.set(row + r, col + c, true, true)
-        } else {
-          matrix.set(row + r, col + c, false, true)
-        }
-      }
-    }
-  }
-}
-
-/**
- * Add timing pattern bits to matrix
- *
- * Note: this function must be called before {@link setupAlignmentPattern}
- *
- * @param  {BitMatrix} matrix Modules matrix
- */
-function setupTimingPattern (matrix) {
-  var size = matrix.size
-
-  for (var r = 8; r < size - 8; r++) {
-    var value = r % 2 === 0
-    matrix.set(r, 6, value, true)
-    matrix.set(6, r, value, true)
-  }
-}
-
-/**
- * Add alignment patterns bits to matrix
- *
- * Note: this function must be called after {@link setupTimingPattern}
- *
- * @param  {BitMatrix} matrix  Modules matrix
- * @param  {Number}    version QR Code version
- */
-function setupAlignmentPattern (matrix, version) {
-  var pos = AlignmentPattern.getPositions(version)
-
-  for (var i = 0; i < pos.length; i++) {
-    var row = pos[i][0]
-    var col = pos[i][1]
-
-    for (var r = -2; r <= 2; r++) {
-      for (var c = -2; c <= 2; c++) {
-        if (r === -2 || r === 2 || c === -2 || c === 2 ||
-          (r === 0 && c === 0)) {
-          matrix.set(row + r, col + c, true, true)
-        } else {
-          matrix.set(row + r, col + c, false, true)
-        }
-      }
-    }
-  }
-}
-
-/**
- * Add version info bits to matrix
- *
- * @param  {BitMatrix} matrix  Modules matrix
- * @param  {Number}    version QR Code version
- */
-function setupVersionInfo (matrix, version) {
-  var size = matrix.size
-  var bits = Version.getEncodedBits(version)
-  var row, col, mod
-
-  for (var i = 0; i < 18; i++) {
-    row = Math.floor(i / 3)
-    col = i % 3 + size - 8 - 3
-    mod = ((bits >> i) & 1) === 1
-
-    matrix.set(row, col, mod, true)
-    matrix.set(col, row, mod, true)
-  }
-}
-
-/**
- * Add format info bits to matrix
- *
- * @param  {BitMatrix} matrix               Modules matrix
- * @param  {ErrorCorrectionLevel}    errorCorrectionLevel Error correction level
- * @param  {Number}    maskPattern          Mask pattern reference value
- */
-function setupFormatInfo (matrix, errorCorrectionLevel, maskPattern) {
-  var size = matrix.size
-  var bits = FormatInfo.getEncodedBits(errorCorrectionLevel, maskPattern)
-  var i, mod
-
-  for (i = 0; i < 15; i++) {
-    mod = ((bits >> i) & 1) === 1
-
-    // vertical
-    if (i < 6) {
-      matrix.set(i, 8, mod, true)
-    } else if (i < 8) {
-      matrix.set(i + 1, 8, mod, true)
-    } else {
-      matrix.set(size - 15 + i, 8, mod, true)
-    }
-
-    // horizontal
-    if (i < 8) {
-      matrix.set(8, size - i - 1, mod, true)
-    } else if (i < 9) {
-      matrix.set(8, 15 - i - 1 + 1, mod, true)
-    } else {
-      matrix.set(8, 15 - i - 1, mod, true)
-    }
-  }
-
-  // fixed module
-  matrix.set(size - 8, 8, 1, true)
-}
-
-/**
- * Add encoded data bits to matrix
- *
- * @param  {BitMatrix} matrix Modules matrix
- * @param  {Buffer}    data   Data codewords
- */
-function setupData (matrix, data) {
-  var size = matrix.size
-  var inc = -1
-  var row = size - 1
-  var bitIndex = 7
-  var byteIndex = 0
-
-  for (var col = size - 1; col > 0; col -= 2) {
-    if (col === 6) col--
-
-    while (true) {
-      for (var c = 0; c < 2; c++) {
-        if (!matrix.isReserved(row, col - c)) {
-          var dark = false
-
-          if (byteIndex < data.length) {
-            dark = (((data[byteIndex] >>> bitIndex) & 1) === 1)
-          }
-
-          matrix.set(row, col - c, dark)
-          bitIndex--
-
-          if (bitIndex === -1) {
-            byteIndex++
-            bitIndex = 7
-          }
-        }
-      }
-
-      row += inc
-
-      if (row < 0 || size <= row) {
-        row -= inc
-        inc = -inc
-        break
-      }
-    }
-  }
-}
-
-/**
- * Create encoded codewords from data input
- *
- * @param  {Number}   version              QR Code version
- * @param  {ErrorCorrectionLevel}   errorCorrectionLevel Error correction level
- * @param  {ByteData} data                 Data input
- * @return {Buffer}                        Buffer containing encoded codewords
- */
-function createData (version, errorCorrectionLevel, segments) {
-  // Prepare data buffer
-  var buffer = new BitBuffer()
-
-  segments.forEach(function (data) {
-    // prefix data with mode indicator (4 bits)
-    buffer.put(data.mode.bit, 4)
-
-    // Prefix data with character count indicator.
-    // The character count indicator is a string of bits that represents the
-    // number of characters that are being encoded.
-    // The character count indicator must be placed after the mode indicator
-    // and must be a certain number of bits long, depending on the QR version
-    // and data mode
-    // @see {@link Mode.getCharCountIndicator}.
-    buffer.put(data.getLength(), Mode.getCharCountIndicator(data.mode, version))
-
-    // add binary data sequence to buffer
-    data.write(buffer)
-  })
-
-  // Calculate required number of bits
-  var totalCodewords = Utils.getSymbolTotalCodewords(version)
-  var ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel)
-  var dataTotalCodewordsBits = (totalCodewords - ecTotalCodewords) * 8
-
-  // Add a terminator.
-  // If the bit string is shorter than the total number of required bits,
-  // a terminator of up to four 0s must be added to the right side of the string.
-  // If the bit string is more than four bits shorter than the required number of bits,
-  // add four 0s to the end.
-  if (buffer.getLengthInBits() + 4 <= dataTotalCodewordsBits) {
-    buffer.put(0, 4)
-  }
-
-  // If the bit string is fewer than four bits shorter, add only the number of 0s that
-  // are needed to reach the required number of bits.
-
-  // After adding the terminator, if the number of bits in the string is not a multiple of 8,
-  // pad the string on the right with 0s to make the string's length a multiple of 8.
-  while (buffer.getLengthInBits() % 8 !== 0) {
-    buffer.putBit(0)
-  }
-
-  // Add pad bytes if the string is still shorter than the total number of required bits.
-  // Extend the buffer to fill the data capacity of the symbol corresponding to
-  // the Version and Error Correction Level by adding the Pad Codewords 11101100 (0xEC)
-  // and 00010001 (0x11) alternately.
-  var remainingByte = (dataTotalCodewordsBits - buffer.getLengthInBits()) / 8
-  for (var i = 0; i < remainingByte; i++) {
-    buffer.put(i % 2 ? 0x11 : 0xEC, 8)
-  }
-
-  return createCodewords(buffer, version, errorCorrectionLevel)
-}
-
-/**
- * Encode input data with Reed-Solomon and return codewords with
- * relative error correction bits
- *
- * @param  {BitBuffer} bitBuffer            Data to encode
- * @param  {Number}    version              QR Code version
- * @param  {ErrorCorrectionLevel} errorCorrectionLevel Error correction level
- * @return {Buffer}                         Buffer containing encoded codewords
- */
-function createCodewords (bitBuffer, version, errorCorrectionLevel) {
-  // Total codewords for this QR code version (Data + Error correction)
-  var totalCodewords = Utils.getSymbolTotalCodewords(version)
-
-  // Total number of error correction codewords
-  var ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel)
-
-  // Total number of data codewords
-  var dataTotalCodewords = totalCodewords - ecTotalCodewords
-
-  // Total number of blocks
-  var ecTotalBlocks = ECCode.getBlocksCount(version, errorCorrectionLevel)
-
-  // Calculate how many blocks each group should contain
-  var blocksInGroup2 = totalCodewords % ecTotalBlocks
-  var blocksInGroup1 = ecTotalBlocks - blocksInGroup2
-
-  var totalCodewordsInGroup1 = Math.floor(totalCodewords / ecTotalBlocks)
-
-  var dataCodewordsInGroup1 = Math.floor(dataTotalCodewords / ecTotalBlocks)
-  var dataCodewordsInGroup2 = dataCodewordsInGroup1 + 1
-
-  // Number of EC codewords is the same for both groups
-  var ecCount = totalCodewordsInGroup1 - dataCodewordsInGroup1
-
-  // Initialize a Reed-Solomon encoder with a generator polynomial of degree ecCount
-  var rs = new ReedSolomonEncoder(ecCount)
-
-  var offset = 0
-  var dcData = new Array(ecTotalBlocks)
-  var ecData = new Array(ecTotalBlocks)
-  var maxDataSize = 0
-  var buffer = new Buffer(bitBuffer.buffer)
-
-  // Divide the buffer into the required number of blocks
-  for (var b = 0; b < ecTotalBlocks; b++) {
-    var dataSize = b < blocksInGroup1 ? dataCodewordsInGroup1 : dataCodewordsInGroup2
-
-    // extract a block of data from buffer
-    dcData[b] = buffer.slice(offset, offset + dataSize)
-
-    // Calculate EC codewords for this data block
-    ecData[b] = rs.encode(dcData[b])
-
-    offset += dataSize
-    maxDataSize = Math.max(maxDataSize, dataSize)
-  }
-
-  // Create final data
-  // Interleave the data and error correction codewords from each block
-  var data = new Buffer(totalCodewords)
-  var index = 0
-  var i, r
-
-  // Add data codewords
-  for (i = 0; i < maxDataSize; i++) {
-    for (r = 0; r < ecTotalBlocks; r++) {
-      if (i < dcData[r].length) {
-        data[index++] = dcData[r][i]
-      }
-    }
-  }
-
-  // Apped EC codewords
-  for (i = 0; i < ecCount; i++) {
-    for (r = 0; r < ecTotalBlocks; r++) {
-      data[index++] = ecData[r][i]
-    }
-  }
-
-  return data
-}
-
-/**
- * Build QR Code symbol
- *
- * @param  {String} data                 Input string
- * @param  {Number} version              QR Code version
- * @param  {ErrorCorretionLevel} errorCorrectionLevel Error level
- * @return {Object}                      Object containing symbol data
- */
-function createSymbol (data, version, errorCorrectionLevel) {
-  var segments
-
-  if (isArray(data)) {
-    segments = Segments.fromArray(data)
-  } else if (typeof data === 'string') {
-    var estimatedVersion = version
-
-    if (!estimatedVersion) {
-      var rawSegments = Segments.rawSplit(data)
-
-      // Estimate best version that can contain raw splitted segments
-      estimatedVersion = Version.getBestVersionForData(rawSegments,
-        errorCorrectionLevel)
-    }
-
-    // Build optimized segments
-    // If estimated version is undefined, try with the highest version
-    segments = Segments.fromString(data, estimatedVersion || 40)
-  } else {
-    throw new Error('Invalid data')
-  }
-
-  // Get the min version that can contain data
-  var bestVersion = Version.getBestVersionForData(segments,
-      errorCorrectionLevel)
-
-  // If no version is found, data cannot be stored
-  if (!bestVersion) {
-    throw new Error('The amount of data is too big to be stored in a QR Code')
-  }
-
-  // If not specified, use min version as default
-  if (!version) {
-    version = bestVersion
-
-  // Check if the specified version can contain the data
-  } else if (version < bestVersion) {
-    throw new Error('\n' +
-      'The chosen QR Code version cannot contain this amount of data.\n' +
-      'Minimum version required to store current data is: ' + bestVersion + '.\n'
-    )
-  }
-
-  var dataBits = createData(version, errorCorrectionLevel, segments)
-
-  // Allocate matrix buffer
-  var moduleCount = Utils.getSymbolSize(version)
-  var modules = new BitMatrix(moduleCount)
-
-  // Add function modules
-  setupFinderPattern(modules, version)
-  setupTimingPattern(modules)
-  setupAlignmentPattern(modules, version)
-
-  // Add temporary dummy bits for format info just to set them as reserved.
-  // This is needed to prevent these bits from being masked by {@link MaskPattern.applyMask}
-  // since the masking operation must be performed only on the encoding region.
-  // These blocks will be replaced with correct values later in code.
-  setupFormatInfo(modules, errorCorrectionLevel, 0)
-
-  if (version >= 7) {
-    setupVersionInfo(modules, version)
-  }
-
-  // Add data codewords
-  setupData(modules, dataBits)
-
-  // Find best mask pattern
-  var maskPattern = MaskPattern.getBestMask(modules,
-    setupFormatInfo.bind(null, modules, errorCorrectionLevel))
-
-  // Apply mask pattern
-  MaskPattern.applyMask(maskPattern, modules)
-
-  // Replace format info bits with correct values
-  setupFormatInfo(modules, errorCorrectionLevel, maskPattern)
-
-  return {
-    modules: modules,
-    version: version,
-    errorCorrectionLevel: errorCorrectionLevel,
-    maskPattern: maskPattern,
-    segments: segments
-  }
-}
-
-/**
- * QR Code
- *
- * @param {String | Array} data                 Input data
- * @param {Object} options                      Optional configurations
- * @param {Number} options.version              QR Code version
- * @param {String} options.errorCorrectionLevel Error correction level
- * @param {Function} options.toSJISFunc         Helper func to convert utf8 to sjis
- */
-exports.create = function create (data, options) {
-  if (typeof data === 'undefined' || data === '') {
-    throw new Error('No input text')
-  }
-
-  var errorCorrectionLevel = ECLevel.M
-  var version
-
-  if (typeof options !== 'undefined') {
-    // Use higher error correction level as default
-    errorCorrectionLevel = ECLevel.from(options.errorCorrectionLevel, ECLevel.M)
-    version = Version.from(options.version)
-
-    if (options.toSJISFunc) {
-      Utils.setToSJISFunction(options.toSJISFunc)
-    }
-  }
-
-  return createSymbol(data, version, errorCorrectionLevel)
-}
-
-
-/***/ }),
-/* 223 */
-/***/ (function(module, exports) {
-
-function BitBuffer () {
-  this.buffer = []
-  this.length = 0
-}
-
-BitBuffer.prototype = {
-
-  get: function (index) {
-    var bufIndex = Math.floor(index / 8)
-    return ((this.buffer[bufIndex] >>> (7 - index % 8)) & 1) === 1
-  },
-
-  put: function (num, length) {
-    for (var i = 0; i < length; i++) {
-      this.putBit(((num >>> (length - i - 1)) & 1) === 1)
-    }
-  },
-
-  getLengthInBits: function () {
-    return this.length
-  },
-
-  putBit: function (bit) {
-    var bufIndex = Math.floor(this.length / 8)
-    if (this.buffer.length <= bufIndex) {
-      this.buffer.push(0)
-    }
-
-    if (bit) {
-      this.buffer[bufIndex] |= (0x80 >>> (this.length % 8))
-    }
-
-    this.length++
-  }
-}
-
-module.exports = BitBuffer
-
-
-/***/ }),
-/* 224 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Buffer = __webpack_require__(26)
-
-/**
- * Helper class to handle QR Code symbol modules
- *
- * @param {Number} size Symbol size
- */
-function BitMatrix (size) {
-  if (!size || size < 1) {
-    throw new Error('BitMatrix size must be defined and greater than 0')
-  }
-
-  this.size = size
-  this.data = new Buffer(size * size)
-  this.data.fill(0)
-  this.reservedBit = new Buffer(size * size)
-  this.reservedBit.fill(0)
-}
-
-/**
- * Set bit value at specified location
- * If reserved flag is set, this bit will be ignored during masking process
- *
- * @param {Number}  row
- * @param {Number}  col
- * @param {Boolean} value
- * @param {Boolean} reserved
- */
-BitMatrix.prototype.set = function (row, col, value, reserved) {
-  var index = row * this.size + col
-  this.data[index] = value
-  if (reserved) this.reservedBit[index] = true
-}
-
-/**
- * Returns bit value at specified location
- *
- * @param  {Number}  row
- * @param  {Number}  col
- * @return {Boolean}
- */
-BitMatrix.prototype.get = function (row, col) {
-  return this.data[row * this.size + col]
-}
-
-/**
- * Applies xor operator at specified location
- * (used during masking process)
- *
- * @param {Number}  row
- * @param {Number}  col
- * @param {Boolean} value
- */
-BitMatrix.prototype.xor = function (row, col, value) {
-  this.data[row * this.size + col] ^= value
-}
-
-/**
- * Check if bit at specified location is reserved
- *
- * @param {Number}   row
- * @param {Number}   col
- * @return {Boolean}
- */
-BitMatrix.prototype.isReserved = function (row, col) {
-  return this.reservedBit[row * this.size + col]
-}
-
-module.exports = BitMatrix
-
-
-/***/ }),
-/* 225 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Alignment pattern are fixed reference pattern in defined positions
- * in a matrix symbology, which enables the decode software to re-synchronise
- * the coordinate mapping of the image modules in the event of moderate amounts
- * of distortion of the image.
- *
- * Alignment patterns are present only in QR Code symbols of version 2 or larger
- * and their number depends on the symbol version.
- */
-
-var getSymbolSize = __webpack_require__(20).getSymbolSize
-
-/**
- * Calculate the row/column coordinates of the center module of each alignment pattern
- * for the specified QR Code version.
- *
- * The alignment patterns are positioned symmetrically on either side of the diagonal
- * running from the top left corner of the symbol to the bottom right corner.
- *
- * Since positions are simmetrical only half of the coordinates are returned.
- * Each item of the array will represent in turn the x and y coordinate.
- * @see {@link getPositions}
- *
- * @param  {Number} version QR Code version
- * @return {Array}          Array of coordinate
- */
-exports.getRowColCoords = function getRowColCoords (version) {
-  if (version === 1) return []
-
-  var posCount = Math.floor(version / 7) + 2
-  var size = getSymbolSize(version)
-  var intervals = size === 145 ? 26 : Math.ceil((size - 13) / (2 * posCount - 2)) * 2
-  var positions = [size - 7] // Last coord is always (size - 7)
-
-  for (var i = 1; i < posCount - 1; i++) {
-    positions[i] = positions[i - 1] - intervals
-  }
-
-  positions.push(6) // First coord is always 6
-
-  return positions.reverse()
-}
-
-/**
- * Returns an array containing the positions of each alignment pattern.
- * Each array's element represent the center point of the pattern as (x, y) coordinates
- *
- * Coordinates are calculated expanding the row/column coordinates returned by {@link getRowColCoords}
- * and filtering out the items that overlaps with finder pattern
- *
- * @example
- * For a Version 7 symbol {@link getRowColCoords} returns values 6, 22 and 38.
- * The alignment patterns, therefore, are to be centered on (row, column)
- * positions (6,22), (22,6), (22,22), (22,38), (38,22), (38,38).
- * Note that the coordinates (6,6), (6,38), (38,6) are occupied by finder patterns
- * and are not therefore used for alignment patterns.
- *
- * var pos = getPositions(7)
- * // [[6,22], [22,6], [22,22], [22,38], [38,22], [38,38]]
- *
- * @param  {Number} version QR Code version
- * @return {Array}          Array of coordinates
- */
-exports.getPositions = function getPositions (version) {
-  var coords = []
-  var pos = exports.getRowColCoords(version)
-  var posLength = pos.length
-
-  for (var i = 0; i < posLength; i++) {
-    for (var j = 0; j < posLength; j++) {
-      // Skip if position is occupied by finder patterns
-      if ((i === 0 && j === 0) ||             // top-left
-          (i === 0 && j === posLength - 1) || // bottom-left
-          (i === posLength - 1 && j === 0)) { // top-right
-        continue
-      }
-
-      coords.push([pos[i], pos[j]])
-    }
-  }
-
-  return coords
-}
-
-
-/***/ }),
-/* 226 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var getSymbolSize = __webpack_require__(20).getSymbolSize
-var FINDER_PATTERN_SIZE = 7
-
-/**
- * Returns an array containing the positions of each finder pattern.
- * Each array's element represent the top-left point of the pattern as (x, y) coordinates
- *
- * @param  {Number} version QR Code version
- * @return {Array}          Array of coordinates
- */
-exports.getPositions = function getPositions (version) {
-  var size = getSymbolSize(version)
-
-  return [
-    // top-left
-    [0, 0],
-    // top-right
-    [size - FINDER_PATTERN_SIZE, 0],
-    // bottom-left
-    [0, size - FINDER_PATTERN_SIZE]
-  ]
-}
-
-
-/***/ }),
-/* 227 */
-/***/ (function(module, exports) {
-
-/**
- * Data mask pattern reference
- * @type {Object}
- */
-exports.Patterns = {
-  PATTERN000: 0,
-  PATTERN001: 1,
-  PATTERN010: 2,
-  PATTERN011: 3,
-  PATTERN100: 4,
-  PATTERN101: 5,
-  PATTERN110: 6,
-  PATTERN111: 7
-}
-
-/**
- * Weighted penalty scores for the undesirable features
- * @type {Object}
- */
-var PenaltyScores = {
-  N1: 3,
-  N2: 3,
-  N3: 40,
-  N4: 10
-}
-
-/**
-* Find adjacent modules in row/column with the same color
-* and assign a penalty value.
-*
-* Points: N1 + i
-* i is the amount by which the number of adjacent modules of the same color exceeds 5
-*/
-exports.getPenaltyN1 = function getPenaltyN1 (data) {
-  var size = data.size
-  var points = 0
-  var sameCountCol = 0
-  var sameCountRow = 0
-  var lastCol = null
-  var lastRow = null
-
-  for (var row = 0; row < size; row++) {
-    sameCountCol = sameCountRow = 0
-    lastCol = lastRow = null
-
-    for (var col = 0; col < size; col++) {
-      var module = data.get(row, col)
-      if (module === lastCol) {
-        sameCountCol++
-      } else {
-        if (sameCountCol >= 5) points += PenaltyScores.N1 + (sameCountCol - 5)
-        lastCol = module
-        sameCountCol = 1
-      }
-
-      module = data.get(col, row)
-      if (module === lastRow) {
-        sameCountRow++
-      } else {
-        if (sameCountRow >= 5) points += PenaltyScores.N1 + (sameCountRow - 5)
-        lastRow = module
-        sameCountRow = 1
-      }
-    }
-
-    if (sameCountCol >= 5) points += PenaltyScores.N1 + (sameCountCol - 5)
-    if (sameCountRow >= 5) points += PenaltyScores.N1 + (sameCountRow - 5)
-  }
-
-  return points
-}
-
-/**
- * Find 2x2 blocks with the same color and assign a penalty value
- *
- * Points: N2 * (m - 1) * (n - 1)
- */
-exports.getPenaltyN2 = function getPenaltyN2 (data) {
-  var size = data.size
-  var points = 0
-
-  for (var row = 0; row < size - 1; row++) {
-    for (var col = 0; col < size - 1; col++) {
-      var last = data.get(row, col) +
-        data.get(row, col + 1) +
-        data.get(row + 1, col) +
-        data.get(row + 1, col + 1)
-
-      if (last === 4 || last === 0) points++
-    }
-  }
-
-  return points * PenaltyScores.N2
-}
-
-/**
- * Find 1:1:3:1:1 ratio (dark:light:dark:light:dark) pattern in row/column,
- * preceded or followed by light area 4 modules wide
- *
- * Points: N3 * number of pattern found
- */
-exports.getPenaltyN3 = function getPenaltyN3 (data) {
-  var size = data.size
-  var points = 0
-  var bitsCol = 0
-  var bitsRow = 0
-
-  for (var row = 0; row < size; row++) {
-    bitsCol = bitsRow = 0
-    for (var col = 0; col < size; col++) {
-      bitsCol = ((bitsCol << 1) & 0x7FF) | data.get(row, col)
-      if (col >= 10 && (bitsCol === 0x5D0 || bitsCol === 0x05D)) points++
-
-      bitsRow = ((bitsRow << 1) & 0x7FF) | data.get(col, row)
-      if (col >= 10 && (bitsRow === 0x5D0 || bitsRow === 0x05D)) points++
-    }
-  }
-
-  return points * PenaltyScores.N3
-}
-
-/**
- * Calculate proportion of dark modules in entire symbol
- *
- * Points: N4 * k
- *
- * k is the rating of the deviation of the proportion of dark modules
- * in the symbol from 50% in steps of 5%
- */
-exports.getPenaltyN4 = function getPenaltyN4 (data) {
-  var darkCount = 0
-  var modulesCount = data.data.length
-
-  for (var i = 0; i < modulesCount; i++) darkCount += data.data[i]
-
-  var k = Math.abs(Math.ceil((darkCount * 100 / modulesCount) / 5) - 10)
-
-  return k * PenaltyScores.N4
-}
-
-/**
- * Return mask value at given position
- *
- * @param  {Number} maskPattern Pattern reference value
- * @param  {Number} i           Row
- * @param  {Number} j           Column
- * @return {Boolean}            Mask value
- */
-function getMaskAt (maskPattern, i, j) {
-  switch (maskPattern) {
-    case exports.Patterns.PATTERN000: return (i + j) % 2 === 0
-    case exports.Patterns.PATTERN001: return i % 2 === 0
-    case exports.Patterns.PATTERN010: return j % 3 === 0
-    case exports.Patterns.PATTERN011: return (i + j) % 3 === 0
-    case exports.Patterns.PATTERN100: return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 === 0
-    case exports.Patterns.PATTERN101: return (i * j) % 2 + (i * j) % 3 === 0
-    case exports.Patterns.PATTERN110: return ((i * j) % 2 + (i * j) % 3) % 2 === 0
-    case exports.Patterns.PATTERN111: return ((i * j) % 3 + (i + j) % 2) % 2 === 0
-
-    default: throw new Error('bad maskPattern:' + maskPattern)
-  }
-}
-
-/**
- * Apply a mask pattern to a BitMatrix
- *
- * @param  {Number}    pattern Pattern reference number
- * @param  {BitMatrix} data    BitMatrix data
- */
-exports.applyMask = function applyMask (pattern, data) {
-  var size = data.size
-
-  for (var col = 0; col < size; col++) {
-    for (var row = 0; row < size; row++) {
-      if (data.isReserved(row, col)) continue
-      data.xor(row, col, getMaskAt(pattern, row, col))
-    }
-  }
-}
-
-/**
- * Returns the best mask pattern for data
- *
- * @param  {BitMatrix} data
- * @return {Number} Mask pattern reference number
- */
-exports.getBestMask = function getBestMask (data, setupFormatFunc) {
-  var numPatterns = Object.keys(exports.Patterns).length
-  var bestPattern = 0
-  var lowerPenalty = Infinity
-
-  for (var p = 0; p < numPatterns; p++) {
-    setupFormatFunc(p)
-    exports.applyMask(p, data)
-
-    // Calculate penalty
-    var penalty =
-      exports.getPenaltyN1(data) +
-      exports.getPenaltyN2(data) +
-      exports.getPenaltyN3(data) +
-      exports.getPenaltyN4(data)
-
-    // Undo previously applied mask
-    exports.applyMask(p, data)
-
-    if (penalty < lowerPenalty) {
-      lowerPenalty = penalty
-      bestPattern = p
-    }
-  }
-
-  return bestPattern
-}
-
-
-/***/ }),
-/* 228 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Buffer = __webpack_require__(26)
-var Polynomial = __webpack_require__(229)
-
-function ReedSolomonEncoder (degree) {
-  this.genPoly = undefined
-  this.degree = degree
-
-  if (this.degree) this.initialize(this.degree)
-}
-
-/**
- * Initialize the encoder.
- * The input param should correspond to the number of error correction codewords.
- *
- * @param  {Number} degree
- */
-ReedSolomonEncoder.prototype.initialize = function initialize (degree) {
-  // create an irreducible generator polynomial
-  this.degree = degree
-  this.genPoly = Polynomial.generateECPolynomial(this.degree)
-}
-
-/**
- * Encodes a chunk of data
- *
- * @param  {Buffer} data Buffer containing input data
- * @return {Buffer}      Buffer containing encoded data
- */
-ReedSolomonEncoder.prototype.encode = function encode (data) {
-  if (!this.genPoly) {
-    throw new Error('Encoder not initialized')
-  }
-
-  // Calculate EC for this data block
-  // extends data size to data+genPoly size
-  var pad = new Buffer(this.degree)
-  pad.fill(0)
-  var paddedData = Buffer.concat([data, pad], data.length + this.degree)
-
-  // The error correction codewords are the remainder after dividing the data codewords
-  // by a generator polynomial
-  var remainder = Polynomial.mod(paddedData, this.genPoly)
-
-  // return EC data blocks (last n byte, where n is the degree of genPoly)
-  // If coefficients number in remainder are less than genPoly degree,
-  // pad with 0s to the left to reach the needed number of coefficients
-  var start = this.degree - remainder.length
-  if (start > 0) {
-    var buff = new Buffer(this.degree)
-    buff.fill(0)
-    remainder.copy(buff, start)
-
-    return buff
-  }
-
-  return remainder
-}
-
-module.exports = ReedSolomonEncoder
-
-
-/***/ }),
-/* 229 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Buffer = __webpack_require__(26)
-var GF = __webpack_require__(230)
-
-/**
- * Multiplies two polynomials inside Galois Field
- *
- * @param  {Buffer} p1 Polynomial
- * @param  {Buffer} p2 Polynomial
- * @return {Buffer}    Product of p1 and p2
- */
-exports.mul = function mul (p1, p2) {
-  var coeff = new Buffer(p1.length + p2.length - 1)
-  coeff.fill(0)
-
-  for (var i = 0; i < p1.length; i++) {
-    for (var j = 0; j < p2.length; j++) {
-      coeff[i + j] ^= GF.mul(p1[i], p2[j])
-    }
-  }
-
-  return coeff
-}
-
-/**
- * Calculate the remainder of polynomials division
- *
- * @param  {Buffer} divident Polynomial
- * @param  {Buffer} divisor  Polynomial
- * @return {Buffer}          Remainder
- */
-exports.mod = function mod (divident, divisor) {
-  var result = new Buffer(divident)
-
-  while ((result.length - divisor.length) >= 0) {
-    var coeff = result[0]
-
-    for (var i = 0; i < divisor.length; i++) {
-      result[i] ^= GF.mul(divisor[i], coeff)
-    }
-
-    // remove all zeros from buffer head
-    var offset = 0
-    while (offset < result.length && result[offset] === 0) offset++
-    result = result.slice(offset)
-  }
-
-  return result
-}
-
-/**
- * Generate an irreducible generator polynomial of specified degree
- * (used by Reed-Solomon encoder)
- *
- * @param  {Number} degree Degree of the generator polynomial
- * @return {Buffer}        Buffer containing polynomial coefficients
- */
-exports.generateECPolynomial = function generateECPolynomial (degree) {
-  var poly = new Buffer([1])
-  for (var i = 0; i < degree; i++) {
-    poly = exports.mul(poly, [1, GF.exp(i)])
-  }
-
-  return poly
-}
-
-
-/***/ }),
-/* 230 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Buffer = __webpack_require__(26)
-
-var EXP_TABLE = new Buffer(512)
-var LOG_TABLE = new Buffer(256)
-
-/**
- * Precompute the log and anti-log tables for faster computation later
- *
- * For each possible value in the galois field 2^8, we will pre-compute
- * the logarithm and anti-logarithm (exponential) of this value
- *
- * ref {@link https://en.wikiversity.org/wiki/Reed%E2%80%93Solomon_codes_for_coders#Introduction_to_mathematical_fields}
- */
-;(function initTables () {
-  var x = 1
-  for (var i = 0; i < 255; i++) {
-    EXP_TABLE[i] = x
-    LOG_TABLE[x] = i
-
-    x <<= 1 // multiply by 2
-
-    // The QR code specification says to use byte-wise modulo 100011101 arithmetic.
-    // This means that when a number is 256 or larger, it should be XORed with 0x11D.
-    if (x & 0x100) { // similar to x >= 256, but a lot faster (because 0x100 == 256)
-      x ^= 0x11D
-    }
-  }
-
-  // Optimization: double the size of the anti-log table so that we don't need to mod 255 to
-  // stay inside the bounds (because we will mainly use this table for the multiplication of
-  // two GF numbers, no more).
-  // @see {@link mul}
-  for (i = 255; i < 512; i++) {
-    EXP_TABLE[i] = EXP_TABLE[i - 255]
-  }
-}())
-
-/**
- * Returns log value of n inside Galois Field
- *
- * @param  {Number} n
- * @return {Number}
- */
-exports.log = function log (n) {
-  if (n < 1) throw new Error('log(' + n + ')')
-  return LOG_TABLE[n]
-}
-
-/**
- * Returns anti-log value of n inside Galois Field
- *
- * @param  {Number} n
- * @return {Number}
- */
-exports.exp = function exp (n) {
-  return EXP_TABLE[n]
-}
-
-/**
- * Multiplies two number inside Galois Field
- *
- * @param  {Number} x
- * @param  {Number} y
- * @return {Number}
- */
-exports.mul = function mul (x, y) {
-  if (x === 0 || y === 0) return 0
-
-  // should be EXP_TABLE[(LOG_TABLE[x] + LOG_TABLE[y]) % 255] if EXP_TABLE wasn't oversized
-  // @see {@link initTables}
-  return EXP_TABLE[LOG_TABLE[x] + LOG_TABLE[y]]
-}
-
-
-/***/ }),
-/* 231 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Utils = __webpack_require__(20)
-
-var G15 = (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0)
-var G15_MASK = (1 << 14) | (1 << 12) | (1 << 10) | (1 << 4) | (1 << 1)
-var G15_BCH = Utils.getBCHDigit(G15)
-
-/**
- * Returns format information with relative error correction bits
- *
- * The format information is a 15-bit sequence containing 5 data bits,
- * with 10 error correction bits calculated using the (15, 5) BCH code.
- *
- * @param  {Number} errorCorrectionLevel Error correction level
- * @param  {Number} mask                 Mask pattern
- * @return {Number}                      Encoded format information bits
- */
-exports.getEncodedBits = function getEncodedBits (errorCorrectionLevel, mask) {
-  var data = ((errorCorrectionLevel.bit << 3) | mask)
-  var d = data << 10
-
-  while (Utils.getBCHDigit(d) - G15_BCH >= 0) {
-    d ^= (G15 << (Utils.getBCHDigit(d) - G15_BCH))
-  }
-
-  // xor final data with mask pattern in order to ensure that
-  // no combination of Error Correction Level and data mask pattern
-  // will result in an all-zero data string
-  return ((data << 10) | d) ^ G15_MASK
-}
-
-
-/***/ }),
-/* 232 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mode = __webpack_require__(21)
-var NumericData = __webpack_require__(233)
-var AlphanumericData = __webpack_require__(234)
-var ByteData = __webpack_require__(235)
-var KanjiData = __webpack_require__(236)
-var Regex = __webpack_require__(98)
-var Utils = __webpack_require__(20)
-var dijkstra = __webpack_require__(237)
-
-/**
- * Returns UTF8 byte length
- *
- * @param  {String} str Input string
- * @return {Number}     Number of byte
- */
-function getStringByteLength (str) {
-  return unescape(encodeURIComponent(str)).length
-}
-
-/**
- * Get a list of segments of the specified mode
- * from a string
- *
- * @param  {Mode}   mode Segment mode
- * @param  {String} str  String to process
- * @return {Array}       Array of object with segments data
- */
-function getSegments (regex, mode, str) {
-  var segments = []
-  var result
-
-  while ((result = regex.exec(str)) !== null) {
-    segments.push({
-      data: result[0],
-      index: result.index,
-      mode: mode,
-      length: result[0].length
-    })
-  }
-
-  return segments
-}
-
-/**
- * Extracts a series of segments with the appropriate
- * modes from a string
- *
- * @param  {String} dataStr Input string
- * @return {Array}          Array of object with segments data
- */
-function getSegmentsFromString (dataStr) {
-  var numSegs = getSegments(Regex.NUMERIC, Mode.NUMERIC, dataStr)
-  var alphaNumSegs = getSegments(Regex.ALPHANUMERIC, Mode.ALPHANUMERIC, dataStr)
-  var byteSegs
-  var kanjiSegs
-
-  if (Utils.isKanjiModeEnabled()) {
-    byteSegs = getSegments(Regex.BYTE, Mode.BYTE, dataStr)
-    kanjiSegs = getSegments(Regex.KANJI, Mode.KANJI, dataStr)
-  } else {
-    byteSegs = getSegments(Regex.BYTE_KANJI, Mode.BYTE, dataStr)
-    kanjiSegs = []
-  }
-
-  var segs = numSegs.concat(alphaNumSegs, byteSegs, kanjiSegs)
-
-  return segs
-    .sort(function (s1, s2) {
-      return s1.index - s2.index
-    })
-    .map(function (obj) {
-      return {
-        data: obj.data,
-        mode: obj.mode,
-        length: obj.length
-      }
-    })
-}
-
-/**
- * Returns how many bits are needed to encode a string of
- * specified length with the specified mode
- *
- * @param  {Number} length String length
- * @param  {Mode} mode     Segment mode
- * @return {Number}        Bit length
- */
-function getSegmentBitsLength (length, mode) {
-  switch (mode) {
-    case Mode.NUMERIC:
-      return NumericData.getBitsLength(length)
-    case Mode.ALPHANUMERIC:
-      return AlphanumericData.getBitsLength(length)
-    case Mode.KANJI:
-      return KanjiData.getBitsLength(length)
-    case Mode.BYTE:
-      return ByteData.getBitsLength(length)
-  }
-}
-
-/**
- * Merges adjacent segments which have the same mode
- *
- * @param  {Array} segs Array of object with segments data
- * @return {Array}      Array of object with segments data
- */
-function mergeSegments (segs) {
-  return segs.reduce(function (acc, curr) {
-    var prevSeg = acc.length - 1 >= 0 ? acc[acc.length - 1] : null
-    if (prevSeg && prevSeg.mode === curr.mode) {
-      acc[acc.length - 1].data += curr.data
-      return acc
-    }
-
-    acc.push(curr)
-    return acc
-  }, [])
-}
-
-/**
- * Generates a list of all possible nodes combination which
- * will be used to build a segments graph.
- *
- * Nodes are divided by groups. Each group will contain a list of all the modes
- * in which is possible to encode the given text.
- *
- * For example the text '12345' can be encoded as Numeric, Alphanumeric or Byte.
- * The group for '12345' will contain then 3 objects, one for each
- * possible encoding mode.
- *
- * Each node represents a possible segment.
- *
- * @param  {Array} segs Array of object with segments data
- * @return {Array}      Array of object with segments data
- */
-function buildNodes (segs) {
-  var nodes = []
-  for (var i = 0; i < segs.length; i++) {
-    var seg = segs[i]
-
-    switch (seg.mode) {
-      case Mode.NUMERIC:
-        nodes.push([seg,
-          { data: seg.data, mode: Mode.ALPHANUMERIC, length: seg.length },
-          { data: seg.data, mode: Mode.BYTE, length: seg.length }
-        ])
-        break
-      case Mode.ALPHANUMERIC:
-        nodes.push([seg,
-          { data: seg.data, mode: Mode.BYTE, length: seg.length }
-        ])
-        break
-      case Mode.KANJI:
-        nodes.push([seg,
-          { data: seg.data, mode: Mode.BYTE, length: getStringByteLength(seg.data) }
-        ])
-        break
-      case Mode.BYTE:
-        nodes.push([
-          { data: seg.data, mode: Mode.BYTE, length: getStringByteLength(seg.data) }
-        ])
-    }
-  }
-
-  return nodes
-}
-
-/**
- * Builds a graph from a list of nodes.
- * All segments in each node group will be connected with all the segments of
- * the next group and so on.
- *
- * At each connection will be assigned a weight depending on the
- * segment's byte length.
- *
- * @param  {Array} nodes    Array of object with segments data
- * @param  {Number} version QR Code version
- * @return {Object}         Graph of all possible segments
- */
-function buildGraph (nodes, version) {
-  var table = {}
-  var graph = {'start': {}}
-  var prevNodeIds = ['start']
-
-  for (var i = 0; i < nodes.length; i++) {
-    var nodeGroup = nodes[i]
-    var currentNodeIds = []
-
-    for (var j = 0; j < nodeGroup.length; j++) {
-      var node = nodeGroup[j]
-      var key = '' + i + j
-
-      currentNodeIds.push(key)
-      table[key] = { node: node, lastCount: 0 }
-      graph[key] = {}
-
-      for (var n = 0; n < prevNodeIds.length; n++) {
-        var prevNodeId = prevNodeIds[n]
-
-        if (table[prevNodeId] && table[prevNodeId].node.mode === node.mode) {
-          graph[prevNodeId][key] =
-            getSegmentBitsLength(table[prevNodeId].lastCount + node.length, node.mode) -
-            getSegmentBitsLength(table[prevNodeId].lastCount, node.mode)
-
-          table[prevNodeId].lastCount += node.length
-        } else {
-          if (table[prevNodeId]) table[prevNodeId].lastCount = node.length
-
-          graph[prevNodeId][key] = getSegmentBitsLength(node.length, node.mode) +
-            4 + Mode.getCharCountIndicator(node.mode, version) // switch cost
-        }
-      }
-    }
-
-    prevNodeIds = currentNodeIds
-  }
-
-  for (n = 0; n < prevNodeIds.length; n++) {
-    graph[prevNodeIds[n]]['end'] = 0
-  }
-
-  return { map: graph, table: table }
-}
-
-/**
- * Builds a segment from a specified data and mode.
- * If a mode is not specified, the more suitable will be used.
- *
- * @param  {String} data             Input data
- * @param  {Mode | String} modesHint Data mode
- * @return {Segment}                 Segment
- */
-function buildSingleSegment (data, modesHint) {
-  var mode
-  var bestMode = Mode.getBestModeForData(data)
-
-  mode = Mode.from(modesHint, bestMode)
-
-  // Make sure data can be encoded
-  if (mode !== Mode.BYTE && mode.bit < bestMode.bit) {
-    throw new Error('"' + data + '"' +
-      ' cannot be encoded with mode ' + Mode.toString(mode) +
-      '.\n Suggested mode is: ' + Mode.toString(bestMode))
-  }
-
-  // Use Mode.BYTE if Kanji support is disabled
-  if (mode === Mode.KANJI && !Utils.isKanjiModeEnabled()) {
-    mode = Mode.BYTE
-  }
-
-  switch (mode) {
-    case Mode.NUMERIC:
-      return new NumericData(data)
-
-    case Mode.ALPHANUMERIC:
-      return new AlphanumericData(data)
-
-    case Mode.KANJI:
-      return new KanjiData(data)
-
-    case Mode.BYTE:
-      return new ByteData(data)
-  }
-}
-
-/**
- * Builds a list of segments from an array.
- * Array can contain Strings or Objects with segment's info.
- *
- * For each item which is a string, will be generated a segment with the given
- * string and the more appropriate encoding mode.
- *
- * For each item which is an object, will be generated a segment with the given
- * data and mode.
- * Objects must contain at least the property "data".
- * If property "mode" is not present, the more suitable mode will be used.
- *
- * @param  {Array} array Array of objects with segments data
- * @return {Array}       Array of Segments
- */
-exports.fromArray = function fromArray (array) {
-  return array.reduce(function (acc, seg) {
-    if (typeof seg === 'string') {
-      acc.push(buildSingleSegment(seg, null))
-    } else if (seg.data) {
-      acc.push(buildSingleSegment(seg.data, seg.mode))
-    }
-
-    return acc
-  }, [])
-}
-
-/**
- * Builds an optimized sequence of segments from a string,
- * which will produce the shortest possible bitstream.
- *
- * @param  {String} data    Input string
- * @param  {Number} version QR Code version
- * @return {Array}          Array of segments
- */
-exports.fromString = function fromString (data, version) {
-  var segs = getSegmentsFromString(data, Utils.isKanjiModeEnabled())
-
-  var nodes = buildNodes(segs)
-  var graph = buildGraph(nodes, version)
-  var path = dijkstra.find_path(graph.map, 'start', 'end')
-
-  var optimizedSegs = []
-  for (var i = 1; i < path.length - 1; i++) {
-    optimizedSegs.push(graph.table[path[i]].node)
-  }
-
-  return exports.fromArray(mergeSegments(optimizedSegs))
-}
-
-/**
- * Splits a string in various segments with the modes which
- * best represent their content.
- * The produced segments are far from being optimized.
- * The output of this function is only used to estimate a QR Code version
- * which may contain the data.
- *
- * @param  {string} data Input string
- * @return {Array}       Array of segments
- */
-exports.rawSplit = function rawSplit (data) {
-  return exports.fromArray(
-    getSegmentsFromString(data, Utils.isKanjiModeEnabled())
-  )
-}
-
-
-/***/ }),
-/* 233 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mode = __webpack_require__(21)
-
-function NumericData (data) {
-  this.mode = Mode.NUMERIC
-  this.data = data.toString()
-}
-
-NumericData.getBitsLength = function getBitsLength (length) {
-  return 10 * Math.floor(length / 3) + ((length % 3) ? ((length % 3) * 3 + 1) : 0)
-}
-
-NumericData.prototype.getLength = function getLength () {
-  return this.data.length
-}
-
-NumericData.prototype.getBitsLength = function getBitsLength () {
-  return NumericData.getBitsLength(this.data.length)
-}
-
-NumericData.prototype.write = function write (bitBuffer) {
-  var i, group, value
-
-  // The input data string is divided into groups of three digits,
-  // and each group is converted to its 10-bit binary equivalent.
-  for (i = 0; i + 3 <= this.data.length; i += 3) {
-    group = this.data.substr(i, 3)
-    value = parseInt(group, 10)
-
-    bitBuffer.put(value, 10)
-  }
-
-  // If the number of input digits is not an exact multiple of three,
-  // the final one or two digits are converted to 4 or 7 bits respectively.
-  var remainingNum = this.data.length - i
-  if (remainingNum > 0) {
-    group = this.data.substr(i)
-    value = parseInt(group, 10)
-
-    bitBuffer.put(value, remainingNum * 3 + 1)
-  }
-}
-
-module.exports = NumericData
-
-
-/***/ }),
-/* 234 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mode = __webpack_require__(21)
-
-/**
- * Array of characters available in alphanumeric mode
- *
- * As per QR Code specification, to each character
- * is assigned a value from 0 to 44 which in this case coincides
- * with the array index
- *
- * @type {Array}
- */
-var ALPHA_NUM_CHARS = [
-  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-  ' ', '$', '%', '*', '+', '-', '.', '/', ':'
-]
-
-function AlphanumericData (data) {
-  this.mode = Mode.ALPHANUMERIC
-  this.data = data
-}
-
-AlphanumericData.getBitsLength = function getBitsLength (length) {
-  return 11 * Math.floor(length / 2) + 6 * (length % 2)
-}
-
-AlphanumericData.prototype.getLength = function getLength () {
-  return this.data.length
-}
-
-AlphanumericData.prototype.getBitsLength = function getBitsLength () {
-  return AlphanumericData.getBitsLength(this.data.length)
-}
-
-AlphanumericData.prototype.write = function write (bitBuffer) {
-  var i
-
-  // Input data characters are divided into groups of two characters
-  // and encoded as 11-bit binary codes.
-  for (i = 0; i + 2 <= this.data.length; i += 2) {
-    // The character value of the first character is multiplied by 45
-    var value = ALPHA_NUM_CHARS.indexOf(this.data[i]) * 45
-
-    // The character value of the second digit is added to the product
-    value += ALPHA_NUM_CHARS.indexOf(this.data[i + 1])
-
-    // The sum is then stored as 11-bit binary number
-    bitBuffer.put(value, 11)
-  }
-
-  // If the number of input data characters is not a multiple of two,
-  // the character value of the final character is encoded as a 6-bit binary number.
-  if (this.data.length % 2) {
-    bitBuffer.put(ALPHA_NUM_CHARS.indexOf(this.data[i]), 6)
-  }
-}
-
-module.exports = AlphanumericData
-
-
-/***/ }),
-/* 235 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Buffer = __webpack_require__(26)
-var Mode = __webpack_require__(21)
-
-function ByteData (data) {
-  this.mode = Mode.BYTE
-  this.data = new Buffer(data)
-}
-
-ByteData.getBitsLength = function getBitsLength (length) {
-  return length * 8
-}
-
-ByteData.prototype.getLength = function getLength () {
-  return this.data.length
-}
-
-ByteData.prototype.getBitsLength = function getBitsLength () {
-  return ByteData.getBitsLength(this.data.length)
-}
-
-ByteData.prototype.write = function (bitBuffer) {
-  for (var i = 0, l = this.data.length; i < l; i++) {
-    bitBuffer.put(this.data[i], 8)
-  }
-}
-
-module.exports = ByteData
-
-
-/***/ }),
-/* 236 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mode = __webpack_require__(21)
-var Utils = __webpack_require__(20)
-
-function KanjiData (data) {
-  this.mode = Mode.KANJI
-  this.data = data
-}
-
-KanjiData.getBitsLength = function getBitsLength (length) {
-  return length * 13
-}
-
-KanjiData.prototype.getLength = function getLength () {
-  return this.data.length
-}
-
-KanjiData.prototype.getBitsLength = function getBitsLength () {
-  return KanjiData.getBitsLength(this.data.length)
-}
-
-KanjiData.prototype.write = function (bitBuffer) {
-  var i
-
-  // In the Shift JIS system, Kanji characters are represented by a two byte combination.
-  // These byte values are shifted from the JIS X 0208 values.
-  // JIS X 0208 gives details of the shift coded representation.
-  for (i = 0; i < this.data.length; i++) {
-    var value = Utils.toSJIS(this.data[i])
-
-    // For characters with Shift JIS values from 0x8140 to 0x9FFC:
-    if (value >= 0x8140 && value <= 0x9FFC) {
-      // Subtract 0x8140 from Shift JIS value
-      value -= 0x8140
-
-    // For characters with Shift JIS values from 0xE040 to 0xEBBF
-    } else if (value >= 0xE040 && value <= 0xEBBF) {
-      // Subtract 0xC140 from Shift JIS value
-      value -= 0xC140
-    } else {
-      throw new Error(
-        'Invalid SJIS character: ' + this.data[i] + '\n' +
-        'Make sure your charset is UTF-8')
-    }
-
-    // Multiply most significant byte of result by 0xC0
-    // and add least significant byte to product
-    value = (((value >>> 8) & 0xff) * 0xC0) + (value & 0xff)
-
-    // Convert result to a 13-bit binary string
-    bitBuffer.put(value, 13)
-  }
-}
-
-module.exports = KanjiData
-
-
-/***/ }),
-/* 237 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/******************************************************************************
- * Created 2008-08-19.
- *
- * Dijkstra path-finding functions. Adapted from the Dijkstar Python project.
- *
- * Copyright (C) 2008
- *   Wyatt Baldwin <self@wyattbaldwin.com>
- *   All rights reserved
- *
- * Licensed under the MIT license.
- *
- *   http://www.opensource.org/licenses/mit-license.php
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *****************************************************************************/
-var dijkstra = {
-  single_source_shortest_paths: function(graph, s, d) {
-    // Predecessor map for each node that has been encountered.
-    // node ID => predecessor node ID
-    var predecessors = {};
-
-    // Costs of shortest paths from s to all nodes encountered.
-    // node ID => cost
-    var costs = {};
-    costs[s] = 0;
-
-    // Costs of shortest paths from s to all nodes encountered; differs from
-    // `costs` in that it provides easy access to the node that currently has
-    // the known shortest path from s.
-    // XXX: Do we actually need both `costs` and `open`?
-    var open = dijkstra.PriorityQueue.make();
-    open.push(s, 0);
-
-    var closest,
-        u, v,
-        cost_of_s_to_u,
-        adjacent_nodes,
-        cost_of_e,
-        cost_of_s_to_u_plus_cost_of_e,
-        cost_of_s_to_v,
-        first_visit;
-    while (!open.empty()) {
-      // In the nodes remaining in graph that have a known cost from s,
-      // find the node, u, that currently has the shortest path from s.
-      closest = open.pop();
-      u = closest.value;
-      cost_of_s_to_u = closest.cost;
-
-      // Get nodes adjacent to u...
-      adjacent_nodes = graph[u] || {};
-
-      // ...and explore the edges that connect u to those nodes, updating
-      // the cost of the shortest paths to any or all of those nodes as
-      // necessary. v is the node across the current edge from u.
-      for (v in adjacent_nodes) {
-        if (adjacent_nodes.hasOwnProperty(v)) {
-          // Get the cost of the edge running from u to v.
-          cost_of_e = adjacent_nodes[v];
-
-          // Cost of s to u plus the cost of u to v across e--this is *a*
-          // cost from s to v that may or may not be less than the current
-          // known cost to v.
-          cost_of_s_to_u_plus_cost_of_e = cost_of_s_to_u + cost_of_e;
-
-          // If we haven't visited v yet OR if the current known cost from s to
-          // v is greater than the new cost we just found (cost of s to u plus
-          // cost of u to v across e), update v's cost in the cost list and
-          // update v's predecessor in the predecessor list (it's now u).
-          cost_of_s_to_v = costs[v];
-          first_visit = (typeof costs[v] === 'undefined');
-          if (first_visit || cost_of_s_to_v > cost_of_s_to_u_plus_cost_of_e) {
-            costs[v] = cost_of_s_to_u_plus_cost_of_e;
-            open.push(v, cost_of_s_to_u_plus_cost_of_e);
-            predecessors[v] = u;
-          }
-        }
-      }
-    }
-
-    if (typeof d !== 'undefined' && typeof costs[d] === 'undefined') {
-      var msg = ['Could not find a path from ', s, ' to ', d, '.'].join('');
-      throw new Error(msg);
-    }
-
-    return predecessors;
-  },
-
-  extract_shortest_path_from_predecessor_list: function(predecessors, d) {
-    var nodes = [];
-    var u = d;
-    var predecessor;
-    while (u) {
-      nodes.push(u);
-      predecessor = predecessors[u];
-      u = predecessors[u];
-    }
-    nodes.reverse();
-    return nodes;
-  },
-
-  find_path: function(graph, s, d) {
-    var predecessors = dijkstra.single_source_shortest_paths(graph, s, d);
-    return dijkstra.extract_shortest_path_from_predecessor_list(
-      predecessors, d);
-  },
-
-  /**
-   * A very naive priority queue implementation.
-   */
-  PriorityQueue: {
-    make: function (opts) {
-      var T = dijkstra.PriorityQueue,
-          t = {},
-          key;
-      opts = opts || {};
-      for (key in T) {
-        if (T.hasOwnProperty(key)) {
-          t[key] = T[key];
-        }
-      }
-      t.queue = [];
-      t.sorter = opts.sorter || T.default_sorter;
-      return t;
-    },
-
-    default_sorter: function (a, b) {
-      return a.cost - b.cost;
-    },
-
-    /**
-     * Add a new item to the queue and ensure the highest priority element
-     * is at the front of the queue.
-     */
-    push: function (value, cost) {
-      var item = {value: value, cost: cost};
-      this.queue.push(item);
-      this.queue.sort(this.sorter);
-    },
-
-    /**
-     * Return the highest priority element in the queue.
-     */
-    pop: function () {
-      return this.queue.shift();
-    },
-
-    empty: function () {
-      return this.queue.length === 0;
-    }
-  }
-};
-
-
-// node.js module exports
-if (true) {
-  module.exports = dijkstra;
-}
-
-
-/***/ }),
-/* 238 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Utils = __webpack_require__(99)
-
-function clearCanvas (ctx, canvas, size) {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-  if (!canvas.style) canvas.style = {}
-  canvas.height = size
-  canvas.width = size
-  canvas.style.height = size + 'px'
-  canvas.style.width = size + 'px'
-}
-
-function getCanvasElement () {
-  try {
-    return document.createElement('canvas')
-  } catch (e) {
-    throw new Error('You need to specify a canvas element')
-  }
-}
-
-exports.render = function render (qrData, canvas, options) {
-  var opts = options
-  var canvasEl = canvas
-
-  if (typeof opts === 'undefined' && (!canvas || !canvas.getContext)) {
-    opts = canvas
-    canvas = undefined
-  }
-
-  if (!canvas) {
-    canvasEl = getCanvasElement()
-  }
-
-  opts = Utils.getOptions(opts)
-  var size = (qrData.modules.size + opts.margin * 2) * opts.scale
-
-  var ctx = canvasEl.getContext('2d')
-  var image = ctx.createImageData(size, size)
-  Utils.qrToImageData(image.data, qrData, opts.margin, opts.scale, opts.color)
-
-  clearCanvas(ctx, canvasEl, size)
-  ctx.putImageData(image, 0, 0)
-
-  return canvasEl
-}
-
-exports.renderToDataURL = function renderToDataURL (qrData, canvas, options) {
-  var opts = options
-
-  if (typeof opts === 'undefined' && (!canvas || !canvas.getContext)) {
-    opts = canvas
-    canvas = undefined
-  }
-
-  if (!opts) opts = {}
-
-  var canvasEl = exports.render(qrData, canvas, opts)
-
-  var type = opts.type || 'image/png'
-  var rendererOpts = opts.rendererOpts || {}
-
-  return canvasEl.toDataURL(type, rendererOpts.quality)
-}
-
-
-/***/ }),
-/* 239 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Utils = __webpack_require__(99)
-
-function getColorAttrib (color) {
-  return 'fill="rgb(' + [color.r, color.g, color.b].join(',') + ')" ' +
-    'fill-opacity="' + (color.a / 255).toFixed(2) + '"'
-}
-
-exports.render = function render (qrData, options) {
-  var opts = Utils.getOptions(options)
-  var size = qrData.modules.size
-  var data = qrData.modules.data
-  var qrcodesize = (size + opts.margin * 2) * opts.scale
-
-  var xmlStr = '<?xml version="1.0" encoding="utf-8"?>\n'
-  xmlStr += '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n'
-
-  xmlStr += '<svg version="1.1" baseProfile="full"'
-  xmlStr += ' width="' + qrcodesize + '" height="' + qrcodesize + '"'
-  xmlStr += ' viewBox="0 0 ' + qrcodesize + ' ' + qrcodesize + '"'
-  xmlStr += ' xmlns="http://www.w3.org/2000/svg"'
-  xmlStr += ' xmlns:xlink="http://www.w3.org/1999/xlink"'
-  xmlStr += ' xmlns:ev="http://www.w3.org/2001/xml-events">\n'
-
-  xmlStr += '<rect x="0" y="0" width="' + qrcodesize + '" height="' + qrcodesize + '" ' + getColorAttrib(opts.color.light) + ' />\n'
-  xmlStr += '<defs><rect id="p" width="' + opts.scale + '" height="' + opts.scale + '" /></defs>\n'
-  xmlStr += '<g ' + getColorAttrib(opts.color.dark) + '>\n'
-
-  for (var i = 0; i < size; i++) {
-    for (var j = 0; j < size; j++) {
-      if (!data[i * size + j]) continue
-
-      var x = (opts.margin + j) * opts.scale
-      var y = (opts.margin + i) * opts.scale
-      xmlStr += '<use x="' + x + '" y="' + y + '" xlink:href="#p" />\n'
-    }
-  }
-
-  xmlStr += '</g>\n'
-  xmlStr += '</svg>'
-
-  return xmlStr
-}
-
-
-/***/ }),
-/* 240 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(9);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(10);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var TwoFAVerificationForm = function (_React$Component) {
-    _inherits(TwoFAVerificationForm, _React$Component);
-
-    function TwoFAVerificationForm(props) {
-        _classCallCheck(this, TwoFAVerificationForm);
-
-        var _this = _possibleConstructorReturn(this, (TwoFAVerificationForm.__proto__ || Object.getPrototypeOf(TwoFAVerificationForm)).call(this, props));
-
-        _this.state = {
-            twofa_enabled: _this.props.user.record.twofa_enabled == true ? true : false,
-            response_message: '',
-            authentication_requested: false,
-            two_factor_completed: _this.props.user.record.twofa_completed == true ? true : false,
-            qrcode_url: '',
-            secret_key: _this.props.user.record.secret_key,
-            verification_code: '',
-            verification_response: ''
-        };
-        _this.handleUpdate = _this.handleUpdate.bind(_this);
-        _this.verifyCode = _this.verifyCode.bind(_this);
-
-        return _this;
-    }
-
-    _createClass(TwoFAVerificationForm, [{
-        key: 'handleUpdate',
-        value: function handleUpdate(event) {
-            this.setState({
-                verification_code: event.target.value
-            });
-        }
-    }, {
-        key: 'verifyCode',
-        value: function verifyCode(event) {
-            event.preventDefault();
-            var axios = __webpack_require__(7);
-            var that = this;
-
-            axios.post('/verify_code', {
-                verification_code: this.state.verification_code,
-                id: this.props.user._id
-            }).then(function (response) {
-                //console.log(response);
-                if (response.data.status == 'success') {
-                    window.location.replace('/');
-                } else {
-                    toastr.error(response.data.message);
-                }
-            }).catch(function (error) {
-                console.log(error);
-                toastr.error('There was an error');
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-
-            var verification_form = _react2.default.createElement(
-                'form',
-                null,
-                _react2.default.createElement(
-                    'div',
-                    { className: 'row r-2' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'offset-xs-0 col-xs-12 offset-sm-4 col-sm-4' },
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            'Please put in your 6-digit authentication code.'
-                        ),
-                        _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.verification_code, onChange: this.handleUpdate.bind(this) }),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement(
-                            'button',
-                            { type: 'submit', className: 'btn btn-primary', onClick: this.verifyCode.bind(this) },
-                            'Verify code'
-                        )
-                    )
-                )
-            );
-
-            return _react2.default.createElement(
-                'div',
-                null,
-                verification_form
-            );
-        }
-    }]);
-
-    return TwoFAVerificationForm;
-}(_react2.default.Component);
-
-;
-
-var TwofaVerificationExport = function TwofaVerificationExport() {
-    if (document.getElementById('2fa-verification-area') != null) {
-
-        var element = document.getElementById('props');
-        var props = JSON.parse(element.getAttribute('data-props'));
-
-        (0, _reactDom.render)(_react2.default.createElement(TwoFAVerificationForm, { user: props.user, messages: props.messages }), document.getElementById('2fa-verification-area'));
-    }
-};
-
-module.exports = TwofaVerificationExport();
-
-/***/ }),
-/* 241 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(9);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(10);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var axios = __webpack_require__(7);
-
-var AccountComponent = function (_React$Component) {
-    _inherits(AccountComponent, _React$Component);
-
-    function AccountComponent(props) {
-        _classCallCheck(this, AccountComponent);
-
-        var _this = _possibleConstructorReturn(this, (AccountComponent.__proto__ || Object.getPrototypeOf(AccountComponent)).call(this, props));
-
-        _this.state = {
-            user: _this.props.user,
-            email: _this.props.user.record.email,
-            firstname: _this.props.user.record.firstname,
-            lastname: _this.props.user.record.lastname,
-            account_editing_mode: false,
-            saved_email: _this.props.user.record.email,
-            saved_firstname: _this.props.user.record.firstname,
-            saved_lastname: _this.props.user.record.lastname,
-            submitted: false
-        };
-
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.switch_mode = _this.switch_mode.bind(_this);
-        _this.updateAccountInfo = _this.updateAccountInfo.bind(_this);
-        return _this;
-    }
-
-    _createClass(AccountComponent, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {}
-    }, {
-        key: 'handleChange',
-        value: function handleChange(a_field, event) {
-            if (a_field == 'email') {
-                this.setState({ email: event.target.value });
-            } else if (a_field == 'firstname') {
-                this.setState({ firstname: event.target.value });
-            } else if (a_field == 'lastname') {
-                this.setState({ lastname: event.target.value });
-            }
-        }
-    }, {
-        key: 'switch_mode',
-        value: function switch_mode(mode_type, event) {
-            event.preventDefault();
-            if (mode_type == 'account') {
-                this.setState({ account_editing_mode: !this.state.account_editing_mode });
-            }
-        }
-    }, {
-        key: 'updateAccountInfo',
-        value: function updateAccountInfo(event) {
-            event.preventDefault();
-            var page = this;
-
-            this.setState({
-                submitted: true
-            });
-
-            axios.put('/account', {
-                account: {
-                    firstname: this.state.firstname,
-                    lastname: this.state.lastname,
-                    email: this.state.email,
-                    api_key: this.props.user.api_key,
-                    public_key: this.props.public_key
-                }
-            }).then(function (response) {
-                if (response.data.success == true) {
-                    page.setState({
-                        account_editing_mode: false,
-                        saved_email: page.state.email,
-                        saved_firstname: page.state.firstname,
-                        saved_lastname: page.state.lastname,
-                        submitted: false
-                    });
-                    toastr.success('It will take a few minutes for the changes to reflect in your end');
-                    toastr.success('Account update pushed to the blockchain for approval.');
-                } else {
-                    if (response.data.validations != null && response.data.validations.messages != null) {
-                        response.data.validations.messages.map(function (message) {
-                            toastr.error(message);
-                        });
-                    }
-                    toastr.error(response.data.message);
-                }
-            }).catch(function (error) {
-                toastr.error('There was an error');
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-
-            return _react2.default.createElement(
-                'div',
-                { className: '' },
-                _react2.default.createElement(
-                    'h1',
-                    { className: 'page-title text-center' },
-                    'My Account'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'row' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'card card-register mx-auto my-4' },
-                        _react2.default.createElement(
-                            'h3',
-                            { className: 'card-header bg-dark text-white' },
-                            'Account information'
-                        ),
-                        this.state.account_editing_mode == true ? _react2.default.createElement(
-                            'form',
-                            { className: 'card-body' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'form-row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'form-group' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-md-6 col-lg-6 p-3' },
-                                        _react2.default.createElement(
-                                            'label',
-                                            { htmlFor: 'inputFirstName' },
-                                            'First Name'
-                                        ),
-                                        _react2.default.createElement('input', { value: this.state.firstname, onChange: this.handleChange.bind(this, 'firstname'), type: 'name', className: 'form-control', id: 'inputFirstName' })
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-md-6 col-lg-6 p-3' },
-                                        _react2.default.createElement(
-                                            'label',
-                                            { htmlFor: 'inputLastName' },
-                                            'Last Name'
-                                        ),
-                                        _react2.default.createElement('input', { value: this.state.lastname, onChange: this.handleChange.bind(this, 'lastname'), type: 'name', className: 'form-control', id: 'inputLastName' })
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'form-group' },
-                                _react2.default.createElement(
-                                    'label',
-                                    { htmlFor: 'inputEmailAddress' },
-                                    'Email Address'
-                                ),
-                                _react2.default.createElement('input', { value: this.state.email, onChange: this.handleChange.bind(this, 'email'), type: 'email', className: 'form-control', id: 'inputEmailAddress' })
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'form-row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'col' },
-                                    _react2.default.createElement(
-                                        'button',
-                                        { type: 'button', className: 'btn btn-success', onClick: this.updateAccountInfo.bind(this), disabled: this.state.submitted },
-                                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
-                                        ' ',
-                                        this.state.submitted ? 'Saving...' : 'Save'
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'col text-right' },
-                                    _react2.default.createElement(
-                                        'button',
-                                        { type: 'button', className: 'btn btn-danger ml-auto', onClick: this.switch_mode.bind(this, 'account') },
-                                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
-                                        '  Cancel'
-                                    )
-                                )
-                            )
-                        ) : _react2.default.createElement(
-                            'form',
-                            { className: 'card-body' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'form-row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'form-group col-md-6' },
-                                    _react2.default.createElement(
-                                        'label',
-                                        { htmlFor: 'inputFirstName' },
-                                        'First Name'
-                                    ),
-                                    _react2.default.createElement('input', { value: this.state.saved_firstname, type: 'name', className: 'form-control', id: 'inputFirstName', disabled: true })
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'form-group col-md-6' },
-                                    _react2.default.createElement(
-                                        'label',
-                                        { htmlFor: 'inputLastName' },
-                                        'Last Name'
-                                    ),
-                                    _react2.default.createElement('input', { value: this.state.saved_lastname, type: 'name', className: 'form-control', id: 'inputLastName', disabled: true })
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'form-group' },
-                                _react2.default.createElement(
-                                    'label',
-                                    { htmlFor: 'inputEmailAddress' },
-                                    'Email Address'
-                                ),
-                                _react2.default.createElement('input', { value: this.state.saved_email, type: 'email', className: 'form-control', id: 'inputEmailAddress', disabled: true })
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'form-row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'col' },
-                                    _react2.default.createElement(
-                                        'button',
-                                        { type: 'button', className: 'btn btn-default', onClick: this.switch_mode.bind(this, 'account') },
-                                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
-                                        ' Edit'
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'col text-right' },
-                                    _react2.default.createElement(
-                                        'button',
-                                        { type: 'button', className: 'btn btn-default ml-auto', disabled: true },
-                                        'Cancel'
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return AccountComponent;
-}(_react2.default.Component);
-
-;
-
-var AccountExport = function AccountExport() {
-    if (document.getElementById('account-section') != null) {
-
-        var element = document.getElementById('props');
-        var props = JSON.parse(element.getAttribute('data-props'));
-
-        (0, _reactDom.render)(_react2.default.createElement(AccountComponent, { user: props.user, messages: props.messages }), document.getElementById('account-section'));
-    }
-};
-
-module.exports = AccountExport();
-
-/***/ }),
-/* 242 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(9);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(10);
-
-var _axios = __webpack_require__(7);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _toastr = __webpack_require__(100);
-
-var _toastr2 = _interopRequireDefault(_toastr);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var DataRow = function (_React$Component) {
-  _inherits(DataRow, _React$Component);
-
-  function DataRow(props) {
-    _classCallCheck(this, DataRow);
-
-    var _this = _possibleConstructorReturn(this, (DataRow.__proto__ || Object.getPrototypeOf(DataRow)).call(this, props));
-
-    _this.state = {
-      record: _this.props.record,
-      params: _this.props.params
-    };
-    return _this;
-  }
-
-  _createClass(DataRow, [{
-    key: 'render',
-    value: function render() {
-      var self = this;
-
-      var get_data = function get_data(record, param) {
-        return _react2.default.createElement(
-          'td',
-          null,
-          record[param]
-        );
-      };
-
-      var data = self.state.params.map(function (param) {
-        return get_data(self.state.record.versions[0], param);
-      });
-
-      return _react2.default.createElement(
-        'tr',
-        null,
-        data
-      );
-    }
-  }]);
-
-  return DataRow;
-}(_react2.default.Component);
-
-var DataCard = function (_React$Component2) {
-  _inherits(DataCard, _React$Component2);
-
-  function DataCard(props) {
-    _classCallCheck(this, DataCard);
-
-    var _this2 = _possibleConstructorReturn(this, (DataCard.__proto__ || Object.getPrototypeOf(DataCard)).call(this, props));
-
-    _this2.state = {
-      record: _this2.props.record,
-      params: _this2.props.params
-    };
-    return _this2;
-  }
-
-  _createClass(DataCard, [{
-    key: 'render',
-    value: function render() {
-      var self = this;
-      var get_data = function get_data(record, param) {
-        return _react2.default.createElement(
-          'p',
-          null,
-          _react2.default.createElement(
-            'strong',
-            null,
-            param
-          ),
-          ': ',
-          String(record[param])
-        );
-      };
-
-      var data = self.state.params.map(function (param) {
-        return param !== 'id' ? get_data(self.state.record.versions[0], param) : null;
-      });
-
-      return _react2.default.createElement(
-        'div',
-        { className: 'card' },
-        _react2.default.createElement(
-          'h3',
-          null,
-          'Id#',
-          this.state.record.id
-        ),
-        data
-      );
-    }
-  }]);
-
-  return DataCard;
-}(_react2.default.Component);
-
-var DataComponent = function (_React$Component3) {
-  _inherits(DataComponent, _React$Component3);
-
-  function DataComponent(props) {
-    _classCallCheck(this, DataComponent);
-
-    var _this3 = _possibleConstructorReturn(this, (DataComponent.__proto__ || Object.getPrototypeOf(DataComponent)).call(this, props));
-
-    _this3.state = {
-      records: [],
-      params: [],
-      table: 'users',
-      tables: [],
-      application: {},
-      loading: true,
-      table_display: false
-    };
-    return _this3;
-  }
-
-  _createClass(DataComponent, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.loadAppData();
-      this.loadTableData(this.state.table);
-    }
-  }, {
-    key: 'loadAppData',
-    value: function loadAppData() {
-      var page = this;
-
-      var config = {
-        headers: {
-          user_api_key: this.props.user ? this.props.user.record.api_key : null,
-          user_public_key: this.props.public_key
-        }
-      };
-
-      _axios2.default.get('/admin/api/app', config).then(function (response) {
-        if (response.data.success) {
-          page.setState({
-            application: response.data.application,
-            tables: response.data.tables
-          });
-        } else {
-          _toastr2.default.error("Error obtaining your app's data");
-        }
-      }).catch(function (error) {
-        console.log(error);
-        _toastr2.default.error('There was an error');
-      });
-    }
-  }, {
-    key: 'loadTableData',
-    value: function loadTableData(table) {
-      var page = this;
-      var config = {
-        headers: {
-          user_api_key: this.props.user ? this.props.user.record.api_key : null,
-          user_public_key: this.props.public_key
-        }
-      };
-
-      page.setState({
-        loading: true
-      });
-
-      _axios2.default.get('/admin/api/' + table, config).then(function (response) {
-        console.log(response.data);
-        if (response.data.success) {
-          page.setState({
-            records: response.data.records,
-            params: response.data.params,
-            loading: false
-          });
-        } else {
-          page.setState({
-            records: [],
-            params: [],
-            loading: false
-          });
-
-          if (response.data.error && response.data.error === 'table-not-found' && page.state.tables.length > 0) {
-            _toastr2.default.error('Table in database but app has no model file for it!');
-          } else {
-            _toastr2.default.error('No table history');
-          }
-        }
-      }).catch(function (error) {
-        console.log(error);
-        _toastr2.default.error('There was an error');
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this4 = this;
-
-      var self = this;
-
-      var headers = self.state.params.map(function (param) {
-        return _react2.default.createElement(
-          'th',
-          null,
-          param
-        );
-      });
-
-      var body = self.state.records.map(function (record) {
-        return _react2.default.createElement(DataRow, { record: record, params: self.state.params, key: record.id });
-      });
-
-      var table_version = _react2.default.createElement(
-        'div',
-        { className: 'container-fluid' },
-        _react2.default.createElement(
-          'table',
-          { className: 'table table-striped' },
-          _react2.default.createElement(
-            'thead',
-            null,
-            _react2.default.createElement(
-              'tr',
-              null,
-              headers
-            )
-          ),
-          _react2.default.createElement(
-            'tbody',
-            null,
-            body
-          )
-        )
-      );
-
-      var card_version = self.state.records.map(function (record) {
-        return _react2.default.createElement(DataCard, { record: record, params: self.state.params, key: record.id });
-      });
-
-      var tables = this.state.tables.map(function (table) {
-        return _react2.default.createElement(
-          'button',
-          { className: 'btn btn-link', onClick: _this4.loadTableData.bind(_this4, table) },
-          table
-        );
-      });
-
-      var data_display = this.state.table_display ? table_version : card_version;
-
-      return _react2.default.createElement(
-        'div',
-        { className: 'container-fluid' },
-        _react2.default.createElement(
-          'div',
-          { className: 'container text-center' },
-          tables
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'text-center' },
-          _react2.default.createElement(
-            'h2',
-            null,
-            'Current table: ',
-            this.state.table
-          )
-        ),
-        this.state.loading ? _react2.default.createElement(
-          'p',
-          { className: 'alert alert-info' },
-          'Loading'
-        ) : data_display
-      );
-    }
-  }]);
-
-  return DataComponent;
-}(_react2.default.Component);
-
-var DataComponentExport = function DataComponentExport() {
-  if (document.getElementById('app-data') != null) {
-    var element = document.getElementById('props');
-    var props = JSON.parse(element.getAttribute('data-props'));
-
-    (0, _reactDom.render)(_react2.default.createElement(DataComponent, {
-      user: props.user,
-      validation: props.validation,
-      public_key: props.public_key
-    }), document.getElementById('app-data'));
-  }
-};
-
-module.exports = DataComponentExport();
-
-/***/ }),
-/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -38804,13 +35975,2848 @@ return jQuery;
 
 
 /***/ }),
-/* 244 */
+/* 222 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
 	throw new Error("define cannot be used indirect");
 };
 
+
+/***/ }),
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var QRCode = __webpack_require__(224)
+var CanvasRenderer = __webpack_require__(240)
+var SvgRenderer = __webpack_require__(241)
+
+function renderCanvas (renderFunc, canvas, text, opts, cb) {
+  var argsNum = arguments.length - 1
+  if (argsNum < 2) {
+    throw new Error('Too few arguments provided')
+  }
+
+  if (argsNum === 2) {
+    cb = text
+    text = canvas
+    canvas = opts = undefined
+  } else if (argsNum === 3) {
+    if (canvas.getContext && typeof cb === 'undefined') {
+      cb = opts
+      opts = undefined
+    } else {
+      cb = opts
+      opts = text
+      text = canvas
+      canvas = undefined
+    }
+  }
+
+  if (typeof cb !== 'function') {
+    throw new Error('Callback required as last argument')
+  }
+
+  try {
+    var data = QRCode.create(text, opts)
+    cb(null, renderFunc(data, canvas, opts))
+  } catch (e) {
+    cb(e)
+  }
+}
+
+exports.create = QRCode.create
+exports.toCanvas = renderCanvas.bind(null, CanvasRenderer.render)
+exports.toDataURL = renderCanvas.bind(null, CanvasRenderer.renderToDataURL)
+
+// only svg for now.
+exports.toString = renderCanvas.bind(null, function (data, _, opts) {
+  return SvgRenderer.render(data, opts)
+})
+
+/**
+ * Legacy API
+ */
+exports.qrcodedraw = function () {
+  return {
+    draw: exports.toCanvas
+  }
+}
+
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Buffer = __webpack_require__(26)
+var Utils = __webpack_require__(20)
+var ECLevel = __webpack_require__(59)
+var BitBuffer = __webpack_require__(225)
+var BitMatrix = __webpack_require__(226)
+var AlignmentPattern = __webpack_require__(227)
+var FinderPattern = __webpack_require__(228)
+var MaskPattern = __webpack_require__(229)
+var ECCode = __webpack_require__(97)
+var ReedSolomonEncoder = __webpack_require__(230)
+var Version = __webpack_require__(98)
+var FormatInfo = __webpack_require__(233)
+var Mode = __webpack_require__(21)
+var Segments = __webpack_require__(234)
+var isArray = __webpack_require__(58)
+
+/**
+ * QRCode for JavaScript
+ *
+ * modified by Ryan Day for nodejs support
+ * Copyright (c) 2011 Ryan Day
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+//---------------------------------------------------------------------
+// QRCode for JavaScript
+//
+// Copyright (c) 2009 Kazuhiko Arase
+//
+// URL: http://www.d-project.com/
+//
+// Licensed under the MIT license:
+//   http://www.opensource.org/licenses/mit-license.php
+//
+// The word "QR Code" is registered trademark of
+// DENSO WAVE INCORPORATED
+//   http://www.denso-wave.com/qrcode/faqpatent-e.html
+//
+//---------------------------------------------------------------------
+*/
+
+/**
+ * Add finder patterns bits to matrix
+ *
+ * @param  {BitMatrix} matrix  Modules matrix
+ * @param  {Number}    version QR Code version
+ */
+function setupFinderPattern (matrix, version) {
+  var size = matrix.size
+  var pos = FinderPattern.getPositions(version)
+
+  for (var i = 0; i < pos.length; i++) {
+    var row = pos[i][0]
+    var col = pos[i][1]
+
+    for (var r = -1; r <= 7; r++) {
+      if (row + r <= -1 || size <= row + r) continue
+
+      for (var c = -1; c <= 7; c++) {
+        if (col + c <= -1 || size <= col + c) continue
+
+        if ((r >= 0 && r <= 6 && (c === 0 || c === 6)) ||
+          (c >= 0 && c <= 6 && (r === 0 || r === 6)) ||
+          (r >= 2 && r <= 4 && c >= 2 && c <= 4)) {
+          matrix.set(row + r, col + c, true, true)
+        } else {
+          matrix.set(row + r, col + c, false, true)
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Add timing pattern bits to matrix
+ *
+ * Note: this function must be called before {@link setupAlignmentPattern}
+ *
+ * @param  {BitMatrix} matrix Modules matrix
+ */
+function setupTimingPattern (matrix) {
+  var size = matrix.size
+
+  for (var r = 8; r < size - 8; r++) {
+    var value = r % 2 === 0
+    matrix.set(r, 6, value, true)
+    matrix.set(6, r, value, true)
+  }
+}
+
+/**
+ * Add alignment patterns bits to matrix
+ *
+ * Note: this function must be called after {@link setupTimingPattern}
+ *
+ * @param  {BitMatrix} matrix  Modules matrix
+ * @param  {Number}    version QR Code version
+ */
+function setupAlignmentPattern (matrix, version) {
+  var pos = AlignmentPattern.getPositions(version)
+
+  for (var i = 0; i < pos.length; i++) {
+    var row = pos[i][0]
+    var col = pos[i][1]
+
+    for (var r = -2; r <= 2; r++) {
+      for (var c = -2; c <= 2; c++) {
+        if (r === -2 || r === 2 || c === -2 || c === 2 ||
+          (r === 0 && c === 0)) {
+          matrix.set(row + r, col + c, true, true)
+        } else {
+          matrix.set(row + r, col + c, false, true)
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Add version info bits to matrix
+ *
+ * @param  {BitMatrix} matrix  Modules matrix
+ * @param  {Number}    version QR Code version
+ */
+function setupVersionInfo (matrix, version) {
+  var size = matrix.size
+  var bits = Version.getEncodedBits(version)
+  var row, col, mod
+
+  for (var i = 0; i < 18; i++) {
+    row = Math.floor(i / 3)
+    col = i % 3 + size - 8 - 3
+    mod = ((bits >> i) & 1) === 1
+
+    matrix.set(row, col, mod, true)
+    matrix.set(col, row, mod, true)
+  }
+}
+
+/**
+ * Add format info bits to matrix
+ *
+ * @param  {BitMatrix} matrix               Modules matrix
+ * @param  {ErrorCorrectionLevel}    errorCorrectionLevel Error correction level
+ * @param  {Number}    maskPattern          Mask pattern reference value
+ */
+function setupFormatInfo (matrix, errorCorrectionLevel, maskPattern) {
+  var size = matrix.size
+  var bits = FormatInfo.getEncodedBits(errorCorrectionLevel, maskPattern)
+  var i, mod
+
+  for (i = 0; i < 15; i++) {
+    mod = ((bits >> i) & 1) === 1
+
+    // vertical
+    if (i < 6) {
+      matrix.set(i, 8, mod, true)
+    } else if (i < 8) {
+      matrix.set(i + 1, 8, mod, true)
+    } else {
+      matrix.set(size - 15 + i, 8, mod, true)
+    }
+
+    // horizontal
+    if (i < 8) {
+      matrix.set(8, size - i - 1, mod, true)
+    } else if (i < 9) {
+      matrix.set(8, 15 - i - 1 + 1, mod, true)
+    } else {
+      matrix.set(8, 15 - i - 1, mod, true)
+    }
+  }
+
+  // fixed module
+  matrix.set(size - 8, 8, 1, true)
+}
+
+/**
+ * Add encoded data bits to matrix
+ *
+ * @param  {BitMatrix} matrix Modules matrix
+ * @param  {Buffer}    data   Data codewords
+ */
+function setupData (matrix, data) {
+  var size = matrix.size
+  var inc = -1
+  var row = size - 1
+  var bitIndex = 7
+  var byteIndex = 0
+
+  for (var col = size - 1; col > 0; col -= 2) {
+    if (col === 6) col--
+
+    while (true) {
+      for (var c = 0; c < 2; c++) {
+        if (!matrix.isReserved(row, col - c)) {
+          var dark = false
+
+          if (byteIndex < data.length) {
+            dark = (((data[byteIndex] >>> bitIndex) & 1) === 1)
+          }
+
+          matrix.set(row, col - c, dark)
+          bitIndex--
+
+          if (bitIndex === -1) {
+            byteIndex++
+            bitIndex = 7
+          }
+        }
+      }
+
+      row += inc
+
+      if (row < 0 || size <= row) {
+        row -= inc
+        inc = -inc
+        break
+      }
+    }
+  }
+}
+
+/**
+ * Create encoded codewords from data input
+ *
+ * @param  {Number}   version              QR Code version
+ * @param  {ErrorCorrectionLevel}   errorCorrectionLevel Error correction level
+ * @param  {ByteData} data                 Data input
+ * @return {Buffer}                        Buffer containing encoded codewords
+ */
+function createData (version, errorCorrectionLevel, segments) {
+  // Prepare data buffer
+  var buffer = new BitBuffer()
+
+  segments.forEach(function (data) {
+    // prefix data with mode indicator (4 bits)
+    buffer.put(data.mode.bit, 4)
+
+    // Prefix data with character count indicator.
+    // The character count indicator is a string of bits that represents the
+    // number of characters that are being encoded.
+    // The character count indicator must be placed after the mode indicator
+    // and must be a certain number of bits long, depending on the QR version
+    // and data mode
+    // @see {@link Mode.getCharCountIndicator}.
+    buffer.put(data.getLength(), Mode.getCharCountIndicator(data.mode, version))
+
+    // add binary data sequence to buffer
+    data.write(buffer)
+  })
+
+  // Calculate required number of bits
+  var totalCodewords = Utils.getSymbolTotalCodewords(version)
+  var ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel)
+  var dataTotalCodewordsBits = (totalCodewords - ecTotalCodewords) * 8
+
+  // Add a terminator.
+  // If the bit string is shorter than the total number of required bits,
+  // a terminator of up to four 0s must be added to the right side of the string.
+  // If the bit string is more than four bits shorter than the required number of bits,
+  // add four 0s to the end.
+  if (buffer.getLengthInBits() + 4 <= dataTotalCodewordsBits) {
+    buffer.put(0, 4)
+  }
+
+  // If the bit string is fewer than four bits shorter, add only the number of 0s that
+  // are needed to reach the required number of bits.
+
+  // After adding the terminator, if the number of bits in the string is not a multiple of 8,
+  // pad the string on the right with 0s to make the string's length a multiple of 8.
+  while (buffer.getLengthInBits() % 8 !== 0) {
+    buffer.putBit(0)
+  }
+
+  // Add pad bytes if the string is still shorter than the total number of required bits.
+  // Extend the buffer to fill the data capacity of the symbol corresponding to
+  // the Version and Error Correction Level by adding the Pad Codewords 11101100 (0xEC)
+  // and 00010001 (0x11) alternately.
+  var remainingByte = (dataTotalCodewordsBits - buffer.getLengthInBits()) / 8
+  for (var i = 0; i < remainingByte; i++) {
+    buffer.put(i % 2 ? 0x11 : 0xEC, 8)
+  }
+
+  return createCodewords(buffer, version, errorCorrectionLevel)
+}
+
+/**
+ * Encode input data with Reed-Solomon and return codewords with
+ * relative error correction bits
+ *
+ * @param  {BitBuffer} bitBuffer            Data to encode
+ * @param  {Number}    version              QR Code version
+ * @param  {ErrorCorrectionLevel} errorCorrectionLevel Error correction level
+ * @return {Buffer}                         Buffer containing encoded codewords
+ */
+function createCodewords (bitBuffer, version, errorCorrectionLevel) {
+  // Total codewords for this QR code version (Data + Error correction)
+  var totalCodewords = Utils.getSymbolTotalCodewords(version)
+
+  // Total number of error correction codewords
+  var ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel)
+
+  // Total number of data codewords
+  var dataTotalCodewords = totalCodewords - ecTotalCodewords
+
+  // Total number of blocks
+  var ecTotalBlocks = ECCode.getBlocksCount(version, errorCorrectionLevel)
+
+  // Calculate how many blocks each group should contain
+  var blocksInGroup2 = totalCodewords % ecTotalBlocks
+  var blocksInGroup1 = ecTotalBlocks - blocksInGroup2
+
+  var totalCodewordsInGroup1 = Math.floor(totalCodewords / ecTotalBlocks)
+
+  var dataCodewordsInGroup1 = Math.floor(dataTotalCodewords / ecTotalBlocks)
+  var dataCodewordsInGroup2 = dataCodewordsInGroup1 + 1
+
+  // Number of EC codewords is the same for both groups
+  var ecCount = totalCodewordsInGroup1 - dataCodewordsInGroup1
+
+  // Initialize a Reed-Solomon encoder with a generator polynomial of degree ecCount
+  var rs = new ReedSolomonEncoder(ecCount)
+
+  var offset = 0
+  var dcData = new Array(ecTotalBlocks)
+  var ecData = new Array(ecTotalBlocks)
+  var maxDataSize = 0
+  var buffer = new Buffer(bitBuffer.buffer)
+
+  // Divide the buffer into the required number of blocks
+  for (var b = 0; b < ecTotalBlocks; b++) {
+    var dataSize = b < blocksInGroup1 ? dataCodewordsInGroup1 : dataCodewordsInGroup2
+
+    // extract a block of data from buffer
+    dcData[b] = buffer.slice(offset, offset + dataSize)
+
+    // Calculate EC codewords for this data block
+    ecData[b] = rs.encode(dcData[b])
+
+    offset += dataSize
+    maxDataSize = Math.max(maxDataSize, dataSize)
+  }
+
+  // Create final data
+  // Interleave the data and error correction codewords from each block
+  var data = new Buffer(totalCodewords)
+  var index = 0
+  var i, r
+
+  // Add data codewords
+  for (i = 0; i < maxDataSize; i++) {
+    for (r = 0; r < ecTotalBlocks; r++) {
+      if (i < dcData[r].length) {
+        data[index++] = dcData[r][i]
+      }
+    }
+  }
+
+  // Apped EC codewords
+  for (i = 0; i < ecCount; i++) {
+    for (r = 0; r < ecTotalBlocks; r++) {
+      data[index++] = ecData[r][i]
+    }
+  }
+
+  return data
+}
+
+/**
+ * Build QR Code symbol
+ *
+ * @param  {String} data                 Input string
+ * @param  {Number} version              QR Code version
+ * @param  {ErrorCorretionLevel} errorCorrectionLevel Error level
+ * @return {Object}                      Object containing symbol data
+ */
+function createSymbol (data, version, errorCorrectionLevel) {
+  var segments
+
+  if (isArray(data)) {
+    segments = Segments.fromArray(data)
+  } else if (typeof data === 'string') {
+    var estimatedVersion = version
+
+    if (!estimatedVersion) {
+      var rawSegments = Segments.rawSplit(data)
+
+      // Estimate best version that can contain raw splitted segments
+      estimatedVersion = Version.getBestVersionForData(rawSegments,
+        errorCorrectionLevel)
+    }
+
+    // Build optimized segments
+    // If estimated version is undefined, try with the highest version
+    segments = Segments.fromString(data, estimatedVersion || 40)
+  } else {
+    throw new Error('Invalid data')
+  }
+
+  // Get the min version that can contain data
+  var bestVersion = Version.getBestVersionForData(segments,
+      errorCorrectionLevel)
+
+  // If no version is found, data cannot be stored
+  if (!bestVersion) {
+    throw new Error('The amount of data is too big to be stored in a QR Code')
+  }
+
+  // If not specified, use min version as default
+  if (!version) {
+    version = bestVersion
+
+  // Check if the specified version can contain the data
+  } else if (version < bestVersion) {
+    throw new Error('\n' +
+      'The chosen QR Code version cannot contain this amount of data.\n' +
+      'Minimum version required to store current data is: ' + bestVersion + '.\n'
+    )
+  }
+
+  var dataBits = createData(version, errorCorrectionLevel, segments)
+
+  // Allocate matrix buffer
+  var moduleCount = Utils.getSymbolSize(version)
+  var modules = new BitMatrix(moduleCount)
+
+  // Add function modules
+  setupFinderPattern(modules, version)
+  setupTimingPattern(modules)
+  setupAlignmentPattern(modules, version)
+
+  // Add temporary dummy bits for format info just to set them as reserved.
+  // This is needed to prevent these bits from being masked by {@link MaskPattern.applyMask}
+  // since the masking operation must be performed only on the encoding region.
+  // These blocks will be replaced with correct values later in code.
+  setupFormatInfo(modules, errorCorrectionLevel, 0)
+
+  if (version >= 7) {
+    setupVersionInfo(modules, version)
+  }
+
+  // Add data codewords
+  setupData(modules, dataBits)
+
+  // Find best mask pattern
+  var maskPattern = MaskPattern.getBestMask(modules,
+    setupFormatInfo.bind(null, modules, errorCorrectionLevel))
+
+  // Apply mask pattern
+  MaskPattern.applyMask(maskPattern, modules)
+
+  // Replace format info bits with correct values
+  setupFormatInfo(modules, errorCorrectionLevel, maskPattern)
+
+  return {
+    modules: modules,
+    version: version,
+    errorCorrectionLevel: errorCorrectionLevel,
+    maskPattern: maskPattern,
+    segments: segments
+  }
+}
+
+/**
+ * QR Code
+ *
+ * @param {String | Array} data                 Input data
+ * @param {Object} options                      Optional configurations
+ * @param {Number} options.version              QR Code version
+ * @param {String} options.errorCorrectionLevel Error correction level
+ * @param {Function} options.toSJISFunc         Helper func to convert utf8 to sjis
+ */
+exports.create = function create (data, options) {
+  if (typeof data === 'undefined' || data === '') {
+    throw new Error('No input text')
+  }
+
+  var errorCorrectionLevel = ECLevel.M
+  var version
+
+  if (typeof options !== 'undefined') {
+    // Use higher error correction level as default
+    errorCorrectionLevel = ECLevel.from(options.errorCorrectionLevel, ECLevel.M)
+    version = Version.from(options.version)
+
+    if (options.toSJISFunc) {
+      Utils.setToSJISFunction(options.toSJISFunc)
+    }
+  }
+
+  return createSymbol(data, version, errorCorrectionLevel)
+}
+
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports) {
+
+function BitBuffer () {
+  this.buffer = []
+  this.length = 0
+}
+
+BitBuffer.prototype = {
+
+  get: function (index) {
+    var bufIndex = Math.floor(index / 8)
+    return ((this.buffer[bufIndex] >>> (7 - index % 8)) & 1) === 1
+  },
+
+  put: function (num, length) {
+    for (var i = 0; i < length; i++) {
+      this.putBit(((num >>> (length - i - 1)) & 1) === 1)
+    }
+  },
+
+  getLengthInBits: function () {
+    return this.length
+  },
+
+  putBit: function (bit) {
+    var bufIndex = Math.floor(this.length / 8)
+    if (this.buffer.length <= bufIndex) {
+      this.buffer.push(0)
+    }
+
+    if (bit) {
+      this.buffer[bufIndex] |= (0x80 >>> (this.length % 8))
+    }
+
+    this.length++
+  }
+}
+
+module.exports = BitBuffer
+
+
+/***/ }),
+/* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Buffer = __webpack_require__(26)
+
+/**
+ * Helper class to handle QR Code symbol modules
+ *
+ * @param {Number} size Symbol size
+ */
+function BitMatrix (size) {
+  if (!size || size < 1) {
+    throw new Error('BitMatrix size must be defined and greater than 0')
+  }
+
+  this.size = size
+  this.data = new Buffer(size * size)
+  this.data.fill(0)
+  this.reservedBit = new Buffer(size * size)
+  this.reservedBit.fill(0)
+}
+
+/**
+ * Set bit value at specified location
+ * If reserved flag is set, this bit will be ignored during masking process
+ *
+ * @param {Number}  row
+ * @param {Number}  col
+ * @param {Boolean} value
+ * @param {Boolean} reserved
+ */
+BitMatrix.prototype.set = function (row, col, value, reserved) {
+  var index = row * this.size + col
+  this.data[index] = value
+  if (reserved) this.reservedBit[index] = true
+}
+
+/**
+ * Returns bit value at specified location
+ *
+ * @param  {Number}  row
+ * @param  {Number}  col
+ * @return {Boolean}
+ */
+BitMatrix.prototype.get = function (row, col) {
+  return this.data[row * this.size + col]
+}
+
+/**
+ * Applies xor operator at specified location
+ * (used during masking process)
+ *
+ * @param {Number}  row
+ * @param {Number}  col
+ * @param {Boolean} value
+ */
+BitMatrix.prototype.xor = function (row, col, value) {
+  this.data[row * this.size + col] ^= value
+}
+
+/**
+ * Check if bit at specified location is reserved
+ *
+ * @param {Number}   row
+ * @param {Number}   col
+ * @return {Boolean}
+ */
+BitMatrix.prototype.isReserved = function (row, col) {
+  return this.reservedBit[row * this.size + col]
+}
+
+module.exports = BitMatrix
+
+
+/***/ }),
+/* 227 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Alignment pattern are fixed reference pattern in defined positions
+ * in a matrix symbology, which enables the decode software to re-synchronise
+ * the coordinate mapping of the image modules in the event of moderate amounts
+ * of distortion of the image.
+ *
+ * Alignment patterns are present only in QR Code symbols of version 2 or larger
+ * and their number depends on the symbol version.
+ */
+
+var getSymbolSize = __webpack_require__(20).getSymbolSize
+
+/**
+ * Calculate the row/column coordinates of the center module of each alignment pattern
+ * for the specified QR Code version.
+ *
+ * The alignment patterns are positioned symmetrically on either side of the diagonal
+ * running from the top left corner of the symbol to the bottom right corner.
+ *
+ * Since positions are simmetrical only half of the coordinates are returned.
+ * Each item of the array will represent in turn the x and y coordinate.
+ * @see {@link getPositions}
+ *
+ * @param  {Number} version QR Code version
+ * @return {Array}          Array of coordinate
+ */
+exports.getRowColCoords = function getRowColCoords (version) {
+  if (version === 1) return []
+
+  var posCount = Math.floor(version / 7) + 2
+  var size = getSymbolSize(version)
+  var intervals = size === 145 ? 26 : Math.ceil((size - 13) / (2 * posCount - 2)) * 2
+  var positions = [size - 7] // Last coord is always (size - 7)
+
+  for (var i = 1; i < posCount - 1; i++) {
+    positions[i] = positions[i - 1] - intervals
+  }
+
+  positions.push(6) // First coord is always 6
+
+  return positions.reverse()
+}
+
+/**
+ * Returns an array containing the positions of each alignment pattern.
+ * Each array's element represent the center point of the pattern as (x, y) coordinates
+ *
+ * Coordinates are calculated expanding the row/column coordinates returned by {@link getRowColCoords}
+ * and filtering out the items that overlaps with finder pattern
+ *
+ * @example
+ * For a Version 7 symbol {@link getRowColCoords} returns values 6, 22 and 38.
+ * The alignment patterns, therefore, are to be centered on (row, column)
+ * positions (6,22), (22,6), (22,22), (22,38), (38,22), (38,38).
+ * Note that the coordinates (6,6), (6,38), (38,6) are occupied by finder patterns
+ * and are not therefore used for alignment patterns.
+ *
+ * var pos = getPositions(7)
+ * // [[6,22], [22,6], [22,22], [22,38], [38,22], [38,38]]
+ *
+ * @param  {Number} version QR Code version
+ * @return {Array}          Array of coordinates
+ */
+exports.getPositions = function getPositions (version) {
+  var coords = []
+  var pos = exports.getRowColCoords(version)
+  var posLength = pos.length
+
+  for (var i = 0; i < posLength; i++) {
+    for (var j = 0; j < posLength; j++) {
+      // Skip if position is occupied by finder patterns
+      if ((i === 0 && j === 0) ||             // top-left
+          (i === 0 && j === posLength - 1) || // bottom-left
+          (i === posLength - 1 && j === 0)) { // top-right
+        continue
+      }
+
+      coords.push([pos[i], pos[j]])
+    }
+  }
+
+  return coords
+}
+
+
+/***/ }),
+/* 228 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getSymbolSize = __webpack_require__(20).getSymbolSize
+var FINDER_PATTERN_SIZE = 7
+
+/**
+ * Returns an array containing the positions of each finder pattern.
+ * Each array's element represent the top-left point of the pattern as (x, y) coordinates
+ *
+ * @param  {Number} version QR Code version
+ * @return {Array}          Array of coordinates
+ */
+exports.getPositions = function getPositions (version) {
+  var size = getSymbolSize(version)
+
+  return [
+    // top-left
+    [0, 0],
+    // top-right
+    [size - FINDER_PATTERN_SIZE, 0],
+    // bottom-left
+    [0, size - FINDER_PATTERN_SIZE]
+  ]
+}
+
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports) {
+
+/**
+ * Data mask pattern reference
+ * @type {Object}
+ */
+exports.Patterns = {
+  PATTERN000: 0,
+  PATTERN001: 1,
+  PATTERN010: 2,
+  PATTERN011: 3,
+  PATTERN100: 4,
+  PATTERN101: 5,
+  PATTERN110: 6,
+  PATTERN111: 7
+}
+
+/**
+ * Weighted penalty scores for the undesirable features
+ * @type {Object}
+ */
+var PenaltyScores = {
+  N1: 3,
+  N2: 3,
+  N3: 40,
+  N4: 10
+}
+
+/**
+* Find adjacent modules in row/column with the same color
+* and assign a penalty value.
+*
+* Points: N1 + i
+* i is the amount by which the number of adjacent modules of the same color exceeds 5
+*/
+exports.getPenaltyN1 = function getPenaltyN1 (data) {
+  var size = data.size
+  var points = 0
+  var sameCountCol = 0
+  var sameCountRow = 0
+  var lastCol = null
+  var lastRow = null
+
+  for (var row = 0; row < size; row++) {
+    sameCountCol = sameCountRow = 0
+    lastCol = lastRow = null
+
+    for (var col = 0; col < size; col++) {
+      var module = data.get(row, col)
+      if (module === lastCol) {
+        sameCountCol++
+      } else {
+        if (sameCountCol >= 5) points += PenaltyScores.N1 + (sameCountCol - 5)
+        lastCol = module
+        sameCountCol = 1
+      }
+
+      module = data.get(col, row)
+      if (module === lastRow) {
+        sameCountRow++
+      } else {
+        if (sameCountRow >= 5) points += PenaltyScores.N1 + (sameCountRow - 5)
+        lastRow = module
+        sameCountRow = 1
+      }
+    }
+
+    if (sameCountCol >= 5) points += PenaltyScores.N1 + (sameCountCol - 5)
+    if (sameCountRow >= 5) points += PenaltyScores.N1 + (sameCountRow - 5)
+  }
+
+  return points
+}
+
+/**
+ * Find 2x2 blocks with the same color and assign a penalty value
+ *
+ * Points: N2 * (m - 1) * (n - 1)
+ */
+exports.getPenaltyN2 = function getPenaltyN2 (data) {
+  var size = data.size
+  var points = 0
+
+  for (var row = 0; row < size - 1; row++) {
+    for (var col = 0; col < size - 1; col++) {
+      var last = data.get(row, col) +
+        data.get(row, col + 1) +
+        data.get(row + 1, col) +
+        data.get(row + 1, col + 1)
+
+      if (last === 4 || last === 0) points++
+    }
+  }
+
+  return points * PenaltyScores.N2
+}
+
+/**
+ * Find 1:1:3:1:1 ratio (dark:light:dark:light:dark) pattern in row/column,
+ * preceded or followed by light area 4 modules wide
+ *
+ * Points: N3 * number of pattern found
+ */
+exports.getPenaltyN3 = function getPenaltyN3 (data) {
+  var size = data.size
+  var points = 0
+  var bitsCol = 0
+  var bitsRow = 0
+
+  for (var row = 0; row < size; row++) {
+    bitsCol = bitsRow = 0
+    for (var col = 0; col < size; col++) {
+      bitsCol = ((bitsCol << 1) & 0x7FF) | data.get(row, col)
+      if (col >= 10 && (bitsCol === 0x5D0 || bitsCol === 0x05D)) points++
+
+      bitsRow = ((bitsRow << 1) & 0x7FF) | data.get(col, row)
+      if (col >= 10 && (bitsRow === 0x5D0 || bitsRow === 0x05D)) points++
+    }
+  }
+
+  return points * PenaltyScores.N3
+}
+
+/**
+ * Calculate proportion of dark modules in entire symbol
+ *
+ * Points: N4 * k
+ *
+ * k is the rating of the deviation of the proportion of dark modules
+ * in the symbol from 50% in steps of 5%
+ */
+exports.getPenaltyN4 = function getPenaltyN4 (data) {
+  var darkCount = 0
+  var modulesCount = data.data.length
+
+  for (var i = 0; i < modulesCount; i++) darkCount += data.data[i]
+
+  var k = Math.abs(Math.ceil((darkCount * 100 / modulesCount) / 5) - 10)
+
+  return k * PenaltyScores.N4
+}
+
+/**
+ * Return mask value at given position
+ *
+ * @param  {Number} maskPattern Pattern reference value
+ * @param  {Number} i           Row
+ * @param  {Number} j           Column
+ * @return {Boolean}            Mask value
+ */
+function getMaskAt (maskPattern, i, j) {
+  switch (maskPattern) {
+    case exports.Patterns.PATTERN000: return (i + j) % 2 === 0
+    case exports.Patterns.PATTERN001: return i % 2 === 0
+    case exports.Patterns.PATTERN010: return j % 3 === 0
+    case exports.Patterns.PATTERN011: return (i + j) % 3 === 0
+    case exports.Patterns.PATTERN100: return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 === 0
+    case exports.Patterns.PATTERN101: return (i * j) % 2 + (i * j) % 3 === 0
+    case exports.Patterns.PATTERN110: return ((i * j) % 2 + (i * j) % 3) % 2 === 0
+    case exports.Patterns.PATTERN111: return ((i * j) % 3 + (i + j) % 2) % 2 === 0
+
+    default: throw new Error('bad maskPattern:' + maskPattern)
+  }
+}
+
+/**
+ * Apply a mask pattern to a BitMatrix
+ *
+ * @param  {Number}    pattern Pattern reference number
+ * @param  {BitMatrix} data    BitMatrix data
+ */
+exports.applyMask = function applyMask (pattern, data) {
+  var size = data.size
+
+  for (var col = 0; col < size; col++) {
+    for (var row = 0; row < size; row++) {
+      if (data.isReserved(row, col)) continue
+      data.xor(row, col, getMaskAt(pattern, row, col))
+    }
+  }
+}
+
+/**
+ * Returns the best mask pattern for data
+ *
+ * @param  {BitMatrix} data
+ * @return {Number} Mask pattern reference number
+ */
+exports.getBestMask = function getBestMask (data, setupFormatFunc) {
+  var numPatterns = Object.keys(exports.Patterns).length
+  var bestPattern = 0
+  var lowerPenalty = Infinity
+
+  for (var p = 0; p < numPatterns; p++) {
+    setupFormatFunc(p)
+    exports.applyMask(p, data)
+
+    // Calculate penalty
+    var penalty =
+      exports.getPenaltyN1(data) +
+      exports.getPenaltyN2(data) +
+      exports.getPenaltyN3(data) +
+      exports.getPenaltyN4(data)
+
+    // Undo previously applied mask
+    exports.applyMask(p, data)
+
+    if (penalty < lowerPenalty) {
+      lowerPenalty = penalty
+      bestPattern = p
+    }
+  }
+
+  return bestPattern
+}
+
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Buffer = __webpack_require__(26)
+var Polynomial = __webpack_require__(231)
+
+function ReedSolomonEncoder (degree) {
+  this.genPoly = undefined
+  this.degree = degree
+
+  if (this.degree) this.initialize(this.degree)
+}
+
+/**
+ * Initialize the encoder.
+ * The input param should correspond to the number of error correction codewords.
+ *
+ * @param  {Number} degree
+ */
+ReedSolomonEncoder.prototype.initialize = function initialize (degree) {
+  // create an irreducible generator polynomial
+  this.degree = degree
+  this.genPoly = Polynomial.generateECPolynomial(this.degree)
+}
+
+/**
+ * Encodes a chunk of data
+ *
+ * @param  {Buffer} data Buffer containing input data
+ * @return {Buffer}      Buffer containing encoded data
+ */
+ReedSolomonEncoder.prototype.encode = function encode (data) {
+  if (!this.genPoly) {
+    throw new Error('Encoder not initialized')
+  }
+
+  // Calculate EC for this data block
+  // extends data size to data+genPoly size
+  var pad = new Buffer(this.degree)
+  pad.fill(0)
+  var paddedData = Buffer.concat([data, pad], data.length + this.degree)
+
+  // The error correction codewords are the remainder after dividing the data codewords
+  // by a generator polynomial
+  var remainder = Polynomial.mod(paddedData, this.genPoly)
+
+  // return EC data blocks (last n byte, where n is the degree of genPoly)
+  // If coefficients number in remainder are less than genPoly degree,
+  // pad with 0s to the left to reach the needed number of coefficients
+  var start = this.degree - remainder.length
+  if (start > 0) {
+    var buff = new Buffer(this.degree)
+    buff.fill(0)
+    remainder.copy(buff, start)
+
+    return buff
+  }
+
+  return remainder
+}
+
+module.exports = ReedSolomonEncoder
+
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Buffer = __webpack_require__(26)
+var GF = __webpack_require__(232)
+
+/**
+ * Multiplies two polynomials inside Galois Field
+ *
+ * @param  {Buffer} p1 Polynomial
+ * @param  {Buffer} p2 Polynomial
+ * @return {Buffer}    Product of p1 and p2
+ */
+exports.mul = function mul (p1, p2) {
+  var coeff = new Buffer(p1.length + p2.length - 1)
+  coeff.fill(0)
+
+  for (var i = 0; i < p1.length; i++) {
+    for (var j = 0; j < p2.length; j++) {
+      coeff[i + j] ^= GF.mul(p1[i], p2[j])
+    }
+  }
+
+  return coeff
+}
+
+/**
+ * Calculate the remainder of polynomials division
+ *
+ * @param  {Buffer} divident Polynomial
+ * @param  {Buffer} divisor  Polynomial
+ * @return {Buffer}          Remainder
+ */
+exports.mod = function mod (divident, divisor) {
+  var result = new Buffer(divident)
+
+  while ((result.length - divisor.length) >= 0) {
+    var coeff = result[0]
+
+    for (var i = 0; i < divisor.length; i++) {
+      result[i] ^= GF.mul(divisor[i], coeff)
+    }
+
+    // remove all zeros from buffer head
+    var offset = 0
+    while (offset < result.length && result[offset] === 0) offset++
+    result = result.slice(offset)
+  }
+
+  return result
+}
+
+/**
+ * Generate an irreducible generator polynomial of specified degree
+ * (used by Reed-Solomon encoder)
+ *
+ * @param  {Number} degree Degree of the generator polynomial
+ * @return {Buffer}        Buffer containing polynomial coefficients
+ */
+exports.generateECPolynomial = function generateECPolynomial (degree) {
+  var poly = new Buffer([1])
+  for (var i = 0; i < degree; i++) {
+    poly = exports.mul(poly, [1, GF.exp(i)])
+  }
+
+  return poly
+}
+
+
+/***/ }),
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Buffer = __webpack_require__(26)
+
+var EXP_TABLE = new Buffer(512)
+var LOG_TABLE = new Buffer(256)
+
+/**
+ * Precompute the log and anti-log tables for faster computation later
+ *
+ * For each possible value in the galois field 2^8, we will pre-compute
+ * the logarithm and anti-logarithm (exponential) of this value
+ *
+ * ref {@link https://en.wikiversity.org/wiki/Reed%E2%80%93Solomon_codes_for_coders#Introduction_to_mathematical_fields}
+ */
+;(function initTables () {
+  var x = 1
+  for (var i = 0; i < 255; i++) {
+    EXP_TABLE[i] = x
+    LOG_TABLE[x] = i
+
+    x <<= 1 // multiply by 2
+
+    // The QR code specification says to use byte-wise modulo 100011101 arithmetic.
+    // This means that when a number is 256 or larger, it should be XORed with 0x11D.
+    if (x & 0x100) { // similar to x >= 256, but a lot faster (because 0x100 == 256)
+      x ^= 0x11D
+    }
+  }
+
+  // Optimization: double the size of the anti-log table so that we don't need to mod 255 to
+  // stay inside the bounds (because we will mainly use this table for the multiplication of
+  // two GF numbers, no more).
+  // @see {@link mul}
+  for (i = 255; i < 512; i++) {
+    EXP_TABLE[i] = EXP_TABLE[i - 255]
+  }
+}())
+
+/**
+ * Returns log value of n inside Galois Field
+ *
+ * @param  {Number} n
+ * @return {Number}
+ */
+exports.log = function log (n) {
+  if (n < 1) throw new Error('log(' + n + ')')
+  return LOG_TABLE[n]
+}
+
+/**
+ * Returns anti-log value of n inside Galois Field
+ *
+ * @param  {Number} n
+ * @return {Number}
+ */
+exports.exp = function exp (n) {
+  return EXP_TABLE[n]
+}
+
+/**
+ * Multiplies two number inside Galois Field
+ *
+ * @param  {Number} x
+ * @param  {Number} y
+ * @return {Number}
+ */
+exports.mul = function mul (x, y) {
+  if (x === 0 || y === 0) return 0
+
+  // should be EXP_TABLE[(LOG_TABLE[x] + LOG_TABLE[y]) % 255] if EXP_TABLE wasn't oversized
+  // @see {@link initTables}
+  return EXP_TABLE[LOG_TABLE[x] + LOG_TABLE[y]]
+}
+
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Utils = __webpack_require__(20)
+
+var G15 = (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0)
+var G15_MASK = (1 << 14) | (1 << 12) | (1 << 10) | (1 << 4) | (1 << 1)
+var G15_BCH = Utils.getBCHDigit(G15)
+
+/**
+ * Returns format information with relative error correction bits
+ *
+ * The format information is a 15-bit sequence containing 5 data bits,
+ * with 10 error correction bits calculated using the (15, 5) BCH code.
+ *
+ * @param  {Number} errorCorrectionLevel Error correction level
+ * @param  {Number} mask                 Mask pattern
+ * @return {Number}                      Encoded format information bits
+ */
+exports.getEncodedBits = function getEncodedBits (errorCorrectionLevel, mask) {
+  var data = ((errorCorrectionLevel.bit << 3) | mask)
+  var d = data << 10
+
+  while (Utils.getBCHDigit(d) - G15_BCH >= 0) {
+    d ^= (G15 << (Utils.getBCHDigit(d) - G15_BCH))
+  }
+
+  // xor final data with mask pattern in order to ensure that
+  // no combination of Error Correction Level and data mask pattern
+  // will result in an all-zero data string
+  return ((data << 10) | d) ^ G15_MASK
+}
+
+
+/***/ }),
+/* 234 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mode = __webpack_require__(21)
+var NumericData = __webpack_require__(235)
+var AlphanumericData = __webpack_require__(236)
+var ByteData = __webpack_require__(237)
+var KanjiData = __webpack_require__(238)
+var Regex = __webpack_require__(99)
+var Utils = __webpack_require__(20)
+var dijkstra = __webpack_require__(239)
+
+/**
+ * Returns UTF8 byte length
+ *
+ * @param  {String} str Input string
+ * @return {Number}     Number of byte
+ */
+function getStringByteLength (str) {
+  return unescape(encodeURIComponent(str)).length
+}
+
+/**
+ * Get a list of segments of the specified mode
+ * from a string
+ *
+ * @param  {Mode}   mode Segment mode
+ * @param  {String} str  String to process
+ * @return {Array}       Array of object with segments data
+ */
+function getSegments (regex, mode, str) {
+  var segments = []
+  var result
+
+  while ((result = regex.exec(str)) !== null) {
+    segments.push({
+      data: result[0],
+      index: result.index,
+      mode: mode,
+      length: result[0].length
+    })
+  }
+
+  return segments
+}
+
+/**
+ * Extracts a series of segments with the appropriate
+ * modes from a string
+ *
+ * @param  {String} dataStr Input string
+ * @return {Array}          Array of object with segments data
+ */
+function getSegmentsFromString (dataStr) {
+  var numSegs = getSegments(Regex.NUMERIC, Mode.NUMERIC, dataStr)
+  var alphaNumSegs = getSegments(Regex.ALPHANUMERIC, Mode.ALPHANUMERIC, dataStr)
+  var byteSegs
+  var kanjiSegs
+
+  if (Utils.isKanjiModeEnabled()) {
+    byteSegs = getSegments(Regex.BYTE, Mode.BYTE, dataStr)
+    kanjiSegs = getSegments(Regex.KANJI, Mode.KANJI, dataStr)
+  } else {
+    byteSegs = getSegments(Regex.BYTE_KANJI, Mode.BYTE, dataStr)
+    kanjiSegs = []
+  }
+
+  var segs = numSegs.concat(alphaNumSegs, byteSegs, kanjiSegs)
+
+  return segs
+    .sort(function (s1, s2) {
+      return s1.index - s2.index
+    })
+    .map(function (obj) {
+      return {
+        data: obj.data,
+        mode: obj.mode,
+        length: obj.length
+      }
+    })
+}
+
+/**
+ * Returns how many bits are needed to encode a string of
+ * specified length with the specified mode
+ *
+ * @param  {Number} length String length
+ * @param  {Mode} mode     Segment mode
+ * @return {Number}        Bit length
+ */
+function getSegmentBitsLength (length, mode) {
+  switch (mode) {
+    case Mode.NUMERIC:
+      return NumericData.getBitsLength(length)
+    case Mode.ALPHANUMERIC:
+      return AlphanumericData.getBitsLength(length)
+    case Mode.KANJI:
+      return KanjiData.getBitsLength(length)
+    case Mode.BYTE:
+      return ByteData.getBitsLength(length)
+  }
+}
+
+/**
+ * Merges adjacent segments which have the same mode
+ *
+ * @param  {Array} segs Array of object with segments data
+ * @return {Array}      Array of object with segments data
+ */
+function mergeSegments (segs) {
+  return segs.reduce(function (acc, curr) {
+    var prevSeg = acc.length - 1 >= 0 ? acc[acc.length - 1] : null
+    if (prevSeg && prevSeg.mode === curr.mode) {
+      acc[acc.length - 1].data += curr.data
+      return acc
+    }
+
+    acc.push(curr)
+    return acc
+  }, [])
+}
+
+/**
+ * Generates a list of all possible nodes combination which
+ * will be used to build a segments graph.
+ *
+ * Nodes are divided by groups. Each group will contain a list of all the modes
+ * in which is possible to encode the given text.
+ *
+ * For example the text '12345' can be encoded as Numeric, Alphanumeric or Byte.
+ * The group for '12345' will contain then 3 objects, one for each
+ * possible encoding mode.
+ *
+ * Each node represents a possible segment.
+ *
+ * @param  {Array} segs Array of object with segments data
+ * @return {Array}      Array of object with segments data
+ */
+function buildNodes (segs) {
+  var nodes = []
+  for (var i = 0; i < segs.length; i++) {
+    var seg = segs[i]
+
+    switch (seg.mode) {
+      case Mode.NUMERIC:
+        nodes.push([seg,
+          { data: seg.data, mode: Mode.ALPHANUMERIC, length: seg.length },
+          { data: seg.data, mode: Mode.BYTE, length: seg.length }
+        ])
+        break
+      case Mode.ALPHANUMERIC:
+        nodes.push([seg,
+          { data: seg.data, mode: Mode.BYTE, length: seg.length }
+        ])
+        break
+      case Mode.KANJI:
+        nodes.push([seg,
+          { data: seg.data, mode: Mode.BYTE, length: getStringByteLength(seg.data) }
+        ])
+        break
+      case Mode.BYTE:
+        nodes.push([
+          { data: seg.data, mode: Mode.BYTE, length: getStringByteLength(seg.data) }
+        ])
+    }
+  }
+
+  return nodes
+}
+
+/**
+ * Builds a graph from a list of nodes.
+ * All segments in each node group will be connected with all the segments of
+ * the next group and so on.
+ *
+ * At each connection will be assigned a weight depending on the
+ * segment's byte length.
+ *
+ * @param  {Array} nodes    Array of object with segments data
+ * @param  {Number} version QR Code version
+ * @return {Object}         Graph of all possible segments
+ */
+function buildGraph (nodes, version) {
+  var table = {}
+  var graph = {'start': {}}
+  var prevNodeIds = ['start']
+
+  for (var i = 0; i < nodes.length; i++) {
+    var nodeGroup = nodes[i]
+    var currentNodeIds = []
+
+    for (var j = 0; j < nodeGroup.length; j++) {
+      var node = nodeGroup[j]
+      var key = '' + i + j
+
+      currentNodeIds.push(key)
+      table[key] = { node: node, lastCount: 0 }
+      graph[key] = {}
+
+      for (var n = 0; n < prevNodeIds.length; n++) {
+        var prevNodeId = prevNodeIds[n]
+
+        if (table[prevNodeId] && table[prevNodeId].node.mode === node.mode) {
+          graph[prevNodeId][key] =
+            getSegmentBitsLength(table[prevNodeId].lastCount + node.length, node.mode) -
+            getSegmentBitsLength(table[prevNodeId].lastCount, node.mode)
+
+          table[prevNodeId].lastCount += node.length
+        } else {
+          if (table[prevNodeId]) table[prevNodeId].lastCount = node.length
+
+          graph[prevNodeId][key] = getSegmentBitsLength(node.length, node.mode) +
+            4 + Mode.getCharCountIndicator(node.mode, version) // switch cost
+        }
+      }
+    }
+
+    prevNodeIds = currentNodeIds
+  }
+
+  for (n = 0; n < prevNodeIds.length; n++) {
+    graph[prevNodeIds[n]]['end'] = 0
+  }
+
+  return { map: graph, table: table }
+}
+
+/**
+ * Builds a segment from a specified data and mode.
+ * If a mode is not specified, the more suitable will be used.
+ *
+ * @param  {String} data             Input data
+ * @param  {Mode | String} modesHint Data mode
+ * @return {Segment}                 Segment
+ */
+function buildSingleSegment (data, modesHint) {
+  var mode
+  var bestMode = Mode.getBestModeForData(data)
+
+  mode = Mode.from(modesHint, bestMode)
+
+  // Make sure data can be encoded
+  if (mode !== Mode.BYTE && mode.bit < bestMode.bit) {
+    throw new Error('"' + data + '"' +
+      ' cannot be encoded with mode ' + Mode.toString(mode) +
+      '.\n Suggested mode is: ' + Mode.toString(bestMode))
+  }
+
+  // Use Mode.BYTE if Kanji support is disabled
+  if (mode === Mode.KANJI && !Utils.isKanjiModeEnabled()) {
+    mode = Mode.BYTE
+  }
+
+  switch (mode) {
+    case Mode.NUMERIC:
+      return new NumericData(data)
+
+    case Mode.ALPHANUMERIC:
+      return new AlphanumericData(data)
+
+    case Mode.KANJI:
+      return new KanjiData(data)
+
+    case Mode.BYTE:
+      return new ByteData(data)
+  }
+}
+
+/**
+ * Builds a list of segments from an array.
+ * Array can contain Strings or Objects with segment's info.
+ *
+ * For each item which is a string, will be generated a segment with the given
+ * string and the more appropriate encoding mode.
+ *
+ * For each item which is an object, will be generated a segment with the given
+ * data and mode.
+ * Objects must contain at least the property "data".
+ * If property "mode" is not present, the more suitable mode will be used.
+ *
+ * @param  {Array} array Array of objects with segments data
+ * @return {Array}       Array of Segments
+ */
+exports.fromArray = function fromArray (array) {
+  return array.reduce(function (acc, seg) {
+    if (typeof seg === 'string') {
+      acc.push(buildSingleSegment(seg, null))
+    } else if (seg.data) {
+      acc.push(buildSingleSegment(seg.data, seg.mode))
+    }
+
+    return acc
+  }, [])
+}
+
+/**
+ * Builds an optimized sequence of segments from a string,
+ * which will produce the shortest possible bitstream.
+ *
+ * @param  {String} data    Input string
+ * @param  {Number} version QR Code version
+ * @return {Array}          Array of segments
+ */
+exports.fromString = function fromString (data, version) {
+  var segs = getSegmentsFromString(data, Utils.isKanjiModeEnabled())
+
+  var nodes = buildNodes(segs)
+  var graph = buildGraph(nodes, version)
+  var path = dijkstra.find_path(graph.map, 'start', 'end')
+
+  var optimizedSegs = []
+  for (var i = 1; i < path.length - 1; i++) {
+    optimizedSegs.push(graph.table[path[i]].node)
+  }
+
+  return exports.fromArray(mergeSegments(optimizedSegs))
+}
+
+/**
+ * Splits a string in various segments with the modes which
+ * best represent their content.
+ * The produced segments are far from being optimized.
+ * The output of this function is only used to estimate a QR Code version
+ * which may contain the data.
+ *
+ * @param  {string} data Input string
+ * @return {Array}       Array of segments
+ */
+exports.rawSplit = function rawSplit (data) {
+  return exports.fromArray(
+    getSegmentsFromString(data, Utils.isKanjiModeEnabled())
+  )
+}
+
+
+/***/ }),
+/* 235 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mode = __webpack_require__(21)
+
+function NumericData (data) {
+  this.mode = Mode.NUMERIC
+  this.data = data.toString()
+}
+
+NumericData.getBitsLength = function getBitsLength (length) {
+  return 10 * Math.floor(length / 3) + ((length % 3) ? ((length % 3) * 3 + 1) : 0)
+}
+
+NumericData.prototype.getLength = function getLength () {
+  return this.data.length
+}
+
+NumericData.prototype.getBitsLength = function getBitsLength () {
+  return NumericData.getBitsLength(this.data.length)
+}
+
+NumericData.prototype.write = function write (bitBuffer) {
+  var i, group, value
+
+  // The input data string is divided into groups of three digits,
+  // and each group is converted to its 10-bit binary equivalent.
+  for (i = 0; i + 3 <= this.data.length; i += 3) {
+    group = this.data.substr(i, 3)
+    value = parseInt(group, 10)
+
+    bitBuffer.put(value, 10)
+  }
+
+  // If the number of input digits is not an exact multiple of three,
+  // the final one or two digits are converted to 4 or 7 bits respectively.
+  var remainingNum = this.data.length - i
+  if (remainingNum > 0) {
+    group = this.data.substr(i)
+    value = parseInt(group, 10)
+
+    bitBuffer.put(value, remainingNum * 3 + 1)
+  }
+}
+
+module.exports = NumericData
+
+
+/***/ }),
+/* 236 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mode = __webpack_require__(21)
+
+/**
+ * Array of characters available in alphanumeric mode
+ *
+ * As per QR Code specification, to each character
+ * is assigned a value from 0 to 44 which in this case coincides
+ * with the array index
+ *
+ * @type {Array}
+ */
+var ALPHA_NUM_CHARS = [
+  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+  ' ', '$', '%', '*', '+', '-', '.', '/', ':'
+]
+
+function AlphanumericData (data) {
+  this.mode = Mode.ALPHANUMERIC
+  this.data = data
+}
+
+AlphanumericData.getBitsLength = function getBitsLength (length) {
+  return 11 * Math.floor(length / 2) + 6 * (length % 2)
+}
+
+AlphanumericData.prototype.getLength = function getLength () {
+  return this.data.length
+}
+
+AlphanumericData.prototype.getBitsLength = function getBitsLength () {
+  return AlphanumericData.getBitsLength(this.data.length)
+}
+
+AlphanumericData.prototype.write = function write (bitBuffer) {
+  var i
+
+  // Input data characters are divided into groups of two characters
+  // and encoded as 11-bit binary codes.
+  for (i = 0; i + 2 <= this.data.length; i += 2) {
+    // The character value of the first character is multiplied by 45
+    var value = ALPHA_NUM_CHARS.indexOf(this.data[i]) * 45
+
+    // The character value of the second digit is added to the product
+    value += ALPHA_NUM_CHARS.indexOf(this.data[i + 1])
+
+    // The sum is then stored as 11-bit binary number
+    bitBuffer.put(value, 11)
+  }
+
+  // If the number of input data characters is not a multiple of two,
+  // the character value of the final character is encoded as a 6-bit binary number.
+  if (this.data.length % 2) {
+    bitBuffer.put(ALPHA_NUM_CHARS.indexOf(this.data[i]), 6)
+  }
+}
+
+module.exports = AlphanumericData
+
+
+/***/ }),
+/* 237 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Buffer = __webpack_require__(26)
+var Mode = __webpack_require__(21)
+
+function ByteData (data) {
+  this.mode = Mode.BYTE
+  this.data = new Buffer(data)
+}
+
+ByteData.getBitsLength = function getBitsLength (length) {
+  return length * 8
+}
+
+ByteData.prototype.getLength = function getLength () {
+  return this.data.length
+}
+
+ByteData.prototype.getBitsLength = function getBitsLength () {
+  return ByteData.getBitsLength(this.data.length)
+}
+
+ByteData.prototype.write = function (bitBuffer) {
+  for (var i = 0, l = this.data.length; i < l; i++) {
+    bitBuffer.put(this.data[i], 8)
+  }
+}
+
+module.exports = ByteData
+
+
+/***/ }),
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mode = __webpack_require__(21)
+var Utils = __webpack_require__(20)
+
+function KanjiData (data) {
+  this.mode = Mode.KANJI
+  this.data = data
+}
+
+KanjiData.getBitsLength = function getBitsLength (length) {
+  return length * 13
+}
+
+KanjiData.prototype.getLength = function getLength () {
+  return this.data.length
+}
+
+KanjiData.prototype.getBitsLength = function getBitsLength () {
+  return KanjiData.getBitsLength(this.data.length)
+}
+
+KanjiData.prototype.write = function (bitBuffer) {
+  var i
+
+  // In the Shift JIS system, Kanji characters are represented by a two byte combination.
+  // These byte values are shifted from the JIS X 0208 values.
+  // JIS X 0208 gives details of the shift coded representation.
+  for (i = 0; i < this.data.length; i++) {
+    var value = Utils.toSJIS(this.data[i])
+
+    // For characters with Shift JIS values from 0x8140 to 0x9FFC:
+    if (value >= 0x8140 && value <= 0x9FFC) {
+      // Subtract 0x8140 from Shift JIS value
+      value -= 0x8140
+
+    // For characters with Shift JIS values from 0xE040 to 0xEBBF
+    } else if (value >= 0xE040 && value <= 0xEBBF) {
+      // Subtract 0xC140 from Shift JIS value
+      value -= 0xC140
+    } else {
+      throw new Error(
+        'Invalid SJIS character: ' + this.data[i] + '\n' +
+        'Make sure your charset is UTF-8')
+    }
+
+    // Multiply most significant byte of result by 0xC0
+    // and add least significant byte to product
+    value = (((value >>> 8) & 0xff) * 0xC0) + (value & 0xff)
+
+    // Convert result to a 13-bit binary string
+    bitBuffer.put(value, 13)
+  }
+}
+
+module.exports = KanjiData
+
+
+/***/ }),
+/* 239 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/******************************************************************************
+ * Created 2008-08-19.
+ *
+ * Dijkstra path-finding functions. Adapted from the Dijkstar Python project.
+ *
+ * Copyright (C) 2008
+ *   Wyatt Baldwin <self@wyattbaldwin.com>
+ *   All rights reserved
+ *
+ * Licensed under the MIT license.
+ *
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *****************************************************************************/
+var dijkstra = {
+  single_source_shortest_paths: function(graph, s, d) {
+    // Predecessor map for each node that has been encountered.
+    // node ID => predecessor node ID
+    var predecessors = {};
+
+    // Costs of shortest paths from s to all nodes encountered.
+    // node ID => cost
+    var costs = {};
+    costs[s] = 0;
+
+    // Costs of shortest paths from s to all nodes encountered; differs from
+    // `costs` in that it provides easy access to the node that currently has
+    // the known shortest path from s.
+    // XXX: Do we actually need both `costs` and `open`?
+    var open = dijkstra.PriorityQueue.make();
+    open.push(s, 0);
+
+    var closest,
+        u, v,
+        cost_of_s_to_u,
+        adjacent_nodes,
+        cost_of_e,
+        cost_of_s_to_u_plus_cost_of_e,
+        cost_of_s_to_v,
+        first_visit;
+    while (!open.empty()) {
+      // In the nodes remaining in graph that have a known cost from s,
+      // find the node, u, that currently has the shortest path from s.
+      closest = open.pop();
+      u = closest.value;
+      cost_of_s_to_u = closest.cost;
+
+      // Get nodes adjacent to u...
+      adjacent_nodes = graph[u] || {};
+
+      // ...and explore the edges that connect u to those nodes, updating
+      // the cost of the shortest paths to any or all of those nodes as
+      // necessary. v is the node across the current edge from u.
+      for (v in adjacent_nodes) {
+        if (adjacent_nodes.hasOwnProperty(v)) {
+          // Get the cost of the edge running from u to v.
+          cost_of_e = adjacent_nodes[v];
+
+          // Cost of s to u plus the cost of u to v across e--this is *a*
+          // cost from s to v that may or may not be less than the current
+          // known cost to v.
+          cost_of_s_to_u_plus_cost_of_e = cost_of_s_to_u + cost_of_e;
+
+          // If we haven't visited v yet OR if the current known cost from s to
+          // v is greater than the new cost we just found (cost of s to u plus
+          // cost of u to v across e), update v's cost in the cost list and
+          // update v's predecessor in the predecessor list (it's now u).
+          cost_of_s_to_v = costs[v];
+          first_visit = (typeof costs[v] === 'undefined');
+          if (first_visit || cost_of_s_to_v > cost_of_s_to_u_plus_cost_of_e) {
+            costs[v] = cost_of_s_to_u_plus_cost_of_e;
+            open.push(v, cost_of_s_to_u_plus_cost_of_e);
+            predecessors[v] = u;
+          }
+        }
+      }
+    }
+
+    if (typeof d !== 'undefined' && typeof costs[d] === 'undefined') {
+      var msg = ['Could not find a path from ', s, ' to ', d, '.'].join('');
+      throw new Error(msg);
+    }
+
+    return predecessors;
+  },
+
+  extract_shortest_path_from_predecessor_list: function(predecessors, d) {
+    var nodes = [];
+    var u = d;
+    var predecessor;
+    while (u) {
+      nodes.push(u);
+      predecessor = predecessors[u];
+      u = predecessors[u];
+    }
+    nodes.reverse();
+    return nodes;
+  },
+
+  find_path: function(graph, s, d) {
+    var predecessors = dijkstra.single_source_shortest_paths(graph, s, d);
+    return dijkstra.extract_shortest_path_from_predecessor_list(
+      predecessors, d);
+  },
+
+  /**
+   * A very naive priority queue implementation.
+   */
+  PriorityQueue: {
+    make: function (opts) {
+      var T = dijkstra.PriorityQueue,
+          t = {},
+          key;
+      opts = opts || {};
+      for (key in T) {
+        if (T.hasOwnProperty(key)) {
+          t[key] = T[key];
+        }
+      }
+      t.queue = [];
+      t.sorter = opts.sorter || T.default_sorter;
+      return t;
+    },
+
+    default_sorter: function (a, b) {
+      return a.cost - b.cost;
+    },
+
+    /**
+     * Add a new item to the queue and ensure the highest priority element
+     * is at the front of the queue.
+     */
+    push: function (value, cost) {
+      var item = {value: value, cost: cost};
+      this.queue.push(item);
+      this.queue.sort(this.sorter);
+    },
+
+    /**
+     * Return the highest priority element in the queue.
+     */
+    pop: function () {
+      return this.queue.shift();
+    },
+
+    empty: function () {
+      return this.queue.length === 0;
+    }
+  }
+};
+
+
+// node.js module exports
+if (true) {
+  module.exports = dijkstra;
+}
+
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Utils = __webpack_require__(100)
+
+function clearCanvas (ctx, canvas, size) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+  if (!canvas.style) canvas.style = {}
+  canvas.height = size
+  canvas.width = size
+  canvas.style.height = size + 'px'
+  canvas.style.width = size + 'px'
+}
+
+function getCanvasElement () {
+  try {
+    return document.createElement('canvas')
+  } catch (e) {
+    throw new Error('You need to specify a canvas element')
+  }
+}
+
+exports.render = function render (qrData, canvas, options) {
+  var opts = options
+  var canvasEl = canvas
+
+  if (typeof opts === 'undefined' && (!canvas || !canvas.getContext)) {
+    opts = canvas
+    canvas = undefined
+  }
+
+  if (!canvas) {
+    canvasEl = getCanvasElement()
+  }
+
+  opts = Utils.getOptions(opts)
+  var size = (qrData.modules.size + opts.margin * 2) * opts.scale
+
+  var ctx = canvasEl.getContext('2d')
+  var image = ctx.createImageData(size, size)
+  Utils.qrToImageData(image.data, qrData, opts.margin, opts.scale, opts.color)
+
+  clearCanvas(ctx, canvasEl, size)
+  ctx.putImageData(image, 0, 0)
+
+  return canvasEl
+}
+
+exports.renderToDataURL = function renderToDataURL (qrData, canvas, options) {
+  var opts = options
+
+  if (typeof opts === 'undefined' && (!canvas || !canvas.getContext)) {
+    opts = canvas
+    canvas = undefined
+  }
+
+  if (!opts) opts = {}
+
+  var canvasEl = exports.render(qrData, canvas, opts)
+
+  var type = opts.type || 'image/png'
+  var rendererOpts = opts.rendererOpts || {}
+
+  return canvasEl.toDataURL(type, rendererOpts.quality)
+}
+
+
+/***/ }),
+/* 241 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Utils = __webpack_require__(100)
+
+function getColorAttrib (color) {
+  return 'fill="rgb(' + [color.r, color.g, color.b].join(',') + ')" ' +
+    'fill-opacity="' + (color.a / 255).toFixed(2) + '"'
+}
+
+exports.render = function render (qrData, options) {
+  var opts = Utils.getOptions(options)
+  var size = qrData.modules.size
+  var data = qrData.modules.data
+  var qrcodesize = (size + opts.margin * 2) * opts.scale
+
+  var xmlStr = '<?xml version="1.0" encoding="utf-8"?>\n'
+  xmlStr += '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n'
+
+  xmlStr += '<svg version="1.1" baseProfile="full"'
+  xmlStr += ' width="' + qrcodesize + '" height="' + qrcodesize + '"'
+  xmlStr += ' viewBox="0 0 ' + qrcodesize + ' ' + qrcodesize + '"'
+  xmlStr += ' xmlns="http://www.w3.org/2000/svg"'
+  xmlStr += ' xmlns:xlink="http://www.w3.org/1999/xlink"'
+  xmlStr += ' xmlns:ev="http://www.w3.org/2001/xml-events">\n'
+
+  xmlStr += '<rect x="0" y="0" width="' + qrcodesize + '" height="' + qrcodesize + '" ' + getColorAttrib(opts.color.light) + ' />\n'
+  xmlStr += '<defs><rect id="p" width="' + opts.scale + '" height="' + opts.scale + '" /></defs>\n'
+  xmlStr += '<g ' + getColorAttrib(opts.color.dark) + '>\n'
+
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      if (!data[i * size + j]) continue
+
+      var x = (opts.margin + j) * opts.scale
+      var y = (opts.margin + i) * opts.scale
+      xmlStr += '<use x="' + x + '" y="' + y + '" xlink:href="#p" />\n'
+    }
+  }
+
+  xmlStr += '</g>\n'
+  xmlStr += '</svg>'
+
+  return xmlStr
+}
+
+
+/***/ }),
+/* 242 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(9);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(10);
+
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _toastr = __webpack_require__(39);
+
+var _toastr2 = _interopRequireDefault(_toastr);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TwoFAVerificationForm = function (_React$Component) {
+  _inherits(TwoFAVerificationForm, _React$Component);
+
+  function TwoFAVerificationForm(props) {
+    _classCallCheck(this, TwoFAVerificationForm);
+
+    var _this = _possibleConstructorReturn(this, (TwoFAVerificationForm.__proto__ || Object.getPrototypeOf(TwoFAVerificationForm)).call(this, props));
+
+    _this.state = {
+      twofa_enabled: _this.props.user.record.twofa_enabled || false,
+      response_message: '',
+      authentication_requested: false,
+      two_factor_completed: _this.props.user.record.twofa_completed || false,
+      qrcode_url: '',
+      secret_key: _this.props.user.record.secret_key,
+      verification_code: '',
+      verification_response: ''
+    };
+    _this.handleUpdate = _this.handleUpdate.bind(_this);
+    _this.verifyCode = _this.verifyCode.bind(_this);
+    return _this;
+  }
+
+  _createClass(TwoFAVerificationForm, [{
+    key: 'handleUpdate',
+    value: function handleUpdate(event) {
+      this.setState({
+        verification_code: event.target.value
+      });
+    }
+  }, {
+    key: 'verifyCode',
+    value: function verifyCode(event) {
+      event.preventDefault();
+
+      _axios2.default.post('/verify_code', {
+        verification_code: this.state.verification_code,
+        id: this.props.user.id
+      }).then(function (response) {
+        if (response.data.status === 'success') {
+          window.location.replace('/');
+        } else {
+          _toastr2.default.error(response.data.message);
+        }
+      }).catch(function (error) {
+        console.log(error);
+        _toastr2.default.error('There was an error');
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var verification_form = _react2.default.createElement(
+        'form',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'row r-2' },
+          _react2.default.createElement(
+            'div',
+            { className: 'offset-xs-0 col-xs-12 offset-sm-4 col-sm-4' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Please put in your 6-digit authentication code.'
+            ),
+            _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.verification_code, onChange: this.handleUpdate.bind(this) }),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'button',
+              { type: 'submit', className: 'btn btn-primary', onClick: this.verifyCode.bind(this) },
+              'Verify code'
+            )
+          )
+        )
+      );
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        verification_form
+      );
+    }
+  }]);
+
+  return TwoFAVerificationForm;
+}(_react2.default.Component);
+
+var TwofaVerificationExport = function TwofaVerificationExport() {
+  if (document.getElementById('2fa-verification-area') != null) {
+    var element = document.getElementById('props');
+    var props = JSON.parse(element.getAttribute('data-props'));
+
+    (0, _reactDom.render)(_react2.default.createElement(TwoFAVerificationForm, { user: props.user, messages: props.messages }), document.getElementById('2fa-verification-area'));
+  }
+};
+
+module.exports = TwofaVerificationExport();
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(9);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(10);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var axios = __webpack_require__(8);
+
+var AccountComponent = function (_React$Component) {
+    _inherits(AccountComponent, _React$Component);
+
+    function AccountComponent(props) {
+        _classCallCheck(this, AccountComponent);
+
+        var _this = _possibleConstructorReturn(this, (AccountComponent.__proto__ || Object.getPrototypeOf(AccountComponent)).call(this, props));
+
+        _this.state = {
+            user: _this.props.user,
+            email: _this.props.user.record.email,
+            firstname: _this.props.user.record.firstname,
+            lastname: _this.props.user.record.lastname,
+            account_editing_mode: false,
+            saved_email: _this.props.user.record.email,
+            saved_firstname: _this.props.user.record.firstname,
+            saved_lastname: _this.props.user.record.lastname,
+            submitted: false
+        };
+
+        _this.handleChange = _this.handleChange.bind(_this);
+        _this.switch_mode = _this.switch_mode.bind(_this);
+        _this.updateAccountInfo = _this.updateAccountInfo.bind(_this);
+        return _this;
+    }
+
+    _createClass(AccountComponent, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {}
+    }, {
+        key: 'handleChange',
+        value: function handleChange(a_field, event) {
+            if (a_field == 'email') {
+                this.setState({ email: event.target.value });
+            } else if (a_field == 'firstname') {
+                this.setState({ firstname: event.target.value });
+            } else if (a_field == 'lastname') {
+                this.setState({ lastname: event.target.value });
+            }
+        }
+    }, {
+        key: 'switch_mode',
+        value: function switch_mode(mode_type, event) {
+            event.preventDefault();
+            if (mode_type == 'account') {
+                this.setState({ account_editing_mode: !this.state.account_editing_mode });
+            }
+        }
+    }, {
+        key: 'updateAccountInfo',
+        value: function updateAccountInfo(event) {
+            event.preventDefault();
+            var page = this;
+
+            this.setState({
+                submitted: true
+            });
+
+            axios.put('/account', {
+                account: {
+                    firstname: this.state.firstname,
+                    lastname: this.state.lastname,
+                    email: this.state.email,
+                    api_key: this.props.user.api_key,
+                    public_key: this.props.public_key
+                }
+            }).then(function (response) {
+                if (response.data.success == true) {
+                    page.setState({
+                        account_editing_mode: false,
+                        saved_email: page.state.email,
+                        saved_firstname: page.state.firstname,
+                        saved_lastname: page.state.lastname,
+                        submitted: false
+                    });
+                    toastr.success('It will take a few minutes for the changes to reflect in your end');
+                    toastr.success('Account update pushed to the blockchain for approval.');
+                } else {
+                    if (response.data.validations != null && response.data.validations.messages != null) {
+                        response.data.validations.messages.map(function (message) {
+                            toastr.error(message);
+                        });
+                    }
+                    toastr.error(response.data.message);
+                }
+            }).catch(function (error) {
+                toastr.error('There was an error');
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            return _react2.default.createElement(
+                'div',
+                { className: '' },
+                _react2.default.createElement(
+                    'h1',
+                    { className: 'page-title text-center' },
+                    'My Account'
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'card card-register mx-auto my-4' },
+                        _react2.default.createElement(
+                            'h3',
+                            { className: 'card-header bg-dark text-white' },
+                            'Account information'
+                        ),
+                        this.state.account_editing_mode == true ? _react2.default.createElement(
+                            'form',
+                            { className: 'card-body' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-row' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'col-md-6 col-lg-6 p-3' },
+                                        _react2.default.createElement(
+                                            'label',
+                                            { htmlFor: 'inputFirstName' },
+                                            'First Name'
+                                        ),
+                                        _react2.default.createElement('input', { value: this.state.firstname, onChange: this.handleChange.bind(this, 'firstname'), type: 'name', className: 'form-control', id: 'inputFirstName' })
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'col-md-6 col-lg-6 p-3' },
+                                        _react2.default.createElement(
+                                            'label',
+                                            { htmlFor: 'inputLastName' },
+                                            'Last Name'
+                                        ),
+                                        _react2.default.createElement('input', { value: this.state.lastname, onChange: this.handleChange.bind(this, 'lastname'), type: 'name', className: 'form-control', id: 'inputLastName' })
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-group' },
+                                _react2.default.createElement(
+                                    'label',
+                                    { htmlFor: 'inputEmailAddress' },
+                                    'Email Address'
+                                ),
+                                _react2.default.createElement('input', { value: this.state.email, onChange: this.handleChange.bind(this, 'email'), type: 'email', className: 'form-control', id: 'inputEmailAddress' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-row' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'col' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-success', onClick: this.updateAccountInfo.bind(this), disabled: this.state.submitted },
+                                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
+                                        ' ',
+                                        this.state.submitted ? 'Saving...' : 'Save'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'col text-right' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-danger ml-auto', onClick: this.switch_mode.bind(this, 'account') },
+                                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
+                                        '  Cancel'
+                                    )
+                                )
+                            )
+                        ) : _react2.default.createElement(
+                            'form',
+                            { className: 'card-body' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-row' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-6' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        { htmlFor: 'inputFirstName' },
+                                        'First Name'
+                                    ),
+                                    _react2.default.createElement('input', { value: this.state.saved_firstname, type: 'name', className: 'form-control', id: 'inputFirstName', disabled: true })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group col-md-6' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        { htmlFor: 'inputLastName' },
+                                        'Last Name'
+                                    ),
+                                    _react2.default.createElement('input', { value: this.state.saved_lastname, type: 'name', className: 'form-control', id: 'inputLastName', disabled: true })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-group' },
+                                _react2.default.createElement(
+                                    'label',
+                                    { htmlFor: 'inputEmailAddress' },
+                                    'Email Address'
+                                ),
+                                _react2.default.createElement('input', { value: this.state.saved_email, type: 'email', className: 'form-control', id: 'inputEmailAddress', disabled: true })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-row' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'col' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-default', onClick: this.switch_mode.bind(this, 'account') },
+                                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
+                                        ' Edit'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'col text-right' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-default ml-auto', disabled: true },
+                                        'Cancel'
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AccountComponent;
+}(_react2.default.Component);
+
+;
+
+var AccountExport = function AccountExport() {
+    if (document.getElementById('account-section') != null) {
+
+        var element = document.getElementById('props');
+        var props = JSON.parse(element.getAttribute('data-props'));
+
+        (0, _reactDom.render)(_react2.default.createElement(AccountComponent, { user: props.user, messages: props.messages }), document.getElementById('account-section'));
+    }
+};
+
+module.exports = AccountExport();
+
+/***/ }),
+/* 244 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(9);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(10);
+
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _toastr = __webpack_require__(39);
+
+var _toastr2 = _interopRequireDefault(_toastr);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DataRow = function (_React$Component) {
+  _inherits(DataRow, _React$Component);
+
+  function DataRow(props) {
+    _classCallCheck(this, DataRow);
+
+    var _this = _possibleConstructorReturn(this, (DataRow.__proto__ || Object.getPrototypeOf(DataRow)).call(this, props));
+
+    _this.state = {
+      record: _this.props.record,
+      params: _this.props.params
+    };
+    return _this;
+  }
+
+  _createClass(DataRow, [{
+    key: 'render',
+    value: function render() {
+      var self = this;
+
+      var get_data = function get_data(record, param) {
+        return _react2.default.createElement(
+          'td',
+          null,
+          record[param]
+        );
+      };
+
+      var data = self.state.params.map(function (param) {
+        return get_data(self.state.record.versions[0], param);
+      });
+
+      return _react2.default.createElement(
+        'tr',
+        null,
+        data
+      );
+    }
+  }]);
+
+  return DataRow;
+}(_react2.default.Component);
+
+var DataCard = function (_React$Component2) {
+  _inherits(DataCard, _React$Component2);
+
+  function DataCard(props) {
+    _classCallCheck(this, DataCard);
+
+    var _this2 = _possibleConstructorReturn(this, (DataCard.__proto__ || Object.getPrototypeOf(DataCard)).call(this, props));
+
+    _this2.state = {
+      record: _this2.props.record,
+      params: _this2.props.params
+    };
+    return _this2;
+  }
+
+  _createClass(DataCard, [{
+    key: 'render',
+    value: function render() {
+      var self = this;
+      var get_data = function get_data(record, param) {
+        return _react2.default.createElement(
+          'p',
+          null,
+          _react2.default.createElement(
+            'strong',
+            null,
+            param
+          ),
+          ': ',
+          String(record[param])
+        );
+      };
+
+      var data = self.state.params.map(function (param) {
+        return param !== 'id' ? get_data(self.state.record.versions[0], param) : null;
+      });
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'card' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Id#',
+          this.state.record.id
+        ),
+        data
+      );
+    }
+  }]);
+
+  return DataCard;
+}(_react2.default.Component);
+
+var DataComponent = function (_React$Component3) {
+  _inherits(DataComponent, _React$Component3);
+
+  function DataComponent(props) {
+    _classCallCheck(this, DataComponent);
+
+    var _this3 = _possibleConstructorReturn(this, (DataComponent.__proto__ || Object.getPrototypeOf(DataComponent)).call(this, props));
+
+    _this3.state = {
+      records: [],
+      params: [],
+      table: 'users',
+      tables: [],
+      application: {},
+      loading: true,
+      table_display: false
+    };
+    return _this3;
+  }
+
+  _createClass(DataComponent, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.loadAppData();
+      this.loadTableData(this.state.table);
+    }
+  }, {
+    key: 'loadAppData',
+    value: function loadAppData() {
+      var page = this;
+
+      var config = {
+        headers: {
+          user_api_key: this.props.user ? this.props.user.record.api_key : null,
+          user_public_key: this.props.public_key
+        }
+      };
+
+      _axios2.default.get('/admin/api/app', config).then(function (response) {
+        if (response.data.success) {
+          page.setState({
+            application: response.data.application,
+            tables: response.data.tables
+          });
+        } else {
+          _toastr2.default.error("Error obtaining your app's data");
+        }
+      }).catch(function (error) {
+        console.log(error);
+        _toastr2.default.error('There was an error');
+      });
+    }
+  }, {
+    key: 'loadTableData',
+    value: function loadTableData(table) {
+      var page = this;
+      var config = {
+        headers: {
+          user_api_key: this.props.user ? this.props.user.record.api_key : null,
+          user_public_key: this.props.public_key
+        }
+      };
+
+      page.setState({
+        loading: true
+      });
+
+      _axios2.default.get('/admin/api/' + table, config).then(function (response) {
+        console.log(response.data);
+        if (response.data.success) {
+          page.setState({
+            records: response.data.records,
+            params: response.data.params,
+            loading: false
+          });
+        } else {
+          page.setState({
+            records: [],
+            params: [],
+            loading: false
+          });
+
+          if (response.data.error && response.data.error === 'table-not-found' && page.state.tables.length > 0) {
+            _toastr2.default.error('Table in database but app has no model file for it!');
+          } else {
+            _toastr2.default.error('No table history');
+          }
+        }
+      }).catch(function (error) {
+        console.log(error);
+        _toastr2.default.error('There was an error');
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this4 = this;
+
+      var self = this;
+
+      var headers = self.state.params.map(function (param) {
+        return _react2.default.createElement(
+          'th',
+          null,
+          param
+        );
+      });
+
+      var body = self.state.records.map(function (record) {
+        return _react2.default.createElement(DataRow, { record: record, params: self.state.params, key: record.id });
+      });
+
+      var table_version = _react2.default.createElement(
+        'div',
+        { className: 'container-fluid' },
+        _react2.default.createElement(
+          'table',
+          { className: 'table table-striped' },
+          _react2.default.createElement(
+            'thead',
+            null,
+            _react2.default.createElement(
+              'tr',
+              null,
+              headers
+            )
+          ),
+          _react2.default.createElement(
+            'tbody',
+            null,
+            body
+          )
+        )
+      );
+
+      var card_version = self.state.records.map(function (record) {
+        return _react2.default.createElement(DataCard, { record: record, params: self.state.params, key: record.id });
+      });
+
+      var tables = this.state.tables.map(function (table) {
+        return _react2.default.createElement(
+          'button',
+          { className: 'btn btn-link', onClick: _this4.loadTableData.bind(_this4, table) },
+          table
+        );
+      });
+
+      var data_display = this.state.table_display ? table_version : card_version;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'container-fluid' },
+        _react2.default.createElement(
+          'div',
+          { className: 'container text-center' },
+          tables
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'text-center' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Current table: ',
+            this.state.table
+          )
+        ),
+        this.state.loading ? _react2.default.createElement(
+          'p',
+          { className: 'alert alert-info' },
+          'Loading'
+        ) : data_display
+      );
+    }
+  }]);
+
+  return DataComponent;
+}(_react2.default.Component);
+
+var DataComponentExport = function DataComponentExport() {
+  if (document.getElementById('app-data') != null) {
+    var element = document.getElementById('props');
+    var props = JSON.parse(element.getAttribute('data-props'));
+
+    (0, _reactDom.render)(_react2.default.createElement(DataComponent, {
+      user: props.user,
+      validation: props.validation,
+      public_key: props.public_key
+    }), document.getElementById('app-data'));
+  }
+};
+
+module.exports = DataComponentExport();
 
 /***/ }),
 /* 245 */
@@ -38827,11 +38833,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(10);
 
-var _axios = __webpack_require__(7);
+var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _toastr = __webpack_require__(100);
+var _toastr = __webpack_require__(39);
 
 var _toastr2 = _interopRequireDefault(_toastr);
 
@@ -39319,7 +39325,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var axios = __webpack_require__(7);
+var axios = __webpack_require__(8);
 
 var HomeComponent = function (_React$Component) {
     _inherits(HomeComponent, _React$Component);
@@ -39438,7 +39444,7 @@ var LoginForm = function (_React$Component) {
             console.log('Authentication submitted!');
             var events = __webpack_require__(249);
             var eventEmitter = new events.EventEmitter();
-            var axios = __webpack_require__(7);
+            var axios = __webpack_require__(8);
             var page = this;
             var accountRS;
 
@@ -39986,7 +39992,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var axios = __webpack_require__(7);
+var axios = __webpack_require__(8);
 
 var SettingsOptions = function (_React$Component) {
     _inherits(SettingsOptions, _React$Component);
@@ -40252,7 +40258,7 @@ var SignupForm = function (_React$Component) {
         _this.testConnection = function (event) {
             event.preventDefault();
 
-            var axios = __webpack_require__(7);
+            var axios = __webpack_require__(8);
 
             axios.post('/test_connection', {}).then(function (response) {
                 if (response.data.success == true) {
@@ -40277,7 +40283,7 @@ var SignupForm = function (_React$Component) {
         _this.generatePassphrase = function (event) {
             event.preventDefault();
 
-            var axios = __webpack_require__(7);
+            var axios = __webpack_require__(8);
 
             var page = _this;
 
@@ -40301,7 +40307,7 @@ var SignupForm = function (_React$Component) {
 
         _this.confirmPassphrase = function (event) {
             event.preventDefault();
-            var axios = __webpack_require__(7);
+            var axios = __webpack_require__(8);
 
             var page = _this;
 
@@ -40410,7 +40416,7 @@ var SignupForm = function (_React$Component) {
         value: function registerAccount(event) {
             event.preventDefault();
 
-            var axios = __webpack_require__(7);
+            var axios = __webpack_require__(8);
 
             var page = this;
 
@@ -40728,7 +40734,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var axios = __webpack_require__(7);
+var axios = __webpack_require__(8);
 
 var UserListComponent = function (_React$Component) {
     _inherits(UserListComponent, _React$Component);
