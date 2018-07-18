@@ -1,18 +1,16 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 
 export default class ApplicationLayout extends React.Component {
-    constructor(props){
-        super(props);
-        this.state={
-            user_exists: this.props.data.user != null ? true : false
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      user_exists: this.props.data.user || false,
+    };
+  }
 
 
-    render(){
-        var links_list=
-        
+  render() {
+    const links_list = (
         <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
             <li className="nav-item p-2 bg-secondary rounded">
               <div className="text-center">
@@ -52,8 +50,9 @@ export default class ApplicationLayout extends React.Component {
               </a>
             </li>
         </ul>
+    );
 
-        var logged_header=
+    const logged_header = (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <a className="navbar-brand" href="#"><img className="img" src="../img/sigwo-sheild2.png" height="48px" width="auto" /> Sigwo Technologies</a>
             <a className="nav-link text-light" id="sidenavToggler">
@@ -93,8 +92,9 @@ export default class ApplicationLayout extends React.Component {
               </ul>
             </div>
         </nav>
+    );
 
-        var unlogged_header=
+    const unlogged_header = (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <a className="navbar-brand" href="#"><img className="img" src="../img/sigwo-sheild2.png" height="48px" width="auto" /> Sigwo Technologies</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,23 +130,17 @@ export default class ApplicationLayout extends React.Component {
               </ul>
             </div>
         </nav>
+    );
 
-        var logged_wrapper=
-        <div className="content-wrapper">
-          <div className="container">
-            {this.props.children}
-          </div> 
-        </div>
-        
-
-        var unlogged_wrapper=
+    const unlogged_wrapper = (
         <div className="content-wrapper">
           <div className="container-fluid">
             {this.props.children}
           </div>
         </div>
+    );
 
-        return(
+    return (
             <html>
                 <head>
                     <meta httpEquiv="Content-Type" content= "text/html;charset=utf-8" />
@@ -165,21 +159,21 @@ export default class ApplicationLayout extends React.Component {
                 </head>
                 <body className="sticky-footer bg-dark fixed-nav" id="page-top">
                     <span id="toastrMessages"></span>
-                    <div id={this.props.data.dashboard == true ? 'wrapper' : 'unlogged-wrapper'}>
+                    <div id={this.props.data.dashboard === true ? 'wrapper' : 'unlogged-wrapper'}>
                         {
-                            this.props.data.dashboard== true ? logged_header : unlogged_header
+                            this.props.data.dashboard === true ? logged_header : unlogged_header
                         }
 
 
                         {
-                            this.props.data.dashboard==true ?
-                            <div className="content-wrapper" id="page-wrapper">
-                              <div className="container">
-                                {this.props.children}
-                                <div className="background-image"></div>
-                              </div>
-                            </div>:
-                            unlogged_wrapper
+                            this.props.data.dashboard === true
+                              ? <div className="content-wrapper" id="page-wrapper">
+                                  <div className="container">
+                                    {this.props.children}
+                                    <div className="background-image"></div>
+                                  </div>
+                                </div>
+                              : unlogged_wrapper
                         }
                     </div>
                     <footer className="sticky-footer">
@@ -220,6 +214,6 @@ export default class ApplicationLayout extends React.Component {
                     <script src="/js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
                 </body>
             </html>
-        )
-    }
-};
+    );
+  }
+}

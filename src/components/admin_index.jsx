@@ -39,7 +39,7 @@ class TableComponent extends React.Component {
       balance: 0,
       low_balance: true,
       show_passphrase: false,
-      expanded: false
+      expanded: false,
     };
   }
 
@@ -102,14 +102,14 @@ class TableComponent extends React.Component {
                   <h6 className="text-danger">Low Balance</h6>
                 </div>
                 <div className="col-3 col-xs-12 text-right">
-                  <button onClick={this.expanded.bind(this)} className="btn btn-info" type="button" data-toggle="collapse" data-target={"#heading" + this.state.name} aria-expanded="false" aria-controls={"heading" + this.state.name}>
+                  <button onClick={this.expanded.bind(this)} className="btn btn-info" type="button" data-toggle="collapse" data-target={`#heading${this.state.name}`} aria-expanded="false" aria-controls={`heading${this.state.name}`}>
                     {this.state.expanded ? ' - ' : ' + '} more details
                   </button>
                 </div>
               </div>
             </div>
 
-            <div id={"heading" + this.state.name} className="collapse">
+            <div id={`heading${this.state.name}`} className="collapse">
               <div className="card-body">
                 <div className="">
                     <p><strong>Address:</strong> {data.address}</p>
@@ -243,9 +243,7 @@ class AdminComponent extends React.Component {
   render() {
     const { state } = this;
     const { props } = this;
-    const tableList = state.tables.map((table, index) => 
-        <TableComponent table={table} parent={this} key={`table-component-${index}`} />
-    );
+    const tableList = state.tables.map((table, index) => <TableComponent table={table} parent={this} key={`table-component-${index}`} />);
 
 
     return (
@@ -271,7 +269,7 @@ class AdminComponent extends React.Component {
               </div>
             </div>
           </div>
-              
+
           <div className="row">
             <div className="col-12 col-md-10 mx-auto">
               <div className="card mt-2 mb-5">

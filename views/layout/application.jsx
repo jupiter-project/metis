@@ -1,16 +1,15 @@
-import React from "react";
-import ReactDom from "react-dom";
+import React from 'react';
 
 export default class ApplicationLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_exists: this.props.data.user != null ? true : false
+      user_exists: this.props.data.user || false,
     };
   }
 
   render() {
-    var links_list = (
+    const links_list = (
       <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li className="nav-item p-2 bg-secondary rounded">
           <div className="text-center">
@@ -46,7 +45,7 @@ export default class ApplicationLayout extends React.Component {
             <span className="nav-link-text"> Account</span>
           </a>
         </li>
-        {false && "Generated plop links go here"}
+        {false && 'Generated plop links go here'}
         <li
           className="nav-item"
           data-toggle="tooltip"
@@ -90,7 +89,7 @@ export default class ApplicationLayout extends React.Component {
       </ul>
     );
 
-    var logged_header = (
+    const logged_header = (
       <nav
         className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
         id="mainNav"
@@ -101,7 +100,7 @@ export default class ApplicationLayout extends React.Component {
             src="../img/sigwo-sheild2.png"
             height="48px"
             width="auto"
-          />{" "}
+          />{' '}
           Sigwo Technologies
         </a>
         <button
@@ -141,7 +140,7 @@ export default class ApplicationLayout extends React.Component {
                 aria-labelledby="profileDropdown"
               >
                 <h6 className="dropdown-header">
-                  Logged in as:{" "}
+                  Logged in as:{' '}
                   {this.props.data.user != null
                     ? this.props.data.user.record.firstname
                     : null}
@@ -173,7 +172,7 @@ export default class ApplicationLayout extends React.Component {
       </nav>
     );
 
-    var unlogged_header = (
+    const unlogged_header = (
       <nav
         className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
         id="mainNav"
@@ -184,7 +183,7 @@ export default class ApplicationLayout extends React.Component {
             src="../img/sigwo-sheild2.png"
             height="48px"
             width="auto"
-          />{" "}
+          />{' '}
           Sigwo Technologies
         </a>
         <a
@@ -239,13 +238,13 @@ export default class ApplicationLayout extends React.Component {
       </nav>
     );
 
-    var logged_wrapper = (
+    const logged_wrapper = (
       <div className="content-wrapper" id="page-wrapper">
         <div className="container">{this.props.children}</div>
       </div>
     );
 
-    var unlogged_wrapper = (
+    const unlogged_wrapper = (
       <div className="content-wrapper" id="page-wrapper">
         <div className="container">{this.props.children}</div>
       </div>
@@ -290,14 +289,14 @@ export default class ApplicationLayout extends React.Component {
           <span id="toastrMessages" />
           <div
             id={
-              this.props.data.dashboard == true ? "wrapper" : "unlogged-wrapper"
+              this.props.data.dashboard === true ? 'wrapper' : 'unlogged-wrapper'
             }
           >
-            {this.props.data.dashboard == true
+            {this.props.data.dashboard === true
               ? logged_header
               : unlogged_header}
 
-            {this.props.data.dashboard == true
+            {this.props.data.dashboard === true
               ? logged_wrapper
               : unlogged_wrapper}
           </div>
