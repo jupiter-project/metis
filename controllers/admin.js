@@ -84,7 +84,20 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       const file = `../models/${model}.js`;
 
       if (!modelFound) {
-        res.send({ success: false, message: 'Invalid table', error: 'table-not-found' });
+        gravity.getAllRecords(tableName)
+          .then((response) => {
+            const { records } = response;
+            res.send({
+              records,
+              success: false,
+              message: 'Invalid table',
+              error: 'table-not-found',
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            res.send({ success: false, message: 'Invalid table', error: 'table-not-found' });
+          });
       } else {
         const Record = require(file);
 

@@ -62,6 +62,7 @@ class DataComponent extends React.Component {
       application: {},
       loading: true,
       table_display: false,
+      raw_data: [],
     };
   }
 
@@ -125,8 +126,12 @@ class DataComponent extends React.Component {
             params: [],
             loading: false,
           });
-
-          if (response.data.error && response.data.error === 'table-not-found' && page.state.tables.length > 0) {
+          if (response.data.error && response.data.error === 'table-not-found' && response.data.records && page.state.tables.length > 0) {
+            toastr.error('Table in database but app has no model file for it! Displaying raw data.');
+            page.setState({
+              raw_data: response.data.records,
+            });
+          } else if (response.data.error && response.data.error === 'table-not-found' && page.state.tables.length > 0) {
             toastr.error('Table in database but app has no model file for it!');
           } else {
             toastr.error('No table history');
@@ -168,6 +173,9 @@ class DataComponent extends React.Component {
     const tables = this.state.tables.map(
       table => <button className="btn btn-link" onClick={this.loadTableData.bind(this, table)}>{table}</button>,
     );
+    const rawData = this.state.raw_data.map(
+      data => <div className="card">{JSON.stringify(data)}</div>,
+    );
 
     const dataDisplay = this.state.table_display ? tableVersion : cardVersion;
 
@@ -183,6 +191,11 @@ class DataComponent extends React.Component {
           this.state.loading
             ? <p className="alert alert-info">Loading</p>
             : dataDisplay
+        }
+
+        {
+          this.state.raw_data.length > 0
+            ? rawData : null
         }
       </div>
     );

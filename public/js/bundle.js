@@ -38686,7 +38686,8 @@ var DataComponent = function (_React$Component3) {
       tables: [],
       application: {},
       loading: true,
-      table_display: false
+      table_display: false,
+      raw_data: []
     };
     return _this3;
   }
@@ -38752,8 +38753,12 @@ var DataComponent = function (_React$Component3) {
             params: [],
             loading: false
           });
-
-          if (response.data.error && response.data.error === 'table-not-found' && page.state.tables.length > 0) {
+          if (response.data.error && response.data.error === 'table-not-found' && response.data.records && page.state.tables.length > 0) {
+            _toastr2.default.error('Table in database but app has no model file for it! Displaying raw data.');
+            page.setState({
+              raw_data: response.data.records
+            });
+          } else if (response.data.error && response.data.error === 'table-not-found' && page.state.tables.length > 0) {
             _toastr2.default.error('Table in database but app has no model file for it!');
           } else {
             _toastr2.default.error('No table history');
@@ -38817,6 +38822,13 @@ var DataComponent = function (_React$Component3) {
           table
         );
       });
+      var rawData = this.state.raw_data.map(function (data) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'card' },
+          JSON.stringify(data)
+        );
+      });
 
       var dataDisplay = this.state.table_display ? tableVersion : cardVersion;
 
@@ -38842,7 +38854,8 @@ var DataComponent = function (_React$Component3) {
           'p',
           { className: 'alert alert-info' },
           'Loading'
-        ) : dataDisplay
+        ) : dataDisplay,
+        this.state.raw_data.length > 0 ? rawData : null
       );
     }
   }]);
