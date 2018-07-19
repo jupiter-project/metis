@@ -31,8 +31,8 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   app.get('/api/account', controller.isLoggedIn, (req, res) => {
     gravity.findById(req.user.record.id, 'users', { size: 'last' })
       .then((response) => {
-        const user_info = JSON.parse(response.record.user_record);
-        res.send({ success: true, account_info: user_info, message: 'Retrieved account info' });
+        const userInfo = JSON.parse(response.record.user_record);
+        res.send({ success: true, account_info: userInfo, message: 'Retrieved account info' });
       })
       .catch((error) => {
         console.log(error);
@@ -157,7 +157,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     //  Page for 2fa checkup
     const VerificationPage = require('../views/verification.jsx');
 
-    const check_code = ReactDOMServer.renderToString(
+    const checkCode = ReactDOMServer.renderToString(
       React.createElement(VerificationPage, {
         messages,
         name: 'Gravity - Two-factor authentication',
@@ -166,7 +166,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       }),
     );
 
-    res.send(check_code);
+    res.send(checkCode);
   });
 
   app.post('/start2fa', controller.onlyLoggedIn, (req, res) => {
@@ -191,14 +191,14 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   });
 
   app.post('/verify_code', controller.onlyLoggedIn, (req, res) => {
-    const { verification_code } = req.body;
-    const user_secret_key = req.user.record.secret_key;
+    const verificationCode = req.body.verification_code;
+    const userSecretKey = req.user.record.secret_key;
     //  verify that the user token matches what it should be at this moment
     const speakeasy = require('speakeasy');
     const verified = speakeasy.totp.verify({
-      secret: user_secret_key,
+      secret: userSecretKey,
       encoding: 'base32',
-      token: verification_code,
+      token: verificationCode,
     });
     // console.log(verified)
     if (verified) {
@@ -211,20 +211,20 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   });
 
   app.post('/verify_code_and_save', controller.onlyLoggedIn, (req, res) => {
-    const { verification_code } = req.body;
-    const user_secret_key = req.session.secret;
+    const verificationCode = req.body.verification_code;
+    const userSecretKey = req.session.secret;
 
     // verify that the user token matches what it should be at this moment
     const speakeasy = require('speakeasy');
     const verified = speakeasy.totp.verify({
-      secret: user_secret_key,
+      secret: userSecretKey,
       encoding: 'base32',
-      token: verification_code,
+      token: verificationCode,
     });
 
     if (verified) {
       const data = req.user.record;
-      data.secret_key = user_secret_key;
+      data.secret_key = userSecretKey;
       data.public_key = req.session.public_key;
       data.twofa_enabled = true;
       data.twofa_completed = true;
@@ -251,12 +251,12 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.setHeader('Content-Type', 'application/json');
     const params = req.body;
     const data = req.user.record;
-    const twofa_enabled = params.enable_2fa === 'true';
-    data.twofa_enabled = twofa_enabled;
+    const twofaEnabled = params.enable_2fa === 'true';
+    data.twofa_enabled = twofaEnabled;
     data.public_key = req.session.public_key;
     const user = new User(data);
 
-    if (twofa_enabled) {
+    if (twofaEnabled) {
       req.flash('loginMessage', 'Begining 2FA');
       req.session.twofa_enabled = true;
       req.session.twofa_completed = false;
@@ -272,7 +272,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     user.update()
       .then(() => {
-        if (twofa_enabled) {
+        if (twofaEnabled) {
           // console.log('This thing trigered');
           res.redirect('/2fa_setup');
         } else if (user.record.twofa_enabled === false) {

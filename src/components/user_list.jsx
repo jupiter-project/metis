@@ -20,8 +20,8 @@ class UserListComponent extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.recordUser = this.recordUser.bind(this);
-    this.twofa_enabledUpdate = this.twofa_enabledUpdate.bind(this);
-    this.twofa_completedUpdate = this.twofa_completedUpdate.bind(this);
+    this.twofaEnabledUpdate = this.twofaEnabledUpdate.bind(this);
+    this.twofaCompletedUpdate = this.twofaCompletedUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -46,24 +46,24 @@ class UserListComponent extends React.Component {
   }
 
 
-  handleChange(a_field, event) {
-    if (a_field === 'account') {
+  handleChange(aField, event) {
+    if (aField === 'account') {
       this.setState({ account: event.target.value });
-    } else if (a_field === 'accounthash') {
+    } else if (aField === 'accounthash') {
       this.setState({ accounthash: event.target.value });
-    } else if (a_field === 'email') {
+    } else if (aField === 'email') {
       this.setState({ email: event.target.value });
-    } else if (a_field === 'firstname') {
+    } else if (aField === 'firstname') {
       this.setState({ firstname: event.target.value });
-    } else if (a_field === 'lastname') {
+    } else if (aField === 'lastname') {
       this.setState({ lastname: event.target.value });
-    } else if (a_field === 'secret_key') {
+    } else if (aField === 'secret_key') {
       this.setState({ secret_key: event.target.value });
-    } else if (a_field === 'twofa_enabled') {
+    } else if (aField === 'twofa_enabled') {
       this.setState({ twofa_enabled: event.target.value });
-    } else if (a_field === 'twofa_completed') {
+    } else if (aField === 'twofa_completed') {
       this.setState({ twofa_completed: event.target.value });
-    } else if (a_field === 'api_key') {
+    } else if (aField === 'api_key') {
       this.setState({ api_key: event.target.value });
     }
   }
@@ -116,18 +116,18 @@ class UserListComponent extends React.Component {
       });
   }
 
-  twofa_enabledUpdate() {
-    const new_value = !this.state.twofa_enabled;
-    this.setState({ twofa_enabled: new_value });
+  twofaEnabledUpdate() {
+    const newValue = !this.state.twofa_enabled;
+    this.setState({ twofa_enabled: newValue });
   }
 
-  twofa_completedUpdate() {
-    const new_value = !this.state.twofa_completed;
-    this.setState({ twofa_completed: new_value });
+  twofaCompletedUpdate() {
+    const newValue = !this.state.twofa_completed;
+    this.setState({ twofa_completed: newValue });
   }
 
   render() {
-    const user_list = (
+    const userList = (
       this.state.users.map((user, index) => (
           <tr className="text-center" key={`user-${index}`}>
                 <td>{user.user_record.account}</td>
@@ -187,7 +187,7 @@ class UserListComponent extends React.Component {
                                 <label>twofa_enabled</label>
                                 <div className="status-toggle">
                                     <label className={'switch'}>
-                                        <input type="checkbox" onChange={this.twofa_enabledUpdate.bind(this)} checked={this.state.twofa_enabled || false} />
+                                        <input type="checkbox" onChange={this.twofaEnabledUpdate.bind(this)} checked={this.state.twofa_enabled || false} />
                                         <span className={'slider round'}></span>
                                     </label><br />
                                 </div>
@@ -197,7 +197,7 @@ class UserListComponent extends React.Component {
                                 <label>twofa_completed</label>
                                 <div className="status-toggle">
                                     <label className={'switch'}>
-                                        <input type="checkbox" onChange={this.twofa_completedUpdate.bind(this)} checked={this.state.twofa_completed || false} />
+                                        <input type="checkbox" onChange={this.twofaCompletedUpdate.bind(this)} checked={this.state.twofa_completed || false} />
                                         <span className={'slider round'}></span>
                                     </label><br />
                                 </div>
@@ -232,7 +232,7 @@ class UserListComponent extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {user_list}
+                    {userList}
                 </tbody>
             </table>
 

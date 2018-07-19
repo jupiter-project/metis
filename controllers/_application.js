@@ -160,7 +160,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   // NEW ACCOUNT GENERATION
   // ===============================================================================
   app.post('/create_jupiter_account', (req, res) => {
-    const form_data = req.body.account_data;
+    const formData = req.body.account_data;
 
     res.setHeader('Content-Type', 'application/json');
 
@@ -170,21 +170,21 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       .then((response) => {
         // new_account_created = true;
         // bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
-        const jupiter_account = {
+        const jupiterAccount = {
           account: response.data.accountRS,
           public_key: response.data.publicKey,
           accounthash: gravity.encrypt(response.data.accountRS),
           jup_account_id: response.data.account,
-          email: form_data.email,
-          firstname: form_data.firstname,
-          lastname: form_data.lastname,
-          twofa_enabled: form_data.twofa_enabled,
+          email: formData.email,
+          firstname: formData.firstname,
+          lastname: formData.lastname,
+          twofa_enabled: formData.twofa_enabled,
         };
 
         if (response.data.accountRS == null) {
           res.send({ success: false, message: 'There was an error in saving the trasaction record', transaction: response.data });
         } else {
-          res.send({ success: true, message: 'Jupiter account created', account: jupiter_account });
+          res.send({ success: true, message: 'Jupiter account created', account: jupiterAccount });
         }
       })
       .catch((error) => {

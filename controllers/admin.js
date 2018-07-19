@@ -58,32 +58,32 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   });
 
   app.get('/admin/api/:table', controller.isAppAdmin, (req, res, next) => {
-    const table_name = req.params.table;
+    const tableName = req.params.table;
     const exceptions = [];
     let model = '';
-    let model_found = false;
+    let modelFound = false;
 
     // If table in route is in the exception list, then it goes lower in the route list
-    if (exceptions.includes(table_name)) {
+    if (exceptions.includes(tableName)) {
       next();
     } else {
       find.fileSync(/\.js$/, './models').forEach((file) => {
-        const model_name = file.replace('models/', '').replace('.js', '');
-        let is_included = table_name.includes(model_name) || false;
-        if (table_name.includes('_')) {
-          if (!model_name.includes('_')) {
-            is_included = false;
+        const modelName = file.replace('models/', '').replace('.js', '');
+        let isIncluded = tableName.includes(modelName) || false;
+        if (tableName.includes('_')) {
+          if (!modelName.includes('_')) {
+            isIncluded = false;
           }
         }
-        if (is_included) {
-          model_found = true;
-          model = model_name;
+        if (isIncluded) {
+          modelFound = true;
+          model = modelName;
         }
       });
 
       const file = `../models/${model}.js`;
 
-      if (!model_found) {
+      if (!modelFound) {
         res.send({ success: false, message: 'Invalid table', error: 'table-not-found' });
       } else {
         const Record = require(file);

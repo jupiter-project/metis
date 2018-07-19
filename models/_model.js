@@ -47,9 +47,9 @@ class Model {
     const self = this;
 
     return new Promise((resolve, reject) => {
-      const call_url = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${table.passphrase}&recipient=${table.address}&messageToEncrypt=${'Generating Id for record'}&feeNQT=${100}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${table.public_key}&compressMessageToEncrypt=true&encryptedMessageIsPrunable=true`;
+      const callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${table.passphrase}&recipient=${table.address}&messageToEncrypt=${'Generating Id for record'}&feeNQT=${100}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${table.public_key}&compressMessageToEncrypt=true&encryptedMessageIsPrunable=true`;
 
-      axios.post(call_url)
+      axios.post(callUrl)
         .then((response) => {
           if (response.data.broadcasted != null && response.data.broadcasted === true) {
             self.id = response.data.transaction;
@@ -73,20 +73,20 @@ class Model {
 
   verify() {
     const self = this;
-    let total_errors = [];
-    let error_found = false;
+    let totalErrors = [];
+    let errorFound = false;
 
     for (let x = 0; x < Object.keys(self.validation_rules).length; x += 1) {
       const rule = self.validation_rules[x];
       const validation = validate.validate_model(rule.attribute_name, rule.validate, rule.rules);
 
       if (validation.error === true) {
-        error_found = true;
-        total_errors.push(validation.messages);
-        total_errors = Array.prototype.concat.apply([], total_errors);
+        errorFound = true;
+        totalErrors.push(validation.messages);
+        totalErrors = Array.prototype.concat.apply([], totalErrors);
       }
     }
-    return ({ errors: error_found, messages: total_errors });
+    return ({ errors: errorFound, messages: totalErrors });
   }
 
   loadTable() {
@@ -97,8 +97,8 @@ class Model {
           const { tables } = response.app;
           for (let x = 0; x < Object.keys(tables).length; x += 1) {
             if (tables[x][self.table] !== undefined) {
-              const record_table = tables[x][self.table];
-              resolve(record_table);
+              const recordTable = tables[x][self.table];
+              resolve(recordTable);
               break;
             }
           }
@@ -113,8 +113,8 @@ class Model {
 
   getAllVersions() {
     const self = this;
-    const record_list = [];
-    let created_at;
+    const recordList = [];
+    let createdAt;
 
     return new Promise((resolve, reject) => {
       gravity.getAllRecords(self.table)
@@ -122,24 +122,24 @@ class Model {
           const { records } = response;
 
           for (let x = 0; x < Object.keys(records).length; x += 1) {
-            const this_record = records[x];
-            if (this_record.id === self.id) {
-              const record_record = JSON.parse(this_record[`${self.model}_record`]);
-              record_record.date = this_record.date;
+            const thisRecord = records[x];
+            if (thisRecord.id === self.id) {
+              const recordRecord = JSON.parse(thisRecord[`${self.model}_record`]);
+              recordRecord.date = thisRecord.date;
 
-              this_record[`${self.model}_record`] = record_record;
-              record_list.push(record_record);
+              thisRecord[`${self.model}_record`] = recordRecord;
+              recordList.push(recordRecord);
             }
           }
 
-          gravity.sortByDate(record_list);
+          gravity.sortByDate(recordList);
 
-          created_at = record_list[record_list.length - 1].date;
+          createdAt = recordList[recordList.length - 1].date;
 
           resolve({
             id: self.id,
-            versions: record_list,
-            date: created_at,
+            versions: recordList,
+            date: createdAt,
           });
         })
         .catch((error) => {
@@ -185,51 +185,51 @@ class Model {
   loadRecords() {
     const self = this;
     const eventEmitter = new events.EventEmitter();
-    const final_list = [];
-    let table_data;
+    const finalList = [];
+    let tableData;
     let user;
 
     return new Promise((resolve, reject) => {
-      eventEmitter.on('table_data_loaded', () => {
-        gravity.get_records(user.record.account, table_data.address, table_data.passphrase)
+      eventEmitter.on('tableData_loaded', () => {
+        gravity.get_records(user.record.account, tableData.address, tableData.passphrase)
           .then((res) => {
             const { records } = res;
-            const records_breakdown = {};
+            const recordsBreakdown = {};
             for (let x = 0; x < Object.keys(records).length; x += 1) {
-              const this_record = records[x];
-              if (this_record.id) {
-                if (records_breakdown[this_record.id] === undefined) {
-                  records_breakdown[this_record.id] = {
+              const thisRecord = records[x];
+              if (thisRecord.id) {
+                if (recordsBreakdown[thisRecord.id] === undefined) {
+                  recordsBreakdown[thisRecord.id] = {
                     versions: [],
                     date_first_record: '',
                   };
                 }
 
-                const data = JSON.parse(this_record[`${self.model}_record`]);
-                data.date = this_record.date;
-                records_breakdown[this_record.id].versions.push(data);
+                const data = JSON.parse(thisRecord[`${self.model}_record`]);
+                data.date = thisRecord.date;
+                recordsBreakdown[thisRecord.id].versions.push(data);
               }
             }
-            const ids = Object.keys(records_breakdown);
+            const ids = Object.keys(recordsBreakdown);
 
             for (let z = 0; z < ids.length; z += 1) {
               const id = ids[z];
-              // console.log(records_breakdown[id]);
-              gravity.sortByDate(records_breakdown[id].versions);
-              const this_records = records_breakdown[id].versions;
-              const last_record = this_records.length - 1;
-              // console.log(this_records[0]);
-              // console.log(this_records[last_record]);
-              const created_at = this_records[last_record].date;
-              final_list.push({
+              // console.log(recordsBreakdown[id]);
+              gravity.sortByDate(recordsBreakdown[id].versions);
+              const thisRecords = recordsBreakdown[id].versions;
+              const lastRecord = thisRecords.length - 1;
+              // console.log(thisRecords[0]);
+              // console.log(thisRecords[lastRecord]);
+              const createdAt = thisRecords[lastRecord].date;
+              finalList.push({
                 id,
-                [`${self.model}_record`]: this_records[0],
-                date: created_at,
+                [`${self.model}_record`]: thisRecords[0],
+                date: createdAt,
               });
             }
-            // console.log(final_list);
+            // console.log(finalList);
 
-            resolve({ success: true, records: final_list, records_found: final_list.length });
+            resolve({ success: true, records: finalList, records_found: finalList.length });
           })
           .catch((err) => {
             reject(err);
@@ -240,8 +240,8 @@ class Model {
         if (self.user.api_key === user.record.api_key) {
           self.loadTable()
             .then((res) => {
-              table_data = res;
-              eventEmitter.emit('table_data_loaded');
+              tableData = res;
+              eventEmitter.emit('tableData_loaded');
             })
             .catch((err) => {
               console.log(err);
@@ -275,7 +275,7 @@ class Model {
   create() {
     const self = this;
     const eventEmitter = new events.EventEmitter();
-    let record_table;
+    let recordTable;
     let user;
 
     return new Promise((resolve, reject) => {
@@ -283,27 +283,27 @@ class Model {
         reject({ false: false, verification_error: true, errors: self.verify().messages });
       } else {
         eventEmitter.on('id_generated', () => {
-          const stringified_record = JSON.stringify(self.record);
+          const stringifiedRecord = JSON.stringify(self.record);
 
-          const full_record = {
+          const fullRecord = {
             id: self.record.id,
-            [`${self.model}_record`]: stringified_record,
+            [`${self.model}_record`]: stringifiedRecord,
             date: Date.now(),
           };
-          const encrypted_record = gravity.encrypt(JSON.stringify(full_record));
-          let call_url;
+          const encryptedRecord = gravity.encrypt(JSON.stringify(fullRecord));
+          let callUrl;
 
           if (self.model === 'user') {
-            call_url = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${record_table.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encrypted_record}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.data.public_key}&compressMessageToEncrypt=true`;
+            callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.data.public_key}&compressMessageToEncrypt=true`;
           } else if (self.user) {
             // console.log('Non user call url');
-            call_url = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${record_table.passphrase}&recipient=${self.user.address}&messageToEncrypt=${encrypted_record}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.user.public_key}&compressMessageToEncrypt=true`;
+            callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.user.address}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.user.public_key}&compressMessageToEncrypt=true`;
           } else {
-            call_url = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${record_table.passphrase}&recipient=${record_table.address}&messageToEncrypt=${encrypted_record}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${record_table.public_key}&compressMessageToEncrypt=true`;
+            callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${recordTable.address}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${recordTable.public_key}&compressMessageToEncrypt=true`;
           }
-          // console.log(call_url)
+          // console.log(callUrl)
           // console.log(self);
-          axios.post(call_url)
+          axios.post(callUrl)
             .then((response) => {
               // console.log(response)
               if (response.data.broadcasted && response.data.broadcasted === true) {
@@ -319,7 +319,7 @@ class Model {
             });
         });
         eventEmitter.on('table_loaded', () => {
-          self.generateId(record_table)
+          self.generateId(recordTable)
             .then(() => {
               if (self.record.id === undefined) {
                 reject({ success: false, errors: 'Id for model was not generated' });
@@ -334,7 +334,7 @@ class Model {
         eventEmitter.on('request_authenticated', () => {
           self.loadTable()
             .then((res) => {
-              record_table = res;
+              recordTable = res;
               eventEmitter.emit('table_loaded');
             })
             .catch((err) => {
@@ -378,7 +378,7 @@ class Model {
   update() {
     const self = this;
     const eventEmitter = new events.EventEmitter();
-    let record_table;
+    let recordTable;
     let user;
 
     return new Promise((resolve, reject) => {
@@ -386,24 +386,24 @@ class Model {
         reject({ false: false, verification_error: true, errors: self.verify().messages });
       } else {
         eventEmitter.on('id_verified', () => {
-          const stringified_record = JSON.stringify(self.record);
-          const full_record = {
+          const stringifiedRecord = JSON.stringify(self.record);
+          const fullRecord = {
             id: self.record.id,
-            [`${self.model}_record`]: stringified_record,
+            [`${self.model}_record`]: stringifiedRecord,
             date: Date.now(),
           };
-          const encrypted_record = gravity.encrypt(JSON.stringify(full_record));
-          let call_url;
+          const encryptedRecord = gravity.encrypt(JSON.stringify(fullRecord));
+          let callUrl;
           if (self.model === 'user') {
-            call_url = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${record_table.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encrypted_record}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.data.public_key}&compressMessageToEncrypt=true`;
+            callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.data.public_key}&compressMessageToEncrypt=true`;
           } else if (self.user) {
-            call_url = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${record_table.passphrase}&recipient=${self.user.address}&messageToEncrypt=${encrypted_record}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.user.public_key}&compressMessageToEncrypt=true`;
+            callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.user.address}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.user.public_key}&compressMessageToEncrypt=true`;
           } else {
-            call_url = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${record_table.passphrase}&recipient=${record_table.address}&messageToEncrypt=${encrypted_record}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${record_table.public_key}&compressMessageToEncrypt=true`;
+            callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${recordTable.address}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${recordTable.public_key}&compressMessageToEncrypt=true`;
           }
-          // console.log(call_url);
+          // console.log(callUrl);
           // console.log(self);
-          axios.post(call_url)
+          axios.post(callUrl)
             .then((response) => {
               // console.log(response);
               if (response.data.broadcasted && response.data.broadcasted === true) {
@@ -430,7 +430,7 @@ class Model {
         eventEmitter.on('request_authenticated', () => {
           self.loadTable()
             .then((res) => {
-              record_table = res;
+              recordTable = res;
               eventEmitter.emit('table_loaded');
             })
             .catch((err) => {
@@ -480,41 +480,41 @@ class Model {
         .then((response) => {
           const { records } = response;
           const collection = {};
-          const collection_list = [];
+          const collectionList = [];
 
           for (let x = 0; x < Object.keys(records).length; x += 1) {
-            const this_record = records[x];
-            let record_record;
-            if (collection[this_record.id] === undefined) {
-              record_record = JSON.parse(this_record[`${self.model}_record`]);
-              record_record.date = this_record.date;
+            const thisRecord = records[x];
+            let recordRecord;
+            if (collection[thisRecord.id] === undefined) {
+              recordRecord = JSON.parse(thisRecord[`${self.model}_record`]);
+              recordRecord.date = thisRecord.date;
 
-              collection[this_record.id] = {
-                id: this_record.id,
-                versions: [record_record],
+              collection[thisRecord.id] = {
+                id: thisRecord.id,
+                versions: [recordRecord],
               };
             } else {
-              record_record = JSON.parse(this_record[`${self.model}_record`]);
-              record_record.date = this_record.date;
+              recordRecord = JSON.parse(thisRecord[`${self.model}_record`]);
+              recordRecord.date = thisRecord.date;
 
-              this_record[`${self.model}_record`] = record_record;
-              collection[this_record.id].versions.push(record_record);
+              thisRecord[`${self.model}_record`] = recordRecord;
+              collection[thisRecord.id].versions.push(recordRecord);
             }
           }
 
-          const collection_ids = Object.keys(collection);
+          const collectionIds = Object.keys(collection);
 
-          for (let key = 0; key < collection_ids.length; key += 1) {
-            const this_key = collection_ids[key];
-            const data_object = collection[this_key];
+          for (let key = 0; key < collectionIds.length; key += 1) {
+            const thisKey = collectionIds[key];
+            const dataObject = collection[thisKey];
             // This sorts dates in versions, assigns date to overall record and pushes to final list
-            gravity.sortByDate(data_object.versions);
-            data_object.date = data_object.versions[data_object.versions.length - 1].date;
-            collection_list.push(data_object);
+            gravity.sortByDate(dataObject.versions);
+            dataObject.date = dataObject.versions[dataObject.versions.length - 1].date;
+            collectionList.push(dataObject);
           }
           // This sorts final list by last update
-          gravity.sortByDate(collection_list);
-          resolve({ success: true, records: collection_list, params: self.model_params });
+          gravity.sortByDate(collectionList);
+          resolve({ success: true, records: collectionList, params: self.model_params });
         })
         .catch((error) => {
           console.log(error);

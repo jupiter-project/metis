@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
 }
 
+
 require('babel-register')({
   presets: ['react'],
 });
@@ -77,8 +78,8 @@ app.use(express.static(`${__dirname}/public`));
 require('./config/passport')(passport); //  pass passport for configuration
 
 // required for passport
-const session_secret = process.env.SESSION_SECRET !== undefined ? process.env.SESSION_SECRET : 'undefined';
-app.use(session({ secret: session_secret }));
+const sessionSecret = process.env.SESSION_SECRET !== undefined ? process.env.SESSION_SECRET : 'undefined';
+app.use(session({ secret: sessionSecret }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session

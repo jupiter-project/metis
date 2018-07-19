@@ -20,8 +20,8 @@ module.exports = (passport) => {
 
     user.findById()
       .then(() => {
-        const this_user = user;
-        done(null, this_user);
+        const thisUser = user;
+        done(null, thisUser);
       })
       .catch((err) => {
         done(err, null);
@@ -69,22 +69,22 @@ module.exports = (passport) => {
           })
           .catch((err) => {
             console.log(err);
-            let error_message;
+            let errorMessage;
             if (err.verification_error !== undefined && err.verification_error === true) {
               err.errors.forEach((x) => {
                 req.flash('signupMessage', err.errors[x]);
               });
-              error_message = 'There were validation errors';
+              errorMessage = 'There were validation errors';
             } else {
-              error_message = err.errors;
+              errorMessage = err.errors;
             }
-            return done(null, false, req.flash('signupMessage', error_message));
+            return done(null, false, req.flash('signupMessage', errorMessage));
           });
       });
 
       eventEmitter.on('app_data_loaded', () => {
         const aliasQueue = new Queue('Alias registration', 'redis://127.0.0.1:6379');
-        const encrypted_key = gravity.encrypt(req.body.key);
+        const encryptedKey = gravity.encrypt(req.body.key);
 
         aliasQueue.process((job, queueDone) => {
           const processEvent = new events.EventEmitter();
@@ -128,7 +128,7 @@ module.exports = (passport) => {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
           },
-          jup_key: encrypted_key,
+          jup_key: encryptedKey,
           jup_id: req.body.jup_account_id,
         });
 

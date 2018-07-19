@@ -13,33 +13,33 @@ class SettingsOptions extends React.Component {
       api_key: this.props.user.record.api_key,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.switch_mode = this.switch_mode.bind(this);
+    this.switchMode = this.switchMode.bind(this);
     this.updateApiKey = this.updateApiKey.bind(this);
     this.enableTwoFactor = this.enableTwoFactor.bind(this);
   }
 
 
-  handleChange(a_field, event) {
-    if (a_field === 'email') {
+  handleChange(aField, event) {
+    if (aField === 'email') {
       this.setState({ email: event.target.value });
-    } else if (a_field === 'firstname') {
+    } else if (aField === 'firstname') {
       this.setState({ firstname: event.target.value });
-    } else if (a_field === 'lastname') {
+    } else if (aField === 'lastname') {
       this.setState({ lastname: event.target.value });
-    } else if (a_field === 'currency') {
+    } else if (aField === 'currency') {
       this.setState({ currency: event.target.value });
-    } else if (a_field === 'address') {
+    } else if (aField === 'address') {
       this.setState({ payment_address: event.target.value });
-    } else if (a_field === 'charity') {
+    } else if (aField === 'charity') {
       this.setState({ charity_address: event.target.value });
-    } else if (a_field === 'donation') {
+    } else if (aField === 'donation') {
       this.setState({ donation: event.target.value });
     }
   }
 
-  switch_mode(mode_type, event) {
+  switchMode(modeType, event) {
     event.preventDefault();
-    if (mode_type === 'account') {
+    if (modeType === 'account') {
       this.setState({ account_editing_mode: !this.state.account_editing_mode });
     }
   }

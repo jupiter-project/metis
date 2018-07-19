@@ -46,7 +46,7 @@ class TwoFAVerificationForm extends React.Component {
 
 
   render() {
-    const verification_form = (
+    const verificationForm = (
         <form>
             <div className="row r-2">
                 <div className="offset-xs-0 col-xs-12 offset-sm-4 col-sm-4">
@@ -61,7 +61,7 @@ class TwoFAVerificationForm extends React.Component {
 
     return (
         <div>
-            {verification_form}
+            {verificationForm}
         </div>
     );
   }

@@ -19,23 +19,23 @@ class AccountComponent extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.switch_mode = this.switch_mode.bind(this);
+    this.switchMode = this.switchMode.bind(this);
     this.updateAccountInfo = this.updateAccountInfo.bind(this);
   }
 
-  handleChange(a_field, event) {
-    if (a_field === 'email') {
+  handleChange(aField, event) {
+    if (aField === 'email') {
       this.setState({ email: event.target.value });
-    } else if (a_field === 'firstname') {
+    } else if (aField === 'firstname') {
       this.setState({ firstname: event.target.value });
-    } else if (a_field === 'lastname') {
+    } else if (aField === 'lastname') {
       this.setState({ lastname: event.target.value });
     }
   }
 
-  switch_mode(mode_type, event) {
+  switchMode(modeType, event) {
     event.preventDefault();
-    if (mode_type === 'account') {
+    if (modeType === 'account') {
       this.setState({ account_editing_mode: !this.state.account_editing_mode });
     }
   }
@@ -47,15 +47,16 @@ class AccountComponent extends React.Component {
     this.setState({
       submitted: true,
     });
+    const account = {
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      email: this.state.email,
+      api_key: this.props.user.record.api_key,
+      public_key: this.props.public_key,
+    };
 
     axios.put('/account', {
-      account: {
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
-        email: this.state.email,
-        api_key: this.props.user.api_key,
-        public_key: this.props.public_key,
-      },
+      account,
     })
       .then((response) => {
         if (response.data.success === true) {
@@ -295,7 +296,7 @@ class AccountComponent extends React.Component {
                                             </button>
                                         </div>
                                         <div className="col text-right">
-                                            <button type="button" className="btn btn-danger ml-auto" onClick={this.switch_mode.bind(this, 'account')}>
+                                            <button type="button" className="btn btn-danger ml-auto" onClick={this.switchMode.bind(this, 'account')}>
                                                 <i className="glyphicon glyphicon-edit"></i>  Cancel
                                             </button>
                                         </div>
@@ -318,7 +319,7 @@ class AccountComponent extends React.Component {
                                     </div>
                                     <div className="form-row">
                                         <div className="col">
-                                            <button type="button" className="btn btn-default" onClick={this.switch_mode.bind(this, 'account')}><i className="glyphicon glyphicon-edit"></i> Edit</button>
+                                            <button type="button" className="btn btn-default" onClick={this.switchMode.bind(this, 'account')}><i className="glyphicon glyphicon-edit"></i> Edit</button>
                                         </div>
                                         <div className="col text-right">
                                             <button type="button" className="btn btn-default ml-auto" disabled>Cancel</button>

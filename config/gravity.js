@@ -34,12 +34,12 @@ class Gravity {
     this.tables = [];
   }
 
-  showTables(return_type = 'app') {
+  showTables(returnType = 'app') {
     const self = this;
     return new Promise((resolve, reject) => {
       self.loadAppData()
         .then((response) => {
-          if (return_type === 'console') {
+          if (returnType === 'console') {
             console.log(`Database tables associated with your app ${response.app.appData.name} (${response.app.address})`);
             console.log(response.tables);
             console.log('If you wish to show table details, run "npm run gravity:db"');
@@ -55,7 +55,7 @@ class Gravity {
   }
 
 
-  loadTables(return_type = 'app') {
+  loadTables(returnType = 'app') {
     const self = this;
     let current;
     return new Promise((resolve, reject) => {
@@ -63,7 +63,7 @@ class Gravity {
         .then((response) => {
           const { tables } = response.app;
 
-          if (return_type === 'console') {
+          if (returnType === 'console') {
             console.log(`Database tables associated with your app ${response.app.appData.name}(${response.app.address})`);
             Object.keys(tables).forEach((x) => {
               current = tables[x];
@@ -113,19 +113,19 @@ class Gravity {
     });
   }
 
-  isSubtable(mainTable, subTable) {
-    const main_table = mainTable.sort().join(',');
-    const subtable = subTable.sort().join(',');
-    let return_value;
-    if (main_table.includes(subtable)) {
-      return_value = true;
+  isSubtable(MainTable, SubTable) {
+    const mainTable = MainTable.sort().join(',');
+    const subtable = SubTable.sort().join(',');
+    let returnValue;
+    if (mainTable.includes(subtable)) {
+      returnValue = true;
     } else {
-      return_value = false;
+      returnValue = false;
     }
-    return return_value;
+    return returnValue;
   }
 
-  sort_by_date(array, key, subkey) {
+  sortBySubkey(array, key, subkey) {
     return array.sort((a, b) => {
       const x = a[key][subkey];
       const y = b[key][subkey];
@@ -145,7 +145,7 @@ class Gravity {
     // let decryption_password;
     // let decryption_algorithm;
     let records = [];
-    let number_of_records;
+    let numberOfRecords;
 
     if (process.env.APP_ACCOUNT !== undefined) {
       server = process.env.JUPITERSERVER;
@@ -168,131 +168,131 @@ class Gravity {
     }
 
     return new Promise((resolve, reject) => {
-      let response_message;
+      let responseMessage;
 
       eventEmitter.on('loaded_records', () => {
         // console.log('Records loaded. Organizing records now.');
         if (records !== undefined && records.length > 0) {
-          const table_list = [];
-          const tables_retrieved = {};
+          const tableList = [];
+          const tablesRetrieved = {};
 
-          // We first query the records to find the one containing the table_list
-          // We also create push all the remaining tables to the tables_retrieved_variable
+          // We first query the records to find the one containing the tableList
+          // We also create push all the remaining tables to the tablesRetrieved_variable
           /* Object.keys(records).forEach((x) => {
             // A tables record must contain a date key along with its tables key
             if (records[x].tables && records[x].date && records[x].date) {
-              table_list.push(records[x]);
+              tableList.push(records[x]);
             } else {
-              const object_key = Object.keys(records[x])[0];
-              if (tables_retrieved[object_key] === undefined) {
-                tables_retrieved[object_key] = [];
-                tables_retrieved[object_key].push(records[x]);
+              const objectKey = Object.keys(records[x])[0];
+              if (tablesRetrieved[objectKey] === undefined) {
+                tablesRetrieved[objectKey] = [];
+                tablesRetrieved[objectKey].push(records[x]);
               } else {
-                tables_retrieved[object_key].push(records[x]);
+                tablesRetrieved[objectKey].push(records[x]);
               }
             }
           }); */
 
           for (let x = 0; x < Object.keys(records).length; x += 1) {
             if (records[x].tables && records[x].date && records[x].date) {
-              table_list.push(records[x]);
+              tableList.push(records[x]);
             } else {
-              const object_key = Object.keys(records[x])[0];
-              if (tables_retrieved[object_key] === undefined) {
-                tables_retrieved[object_key] = [];
-                tables_retrieved[object_key].push(records[x]);
+              const objectKey = Object.keys(records[x])[0];
+              if (tablesRetrieved[objectKey] === undefined) {
+                tablesRetrieved[objectKey] = [];
+                tablesRetrieved[objectKey].push(records[x]);
               } else {
-                tables_retrieved[object_key].push(records[x]);
+                tablesRetrieved[objectKey].push(records[x]);
               }
             }
           }
 
           // Once we have separated the records into table list and potentially table object list,
           // we then retrieve the last table record
-          self.sortByDate(table_list);
+          self.sortByDate(tableList);
 
           // This variable will represent the most recent and valid list of tables in the app
-          let current_list = [];
-          /* Object.keys(table_list).forEach((y) => {
-            if (table_list[y].tables.length > current_list.length) {
-              if (current_list.length === 0) {
-                current_list = table_list[y].tables;
-              } else if (self.isSubtable(current_list, table_list[y].tables)) {
-                current_list = table_list[y].tables;
+          let currentList = [];
+          /* Object.keys(tableList).forEach((y) => {
+            if (tableList[y].tables.length > currentList.length) {
+              if (currentList.length === 0) {
+                currentList = tableList[y].tables;
+              } else if (self.isSubtable(currentList, tableList[y].tables)) {
+                currentList = tableList[y].tables;
               }
             }
           }); */
 
-          for (let y = 0; y < Object.keys(table_list).length; y += 1) {
-            if (table_list[y].tables.length > current_list.length) {
-              if (current_list.length === 0) {
-                current_list = table_list[y].tables;
-              } else if (self.isSubtable(current_list, table_list[y].tables)) {
-                current_list = table_list[y].tables;
+          for (let y = 0; y < Object.keys(tableList).length; y += 1) {
+            if (tableList[y].tables.length > currentList.length) {
+              if (currentList.length === 0) {
+                currentList = tableList[y].tables;
+              } else if (self.isSubtable(currentList, tableList[y].tables)) {
+                currentList = tableList[y].tables;
               }
             }
           }
 
           // Now that we have a list with all the table records and the list of tables
-          // that the app should be using. We go through the tables_retrieved and get the
+          // that the app should be using. We go through the tablesRetrieved and get the
           // latest records of each table that the app is supposed to be using.
           const tableData = [];
-          /* Object.keys(current_list).forEach((i) => {
-            const this_key = current_list[i];
+          /* Object.keys(currentList).forEach((i) => {
+            const thisKey = currentList[i];
 
             // We need to sort the the list we are about to call
-            self.sort_by_date(tables_retrieved[this_key], this_key, 'date');
+            self.sortBySubkey(tablesRetrieved[thisKey], thisKey, 'date');
 
             // Once we do this, we can obtain the last record and push to the tableData variable
             // NOTE: We'll expand validation of tables in future releases
-            tableData.push(tables_retrieved[this_key][0]);
+            tableData.push(tablesRetrieved[thisKey][0]);
           }); */
 
-          for (let i = 0; i < Object.keys(current_list).length; i += 1) {
-            const this_key = current_list[i];
+          for (let i = 0; i < Object.keys(currentList).length; i += 1) {
+            const thisKey = currentList[i];
 
             // We need to sort the the list we are about to call
-            self.sort_by_date(tables_retrieved[this_key], this_key, 'date');
+            self.sortBySubkey(tablesRetrieved[thisKey], thisKey, 'date');
 
             // Once we do this, we can obtain the last record and push to the tableData variable
             // NOTE: We'll expand validation of tables in future releases
-            tableData.push(tables_retrieved[this_key][0]);
+            tableData.push(tablesRetrieved[thisKey][0]);
           }
 
           self.appSchema.tables = tableData;
           self.appSchema.appData.name = appname;
           self.appSchema.address = account;
-          response_message = {
-            number_of_records,
+          responseMessage = {
+            numberOfRecords,
             success: true,
             app: self.appSchema,
             message: 'Existing record found',
-            tables: current_list,
+            tables: currentList,
           };
 
           if (process.env.ENV === undefined || process.env.ENV === 'Development') {
             // console.log(self.tables);
             // console.log(self.appSchema.tables);
           }
-          resolve(response_message);
+          resolve(responseMessage);
         } else {
-          response_message = {
-            number_of_records,
+          responseMessage = {
+            numberOfRecords,
             success: true,
             app:
             self.appSchema,
             message: 'No app record',
           };
           // if (process.env.ENV == undefined || process.env.ENV == 'Development')
-          // console.log(response_message);
-          resolve(response_message);
+          // console.log(responseMessage);
+          resolve(responseMessage);
         }
       });
 
-      self.get_records(account, account, passphrase)
+      self.getRecords(account, account, passphrase)
         .then((response) => {
           ({ records } = response);
-          number_of_records = response.records_found;
+          numberOfRecords = response.recordsFound;
           eventEmitter.emit('loaded_records');
         })
         .catch((error) => {
@@ -302,66 +302,66 @@ class Gravity {
     });
   }
 
-  get_records(user_address, records_address, record_passphrase, scope = { size: 'all', show_pending: null }) {
+  getRecords(userAddress, recordsAddress, recordPassphrase, scope = { size: 'all', show_pending: null }) {
     const eventEmitter = new events.EventEmitter();
     const self = this;
 
     return new Promise((resolve, reject) => {
       const records = [];
-      const decrypted_records = [];
-      const decrypted_pendings = [];
-      const pending_records = [];
-      let records_found = 0;
-      let response_data;
+      const decryptedRecords = [];
+      const decryptedPendings = [];
+      const pendingRecords = [];
+      let recordsFound = 0;
+      let responseData;
       let database = [];
-      let completed_number = 0;
-      let pending_number = 0;
+      let completedNumber = 0;
+      let pendingNumber = 0;
       // let show_pending = scope.show_pending;
 
-      eventEmitter.on('set_response_data', () => {
+      eventEmitter.on('set_responseData', () => {
         if (scope.size !== 'last') {
           if (scope.show_pending !== undefined && scope.show_pending > 0) {
-            response_data = {
-              records_found,
-              pending: decrypted_pendings,
-              records: decrypted_records,
-              last_record: decrypted_records[0],
+            responseData = {
+              recordsFound,
+              pending: decryptedPendings,
+              records: decryptedRecords,
+              last_record: decryptedRecords[0],
             };
           } else {
-            response_data = {
-              records_found,
-              records: decrypted_records,
-              last_record: decrypted_records[0],
+            responseData = {
+              recordsFound,
+              records: decryptedRecords,
+              last_record: decryptedRecords[0],
             };
           }
         } else if (scope.size === 'last') {
-          response_data = { record: decrypted_records[0] };
+          responseData = { record: decryptedRecords[0] };
         } else {
-          response_data = { records: null, error: 'Invalid scope size' };
+          responseData = { records: null, error: 'Invalid scope size' };
         }
-        resolve(response_data);
+        resolve(responseData);
       });
 
       eventEmitter.on('check_on_pending', () => {
-        if (Object.keys(pending_records).length > 0) {
-          let record_counter = 0;
+        if (Object.keys(pendingRecords).length > 0) {
+          let recordCounter = 0;
 
-          pending_records.forEach((p) => {
-            const this_url = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${record_passphrase}`;
+          pendingRecords.forEach((p) => {
+            const thisUrl = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${recordPassphrase}`;
 
-            axios.get(this_url)
+            axios.get(thisUrl)
               .then((response) => {
                 try {
-                  const decrypted_pending = JSON.parse(response.data.decryptedMessage);
-                  decrypted_pendings.push(decrypted_pending);
+                  const decriptedPending = JSON.parse(response.data.decryptedMessage);
+                  decryptedPendings.push(decriptedPending);
                 } catch (e) {
                   console.log(e);
                 }
 
-                record_counter += 1;
+                recordCounter += 1;
 
-                if (record_counter === pending_number) {
-                  eventEmitter.emit('set_response_data');
+                if (recordCounter === pendingNumber) {
+                  eventEmitter.emit('set_responseData');
                 }
               })
               .catch((error) => {
@@ -369,7 +369,7 @@ class Gravity {
               });
           });
         } else {
-          eventEmitter.emit('set_response_data');
+          eventEmitter.emit('set_responseData');
         }
       });
 
@@ -377,25 +377,25 @@ class Gravity {
         if (records.length <= 0) {
           eventEmitter.emit('check_on_pending');
         } else {
-          let record_counter = 0;
+          let recordCounter = 0;
           Object.keys(records).forEach((p) => {
-            const transaction_id = records[p];
-            const this_url = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${transaction_id}&secretPhrase=${record_passphrase}`;
-            axios.get(this_url)
+            const transactionId = records[p];
+            const thisUrl = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${transactionId}&secretPhrase=${recordPassphrase}`;
+            axios.get(thisUrl)
               .then((response) => {
                 try {
                   // This decrypts the message from the blockchain using native encryption
                   // as well as the encryption based on encryption variable
                   const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
-                  decrypted_records.push(decrypted);
+                  decryptedRecords.push(decrypted);
                 } catch (e) {
                   // console.log(e);
                   // Error here tend to be trying to decrypt a regular message from Jupiter
                   // rather than a gravity encrypted message
                 }
-                record_counter += 1;
+                recordCounter += 1;
 
-                if (record_counter === completed_number) {
+                if (recordCounter === completedNumber) {
                   eventEmitter.emit('check_on_pending');
                 }
               })
@@ -412,25 +412,25 @@ class Gravity {
           let completion = false;
           if (database[obj].attachment.encryptedMessage
             && database[obj].attachment.encryptedMessage.data != null
-            && database[obj].senderRS === records_address) {
+            && database[obj].senderRS === recordsAddress) {
             if (scope.show_pending !== undefined && scope.show_pending > 0) {
               if (database[obj].confirmations <= scope.show_pending) {
-                pending_records.push(obj.transaction);
-                pending_number += 1;
+                pendingRecords.push(obj.transaction);
+                pendingNumber += 1;
               } else {
                 records.push(database[obj].transaction);
-                completed_number += 1;
+                completedNumber += 1;
               }
             } else if (scope.size === 'all') {
               records.push(database[obj].transaction);
-              completed_number += 1;
+              completedNumber += 1;
             } else if (scope.size === 'last') {
               records.push(database[obj].transaction);
-              records_found += 1;
-              completed_number += 1;
+              recordsFound += 1;
+              completedNumber += 1;
               completion = true;
             }
-            records_found += 1;
+            recordsFound += 1;
           }
           if (completion) {
             break;
@@ -439,7 +439,7 @@ class Gravity {
         eventEmitter.emit('records_retrieved');
       });
 
-      axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${user_address}&withMessage=true&type=1`)
+      axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${userAddress}&withMessage=true&type=1`)
         .then((response) => {
           database = response.data.transactions;
           eventEmitter.emit('database_retrieved');
@@ -451,50 +451,50 @@ class Gravity {
     });
   }
 
-  getAppRecords(app_address, app_passphrase) {
+  getAppRecords(appAddress, appPassphrase) {
     const eventEmitter = new events.EventEmitter();
     const self = this;
 
     return new Promise((resolve, reject) => {
       const records = [];
-      const decrypted_records = [];
-      let records_found = 0;
-      let response_data;
+      const decryptedRecords = [];
+      let recordsFound = 0;
+      let responseData;
       let database = [];
-      let completed_number = 0;
+      let completedNumber = 0;
 
-      eventEmitter.on('set_response_data', () => {
-        response_data = {
-          records_found,
-          records: decrypted_records,
-          last_record: decrypted_records[0],
+      eventEmitter.on('set_responseData', () => {
+        responseData = {
+          recordsFound,
+          records: decryptedRecords,
+          last_record: decryptedRecords[0],
         };
 
-        resolve(response_data);
+        resolve(responseData);
       });
 
       eventEmitter.on('records_retrieved', () => {
         if (records.length <= 0) {
-          eventEmitter.emit('set_response_data');
+          eventEmitter.emit('set_responseData');
         } else {
-          let record_counter = 0;
+          let recordCounter = 0;
           records.forEach((p) => {
-            const this_url = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${app_passphrase}`;
-            axios.get(this_url)
+            const thisUrl = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${appPassphrase}`;
+            axios.get(thisUrl)
               .then((response) => {
                 try {
                   //  This decrypts the message from the blockchain using native encryption
                   // as well as the encryption based on encryption variable
                   const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
-                  decrypted_records.push(decrypted);
-                  // console.log(decrypted_records);
+                  decryptedRecords.push(decrypted);
+                  // console.log(decryptedRecords);
                 } catch (e) {
                   console.log(e);
                 }
-                record_counter += 1;
+                recordCounter += 1;
 
-                if (record_counter === completed_number) {
-                  eventEmitter.emit('set_response_data');
+                if (recordCounter === completedNumber) {
+                  eventEmitter.emit('set_responseData');
                 }
               })
               .catch((error) => {
@@ -509,14 +509,14 @@ class Gravity {
         for (let obj = 0; obj < Object.keys(database).length; obj += 1) {
           if (database[obj].attachment && database[obj].attachment.encryptedMessages) {
             records.push(database[obj].transaction);
-            completed_number += 1;
-            records_found += 1;
+            completedNumber += 1;
+            recordsFound += 1;
           }
         }
         eventEmitter.emit('records_retrieved');
       });
 
-      axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${app_address}&withMessage=true&type=1`)
+      axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${appAddress}&withMessage=true&type=1`)
         .then((response) => {
           database = response.data.transactions;
           eventEmitter.emit('database_retrieved');
@@ -535,60 +535,60 @@ class Gravity {
 
     return new Promise((resolve, reject) => {
       const records = [];
-      const decrypted_records = [];
-      const decrypted_pendings = [];
-      const pending_records = [];
-      let records_found = 0;
-      let response_data;
+      const decryptedRecords = [];
+      const decryptedPendings = [];
+      const pendingRecords = [];
+      let recordsFound = 0;
+      let responseData;
       let database;
-      let record_table;
-      let table_data;
+      let recordTable;
+      let tableData;
       // let { show_pending } = scope;
-      let completed_number = 0;
-      let pending_number = 0;
+      let completedNumber = 0;
+      let pendingNumber = 0;
 
-      eventEmitter.on('set_response_data', () => {
+      eventEmitter.on('set_responseData', () => {
         if (scope.size !== 'last') {
           if (scope.show_pending !== undefined && scope.show_pending > 0) {
-            response_data = {
-              records_found,
-              pending: decrypted_pendings,
-              records: decrypted_records,
-              last_record: decrypted_records[0],
+            responseData = {
+              recordsFound,
+              pending: decryptedPendings,
+              records: decryptedRecords,
+              last_record: decryptedRecords[0],
             };
           } else {
-            response_data = {
-              records_found,
-              records: decrypted_records,
-              last_record: decrypted_records[0],
+            responseData = {
+              recordsFound,
+              records: decryptedRecords,
+              last_record: decryptedRecords[0],
             };
           }
         } else if (scope.size === 'last') {
-          response_data = { record: decrypted_records[0] };
+          responseData = { record: decryptedRecords[0] };
         } else {
-          response_data = { records: null, error: 'Invalid scope size' };
+          responseData = { records: null, error: 'Invalid scope size' };
         }
-        resolve(response_data);
+        resolve(responseData);
       });
 
       eventEmitter.on('check_on_pending', () => {
-        if (Object.keys(pending_records).length > 0) {
-          let record_counter = 0;
+        if (Object.keys(pendingRecords).length > 0) {
+          let recordCounter = 0;
 
-          pending_records.forEach((p) => {
-            const this_url = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${record_table.passphrase}`;
-            axios.get(this_url)
+          pendingRecords.forEach((p) => {
+            const thisUrl = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${recordTable.passphrase}`;
+            axios.get(thisUrl)
               .then((response) => {
                 try {
-                  const decrypted_pending = JSON.parse(response.data.decryptedMessage);
-                  decrypted_pendings.push(decrypted_pending);
+                  const decriptedPending = JSON.parse(response.data.decryptedMessage);
+                  decryptedPendings.push(decriptedPending);
                 } catch (e) {
                   console.log(e);
                 }
-                record_counter += 1;
+                recordCounter += 1;
 
-                if (record_counter === pending_number) {
-                  eventEmitter.emit('set_response_data');
+                if (recordCounter === pendingNumber) {
+                  eventEmitter.emit('set_responseData');
                 }
               })
               .catch((error) => {
@@ -596,7 +596,7 @@ class Gravity {
               });
           });
         } else {
-          eventEmitter.emit('set_response_data');
+          eventEmitter.emit('set_responseData');
         }
       });
 
@@ -604,22 +604,22 @@ class Gravity {
         if (Object.keys(records).length <= 0) {
           eventEmitter.emit('check_on_pending');
         } else {
-          let record_counter = 0;
+          let recordCounter = 0;
           records.forEach((p) => {
-            const this_url = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${record_table.passphrase}`;
-            axios.get(this_url)
+            const thisUrl = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${recordTable.passphrase}`;
+            axios.get(thisUrl)
               .then((response) => {
                 try {
                   // This decrypts the message from the blockchain using native encryption
                   // as well as the encryption based on encryption variable
                   const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
-                  decrypted_records.push(decrypted);
+                  decryptedRecords.push(decrypted);
                 } catch (e) {
                   console.log(e);
                 }
-                record_counter += 1;
+                recordCounter += 1;
 
-                if (record_counter === completed_number) {
+                if (recordCounter === completedNumber) {
                   eventEmitter.emit('check_on_pending');
                 }
               })
@@ -632,54 +632,54 @@ class Gravity {
       });
 
       eventEmitter.on('table_retrieved', () => {
-        /* Object.keys(table_data).some((position) => {
-          const obj = table_data[position];
+        /* Object.keys(tableData).some((position) => {
+          const obj = tableData[position];
           let completion = false;
-          if (obj.attachment.encryptedMessage.data && obj.recipientRS !== record_table.address) {
+          if (obj.attachment.encryptedMessage.data && obj.recipientRS !== recordTable.address) {
             if (scope.show_pending && scope.show_pending > 0) {
               if (obj.confirmations <= scope.show_pending) {
-                pending_records.push(obj.transaction);
-                pending_number += 1;
+                pendingRecords.push(obj.transaction);
+                pendingNumber += 1;
               } else {
                 records.push(obj.transaction);
-                completed_number += 1;
+                completedNumber += 1;
               }
             } else if (scope.size === 'all') {
               records.push(obj.transaction);
-              completed_number += 1;
+              completedNumber += 1;
             } else if (scope.size === 'last') {
               records.push(obj.transaction);
-              records_found += 1;
-              completed_number += 1;
+              recordsFound += 1;
+              completedNumber += 1;
               completion = true;
             }
-            records_found += 1;
+            recordsFound += 1;
           }
           return completion;
         }); */
 
-        for (let position = 0; position < Object.keys(table_data).length; position += 1) {
-          const obj = table_data[position];
+        for (let position = 0; position < Object.keys(tableData).length; position += 1) {
+          const obj = tableData[position];
           let completion = false;
-          if (obj.attachment.encryptedMessage.data && obj.recipientRS !== record_table.address) {
+          if (obj.attachment.encryptedMessage.data && obj.recipientRS !== recordTable.address) {
             if (scope.show_pending && scope.show_pending > 0) {
               if (obj.confirmations <= scope.show_pending) {
-                pending_records.push(obj.transaction);
-                pending_number += 1;
+                pendingRecords.push(obj.transaction);
+                pendingNumber += 1;
               } else {
                 records.push(obj.transaction);
-                completed_number += 1;
+                completedNumber += 1;
               }
             } else if (scope.size === 'all') {
               records.push(obj.transaction);
-              completed_number += 1;
+              completedNumber += 1;
             } else if (scope.size === 'last') {
               records.push(obj.transaction);
-              records_found += 1;
-              completed_number += 1;
+              recordsFound += 1;
+              completedNumber += 1;
               completion = true;
             }
-            records_found += 1;
+            recordsFound += 1;
           }
           if (completion) {
             break;
@@ -689,9 +689,9 @@ class Gravity {
       });
 
       eventEmitter.on('table_access_retrieved', () => {
-        axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${record_table.address}&withMessage=true&type=1`)
+        axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${recordTable.address}&withMessage=true&type=1`)
           .then((response) => {
-            table_data = response.data.transactions;
+            tableData = response.data.transactions;
             eventEmitter.emit('table_retrieved');
           })
           .catch((error) => {
@@ -705,7 +705,7 @@ class Gravity {
           database = res.app.tables;
           Object.keys(database).forEach((x) => {
             if (database[x][table]) {
-              record_table = database[x][table];
+              recordTable = database[x][table];
             }
           });
           eventEmitter.emit('table_access_retrieved');
@@ -724,16 +724,16 @@ class Gravity {
 
     return new Promise((resolve, reject) => {
       const records = [];
-      const decrypted_records = [];
-      let response_data;
+      const decryptedRecords = [];
+      let responseData;
       let database;
-      let record_table;
-      let table_data;
-      let completed_number = 0;
-      let records_found = 0;
+      let recordTable;
+      let tableData;
+      let completedNumber = 0;
+      let recordsFound = 0;
 
       if (account === process.env.APP_ACCOUNT_ADDRESS) {
-        const user_object = {
+        const userObject = {
           account,
           id: process.env.APP_ACCOUNT_ID,
           email: process.env.APP_EMAIL,
@@ -747,43 +747,43 @@ class Gravity {
           admin: true,
           secret: process.env.APP_ACCOUNT,
         };
-        resolve({ user: JSON.stringify(user_object) });
+        resolve({ user: JSON.stringify(userObject) });
       } else {
-        eventEmitter.on('set_response_data', () => {
-          if (decrypted_records[0] === undefined
-            || decrypted_records[0].user_record === undefined) {
+        eventEmitter.on('set_responseData', () => {
+          if (decryptedRecords[0] === undefined
+            || decryptedRecords[0].user_record === undefined) {
             resolve({ error: true, message: 'Account not on file!' });
           } else {
-            response_data = { records_found, user: decrypted_records[0].user_record };
-            resolve(response_data);
+            responseData = { recordsFound, user: decryptedRecords[0].user_record };
+            resolve(responseData);
           }
         });
 
         eventEmitter.on('check_on_pending', () => {
-          eventEmitter.emit('set_response_data');
+          eventEmitter.emit('set_responseData');
         });
 
         eventEmitter.on('records_retrieved', () => {
           if (Object.keys(records).length <= 0) {
             eventEmitter.emit('check_on_pending');
           } else {
-            let record_counter = 0;
+            let recordCounter = 0;
             records.forEach((p) => {
-              const this_url = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${passphrase}`;
+              const thisUrl = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${passphrase}`;
 
-              axios.get(this_url)
+              axios.get(thisUrl)
                 .then((response) => {
                   try {
                     // This decrypts the message from the blockchain using native encryption
                     // as well as the encryption based on encryption variable
                     const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
-                    decrypted_records.push(decrypted);
+                    decryptedRecords.push(decrypted);
                   } catch (e) {
                     console.log(e);
                   }
-                  record_counter += 1;
+                  recordCounter += 1;
 
-                  if (record_counter === completed_number) {
+                  if (recordCounter === completedNumber) {
                     eventEmitter.emit('check_on_pending');
                   }
                 })
@@ -796,13 +796,13 @@ class Gravity {
         });
 
         eventEmitter.on('table_retrieved', () => {
-          Object.keys(table_data).some((position) => {
-            const obj = table_data[position];
+          Object.keys(tableData).some((position) => {
+            const obj = tableData[position];
             let completion = false;
             if (obj.attachment.encryptedMessage.data && obj.recipientRS === account) {
               records.push(obj.transaction);
-              records_found += 1;
-              completed_number += 1;
+              recordsFound += 1;
+              completedNumber += 1;
               completion = true;
             }
             return completion;
@@ -811,9 +811,9 @@ class Gravity {
         });
 
         eventEmitter.on('table_access_retrieved', () => {
-          axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${record_table.address}&withMessage=true&type=1`)
+          axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${recordTable.address}&withMessage=true&type=1`)
             .then((response) => {
-              table_data = response.data.transactions;
+              tableData = response.data.transactions;
               eventEmitter.emit('table_retrieved');
             })
             .catch((error) => {
@@ -827,7 +827,7 @@ class Gravity {
             database = res.app.tables;
             Object.keys(database).forEach((x) => {
               if (database[x].users) {
-                record_table = database[x].users;
+                recordTable = database[x].users;
               }
             });
             eventEmitter.emit('table_access_retrieved');
@@ -844,33 +844,33 @@ class Gravity {
   findById(id, model) {
     const eventEmitter = new events.EventEmitter();
     const self = this;
-    const same_id = [];
-    let all_records = [];
+    const sameId = [];
+    let allRecords = [];
 
     return new Promise((resolve, reject) => {
       const Record = require(`../models/${model}`);
       const record = new Record({ id: null });
 
       eventEmitter.on('records_retrieved', () => {
-        // let user_address;
-        /* Object.keys(all_records).forEach((x) => {
-          if (all_records[x].id && all_records[x].id === id) {
-            same_id.push(JSON.parse(all_records[x][`${model}_record`]));
+        // let userAddress;
+        /* Object.keys(allRecords).forEach((x) => {
+          if (allRecords[x].id && allRecords[x].id === id) {
+            sameId.push(JSON.parse(allRecords[x][`${model}_record`]));
           }
         }); */
 
-        for (let x = 0; x < Object.keys(all_records).length; x += 1) {
-          if (all_records[x].id && all_records[x].id === id) {
-            same_id.push(JSON.parse(all_records[x][`${model}_record`]));
+        for (let x = 0; x < Object.keys(allRecords).length; x += 1) {
+          if (allRecords[x].id && allRecords[x].id === id) {
+            sameId.push(JSON.parse(allRecords[x][`${model}_record`]));
           }
         }
-        self.sortByDate(same_id);
-        resolve({ success: true, record: same_id[0] });
+        self.sortByDate(sameId);
+        resolve({ success: true, record: sameId[0] });
       });
 
       self.getAllRecords(record.table)
         .then((response) => {
-          all_records = response.records;
+          allRecords = response.records;
           eventEmitter.emit('records_retrieved');
         })
         .catch((error) => {
@@ -884,27 +884,27 @@ class Gravity {
     const self = this;
     const eventEmitter = new events.EventEmitter();
     let account;
-    let terminal_called = false;
-    let address_owner;
+    let terminalCalled = false;
+    let addressOwner;
     let server;
 
     if (address === 'undefined') {
       if (process.env.JUPITERSERVER === undefined || process.env.JUPITERSERVER == null) {
         const gravity = require('../.gravity.js');
-        address_owner = gravity.APP_ACCOUNT;
+        addressOwner = gravity.APP_ACCOUNT;
         server = gravity.JUPITERSERVER;
-        terminal_called = true;
+        terminalCalled = true;
       } else {
-        address_owner = process.env.APP_ACCOUNT;
+        addressOwner = process.env.APP_ACCOUNT;
         server = process.env.JUPITERSERVER;
       }
     } else if (process.env.JUPITERSERVER === undefined || process.env.JUPITERSERVER == null) {
       const gravity = require('../.gravity.js');
-      address_owner = address;
+      addressOwner = address;
       server = gravity.JUPITERSERVER;
-      terminal_called = true;
+      terminalCalled = true;
     } else {
-      address_owner = address;
+      addressOwner = address;
       server = process.env.JUPITERSERVER;
     }
 
@@ -915,7 +915,7 @@ class Gravity {
             if (response.data.errorDescription) {
               reject(response.data);
             } else {
-              if (terminal_called) {
+              if (terminalCalled) {
                 console.log(`Balance: ${(parseFloat(response.data.balanceNQT) / (10 ** self.jupiter_data.moneyDecimals))} JUP.`);
               }
               let minimumAppBalance = false;
@@ -929,14 +929,14 @@ class Gravity {
                 minimumTableBalance = true;
               }
 
-              const response_data = {
+              const responseData = {
                 minimumAppBalance,
                 minimumTableBalance,
                 balance: response.data.balanceNQT,
                 minAppBalanceAmount: self.jupiter_data.minimumAppBalance,
                 minTableBalanceAmount: self.jupiter_data.minimumTableBalance,
               };
-              resolve(response_data);
+              resolve(responseData);
             }
           })
           .catch((error) => {
@@ -945,7 +945,7 @@ class Gravity {
           });
       });
 
-      axios.get(`${server}/nxt?requestType=getAccountId&secretPhrase=${address_owner}`)
+      axios.get(`${server}/nxt?requestType=getAccountId&secretPhrase=${addressOwner}`)
         .then((response) => {
           ({ account } = response.data);
           eventEmitter.emit('account_retrieved');
@@ -957,30 +957,30 @@ class Gravity {
     });
   }
 
-  sendMoney(recipient, transfer_amount = null, sender = this.sender) {
+  sendMoney(recipient, transferAmount = null, sender = this.sender) {
     // This is the variable that will be used to send Jupiter from the app address to the address
     // that will be used as a database table or will serve a purpose in the Gravity infrastructure
     const feeNQT = 100;
-    const table_creation = 500 + 250;
-    let amount = transfer_amount;
-    let sender_address;
+    const tableCreation = 500 + 250;
+    let amount = transferAmount;
+    let senderAddress;
     let server;
 
     if (amount == null) {
-      amount = this.jupiter_data.minimumTableBalance - feeNQT - table_creation;
+      amount = this.jupiter_data.minimumTableBalance - feeNQT - tableCreation;
     }
 
     if (this.sender == null || this.sender === undefined) {
       const gravity = require('../.gravity.js');
-      sender_address = gravity.APP_ACCOUNT;
+      senderAddress = gravity.APP_ACCOUNT;
       server = gravity.JUPITERSERVER;
     } else {
-      sender_address = sender;
+      senderAddress = sender;
       server = process.env.JUPITERSERVER;
     }
 
     return new Promise((resolve, reject) => {
-      axios.post(`${server}/nxt?requestType=sendMoney&secretPhrase=${sender_address}&recipient=${recipient}&amountNQT=${amount}&feeNQT=${feeNQT}&deadline=60`)
+      axios.post(`${server}/nxt?requestType=sendMoney&secretPhrase=${senderAddress}&recipient=${recipient}&amountNQT=${amount}&feeNQT=${feeNQT}&deadline=60`)
         .then((response) => {
           if (response.data.signatureHash != null) {
             resolve(true);
@@ -995,42 +995,42 @@ class Gravity {
     });
   }
 
-  create_record(model_name, data, original_attributes) {
+  createRecord(modelName, data, originalAttributes) {
     const eventEmitter = new events.EventEmitter();
     const self = this;
 
     return new Promise((resolve, reject) => {
-      const RecordClass = require(`../models/${model_name}`);
-      const new_record = new RecordClass(original_attributes);
-      let jup_account;
+      const RecordClass = require(`../models/${modelName}`);
+      const newRecord = new RecordClass(originalAttributes);
+      let jupAccount;
       // let model_address;
-      let model_passphrase;
-      let record_name;
-      const attributes = original_attributes;
+      let modelPassphrase;
+      let recordName;
+      const attributes = originalAttributes;
 
       eventEmitter.on('address_verification', () => {
-        let call_url;
+        let callUrl;
         // If there are no errors, rest of the code is executed
-        if (new_record.verify().errors === false) {
-          record_name = `${model_name}_record`;
+        if (newRecord.verify().errors === false) {
+          recordName = `${modelName}_record`;
           attributes.date = Date.now();
           const record = {
-            [record_name]: attributes,
+            [recordName]: attributes,
           };
 
           if (data.public_key != null) {
-            call_url = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${model_passphrase}&recipient=${jup_account}&messageToEncrypt=${JSON.stringify(record)}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${data.public_key}&compressMessageToEncrypt=true`;
+            callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${modelPassphrase}&recipient=${jupAccount}&messageToEncrypt=${JSON.stringify(record)}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${data.public_key}&compressMessageToEncrypt=true`;
           } else {
-            call_url = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${model_passphrase}&recipient=${jup_account}&messageToEncrypt=${JSON.stringify(record)}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&compressMessageToEncrypt=true`;
+            callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${modelPassphrase}&recipient=${jupAccount}&messageToEncrypt=${JSON.stringify(record)}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&compressMessageToEncrypt=true`;
           }
 
-          axios.post(call_url)
+          axios.post(callUrl)
             .then((response) => {
               if (response.data.broadcasted != null && response.data.broadcasted === true) {
                 resolve({
                   data,
                   success: true,
-                  message: `${model_name} record saved`,
+                  message: `${modelName} record saved`,
                   jupiter_response: response.data,
                 });
               } else if (response.data.errorDescription != null) {
@@ -1055,8 +1055,8 @@ class Gravity {
           resolve({
             success: false,
             message: 'There was an error',
-            [model_name]: attributes,
-            validations: new_record.verify(),
+            [modelName]: attributes,
+            validations: newRecord.verify(),
           });
         }
       });
@@ -1070,22 +1070,22 @@ class Gravity {
           reject({ success: false, message: 'The api key you provided is not associated with the account number your provided' });
         } else {
           // model_address = process.env.BOOK_RECORD_ADDRESS;
-          model_passphrase = process.env.BOOK_RECORD;
-          jup_account = data.address;
+          modelPassphrase = process.env.BOOK_RECORD;
+          jupAccount = data.address;
           eventEmitter.emit('address_verification');
         }
       });
     });
   }
 
-  create_new_address(passphrase) {
+  createNewAddress(passphrase) {
     const self = this;
     return new Promise((resolve, reject) => {
       axios.get(`${self.jupiter_data.server}/nxt?requestType=getAccountId&secretPhrase=${passphrase}`)
         .then((response) => {
           const address = response.data.accountRS;
-          const public_key = response.data.publicKey;
-          resolve({ address, public_key, success: true });
+          const { publicKey } = response.data.publicKey;
+          resolve({ address, publicKey, success: true });
         })
         .catch((error) => {
           console.log(error);
@@ -1110,10 +1110,10 @@ class Gravity {
       tables: ['users'],
       date: Date.now(),
     };
-    const encrypted_data = JSON.stringify(records);
+    const encryptedData = JSON.stringify(records);
     console.log(records);
-    console.log(encrypted_data);
-    console.log(this.encrypt(encrypted_data));
+    console.log(encryptedData);
+    console.log(this.encrypt(encryptedData));
   }
 
   // This method creates a table
@@ -1127,14 +1127,14 @@ class Gravity {
       output: process.stdout,
     });
     // let valid_table = true;
-    let table_list = [];
+    let tableList = [];
     // let app;
-    let table_name;
+    let tableName;
     let address;
     let passphrase;
     // let current_tables;
     let record;
-    let table_list_record;
+    let tableListRecord;
     // let table_created = true;
 
     return new Promise((resolve, reject) => {
@@ -1148,11 +1148,11 @@ class Gravity {
         // able to record information
         self.sendMoney(address)
           .then((response) => {
-            console.log(`Table ${table_name} funded with JUP.`);
+            console.log(`Table ${tableName} funded with JUP.`);
             rl.close();
             resolve({
               success: true,
-              message: `Table ${table_name} pushed to the blockchain and funded.`,
+              message: `Table ${tableName} pushed to the blockchain and funded.`,
               data: response.data,
               jupiter_response: response.data,
             });
@@ -1165,19 +1165,19 @@ class Gravity {
       });
 
       eventEmitter.on('address_retrieved', () => {
-        const encrypted_data = self.encrypt(JSON.stringify(record));
-        const encrypted_table_data = self.encrypt(JSON.stringify(table_list_record));
-        // var decrypted_data = self.decrypt(encrypted_data);
+        const encryptedData = self.encrypt(JSON.stringify(record));
+        const encryptedTableData = self.encrypt(JSON.stringify(tableListRecord));
+        // var decrypted_data = self.decrypt(encryptedData);
         // console.log(decrypted_data);
         // console.log(JSON.parse(decrypted_data));
 
-        const call_url = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encrypted_data}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
+        const callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encryptedData}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
 
 
-        axios.post(call_url)
+        axios.post(callUrl)
           .then((response) => {
             if (response.data.broadcasted != null && response.data.broadcasted === true) {
-              console.log(`Table ${table_name} pushed to the blockchain and linked to your account.`);
+              console.log(`Table ${tableName} pushed to the blockchain and linked to your account.`);
               eventEmitter.emit('table_created');
             } else if (response.data.errorDescription != null) {
               console.log('There was an Error');
@@ -1204,9 +1204,9 @@ class Gravity {
             reject({ success: false, message: 'There was an error', error: error.response });
           });
 
-        const table_list_update_url = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encrypted_table_data}&feeNQT=${(self.jupiter_data.feeNQT / 2)}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
+        const tableListUpdateUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encryptedTableData}&feeNQT=${(self.jupiter_data.feeNQT / 2)}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
 
-        axios.post(table_list_update_url)
+        axios.post(tableListUpdateUrl)
           .then((response) => {
             if (response.data.broadcasted && response.data.broadcasted === true) {
               // console.log('Table list updated');
@@ -1217,37 +1217,37 @@ class Gravity {
               console.log(response.data);
             } else {
               console.log(response.data);
-              console.log(encrypted_table_data);
+              console.log(encryptedTableData);
             }
           })
           .catch((error) => {
             console.log('There was an error in updating table list');
             console.log(error);
-            console.log(encrypted_table_data);
+            console.log(encryptedTableData);
           });
       });
 
-      eventEmitter.on('table_name_obtained', () => {
-        if (self.tables.indexOf(table_name) >= 0) {
-          console.log(`Error: Unable to save table. ${table_name} is already in the database`);
+      eventEmitter.on('tableName_obtained', () => {
+        if (self.tables.indexOf(tableName) >= 0) {
+          console.log(`Error: Unable to save table. ${tableName} is already in the database`);
           rl.close();
         } else {
           passphrase = self.generate_passphrase();
 
-          self.create_new_address(passphrase)
+          self.createNewAddress(passphrase)
             .then((response) => {
               if (response.success === true && response.address.length > 0) {
                 ({ address } = response);
                 record = {
-                  [table_name]: {
+                  [tableName]: {
                     address,
                     passphrase,
                     public_key: response.public_key,
                   },
                 };
-                table_list.push(table_name);
-                table_list_record = {
-                  tables: table_list,
+                tableList.push(tableName);
+                tableListRecord = {
+                  tables: tableList,
                   date: Date.now(),
                 };
 
@@ -1273,17 +1273,17 @@ class Gravity {
               if (response.tables === undefined
                 || response.tables == null
                 || response.tables.length === 0) {
-                table_list = [];
+                tableList = [];
               } else {
-                table_list = response.tables;
+                tableList = response.tables;
               }
 
               console.log('You are about to create a new database table for your Gravity app.');
               console.log('The following tables are already linked to your database:');
-              console.log(table_list);
+              console.log(tableList);
               rl.question('What will be the name of your new table?\n', (answer) => {
-                table_name = answer;
-                eventEmitter.emit('table_name_obtained');
+                tableName = answer;
+                eventEmitter.emit('tableName_obtained');
               });
             })
             .catch((error) => {
@@ -1332,13 +1332,13 @@ class Gravity {
         password = answer2;
         rl.question('What is the IP address/URL of your Jupiter server?\n', (answer) => {
           server = answer;
-          const current_data = {
+          const currentData = {
             'Name of the app': appname,
             'Password  for encryption': password,
             'Jupiter Server': server,
           };
           console.log('Please verify the data you entered:');
-          console.log(current_data);
+          console.log(currentData);
           console.log('');
           rl.question("You are about to create a Jupiter account which will hold your Gravity app's data. Is the information provided above accurate? If so, press ENTER. If not, press CTRL+C to cancel and rerun command.\n", () => {
             passphrase = methods.generate_passphrase();
@@ -1346,7 +1346,7 @@ class Gravity {
             axios.get(`${server}/nxt?requestType=getAccountId&secretPhrase=${passphrase}`)
               .then((response) => {
                 const address = response.data.accountRS;
-                const public_key = response.data.publicKey;
+                const { publicKey } = response.data;
 
                 if (address) {
                   const configuration = {
@@ -1354,31 +1354,31 @@ class Gravity {
                     JUPITERSERVER: server,
                     APP_ACCOUNT: passphrase,
                     APP_ACCOUNT_ADDRESS: address,
-                    APP_PUBLIC_KEY: public_key,
+                    APP_PUBLIC_KEY: publicKey,
                     ENCRYPT_ALGORITHM: 'aes-128-cbc',
                     ENCRYPT_PASSWORD: password,
-                    APP_ACCOUNT_ID: public_key,
+                    APP_ACCOUNT_ID: publicKey,
                   };
-                  const env_variables = configuration;
-                  let env_variables_in_string = '';
-                  env_variables.SESSION_SECRET = 'session_secret_key_here';
+                  const envVariables = configuration;
+                  let envVariablesInString = '';
+                  envVariables.SESSION_SECRET = 'session_secret_key_here';
 
                   const fs = require('fs');
 
                   // We prepare the string that will be used to create the .gravity file
-                  const object_in_string = `module.exports=${JSON.stringify(configuration)}`;
-                  const module_in_string = object_in_string.replace(/={/g, '={\n').replace(/","/g, '",\n"').replace(/"}/g, '"\n}');
+                  const objectInString = `module.exports=${JSON.stringify(configuration)}`;
+                  const moduleInString = objectInString.replace(/={/g, '={\n').replace(/","/g, '",\n"').replace(/"}/g, '"\n}');
 
                   // We prepare the string that will be used to create the .env file
-                  Object.keys(env_variables).forEach((key) => {
-                    env_variables_in_string = `${env_variables_in_string + key.toUpperCase()}='${env_variables[key]}'\n`;
+                  Object.keys(envVariables).forEach((key) => {
+                    envVariablesInString = `${envVariablesInString + key.toUpperCase()}='${envVariables[key]}'\n`;
                   });
 
-                  fs.writeFile('.gravity.js', module_in_string, (err) => {
+                  fs.writeFile('.gravity.js', moduleInString, (err) => {
                     if (err) {
                       return console.log(err);
                     }
-                    fs.writeFile('.env', env_variables_in_string, (error) => {
+                    fs.writeFile('.env', envVariablesInString, (error) => {
                       if (error) {
                         return console.log(error);
                       }

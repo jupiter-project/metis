@@ -15,9 +15,9 @@ class DataRow extends React.Component {
   render() {
     const self = this;
 
-    const get_data = (record, param) => <td>{record[param]}</td>;
+    const getData = (record, param) => <td>{record[param]}</td>;
 
-    const data = self.state.params.map(param => get_data(self.state.record.versions[0], param));
+    const data = self.state.params.map(param => getData(self.state.record.versions[0], param));
 
     return (
       <tr>
@@ -38,9 +38,9 @@ class DataCard extends React.Component {
 
   render() {
     const self = this;
-    const get_data = (record, param) => <p><strong>{param}</strong>: {String(record[param])}</p>;
+    const getData = (record, param) => <p><strong>{param}</strong>: {String(record[param])}</p>;
 
-    const data = self.state.params.map(param => (param !== 'id' ? get_data(self.state.record.versions[0], param) : null));
+    const data = self.state.params.map(param => (param !== 'id' ? getData(self.state.record.versions[0], param) : null));
 
     return (
       <div className="card">
@@ -148,7 +148,7 @@ class DataComponent extends React.Component {
       record => <DataRow record={record} params={self.state.params} key={record.id} />,
     );
 
-    const table_version = <div className="container-fluid">
+    const tableVersion = <div className="container-fluid">
                             <table className="table table-striped">
                                 <thead>
                                     <tr>
@@ -161,7 +161,7 @@ class DataComponent extends React.Component {
                             </table>
                           </div>;
 
-    const card_version = self.state.records.map(
+    const cardVersion = self.state.records.map(
       record => <DataCard record={record} params={self.state.params} key={record.id}/>,
     );
 
@@ -169,7 +169,7 @@ class DataComponent extends React.Component {
       table => <button className="btn btn-link" onClick={this.loadTableData.bind(this, table)}>{table}</button>,
     );
 
-    const data_display = this.state.table_display ? table_version : card_version;
+    const dataDisplay = this.state.table_display ? tableVersion : cardVersion;
 
     return (
       <div className="container-fluid">
@@ -182,7 +182,7 @@ class DataComponent extends React.Component {
         {
           this.state.loading
             ? <p className="alert alert-info">Loading</p>
-            : data_display
+            : dataDisplay
         }
       </div>
     );

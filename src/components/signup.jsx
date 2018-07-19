@@ -115,28 +115,28 @@ class SignupForm extends React.Component {
     }
   }
 
-  handleChange(i_type, event) {
-    if (i_type === 'account') {
+  handleChange(iType, event) {
+    if (iType === 'account') {
       this.setState({
         jup_account: event.target.value,
       });
-    } else if (i_type === 'pass') {
+    } else if (iType === 'pass') {
       this.setState({
         jup_passphrase: event.target.value,
       });
-    } else if (i_type === 'firstname') {
+    } else if (iType === 'firstname') {
       this.setState({
         firstname: event.target.value,
       });
-    } else if (i_type === 'lastname') {
+    } else if (iType === 'lastname') {
       this.setState({
         lastname: event.target.value,
       });
-    } else if (i_type === 'email') {
+    } else if (iType === 'email') {
       this.setState({
         email: event.target.value,
       });
-    } else if (i_type === 'passphrase_confirm') {
+    } else if (iType === 'passphrase_confirm') {
       this.setState({
         passphrase_confirmation: event.target.value,
       });
@@ -171,9 +171,9 @@ class SignupForm extends React.Component {
     });
   }
 
-  update2FA(i_type, event) {
+  update2FA(iType, event) {
     event.preventDefault();
-    if (i_type === 'true') {
+    if (iType === 'true') {
       this.setState({
         enable_two_fa: true,
       });
@@ -185,7 +185,7 @@ class SignupForm extends React.Component {
   }
 
   render() {
-    const new_account_summary = (
+    const newAccountSummary = (
         <form action="/signup" method="post" className="">
             <div className="">
             <div className="">
@@ -242,7 +242,7 @@ class SignupForm extends React.Component {
         </form>
     );
 
-    const generated_account = (
+    const generatedAccount = (
         <div className="form-group">
             <div className="">
                 <h4>Your new passphrase:</h4>
@@ -279,7 +279,7 @@ class SignupForm extends React.Component {
     );
 
 
-    const passphrase_confirmation_page = (
+    const passphraseConfirmationPage = (
         <form className="">
             <div className="form-group signup" id="jup-confirm">
                 <p>Please enter the passphrase of your newly created Jupiter account
@@ -294,9 +294,9 @@ class SignupForm extends React.Component {
         </form>
     );
 
-    const signup_form = (
+    const signupForm = (
         <form className="jupiter-form">
-            {this.state.jup_account_created === true ? generated_account
+            {this.state.jup_account_created === true ? generatedAccount
               : <div className="form-group signup">
                     <div className="form-group paragraph">
                     <p>Gravity is a platform designed to give you quick
@@ -318,9 +318,9 @@ class SignupForm extends React.Component {
             {
                 this.state.passphrase_confirmation_page === true
                   ? this.state.passphrase_confirmed === true
-                    ? new_account_summary
-                    : passphrase_confirmation_page
-                  : signup_form
+                    ? newAccountSummary
+                    : passphraseConfirmationPage
+                  : signupForm
             }
         </div>
     );

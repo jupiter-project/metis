@@ -3,11 +3,11 @@ import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
-function getBalance(secret, address, api_key, public_key) {
+function getBalance(secret, address, apiKey, publicKey) {
   const config = {
     headers: {
-      user_api_key: api_key,
-      user_public_key: public_key,
+      user_api_key: apiKey,
+      user_public_key: publicKey,
     },
   };
 

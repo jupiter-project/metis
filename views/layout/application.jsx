@@ -9,7 +9,7 @@ export default class ApplicationLayout extends React.Component {
   }
 
   render() {
-    const links_list = (
+    const linksList = (
       <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li className="nav-item p-2 bg-secondary rounded">
           <div className="text-center">
@@ -89,7 +89,7 @@ export default class ApplicationLayout extends React.Component {
       </ul>
     );
 
-    const logged_header = (
+    const loggedHeader = (
       <nav
         className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
         id="mainNav"
@@ -115,7 +115,7 @@ export default class ApplicationLayout extends React.Component {
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarResponsive">
-          {links_list}
+          {linksList}
           <ul className="navbar-nav sidenav-toggler">
             <li className="nav-item">
               <a className="nav-link text-center" id="sidenavToggler">
@@ -172,7 +172,7 @@ export default class ApplicationLayout extends React.Component {
       </nav>
     );
 
-    const unlogged_header = (
+    const unloggedHeader = (
       <nav
         className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
         id="mainNav"
@@ -238,13 +238,13 @@ export default class ApplicationLayout extends React.Component {
       </nav>
     );
 
-    const logged_wrapper = (
+    const loggedWrapper = (
       <div className="content-wrapper" id="page-wrapper">
         <div className="container">{this.props.children}</div>
       </div>
     );
 
-    const unlogged_wrapper = (
+    const unloggedWrapper = (
       <div className="content-wrapper" id="page-wrapper">
         <div className="container">{this.props.children}</div>
       </div>
@@ -293,12 +293,12 @@ export default class ApplicationLayout extends React.Component {
             }
           >
             {this.props.data.dashboard === true
-              ? logged_header
-              : unlogged_header}
+              ? loggedHeader
+              : unloggedHeader}
 
             {this.props.data.dashboard === true
-              ? logged_wrapper
-              : unlogged_wrapper}
+              ? loggedWrapper
+              : unloggedWrapper}
           </div>
           <footer className="sticky-footer">
             <div className="container">

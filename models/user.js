@@ -120,10 +120,10 @@ class User extends Model {
   }
 
   generateKey() {
-    const generated_phrase = methods.generate_keywords();
-    const unfiltered_key = bcrypt.hashSync(generated_phrase, bcrypt.genSaltSync(8), null);
+    const generatedPhrase = methods.generate_keywords();
+    const unfilteredKey = bcrypt.hashSync(generatedPhrase, bcrypt.genSaltSync(8), null);
 
-    return unfiltered_key;
+    return unfilteredKey;
   }
 
   findById() {

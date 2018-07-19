@@ -20,28 +20,28 @@ module.exports = (app) => {
   // ===============================================================================
   //  API GENERAL ROUTES
   // ===============================================================================
-  app.get('/api/users/:id/:table_name', (req, res, next) => {
+  app.get('/api/users/:id/:tableName', (req, res, next) => {
     // const params = req.body;
     // const { data } = params;
     const { headers } = req;
-    const { table_name } = req.params;
+    const { tableName } = req.params;
     const exceptions = ['users'];
     let model = '';
 
     // If table in route is in the exception list, then it goes lower in the route list
-    if (exceptions.includes(table_name)) {
+    if (exceptions.includes(tableName)) {
       next();
     } else {
       find.fileSync(/\.js$/, './models').forEach((file) => {
-        const model_name = file.replace('models/', '').replace('.js', '');
-        let is_included = table_name.includes(model_name);
-        if (table_name.includes('_')) {
-          if (!model_name.includes('_')) {
-            is_included = false;
+        const modelName = file.replace('models/', '').replace('.js', '');
+        let isIncluded = tableName.includes(modelName);
+        if (tableName.includes('_')) {
+          if (!modelName.includes('_')) {
+            isIncluded = false;
           }
         }
-        if (is_included) {
-          model = model_name;
+        if (isIncluded) {
+          model = modelName;
         }
       });
 
@@ -63,7 +63,7 @@ module.exports = (app) => {
           const { records } = response;
 
           gravity.sortByDate(records);
-          res.send({ success: true, [table_name]: records, [`total_${table_name}_number`]: response.records_found });
+          res.send({ success: true, [tableName]: records, [`total_${tableName}_number`]: response.records_found });
         })
         .catch((error) => {
           console.log(error);
@@ -72,27 +72,27 @@ module.exports = (app) => {
     }
   });
 
-  app.post('/api/:table_name', (req, res, next) => {
+  app.post('/api/:tableName', (req, res, next) => {
     const params = req.body;
     const { data } = params;
-    const { table_name } = req.params;
+    const { tableName } = req.params;
     const exceptions = ['users'];
     let model = '';
 
     // If table in route is in the exception list, then it goes lower in the route list
-    if (exceptions.includes(table_name)) {
+    if (exceptions.includes(tableName)) {
       next();
     } else {
       find.fileSync(/\.js$/, './models').forEach((file) => {
-        const model_name = file.replace('models/', '').replace('.js', '');
-        let is_included = table_name.includes(model_name);
-        if (table_name.includes('_')) {
-          if (!model_name.includes('_')) {
-            is_included = false;
+        const modelName = file.replace('models/', '').replace('.js', '');
+        let isIncluded = tableName.includes(modelName);
+        if (tableName.includes('_')) {
+          if (!modelName.includes('_')) {
+            isIncluded = false;
           }
         }
-        if (is_included) {
-          model = model_name;
+        if (isIncluded) {
+          model = modelName;
         }
       });
 
@@ -115,27 +115,27 @@ module.exports = (app) => {
     }
   });
 
-  app.put('/api/:table_name', (req, res, next) => {
+  app.put('/api/:tableName', (req, res, next) => {
     const params = req.body;
     const { data } = params;
-    const { table_name } = req.params;
+    const { tableName } = req.params;
     const exceptions = ['users'];
     let model = '';
 
     // If table in route is in the exception list, then it goes lower in the route list
-    if (exceptions.includes(table_name)) {
+    if (exceptions.includes(tableName)) {
       next();
     } else {
       find.fileSync(/\.js$/, './models').forEach((file) => {
-        const model_name = file.replace('models/', '').replace('.js', '');
-        let is_included = table_name.includes(model_name);
-        if (table_name.includes('_')) {
-          if (!model_name.includes('_')) {
-            is_included = false;
+        const modelName = file.replace('models/', '').replace('.js', '');
+        let isIncluded = tableName.includes(modelName);
+        if (tableName.includes('_')) {
+          if (!modelName.includes('_')) {
+            isIncluded = false;
           }
         }
-        if (is_included) {
-          model = model_name;
+        if (isIncluded) {
+          model = modelName;
         }
       });
 

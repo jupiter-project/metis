@@ -56,7 +56,7 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    const confirmation_page = (
+    const comfirmationPage = (
         <form action="/login" method="post" className="">
             <div className="form-group text-center">
                 <p>You are about to login to the account:</p>
@@ -74,7 +74,7 @@ class LoginForm extends React.Component {
         </form>
     );
 
-    const login_form = (
+    const loginForm = (
         <form className="form-group">
             <div className="form-group">
                 <label htmlFor="inputPassphrase" className="h4 text-center">Enter your Passphrase:</label>
@@ -88,7 +88,7 @@ class LoginForm extends React.Component {
 
     return (
         <div>
-            {this.state.confirmation_page === true ? confirmation_page : login_form}
+            {this.state.confirmation_page === true ? comfirmationPage : loginForm}
         </div>
     );
   }

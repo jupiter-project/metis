@@ -58,13 +58,13 @@ class TwoFAForm extends React.Component {
         console.log('There was an error');
       } else if (response.data.status === 'success') {
         console.log(response.data);
-        QRCode.toDataURL(response.data.secret, (err, image_data) => {
+        QRCode.toDataURL(response.data.secret, (err, imageData) => {
           if (err) {
             toastr.error('Error retrieving QR code');
           }
           self.setState({
             authentication_requested: true,
-            qrcode_url: image_data,
+            qrcode_url: imageData,
           });
         });
 <<<<<<< HEAD
@@ -138,7 +138,7 @@ class TwoFAForm extends React.Component {
   }
 
   render() {
-    const registration_form = (
+    const registrationForm = (
         <form>
 >>>>>>> a3876ae... Updated 2fa and account component to airbnb standards
             <div className="panel panel-primary">
@@ -191,7 +191,7 @@ class TwoFAForm extends React.Component {
         </form>
     );
 
-    const verification_form = (
+    const verificationForm = (
         <form className="row p-2">
             <div className="offset-xs-0 col-xs-12 offset-sm-4 col-sm-4">
                 <input type="text" className="form-control" value={this.state.verification_code} onChange={this.handleUpdate.bind(this)} /><br />
@@ -204,14 +204,14 @@ class TwoFAForm extends React.Component {
         </form>
     );
 
-    const qrcode_to_scan = (
+    const qrcodeToScan = (
         <div className="text-center">
             <p>Scan the QR-code below with Google Authenticator.</p>
             <img src={this.state.qrcode_url} className="qr-code-image" />
             <div className="container-fluid text-center">
                 Once you have scanned the QR-code, enter the 6-digit authentication code in the
                 field below and click on the “Verify code” button.
-                {verification_form}
+                {verificationForm}
             </div>
         </div>
     );
@@ -221,12 +221,12 @@ class TwoFAForm extends React.Component {
                 {this.state.secret_key != null && this.state.secret_key !== '' && this.state.twofa_completed === true
                   ? <div>
                         Your already have a secret key on file<br />
-                        {verification_form}<br />
+                        {verificationForm}<br />
                         {this.state.verification_response}
                     </div>
                   : <div>
                         {this.state.authentication_requested === true
-                          ? qrcode_to_scan : registration_form}
+                          ? qrcodeToScan : registrationForm}
                     </div>
                 }
 

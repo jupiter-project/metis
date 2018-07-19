@@ -10,7 +10,7 @@ export default class ApplicationLayout extends React.Component {
 
 
   render() {
-    const links_list = (
+    const linksList = (
         <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
             <li className="nav-item p-2 bg-secondary rounded">
               <div className="text-center">
@@ -52,7 +52,7 @@ export default class ApplicationLayout extends React.Component {
         </ul>
     );
 
-    const logged_header = (
+    const loggedHeader = (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <a className="navbar-brand" href="#"><img className="img" src="../img/sigwo-sheild2.png" height="48px" width="auto" /> Sigwo Technologies</a>
             <a className="nav-link text-light" id="sidenavToggler">
@@ -62,7 +62,7 @@ export default class ApplicationLayout extends React.Component {
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarResponsive">
-              {links_list}
+              {linksList}
               <ul className="navbar-nav ml-auto">
               <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle mr-lg-2" id="profileDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -94,7 +94,7 @@ export default class ApplicationLayout extends React.Component {
         </nav>
     );
 
-    const unlogged_header = (
+    const unloggedHeader = (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <a className="navbar-brand" href="#"><img className="img" src="../img/sigwo-sheild2.png" height="48px" width="auto" /> Sigwo Technologies</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,7 +132,7 @@ export default class ApplicationLayout extends React.Component {
         </nav>
     );
 
-    const unlogged_wrapper = (
+    const unloggedWrapper = (
         <div className="content-wrapper">
           <div className="container-fluid">
             {this.props.children}
@@ -161,7 +161,7 @@ export default class ApplicationLayout extends React.Component {
                     <span id="toastrMessages"></span>
                     <div id={this.props.data.dashboard === true ? 'wrapper' : 'unlogged-wrapper'}>
                         {
-                            this.props.data.dashboard === true ? logged_header : unlogged_header
+                            this.props.data.dashboard === true ? loggedHeader : unloggedHeader
                         }
 
 
@@ -173,7 +173,7 @@ export default class ApplicationLayout extends React.Component {
                                     <div className="background-image"></div>
                                   </div>
                                 </div>
-                              : unlogged_wrapper
+                              : unloggedWrapper
                         }
                     </div>
                     <footer className="sticky-footer">
