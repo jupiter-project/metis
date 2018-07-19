@@ -1,12 +1,9 @@
 
-import axios from 'axios';
-import crypto from 'crypto';
-import events from 'events';
-import methods from './_methods';
+const axios = require('axios');
+const crypto = require('crypto');
+const events = require('events');
+const methods = require('./_methods');
 
-/* if (process.env.PRODUCTION !== undefined && process.env.PRODUCTION !== 'True') {
-  let gravity = require('../.gravity.js');
-} */
 
 class Gravity {
   constructor() {

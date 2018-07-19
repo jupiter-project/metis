@@ -1,4 +1,4 @@
-import WordList from './_word_list';
+const WordList = require('./_word_list');
 
 module.exports = {
   generate_passphrase: () => {
