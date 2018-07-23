@@ -1,7 +1,7 @@
 import find from 'find';
 
 const controller = require('../config/controller.js');
-const gravity = require('../config/gravity.js');
+const { gravity } = require('../config/gravity.js');
 
 module.exports = (app, passport, React, ReactDOMServer) => {
   let page;
