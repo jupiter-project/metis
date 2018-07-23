@@ -1,7 +1,7 @@
 import events from 'events';
 import Queue from 'bull';
 import axios from 'axios';
-import gravity from './gravity';
+import { gravity } from './gravity';
 import User from '../models/user';
 
 // Loads up passport code

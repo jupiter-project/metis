@@ -1,523 +1,522 @@
 import React from 'react';
-import {render} from 'react-dom';
-
-var axios= require('axios');
+import { render } from 'react-dom';
+import axios from 'axios';
+import toastr from 'toastr';
 
 class DataRow extends React.Component {
-    constructor(props){
-        super(props);
-        var {{model_variable_name}}= this.props.parent.state.{{records}}[this.props.{{model_variable_name}}];
-        var record= {{model_variable_name}}.{{model_variable_name}}_record;
+  constructor(props) {
+    super(props);
+    const {{model_variable_name}} = this.props.parent.state.{{records}}[this.props.{{model_variable_name}}];
+    const record = {{model_variable_name}}.{{model_variable_name}}_record;
 
-        this.state={
-            {{model_variable_name}}: this.props.parent.state.{{records}}[this.props.{{model_variable_name}}],
-            {{#each attributes}}
-            {{#ifCond this 'String'}}
-            {{@key}}: record.{{@key}},
-            {{/ifCond}}
-            {{#ifCond this 'Cryptocurrency'}}
-            {{@key}}: parseFloat(record.{{@key}})/10000000,
-            {{/ifCond}}
-            {{#ifCond this 'Integer'}}
-            {{@key}}: parseFloat(record.{{@key}})/100,
-            {{/ifCond}}
-            {{#ifCond this 'Boolean'}}
-            {{@key}}: record.{{@key}},
-            {{/ifCond}}
-            {{#ifCond this 'Text'}}
-            {{@key}}: record.{{@key}},
-            {{/ifCond}}
-            {{#ifCond this 'Email'}}
-            {{@key}}: record.{{@key}},
-            {{/ifCond}}
-            {{/each}}
-            {{records}}: [],
-            edit_mode: false,
-            date: (new Date({{model_variable_name}}.date)).toLocaleString(),
+    this.state = {
+      {{model_variable_name}}: this.props.parent.state.{{records}}[this.props.{{model_variable_name}}],
+      {{#each attributes}}
+      {{#ifCond this 'String'}}
+      {{@key}}: record.{{@key}},
+      {{/ifCond}}
+      {{#ifCond this 'Cryptocurrency'}}
+      {{@key}}: parseFloat(record.{{@key}}) / 10000000,
+      {{/ifCond}}
+      {{#ifCond this 'Integer'}}
+      {{@key}}: parseFloat(record.{{@key}}) / 100,
+      {{/ifCond}}
+      {{#ifCond this 'Boolean'}}
+      {{@key}}: record.{{@key}},
+      {{/ifCond}}
+      {{#ifCond this 'Text'}}
+      {{@key}}: record.{{@key}},
+      {{/ifCond}}
+      {{#ifCond this 'Email'}}
+      {{@key}}: record.{{@key}},
+      {{/ifCond}}
+      {{/each}}
+      {{records}}: [],
+      edit_mode: false,
+      date: (new Date({{model_variable_name}}.date)).toLocaleString(),
+      submitted: false,
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.updateRecord = this.updateRecord.bind(this);
+    this.editMode = this.editMode.bind(this);
+  }
+
+  handleChange(aField, event) {
+    this.setState({
+      [aField]: event.target.value,
+    });
+  }
+
+  {{#each attributes}}
+  {{#ifCond this 'Boolean'}}
+  {{@key}}Update() {
+    const newValue = !this.state.{{@key}};
+    this.setState({ {{@key}}: newValue });
+  }
+  {{/ifCond}}
+  {{/each}}
+
+  updateRecord(event) {
+    event.preventDefault();
+    const page = this;
+    this.setState({
+      submitted: true,
+    });
+
+    this.props.parent.setState({
+      update_submitted: true,
+    });
+
+    const record = {
+      id: this.state.{{model_variable_name}}.id,
+      {{#each attributes}}
+      {{#ifCond this 'String'}}
+      {{@key}}: this.state.{{@key}},
+      {{/ifCond}}
+      {{#ifCond this 'Cryptocurrency'}}
+      {{@key}}: parseInt(parseFloat(this.state.{{@key}}) * 10000000, 10),
+      {{/ifCond}}
+      {{#ifCond this 'Integer'}}
+      {{@key}}: parseInt(parseFloat(this.state.{{@key}}) * 100, 10),
+      {{/ifCond}}
+      {{#ifCond this 'Boolean'}}
+      {{@key}}: this.state.{{@key}},
+      {{/ifCond}}
+      {{#ifCond this 'Text'}}
+      {{@key}}: this.state.{{@key}},
+      {{/ifCond}}
+      {{#ifCond this 'Email'}}
+      {{@key}}: this.state.{{@key}},
+      {{/ifCond}}
+      {{/each}}
+      address: this.props.user.record.account,
+      date_confirmed: Date.now(),
+      user_id: this.props.user.id,
+      user_api_key: this.props.user.record.api_key,
+      public_key: this.props.public_key,
+      user_address: this.props.user.record.account,
+    };
+
+    axios.put('/api/{{records}}', { data: record })
+      .then((response) => {
+        if (response.data.success) {
+          page.setState({
             submitted: false,
+            edit_mode: false,
+          });
+
+          page.props.parent.setState({
+            update_submitted: false,
+          });
+
+          toastr.success(' Update submitted to the blockchain.');
+        } else {
+          // console.log(response.data);
+          // toastr.error(response.data.message);
+          response.data.validations.messages.map((message) => {
+            toastr.error(message);
+            return null;
+          });
         }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error('There was an error');
+      });
+  }
 
-        this.handleChange= this.handleChange.bind(this);
-        this.updateRecord= this.updateRecord.bind(this);
-        this.editMode= this.editMode.bind(this);
-    }
+  editMode(event) {
+    event.preventDefault();
+    this.setState({
+      edit_mode: !this.state.edit_mode,
+    });
+  }
 
-    handleChange(a_field, event){
-        this.setState({
-            [a_field]:event.target.value
-        });
-    }
+  render() {
+    const form = (
+        <tr className="text-center">
+        {{#each attributes}}
+            <td>
+                {{#ifCond this 'String'}}
+                <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this, '{{@key}}')} /><br />
+                {{/ifCond}}
+                {{#ifCond this 'Text'}}
+                <textarea placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this, '{{@key}}')}>
+                </textarea><br />
+                {{/ifCond}}
+                {{#ifCond this 'Email'}}
+                <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this, '{{@key}}')} /><br />
+                {{/ifCond}}
+                {{#ifCond this 'Cryptocurrency'}}
+                <input type="number" step="0.00000001"  value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
+                {{/ifCond}}
+                {{#ifCond this 'Integer'}}
+                <input type="number" step="1" value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
+                {{/ifCond}}
+                {{#ifCond this 'Boolean'}}
+                <div className="status-toggle">
+                <label className={'switch'}>
+                    <input type="checkbox" onChange={this.{{@key}}Update.bind(this)} checked={this.state.{{@key}} || false} />
+                    <span className={'slider round'}></span>
+                </label><br />
+                </div>
+                {{/ifCond}}
+            </td>
+        {{/each}}
+            <td>{this.state.date}</td>
+            <td>
+                <button className="btn btn-danger" onClick={this.editMode.bind(this)}>Cancel</button><br /><br />
+                <button className="btn btn-success" disabled={this.state.submitted} onClick={this.updateRecord.bind(this)}>{this.state.submitted ? 'Saving...' : 'Save'}</button>
+            </td>
+        </tr>
+    );
 
-    {{#each attributes}}
-    {{#ifCond this 'Boolean'}}
-    {{@key}}Update(event){
-        var new_value= !this.state.{{@key}};        
-        this.setState({ {{@key}}: new_value });
-    }
-    {{/ifCond}}
-    {{/each}}
+    const {{model_variable_name}}Info = this.props.parent.state.{{records}}[this.props.{{model_variable_name}}];
 
-    updateRecord(event){
-        event.preventDefault();
-        var page= this;
-        this.setState({
-            submitted: true
-        });
+    const readOnly = (
+      <tr className="text-center" key={`row-${({{model_variable_name}}Info.id)}-data`}>
+          {{#each attributes}}
+          {{#ifCond this 'String'}}
+          <td>{{componentHelper ../model_variable_name @key }}</td>
+          {{/ifCond}}
+          {{#ifCond this 'Text'}}
+          <td>{{componentHelper ../model_variable_name @key }}</td>
+          {{/ifCond}}
+          {{#ifCond this 'Cryptocurrency'}}
+          <td>{parseFloat({{../model_variable_name}}Info.{{../model_variable_name}}_record.{{@key}}) / 100000000}</td>
+          {{/ifCond}}
+          {{#ifCond this 'Integer'}}
+          <td>{parseFloat({{../model_variable_name}}Info.{{../model_variable_name}}_record.{{@key}}) / 100}</td>
+          {{/ifCond}}
+          {{#ifCond this 'Boolean'}}
+          <td>{String({{../model_variable_name}}Info.{{../model_variable_name}}_record.{{@key}})}</td>
+          {{/ifCond}}
+          {{/each}}
+          <td>{this.state.date}</td>
+          <td>
+              <button className="btn btn-success" onClick={this.editMode.bind(this)}>Edit</button>
+          </td>
+      </tr>
+    );
 
-        this.props.parent.setState({
-            update_submitted: true
-        });
-
-        var record= {
-            id: this.state.{{model_variable_name}}.id,
-            {{#each attributes}}
-            {{#ifCond this 'String'}}
-            {{@key}}: this.state.{{@key}},
-            {{/ifCond}}
-            {{#ifCond this 'Cryptocurrency'}}
-            {{@key}}: parseInt(parseFloat(this.state.{{@key}})*10000000),,
-            {{/ifCond}}
-            {{#ifCond this 'Integer'}}
-            {{@key}}: parseInt(parseFloat(this.state.{{@key}})*100),
-            {{/ifCond}}
-            {{#ifCond this 'Boolean'}}
-            {{@key}}: this.state.{{@key}},
-            {{/ifCond}}
-            {{#ifCond this 'Text'}}
-            {{@key}}: this.state.{{@key}},
-            {{/ifCond}}
-            {{#ifCond this 'Email'}}
-            {{@key}}: this.state.{{@key}},
-            {{/ifCond}}
-            {{/each}}
-            address: this.props.user.record.account,
-            date_confirmed: Date.now(),
-            user_id: this.props.user.id,
-            user_api_key: this.props.user.record.api_key,
-            public_key: this.props.public_key,
-            user_address: this.props.user.record.account
-        }
-        
-        axios.put('/api/{{records}}', {data: record})
-        .then(function(response){
-            if (response.data.success==true){
-                page.setState({
-                    submitted: false,
-                    edit_mode: false
-                })
-
-                page.props.parent.setState({
-                    update_submitted: false
-                });
-
-                toastr.success(' Update submitted to the blockchain.');
-            }else{
-                //console.log(response.data);
-                //toastr.error(response.data.message);
-                response.data.validations.messages.map(function(message){
-                    toastr.error(message);
-                });
-            }
-        })
-        .catch(function(error){
-            console.log(error);
-            toastr.error('There was an error');
-        });
-    }
-
-    editMode(event){
-        event.preventDefault();
-        this.setState({
-            edit_mode: !this.state.edit_mode
-        });
-    }
-
-    render(){
-
-        var form=
-            <tr className="text-center">
-            {{#each attributes}}
-                <td>
-                    {{#ifCond this 'String'}}
-                    <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
-                    {{/ifCond}}
-                    {{#ifCond this 'Text'}}
-                    <textarea placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')}>
-                    </textarea><br />
-                    {{/ifCond}}
-                    {{#ifCond this 'Email'}}
-                    <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
-                    {{/ifCond}}
-                    {{#ifCond this 'Cryptocurrency'}}
-                    <input type="number" step="0.00000001"  value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
-                    {{/ifCond}}
-                    {{#ifCond this 'Integer'}}
-                    <input type="number" step="1"  value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
-                    {{/ifCond}}
-                    {{#ifCond this 'Boolean'}}
-                    <div className="status-toggle">
-                    <label className={"switch"}>
-                        <input type="checkbox" onChange={this.{{@key}}Update.bind(this)} checked={this.state.{{@key}}==true ? true : false}  />
-                        <span className={"slider round"}></span>
-                    </label><br />
-                    </div>   
-                    {{/ifCond}}
-                </td>
-            {{/each}}
-                <td>{this.state.date}</td>
-                <td>
-                    <button className="btn btn-danger" onClick={this.editMode.bind(this)}>Cancel</button><br /><br />
-                    <button className="btn btn-success" disabled={this.state.submitted} onClick={this.updateRecord.bind(this)}>{this.state.submitted ? 'Saving...':'Save'}</button>
-                </td>
-            </tr>
-
-        var {{model_variable_name}}_info= this.props.parent.state.{{records}}[this.props.{{model_variable_name}}];
-
-        var read_only=
-                    <tr className="text-center" key={'row-'+{{model_variable_name}}_info.id+'-data'}>
-                        {{#each attributes}}
-                        {{#ifCond this 'String'}}
-                        <td>{{componentHelper ../model_variable_name @key }}</td>
-                        {{/ifCond}}
-                        {{#ifCond this 'Text'}}
-                        <td>{{componentHelper ../model_variable_name @key }}</td>
-                        {{/ifCond}}
-                        {{#ifCond this 'Cryptocurrency'}}
-                        <td>{parseFloat({{../model_variable_name}}_info.{{../model_variable_name}}_record.{{@key}})/100000000}</td>
-                        {{/ifCond}}
-                        {{#ifCond this 'Integer'}}
-                        <td>{parseFloat({{../model_variable_name}}_info.{{../model_variable_name}}_record.{{@key}})/100}</td>
-                        {{/ifCond}}
-                        {{#ifCond this 'Boolean'}}
-                        <td>{String({{../model_variable_name}}_info.{{../model_variable_name}}_record.{{@key}})}</td>
-                        {{/ifCond}}
-                        {{/each}}
-                        <td>{this.state.date}</td>
-                        <td>
-                            <button className="btn btn-success" onClick={this.editMode.bind(this)}>Edit</button>
-                        </td>
-                    </tr>
-
-        return(
-            this.state.edit_mode? form : read_only
-        );
-    }
+    return (
+      this.state.edit_mode ? form : readOnly
+    );
+  }
 }
 
 class {{component_name}}Component extends React.Component {
-    constructor(props){
-        super(props);
-        this.state={
-            {{#each attributes}}
-            {{#ifCond this 'String'}}
-            {{@key}}: '',
-            {{/ifCond}}
-            {{#ifCond this 'Cryptocurrency'}}
-            {{@key}}: '',
-            {{/ifCond}}
-            {{#ifCond this 'Integer'}}
-            {{@key}}: '',
-            {{/ifCond}}
-            {{#ifCond this 'Boolean'}}
-            {{@key}}: true,
-            {{/ifCond}}
-            {{#ifCond this 'Text'}}
-            {{@key}}: '',
-            {{/ifCond}}
-            {{#ifCond this 'Email'}}
-            {{@key}}: true,
-            {{/ifCond}}
-            {{/each}}
-            {{records}}: [],
-            submitted: false,
-            update_submitted: false
-        }
-        this.handleChange= this.handleChange.bind(this);
-        this.createRecord= this.createRecord.bind(this);
-
-        {{#each attributes}}
-        {{#ifCond this 'Boolean'}}
-        this.{{@key}}Update= this.{{@key}}Update.bind(this);
-        {{/ifCond}}
-        {{/each}}
-    }
-
-
-    componentDidMount(){
-        this.loadData();
-    }
-
-    resetRecords(new_data){
-        this.setState({
-            {{records}}: new_data
-        });
-    }
-
-    loadData(){
-        var page= this;
-        var config={
-            headers:{
-                user_api_key: this.props.user.record.api_key,
-                user_public_key: this.props.public_key
-            }
-        }
-
-        axios.get('/api/users/'+this.props.user.id+'/{{records}}', config)
-        .then(function(response){
-            console.log(response.data)
-            if (response.data.success==true){
-                page.setState({
-                    {{records}}: response.data.{{records}},
-                })
-                page.monitorData();
-
-            }else{
-                
-                toastr.error('No record history');
-            }
-        })
-        .catch(function(error){
-            console.log(error);
-            toastr.error('There was an error');
-        });       
-    }
-
-    checkUpdates(){
-        var self= this;
-        var current_data= JSON.stringify(this.state.{{records}})
-        var response_data;
-        var config={
-            headers:{
-                user_api_key: this.props.user.record.api_key,
-                user_public_key: this.props.public_key
-            }
-        }
-
-        axios.get('/api/users/'+this.props.user.id+'/{{records}}', config)
-        .then(response => {
-            if (response.data.success==true){
-                response_data= response.data.{{records}};
-
-                if(current_data != JSON.stringify(response_data)){
-                    self.resetRecords(response_data);
-                    toastr.success('Updated records!');
-                }
-            }
-        })
-        .catch(function(error){
-            console.log(error);
-            toastr.error("Could not connect to server. Unable to check and update page's records.");
-        });
-    }
-
-    monitorData(){
-        var self=this;
-
-        setInterval(() => {
-            if (self.state.submitted || self.state.update_submitted) {
-                
-            }else{
-                self.checkUpdates();
-            }
-        },15000);
-    }
-
-
-    handleChange(a_field, event){
-        {{#each attributes}}
-        {{#if @first}}
-        if(a_field=='{{@key}}'){
-            this.setState({ {{@key}}: event.target.value});
-        }
-        {{else}} 
-        else if(a_field=='{{@key}}'){
-            this.setState({ {{@key}}: event.target.value});
-        }
-        {{/if}}
-        {{/each}}
-    }
-    
-    createRecord(event){
-        event.preventDefault();
-        this.setState({
-            submitted: true
-        });
-        
-        var page= this;
-
-        var record= {
-            {{#each attributes}}
-            {{@key}}: this.state.{{@key}},
-            {{/each}}
-            {{#each attributes}}
-            {{#ifCond this 'String'}}
-            {{@key}}: this.state.{{@key}},
-            {{/ifCond}}
-            {{#ifCond this 'Cryptocurrency'}}
-            {{@key}}: this.state.{{@key}},
-            {{/ifCond}}
-            {{#ifCond this 'Integer'}}
-            {{@key}}: parseInt(parseFloat(this.state.{{@key}})*100),
-            {{/ifCond}}
-            {{#ifCond this 'Boolean'}}
-            {{@key}}: this.state.{{@key}},
-            {{/ifCond}}
-            {{#ifCond this 'Text'}}
-            {{@key}}: this.state.{{@key}},
-            {{/ifCond}}
-            {{#ifCond this 'Email'}}
-            {{@key}}: this.state.{{@key}},
-            {{/ifCond}}
-            {{/each}}
-            address: this.props.user.record.account,
-            date_confirmed: Date.now(),
-            user_id: this.props.user.id,
-            user_api_key: this.props.user.record.api_key,
-            public_key: this.props.public_key,
-            user_address: this.props.user.record.account
-        }
-        axios.post('/api/{{records}}', {data: record})
-        .then(function(response){
-            if (response.data.success==true){
-                page.setState({
-                    {{#each attributes}}
-                    {{#ifCond this 'String'}}
-                    {{@key}}: '',
-                    {{/ifCond}}
-                    {{#ifCond this 'Cryptocurrency'}}
-                    {{@key}}: '',
-                    {{/ifCond}}
-                    {{#ifCond this 'Integer'}}
-                    {{@key}}: '',
-                    {{/ifCond}}
-                    {{#ifCond this 'Boolean'}}
-                    {{@key}}: true,
-                    {{/ifCond}}
-                    {{#ifCond this 'Text'}}
-                    {{@key}}: '',
-                    {{/ifCond}}
-                    {{#ifCond this 'Email'}}
-                    {{@key}}: '',
-                    {{/ifCond}}
-                    {{/each}}
-                    submitted: false
-                })
-                toastr.success('{{model_name}} record submitted to the blockchain. It might take a few minutes for record to be shown below.');
-            }else{
-                //console.log(response.data);
-                //toastr.error(response.data.message);
-                response.data.validations.messages.map(function(message){
-                    toastr.error(message);
-                });
-            }
-        })
-        .catch(function(error){
-            console.log(error);
-            toastr.error('There was an error');
-        });
-
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      {{#each attributes}}
+      {{#ifCond this 'String'}}
+      {{@key}}: '',
+      {{/ifCond}}
+      {{#ifCond this 'Cryptocurrency'}}
+      {{@key}}: '',
+      {{/ifCond}}
+      {{#ifCond this 'Integer'}}
+      {{@key}}: '',
+      {{/ifCond}}
+      {{#ifCond this 'Boolean'}}
+      {{@key}}: true,
+      {{/ifCond}}
+      {{#ifCond this 'Text'}}
+      {{@key}}: '',
+      {{/ifCond}}
+      {{#ifCond this 'Email'}}
+      {{@key}}: true,
+      {{/ifCond}}
+      {{/each}}
+      {{records}}: [],
+      submitted: false,
+      update_submitted: false,
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.createRecord = this.createRecord.bind(this);
 
     {{#each attributes}}
     {{#ifCond this 'Boolean'}}
-    {{@key}}Update(event){
-        var new_value= !this.state.{{@key}};        
-        this.setState({ {{@key}}: new_value });
-    }
+    this.{{@key}}Update = this.{{@key}}Update.bind(this);
     {{/ifCond}}
     {{/each}}
+  }
 
-    render(){
 
-        var self= this;
+  componentDidMount() {
+    this.loadData();
+  }
 
-        var record_list=
-            this.state.{{records}}.map(({{model_variable_name}}, index) => {
-                return(
-                    <DataRow parent={self} {{model_variable_name}}={index} user={self.props.user} public_key={self.props.public_key} key={'row_'+{{model_variable_name}}.id} />
-                )
-        });
+  resetRecords(newData) {
+    this.setState({
+      {{records}}: newData,
+    });
+  }
 
-        return(
-            <div className="container-fluid">
-                <h1 className="page-title"></h1>
+  loadData() {
+    const page = this;
+    const config = {
+      headers: {
+        user_api_key: this.props.user.record.api_key,
+        user_public_key: this.props.public_key,
+      },
+    };
 
+    axios.get(`/api/users/${this.props.user.id}/{{records}}`, config)
+      .then((response) => {
+        if (response.data.success) {
+          page.setState({
+            {{records}}: response.data.{{records}},
+          });
+          page.monitorData();
+        } else {
+          toastr.error('No record history');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error('There was an error');
+      });
+  }
+
+  checkUpdates() {
+    const self = this;
+    const currentData = JSON.stringify(this.state.{{records}});
+    const config = {
+      headers: {
+        user_api_key: this.props.user.record.api_key,
+        user_public_key: this.props.public_key,
+      },
+    };
+
+    axios.get(`/api/users/${this.props.user.id}/{{records}}`, config)
+      .then((response) => {
+        if (response.data.success) {
+          const responseData = response.data.{{records}};
+
+          if (currentData !== JSON.stringify(responseData)) {
+            self.resetRecords(responseData);
+            toastr.success('Updated records!');
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error("Could not connect to server. Unable to check and update page's records.");
+      });
+  }
+
+  monitorData() {
+    const self = this;
+
+    setInterval(() => {
+      if (!(self.state.submitted || self.state.update_submitted)) {
+        self.checkUpdates();
+      }
+    }, 15000);
+  }
+
+
+  handleChange(aField, event) {
+    {{#each attributes}}
+    {{#if @first}}
+    if (aField === '{{@key}}') {
+      this.setState({ {{@key}}: event.target.value });
+    }{{else}} else if (aField === '{{@key}}') {
+      this.setState({ {{@key}}: event.target.value });
+    }{{/if}}
+    {{/each}}
+  }
+
+  createRecord(event) {
+    event.preventDefault();
+    this.setState({
+      submitted: true,
+    });
+
+    const page = this;
+
+    const record = {
+      {{#each attributes}}
+      {{#ifCond this 'String'}}
+      {{@key}}: this.state.{{@key}},
+      {{/ifCond}}
+      {{#ifCond this 'Cryptocurrency'}}
+      {{@key}}: this.state.{{@key}},
+      {{/ifCond}}
+      {{#ifCond this 'Integer'}}
+      {{@key}}: parseInt(parseFloat(this.state.{{@key}}) * 100, 10),
+      {{/ifCond}}
+      {{#ifCond this 'Boolean'}}
+      {{@key}}: this.state.{{@key}},
+      {{/ifCond}}
+      {{#ifCond this 'Text'}}
+      {{@key}}: this.state.{{@key}},
+      {{/ifCond}}
+      {{#ifCond this 'Email'}}
+      {{@key}}: this.state.{{@key}},
+      {{/ifCond}}
+      {{/each}}
+      address: this.props.user.record.account,
+      date_confirmed: Date.now(),
+      user_id: this.props.user.id,
+      user_api_key: this.props.user.record.api_key,
+      public_key: this.props.public_key,
+      user_address: this.props.user.record.account,
+    };
+
+    axios.post('/api/{{records}}', { data: record })
+      .then((response) => {
+        if (response.data.success) {
+          page.setState({
+            {{#each attributes}}
+            {{#ifCond this 'String'}}
+            {{@key}}: '',
+            {{/ifCond}}
+            {{#ifCond this 'Cryptocurrency'}}
+            {{@key}}: '',
+            {{/ifCond}}
+            {{#ifCond this 'Integer'}}
+            {{@key}}: '',
+            {{/ifCond}}
+            {{#ifCond this 'Boolean'}}
+            {{@key}}: true,
+            {{/ifCond}}
+            {{#ifCond this 'Text'}}
+            {{@key}}: '',
+            {{/ifCond}}
+            {{#ifCond this 'Email'}}
+            {{@key}}: '',
+            {{/ifCond}}
+            {{/each}}
+            submitted: false,
+          });
+          toastr.success('{{model_name}} record submitted to the blockchain. It might take a few minutes for record to be shown below.');
+        } else {
+          // console.log(response.data);
+          // toastr.error(response.data.message);
+          response.data.validations.messages.map((message) => {
+            toastr.error(message);
+            return null;
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error('There was an error');
+      });
+  }
+
+  {{#each attributes}}
+  {{#ifCond this 'Boolean'}}
+  {{@key}}Update() {
+    const newValue = !this.state.{{@key}};
+    this.setState({ {{@key}}: newValue });
+  }
+  {{/ifCond}}
+  {{/each}}
+
+  render() {
+    const self = this;
+
+    const recordList = (
+      this.state.{{records}}.map(({{model_variable_name}}, index) => <DataRow
+          parent={self}
+          {{model_variable_name}}={index}
+          user={self.props.user}
+          public_key={self.props.public_key}
+          key={`row${({{model_variable_name}}.id)}`}
+          />)
+    );
+
+    return (
+        <div className="container-fluid card">
+            <h1 className="page-title"></h1>
+
+            <div className="">
                 <div className="">
-                    <div className="">
-                        <div className="card col-md-8 col-lg-8 p-0 mx-auto my-4">
-                            <div className="card-header">
-                                Record {{model_name}}
-                            </div>
-                            <div className="card-body form-group">
-                                <div className="row p-2">
-                                    {{#each attributes}}
-                                    <div className="col-lg-12 col-md-12">
-                                        <label>{{@key}}</label>
-                                        {{#ifCond this 'String'}}
-                                        <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
-                                        {{/ifCond}}
-                                        {{#ifCond this 'Text'}}
-                                        <textarea placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')}>
-                                        </textarea><br />
-                                        {{/ifCond}}
-                                        {{#ifCond this 'Email'}}
-                                        <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
-                                        {{/ifCond}}
-                                        {{#ifCond this 'Cryptocurrency'}}
-                                        <input type="number" step="0.00000001"  value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
-                                        {{/ifCond}}
-                                        {{#ifCond this 'Integer'}}
-                                        <input type="number" step="1"  value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
-                                        {{/ifCond}}
-                                        {{#ifCond this 'Boolean'}}
-                                        <div className="status-toggle">
-                                            <label className={"switch"}>
-                                                <input type="checkbox" onChange={this.{{@key}}Update.bind(this)} checked={this.state.{{@key}}==true ? true : false}  />
-                                                <span className={"slider round"}></span>
-                                            </label><br />
-                                        </div>   
-                                        {{/ifCond}}
+                    <div className="card col-md-8 col-lg-8 p-0 mx-auto my-4">
+                        <div className="card-header">
+                            Record {{model_name}}
+                        </div>
+                        <div className="card-body form-group">
+                            <div className="row p-2">
+                                {{#each attributes}}
+                                <div className="col-lg-12 col-md-12">
+                                    <label>{{@key}}</label>
+                                    {{#ifCond this 'String'}}
+                                    <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this, '{{@key}}')} /><br />
+                                    {{/ifCond}}
+                                    {{#ifCond this 'Text'}}
+                                    <textarea placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this, '{{@key}}')}>
+                                    </textarea><br />
+                                    {{/ifCond}}
+                                    {{#ifCond this 'Email'}}
+                                    <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this, '{{@key}}')} /><br />
+                                    {{/ifCond}}
+                                    {{#ifCond this 'Cryptocurrency'}}
+                                    <input type="number" step="0.00000001"  value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
+                                    {{/ifCond}}
+                                    {{#ifCond this 'Integer'}}
+                                    <input type="number" step="1" value={this.state.{{@key}} } onChange={this.handleChange.bind(this, '{{@key}}')} className="form-control" />
+                                    {{/ifCond}}
+                                    {{#ifCond this 'Boolean'}}
+                                    <div className="status-toggle">
+                                        <label className={'switch'}>
+                                            <input type="checkbox" onChange={this.{{@key}}Update.bind(this)} checked={this.state.{{@key}} || false} />
+                                            <span className={'slider round'}></span>
+                                        </label><br />
                                     </div>
-                                    {{/each}}
+                                    {{/ifCond}}
                                 </div>
-                                <div className="row p-3">
-                                    <div className="col-lg-12 col-md-12 col-xs-12 text-center">
-                                        <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...':'Save'}</button>
-                                    </div>
+                                {{/each}}
+                            </div>
+                            <div className="row p-3">
+                                <div className="col-lg-12 col-md-12 col-xs-12 text-center">
+                                    <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...' : 'Save'}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <table className="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            {{#each attributes}}
-                            <th>{{@key}}</th>
-                            {{/each}}
-                            <th>Created on</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                       {record_list}
-                    </tbody>
-                </table>
-
             </div>
-        )
-    }
-};
 
-var {{component_name}}Export= () => {
-    if (document.getElementById('{{component_name}}Component')!= null){
-        var element= document.getElementById('props');
-        var props= JSON.parse(element.getAttribute('data-props'));
-        
-        render(<{{component_name}}Component  user={props.user} validation={props.validation} public_key={props.public_key} />, 
-            document.getElementById('{{component_name}}Component'));
-    } 
+            <table className="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        {{#each attributes}}
+                        <th>{{@key}}</th>
+                        {{/each}}
+                        <th>Created on</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {recordList}
+                </tbody>
+            </table>
+
+        </div>
+    );
+  }
 }
 
-module.exports= {{component_name}}Export();
+const {{component_name}}Export = () => {
+  if (document.getElementById('{{component_name}}Component') != null) {
+    const element = document.getElementById('props');
+    const props = JSON.parse(element.getAttribute('data-props'));
+
+    render(
+      <{{component_name}}Component
+      user={props.user}
+      validation={props.validation}
+      public_key={props.public_key}
+      />,
+      document.getElementById('{{component_name}}Component'),
+    );
+  }
+};
+
+module.exports = {{component_name}}Export();

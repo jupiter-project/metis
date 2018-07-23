@@ -45,7 +45,7 @@ export default class ApplicationLayout extends React.Component {
             <span className="nav-link-text"> Account</span>
           </a>
         </li>
-        {false && 'Generated plop links go here'}
+    {false && 'Generated plop links go here'}
         <li
           className="nav-item"
           data-toggle="tooltip"

@@ -1405,4 +1405,6 @@ class Gravity {
 }
 
 
-module.exports = new Gravity();
+module.exports = {
+  gravity: new Gravity(),
+};

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import events from 'events';
-import gravity from '../config/gravity';
+import { gravity } from '../config/gravity';
 import validate from './_validations';
 
 class Model {
@@ -191,7 +191,7 @@ class Model {
 
     return new Promise((resolve, reject) => {
       eventEmitter.on('tableData_loaded', () => {
-        gravity.get_records(user.record.account, tableData.address, tableData.passphrase)
+        gravity.getRecords(user.record.account, tableData.address, tableData.passphrase)
           .then((res) => {
             const { records } = res;
             const recordsBreakdown = {};

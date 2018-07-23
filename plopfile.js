@@ -10,7 +10,7 @@ module.exports = function(plop) {
     });
 
     plop.addHelper('componentHelper', function(model_file_name, key) {
-        return '{' + model_file_name + '_info.' + model_file_name + '_record.' + key + '}'
+        return '{' + model_file_name + 'Info.' + model_file_name + '_record.' + key + '}'
     });
 
     plop.addHelper('wordMixer', function(w1, w2) {

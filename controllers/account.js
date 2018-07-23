@@ -1,5 +1,5 @@
 import axios from 'axios';
-import gravity from '../config/gravity';
+import { gravity } from '../config/gravity';
 import controller from '../config/controller';
 import User from '../models/user';
 

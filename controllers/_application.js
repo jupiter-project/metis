@@ -1,5 +1,5 @@
 import axios from 'axios';
-import gravity from '../config/gravity';
+import { gravity } from '../config/gravity';
 import controller from '../config/controller';
 
 // This files handles the app's different pages and how they are routed by the system

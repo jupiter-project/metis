@@ -1,44 +1,43 @@
-var Model = require('../models/_model.js');
+import Model from './_model';
 
 class {{model_name}} extends Model {
-    constructor(data={id: null}) {
-        //Sets model name and table name
-        super({
-            model: '{{model_file_name}}',
-            table: '{{table_name}}',
-            model_params:[
-                'id', {{#each attributes}}'{{@key}}'{{#if @last}}{{else}}, {{/if}}{{/each}}      
-            ],
-            data: data
-        });
-        this.public_key = data.public_key;
+  constructor(data = { id: null }) {
+    // Sets model name and table name
+    super({
+      data,
+      model: '{{model_file_name}}',
+      table: '{{table_name}}',
+      model_params: [
+        'id', {{#each attributes}}'{{@key}}'{{#if @last}},{{else}}, {{/if}}{{/each}}
+      ],
+    });
+    this.public_key = data.public_key;
 
-        //Mandatory method to be called after data
-        this.record = this.setRecord();
+    // Mandatory method to be called after data
+    this.record = this.setRecord();
 
 
-        this.validation_rules = [
-            //We list all validation rules as a list of hashes
-            {{#each attributes}}
-            {
-                validate: this.record.{{@key}},
-                attribute_name: '{{@key}}',
-                rules: {
-                    required: true,
-                    dataType: '{{this}}'
-                }
-            }{{#if @last}}{{else}},{{/if}}
-            {{/each}}
-        ]
-    }
+    this.validation_rules = [
+      // We list all validation rules as a list of hashes
+      {{#each attributes}}
+      {
+        validate: this.record.{{@key}},
+        attribute_name: '{{@key}}',
+        rules: {
+          required: true,
+          dataType: '{{this}}',
+        },
+      },
+      {{/each}}
+    ];
+  }
 
-    setRecord() {
-        //We set default data in this method after calling for the class setRecord method
-        var record = super.setRecord(this.data);
+  setRecord() {
+    // We set default data in this method after calling for the class setRecord method
+    const record = super.setRecord(this.data);
 
-        return record;
-    }
+    return record;
+  }
 }
-
 
 module.exports = {{model_name}};

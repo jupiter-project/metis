@@ -1,5 +1,5 @@
 import find from 'find';
-import gravity from './gravity';
+import { gravity } from './gravity';
 
 // This file handles the app's different pages and how they are routed by the system
 
