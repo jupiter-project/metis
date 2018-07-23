@@ -7,11 +7,11 @@
     "scripts": {
         "test": "node server.js",
         "start": "webpack && node server.js",
-        "gravity:db": "node -e \"require(process.env.PWD+'/config/gravity.js').loadTables('console');\"",
-        "gravity:db:create": "node -e \"require(process.env.PWD+'/config/gravity.js').createAppDatabase();\"",
-        "gravity:db:tables": "node -e \"require(process.env.PWD+'/config/gravity.js').showTables('console');\"",
-        "gravity:db:add": "node -e \"require(process.env.PWD+'/config/gravity.js').createTable();\"",
-        "gravity:app:balance": "node -e \"require(process.env.PWD+'/config/gravity.js').getBalance();\"",
+        "gravity:db": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.loadTables('console');\"",
+        "gravity:db:create": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.createAppDatabase();\"",
+        "gravity:db:tables": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.showTables('console');\"",
+        "gravity:db:add": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.createTable();\"",
+        "gravity:app:balance": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.getBalance();\"",
         "gravity:app:scaffold": "plop scaffold",
         "gravity:app:model": "plop model",
         "gravity:app:page": "plop page"

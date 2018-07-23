@@ -143,8 +143,7 @@ class Gravity {
     // let decryption_algorithm;
     let records = [];
     let numberOfRecords;
-
-    if (process.env.APP_ACCOUNT !== undefined) {
+    if (process.env.APP_ACCOUNT) {
       server = process.env.JUPITERSERVER;
       passphrase = process.env.APP_ACCOUNT;
       account = process.env.APP_ACCOUNT_ADDRESS;
@@ -391,7 +390,6 @@ class Gravity {
                   // rather than a gravity encrypted message
                 }
                 recordCounter += 1;
-
                 if (recordCounter === completedNumber) {
                   eventEmitter.emit('check_on_pending');
                 }
