@@ -1079,13 +1079,28 @@ class Gravity {
       axios.get(`${self.jupiter_data.server}/nxt?requestType=getAccountId&secretPhrase=${passphrase}`)
         .then((response) => {
           const address = response.data.accountRS;
-          const { publicKey } = response.data.publicKey;
-          resolve({ address, publicKey, success: true });
+          resolve({ address, publicKey: response.data.publicKey, success: true });
         })
         .catch((error) => {
           console.log(error);
           console.log('There was an error in address creation');
           reject({ success: false, message: 'There was an error creating a new Jupiter address' });
+        });
+    });
+  }
+
+  getAccountInformation(passphrase) {
+    const self = this;
+    return new Promise((resolve, reject) => {
+      axios.get(`${self.jupiter_data.server}/nxt?requestType=getAccountId&secretPhrase=${passphrase}`)
+        .then((response) => {
+          const address = response.data.accountRS;
+          resolve({ address, publicKey: response.data.publicKey, success: true });
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log('There was an error in address creation');
+          reject({ success: false, message: 'There was an error in getting account information' });
         });
     });
   }

@@ -45,29 +45,49 @@ class Model {
 
   generateId(table) {
     const self = this;
+    const eventEmitter = new events.EventEmitter();
 
     return new Promise((resolve, reject) => {
-      const callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${table.passphrase}&recipient=${table.address}&messageToEncrypt=${'Generating Id for record'}&feeNQT=${100}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${table.public_key}&compressMessageToEncrypt=true&encryptedMessageIsPrunable=true`;
+      let callUrl;
 
-      axios.post(callUrl)
-        .then((response) => {
-          if (response.data.broadcasted != null && response.data.broadcasted === true) {
-            self.id = response.data.transaction;
-            self.record.id = self.id;
-            self.data.id = response.data.transaction;
-            self.record = self.setRecord();
+      eventEmitter.on('data_prepared', () => {
+        axios.post(callUrl)
+          .then((response) => {
+            if (response.data.broadcasted != null && response.data.broadcasted === true) {
+              self.id = response.data.transaction;
+              self.record.id = self.id;
+              self.data.id = response.data.transaction;
+              self.record = self.setRecord();
 
-            resolve({ success: true, message: 'Id generated', id: response.data.transaction });
-          } else if (response.data.errorDescription != null) {
-            reject(response.data.errorDescription);
-          } else {
-            reject('There was an error generating Id for record');
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          reject(error.response);
-        });
+              resolve({ success: true, message: 'Id generated', id: response.data.transaction });
+            } else if (response.data.errorDescription != null) {
+              reject(response.data.errorDescription);
+            } else {
+              reject('There was an error generating Id for record');
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            reject(error.response);
+          });
+      });
+
+      if (table.public_key) {
+        callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${table.passphrase}&recipient=${table.address}&messageToEncrypt=${'Generating Id for record'}&feeNQT=${100}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${table.public_key}&compressMessageToEncrypt=true&encryptedMessageIsPrunable=true`;
+        eventEmitter.emit('data_prepared');
+      } else {
+        gravity.getAccountInformation(table.passphrase)
+          .then((response) => {
+            const { publicKey } = response;
+            console.log(response);
+            callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${table.passphrase}&recipient=${table.address}&messageToEncrypt=${'Generating Id for record'}&feeNQT=${100}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${publicKey}&compressMessageToEncrypt=true&encryptedMessageIsPrunable=true`;
+            eventEmitter.emit('data_prepared');
+          })
+          .catch((error) => {
+            console.log(error);
+            reject(error.response);
+          });
+      }
     });
   }
 
