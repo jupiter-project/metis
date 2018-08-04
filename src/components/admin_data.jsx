@@ -108,6 +108,7 @@ class DataComponent extends React.Component {
     };
 
     page.setState({
+      table,
       loading: true,
     });
 

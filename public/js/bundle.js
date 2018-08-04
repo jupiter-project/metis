@@ -38736,6 +38736,7 @@ var DataComponent = function (_React$Component3) {
       };
 
       page.setState({
+        table: table,
         loading: true
       });
 
