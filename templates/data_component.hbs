@@ -10,7 +10,7 @@ class DataRow extends React.Component {
     const record = {{model_variable_name}}.{{model_variable_name}}_record;
 
     this.state = {
-      {{model_variable_name}}: this.props.parent.state.{{records}}[this.props.{{model_variable_name}}],
+      {{model_variable_name}}Data: this.props.parent.state.{{records}}[this.props.{{model_variable_name}}],
       {{#each attributes}}
       {{#ifCond this 'String'}}
       {{@key}}: record.{{@key}},
@@ -69,7 +69,7 @@ class DataRow extends React.Component {
     });
 
     const record = {
-      id: this.state.{{model_variable_name}}.id,
+      id: this.state.{{model_variable_name}}Data.id,
       {{#each attributes}}
       {{#ifCond this 'String'}}
       {{@key}}: this.state.{{@key}},
