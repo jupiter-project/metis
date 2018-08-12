@@ -83,7 +83,7 @@ class TwoFAForm extends React.Component {
 
     render(){
         var registration_form=
-        <form>
+        <div>
             <div className="panel panel-primary">
               <div className="panel-heading text-center lead">
                 Two-factor authentication
@@ -110,10 +110,10 @@ class TwoFAForm extends React.Component {
               </div>
             <br />
             {this.state.response_message}
-        </form>
+        </div>
 
         var verification_form=
-            <form className="row p-2">
+            <div className="row p-2">
                 <div className="offset-xs-0 col-xs-12 offset-sm-4 col-sm-4">
                     <input type="text" className="form-control" value={this.state.verification_code} onChange={this.handleUpdate.bind(this)} /><br />
                     <br />
@@ -121,7 +121,7 @@ class TwoFAForm extends React.Component {
                     <br />
                     {this.state.response_message}
                 </div>
-            </form>
+            </div>
 
         var qrcode_to_scan=
             <div className="text-center">
