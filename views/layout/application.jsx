@@ -9,9 +9,8 @@ export default class ApplicationLayout extends React.Component {
   }
 
   render() {
-    const linksList = (
-      <li className="nav-item">{false && 'Generated plop links go here'}</li>
-    );
+    // const linksList = (
+    // );
 
     const loggedHeader = (
       <nav className="navbar navbar-expand navbar-dark bg-custom-primary static-top">
@@ -20,6 +19,7 @@ export default class ApplicationLayout extends React.Component {
         </a>
 
         <ul className="navbar-nav ml-auto">
+          {false && 'Generated plop links go here'}
           <li className="nav-item dropdown no-arrow mx-1">
             <a
               className="nav-link dropdown-toggle"
@@ -56,7 +56,6 @@ export default class ApplicationLayout extends React.Component {
               </a>
             </div>
           </li>
-          {linksList}
         </ul>
       </nav>
     );
