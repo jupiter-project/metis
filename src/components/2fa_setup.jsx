@@ -67,67 +67,6 @@ class TwoFAForm extends React.Component {
             qrcode_url: imageData,
           });
         });
-<<<<<<< HEAD
-    }
-
-    verifyCode(event){
-        event.preventDefault();
-        var axios= require('axios');
-        var that= this;
-
-        axios.post('/verify_code_and_save',{
-            verification_code: this.state.verification_code,
-            id: this.props.user._id
-        }).then(function(response){
-            console.log(response.data);
-
-            if(response.data.status=='success'){
-                window.location.replace('/');
-            }else{
-                toastr.error(response.data.message);
-            }
-        }).catch(function(error){
-            console.log(error);
-        });
-    }
-
-    start2fa(event){
-        event.preventDefault();
-
-        var axios= require('axios');
-        var QRCode= require('qrcode');
-        var that= this;
-
-        axios.post('/start2fa',{
-            id: this.props.user.record.id
-        }).then(function(response){
-            if (response.data.status=='error'){
-                console.log('There was an error');
-            }else if(response.data.status=='success'){
-                console.log(response.data);
-                QRCode.toDataURL(response.data.secret, function(err,image_data){
-                    that.setState({
-                        authentication_requested: true,
-                        qrcode_url: image_data
-                    });
-                });
-            }
-
-        }).catch(function(error){
-            console.log(error);
-            that.setState({
-                response_message: 'There was an error'
-            })
-        });
-
-
-
-    }
-
-    render(){
-        var registration_form=
-        <div>
-=======
       }
     }).catch((error) => {
       console.log(error);
@@ -140,7 +79,6 @@ class TwoFAForm extends React.Component {
   render() {
     const registrationForm = (
         <form>
->>>>>>> a3876ae... Updated 2fa and account component to airbnb standards
             <div className="panel panel-primary">
               <div className="form-group">
                   <div className="">
@@ -165,29 +103,6 @@ class TwoFAForm extends React.Component {
               </div>
             <br />
             {this.state.response_message}
-<<<<<<< HEAD
-        </div>
-
-        var verification_form=
-            <div className="row p-2">
-                <div className="offset-xs-0 col-xs-12 offset-sm-4 col-sm-4">
-                    <input type="text" className="form-control" value={this.state.verification_code} onChange={this.handleUpdate.bind(this)} /><br />
-                    <br />
-                    <button type="submit" className="btn btn-primary" onClick={this.verifyCode.bind(this)}>Verify code</button>
-                    <br />
-                    {this.state.response_message}
-                </div>
-            </div>
-
-        var qrcode_to_scan=
-            <div className="text-center">
-                <p>Scan the QR-code below with Google Authenticator.</p>
-                <img src={this.state.qrcode_url} className="qr-code-image" />
-                <div className="container-fluid text-center">
-                    Once you have scanned the QR-code, enter the 6-digit authentication code in the field below and click on the “Verify code” button.
-                    {verification_form}
-                </div>
-=======
         </form>
     );
 
@@ -199,7 +114,6 @@ class TwoFAForm extends React.Component {
                 <button type="submit" className="btn btn-primary" onClick={this.verifyCode.bind(this)}>Verify code</button>
                 <br />
                 {this.state.response_message}
->>>>>>> a3876ae... Updated 2fa and account component to airbnb standards
             </div>
         </form>
     );
