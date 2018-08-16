@@ -38312,6 +38312,9 @@ var AccountComponent = function (_React$Component) {
   }
 
   _createClass(AccountComponent, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
     key: 'handleChange',
     value: function handleChange(aField, event) {
       if (aField === 'email') {
@@ -38339,16 +38342,15 @@ var AccountComponent = function (_React$Component) {
       this.setState({
         submitted: true
       });
-      var account = {
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
-        email: this.state.email,
-        api_key: this.props.user.record.api_key,
-        public_key: this.props.public_key
-      };
 
       _axios2.default.put('/account', {
-        account: account
+        account: {
+          firstname: this.state.firstname,
+          lastname: this.state.lastname,
+          email: this.state.email,
+          api_key: this.props.user.api_key,
+          public_key: this.props.public_key
+        }
       }).then(function (response) {
         if (response.data.success === true) {
           page.setState({
@@ -38381,8 +38383,8 @@ var AccountComponent = function (_React$Component) {
         'div',
         { className: '' },
         _react2.default.createElement(
-          'h1',
-          { className: 'page-title text-center' },
+          'div',
+          { className: 'page-title' },
           'My Account'
         ),
         _react2.default.createElement(
@@ -38393,7 +38395,7 @@ var AccountComponent = function (_React$Component) {
             { className: 'card card-register mx-auto my-4' },
             _react2.default.createElement(
               'h3',
-              { className: 'card-header bg-dark text-white' },
+              { className: 'card-header bg-custom-primary text-white' },
               'Account information'
             ),
             this.state.account_editing_mode === true ? _react2.default.createElement(
@@ -38404,27 +38406,35 @@ var AccountComponent = function (_React$Component) {
                 { className: 'form-row' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'form-group' },
+                  { className: 'form-group col-md-6' },
                   _react2.default.createElement(
-                    'div',
-                    { className: 'col-md-6 col-lg-6 p-3' },
-                    _react2.default.createElement(
-                      'label',
-                      { htmlFor: 'inputFirstName' },
-                      'First Name'
-                    ),
-                    _react2.default.createElement('input', { value: this.state.firstname, onChange: this.handleChange.bind(this, 'firstname'), type: 'name', className: 'form-control', id: 'inputFirstName' })
+                    'label',
+                    { htmlFor: 'inputFirstName' },
+                    'First Name'
                   ),
+                  _react2.default.createElement('input', {
+                    value: this.state.firstname,
+                    onChange: this.handleChange.bind(this, 'firstname'),
+                    type: 'name',
+                    className: 'form-control',
+                    id: 'inputFirstName'
+                  })
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-group col-md-6' },
                   _react2.default.createElement(
-                    'div',
-                    { className: 'col-md-6 col-lg-6 p-3' },
-                    _react2.default.createElement(
-                      'label',
-                      { htmlFor: 'inputLastName' },
-                      'Last Name'
-                    ),
-                    _react2.default.createElement('input', { value: this.state.lastname, onChange: this.handleChange.bind(this, 'lastname'), type: 'name', className: 'form-control', id: 'inputLastName' })
-                  )
+                    'label',
+                    { htmlFor: 'inputLastName' },
+                    'Last Name'
+                  ),
+                  _react2.default.createElement('input', {
+                    value: this.state.lastname,
+                    onChange: this.handleChange.bind(this, 'lastname'),
+                    type: 'name',
+                    className: 'form-control',
+                    id: 'inputLastName'
+                  })
                 )
               ),
               _react2.default.createElement(
@@ -38435,17 +38445,28 @@ var AccountComponent = function (_React$Component) {
                   { htmlFor: 'inputEmailAddress' },
                   'Email Address'
                 ),
-                _react2.default.createElement('input', { value: this.state.email, onChange: this.handleChange.bind(this, 'email'), type: 'email', className: 'form-control', id: 'inputEmailAddress' })
+                _react2.default.createElement('input', {
+                  value: this.state.email,
+                  onChange: this.handleChange.bind(this, 'email'),
+                  type: 'email',
+                  className: 'form-control',
+                  id: 'inputEmailAddress'
+                })
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'form-row' },
+                { className: 'form-row mt-2' },
                 _react2.default.createElement(
                   'div',
                   { className: 'col' },
                   _react2.default.createElement(
                     'button',
-                    { type: 'button', className: 'btn btn-success', onClick: this.updateAccountInfo.bind(this), disabled: this.state.submitted },
+                    {
+                      type: 'button',
+                      className: 'btn btn-success',
+                      onClick: this.updateAccountInfo.bind(this),
+                      disabled: this.state.submitted
+                    },
                     _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
                     ' ',
                     this.state.submitted ? 'Saving...' : 'Save'
@@ -38456,9 +38477,13 @@ var AccountComponent = function (_React$Component) {
                   { className: 'col text-right' },
                   _react2.default.createElement(
                     'button',
-                    { type: 'button', className: 'btn btn-danger ml-auto', onClick: this.switchMode.bind(this, 'account') },
+                    {
+                      type: 'button',
+                      className: 'btn btn-danger ml-auto',
+                      onClick: this.switchMode.bind(this, 'account')
+                    },
                     _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
-                    '  Cancel'
+                    ' Cancel'
                   )
                 )
               )
@@ -38476,7 +38501,13 @@ var AccountComponent = function (_React$Component) {
                     { htmlFor: 'inputFirstName' },
                     'First Name'
                   ),
-                  _react2.default.createElement('input', { value: this.state.saved_firstname, type: 'name', className: 'form-control', id: 'inputFirstName', disabled: true })
+                  _react2.default.createElement('input', {
+                    value: this.state.saved_firstname,
+                    type: 'name',
+                    className: 'form-control',
+                    id: 'inputFirstName',
+                    disabled: true
+                  })
                 ),
                 _react2.default.createElement(
                   'div',
@@ -38486,7 +38517,13 @@ var AccountComponent = function (_React$Component) {
                     { htmlFor: 'inputLastName' },
                     'Last Name'
                   ),
-                  _react2.default.createElement('input', { value: this.state.saved_lastname, type: 'name', className: 'form-control', id: 'inputLastName', disabled: true })
+                  _react2.default.createElement('input', {
+                    value: this.state.saved_lastname,
+                    type: 'name',
+                    className: 'form-control',
+                    id: 'inputLastName',
+                    disabled: true
+                  })
                 )
               ),
               _react2.default.createElement(
@@ -38497,17 +38534,27 @@ var AccountComponent = function (_React$Component) {
                   { htmlFor: 'inputEmailAddress' },
                   'Email Address'
                 ),
-                _react2.default.createElement('input', { value: this.state.saved_email, type: 'email', className: 'form-control', id: 'inputEmailAddress', disabled: true })
+                _react2.default.createElement('input', {
+                  value: this.state.saved_email,
+                  type: 'email',
+                  className: 'form-control',
+                  id: 'inputEmailAddress',
+                  disabled: true
+                })
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'form-row' },
+                { className: 'form-row mt-2' },
                 _react2.default.createElement(
                   'div',
                   { className: 'col' },
                   _react2.default.createElement(
                     'button',
-                    { type: 'button', className: 'btn btn-default', onClick: this.switchMode.bind(this, 'account') },
+                    {
+                      type: 'button',
+                      className: 'btn btn-default',
+                      onClick: this.switchMode.bind(this, 'account')
+                    },
                     _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
                     ' Edit'
                   )
@@ -38517,7 +38564,11 @@ var AccountComponent = function (_React$Component) {
                   { className: 'col text-right' },
                   _react2.default.createElement(
                     'button',
-                    { type: 'button', className: 'btn btn-default ml-auto', disabled: true },
+                    {
+                      type: 'button',
+                      className: 'btn btn-default ml-auto',
+                      disabled: true
+                    },
                     'Cancel'
                   )
                 )
@@ -38791,7 +38842,7 @@ var DataComponent = function (_React$Component3) {
 
       var tableVersion = _react2.default.createElement(
         'div',
-        { className: 'container-fluid' },
+        { className: 'container-fluid bg-info' },
         _react2.default.createElement(
           'table',
           { className: 'table table-striped' },
@@ -38948,8 +38999,7 @@ var TableComponent = function (_React$Component) {
       name: Object.keys(_this.props.table),
       balance: 0,
       low_balance: true,
-      show_passphrase: false,
-      expanded: false
+      show_passphrase: false
     };
     return _this;
   }
@@ -38964,13 +39014,6 @@ var TableComponent = function (_React$Component) {
     value: function showPassphrase() {
       this.setState({
         show_passphrase: !this.state.show_passphrase
-      });
-    }
-  }, {
-    key: 'expanded',
-    value: function expanded() {
-      this.setState({
-        expanded: !this.state.expanded
       });
     }
   }, {
@@ -39001,131 +39044,167 @@ var TableComponent = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var state = this.state;
       var table = state.table;
 
       var data = table[state.name];
       return _react2.default.createElement(
         'div',
-        { className: '' },
+        { className: 'table-responsive' },
         _react2.default.createElement(
-          'div',
-          { className: 'card' },
+          'table',
+          { className: 'table mb-0', style: { border: '1px solid lightgray' } },
           _react2.default.createElement(
-            'div',
-            { className: 'card-header' },
+            'tbody',
+            null,
             _react2.default.createElement(
-              'div',
-              { className: 'row mb-0' },
+              'tr',
+              null,
               _react2.default.createElement(
-                'div',
-                { className: 'col-3' },
+                'td',
+                { style: { minWidth: '100px' } },
                 _react2.default.createElement(
-                  'h6',
+                  'span',
                   null,
                   this.state.name
                 )
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'col-3 col-xs-12' },
+                'td',
+                null,
                 _react2.default.createElement(
-                  'h6',
+                  'span',
                   null,
                   this.state.balance
                 )
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'col-3 col-xs-12' },
+                'td',
+                null,
                 _react2.default.createElement(
-                  'h6',
+                  'span',
                   { className: 'text-danger' },
                   'Low Balance'
                 )
               ),
               _react2.default.createElement(
-                'div',
-                { className: 'col-3 col-xs-12 text-right' },
+                'td',
+                { className: 'text-center' },
                 _react2.default.createElement(
-                  'button',
-                  { onClick: this.expanded.bind(this), className: 'btn btn-info', type: 'button', 'data-toggle': 'collapse', 'data-target': '#heading' + this.state.name, 'aria-expanded': 'false', 'aria-controls': 'heading' + this.state.name },
-                  this.state.expanded ? ' - ' : ' + ',
-                  ' more details'
+                  'a',
+                  {
+                    className: 'footer-link text-primary',
+                    href: '#',
+                    onClick: function onClick() {
+                      return _this2.setState({ open: !_this2.state.open });
+                    },
+                    'data-toggle': 'collapse',
+                    'data-target': '#collapse-' + this.state.name,
+                    'aria-controls': 'collapse-' + this.state.name
+                  },
+                  this.state.open ? _react2.default.createElement(
+                    'span',
+                    { className: 'h5' },
+                    'less details'
+                  ) : _react2.default.createElement(
+                    'span',
+                    { className: 'h5' },
+                    'more details'
+                  )
                 )
               )
             )
-          ),
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          {
+            className: 'collapse',
+            id: 'collapse-' + this.state.name,
+            'in': this.state.open
+          },
           _react2.default.createElement(
             'div',
-            { id: 'heading' + this.state.name, className: 'collapse' },
+            {
+              className: 'card-body w-100',
+              style: {
+                borderRight: '4px solid lightgray',
+                borderLeft: '4px solid lightgray'
+              }
+            },
             _react2.default.createElement(
               'div',
-              { className: 'card-body' },
+              { className: 'text-left' },
               _react2.default.createElement(
                 'div',
-                { className: '' },
+                { className: 'form-group' },
                 _react2.default.createElement(
-                  'p',
+                  'strong',
                   null,
-                  _react2.default.createElement(
-                    'strong',
-                    null,
-                    'Address:'
-                  ),
-                  ' ',
-                  data.address
+                  'Address:'
                 ),
+                ' ',
+                data.address
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
                 _react2.default.createElement(
-                  'p',
+                  'strong',
                   null,
-                  _react2.default.createElement(
-                    'strong',
-                    null,
-                    'Passphrase:'
-                  ),
+                  'Passphrase:'
+                ),
+                ' ',
+                state.show_passphrase ? _react2.default.createElement(
+                  'span',
+                  null,
+                  data.passphrase,
                   ' ',
-                  state.show_passphrase ? _react2.default.createElement(
-                    'span',
-                    null,
-                    data.passphrase,
-                    ' ',
-                    _react2.default.createElement(
-                      'button',
-                      { className: 'btn btn-danger', onClick: this.showPassphrase.bind(this) },
-                      'Hide'
-                    )
-                  ) : _react2.default.createElement(
+                  _react2.default.createElement(
                     'button',
-                    { className: 'btn btn-default', onClick: this.showPassphrase.bind(this) },
-                    'Show passphrase'
+                    {
+                      className: 'btn btn-danger',
+                      onClick: this.showPassphrase.bind(this)
+                    },
+                    'Hide'
                   )
+                ) : _react2.default.createElement(
+                  'button',
+                  {
+                    className: 'btn btn-default',
+                    onClick: this.showPassphrase.bind(this)
+                  },
+                  'Show passphrase'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Public Key:'
+                ),
+                ' ',
+                data.public_key
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Current balance: '
                 ),
                 _react2.default.createElement(
-                  'p',
-                  null,
-                  _react2.default.createElement(
-                    'strong',
-                    null,
-                    'Public Key:'
-                  ),
-                  ' ',
-                  data.public_key
-                ),
-                _react2.default.createElement(
-                  'p',
-                  null,
-                  _react2.default.createElement(
-                    'strong',
-                    null,
-                    'Current balance: '
-                  ),
-                  _react2.default.createElement(
-                    'span',
-                    { className: state.low_balance ? 'alert alert-warning' : 'alert alert-info' },
-                    state.balance / Math.pow(10, 8),
-                    ' JUP'
-                  )
+                  'span',
+                  {
+                    className: state.low_balance ? 'alert alert-warning p-1' : 'alert alert-info p-1'
+                  },
+                  state.balance / Math.pow(10, 8),
+                  ' JUP'
                 )
               )
             )
@@ -39144,9 +39223,9 @@ var AdminComponent = function (_React$Component2) {
   function AdminComponent(props) {
     _classCallCheck(this, AdminComponent);
 
-    var _this2 = _possibleConstructorReturn(this, (AdminComponent.__proto__ || Object.getPrototypeOf(AdminComponent)).call(this, props));
+    var _this3 = _possibleConstructorReturn(this, (AdminComponent.__proto__ || Object.getPrototypeOf(AdminComponent)).call(this, props));
 
-    _this2.state = {
+    _this3.state = {
       records: [],
       params: [],
       tables: [],
@@ -39154,7 +39233,7 @@ var AdminComponent = function (_React$Component2) {
       balances: {},
       loading: true
     };
-    return _this2;
+    return _this3;
   }
 
   _createClass(AdminComponent, [{
@@ -39253,13 +39332,17 @@ var AdminComponent = function (_React$Component2) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var state = this.state;
       var props = this.props;
 
       var tableList = state.tables.map(function (table, index) {
-        return _react2.default.createElement(TableComponent, { table: table, parent: _this3, key: 'table-component-' + index });
+        return _react2.default.createElement(TableComponent, {
+          table: table,
+          parent: _this4,
+          key: 'table-component-' + index
+        });
       });
 
       return _react2.default.createElement(
@@ -39267,135 +39350,103 @@ var AdminComponent = function (_React$Component2) {
         { className: '' },
         _react2.default.createElement(
           'div',
-          { className: 'card p-4 my-3' },
-          _react2.default.createElement(
-            'div',
-            { className: 'row' },
-            _react2.default.createElement(
-              'div',
-              { className: 'col-12' },
-              _react2.default.createElement(
-                'h2',
-                { className: 'text-center my-4' },
-                'App Summary'
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'col-12 col-md-6 my-4' },
-              _react2.default.createElement(
-                'h4',
-                null,
-                'App Address:'
-              ),
-              _react2.default.createElement(
-                'span',
-                { className: 'bg-warning rounded h4 p-1' },
-                props.user.record.account
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'col-12 col-md-6 text-right my-auto' },
-              _react2.default.createElement(
-                'p',
-                null,
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  'Current balance: '
-                ),
-                state.balances && state.balances.balance ? state.balances.balance / Math.pow(10, 8) : 0,
-                ' JUP',
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  'Required app balance: '
-                ),
-                state.balances && state.balances.minAppBalanceAmount ? state.balances.minAppBalanceAmount / Math.pow(10, 8) : 0,
-                ' JUP'
-              )
-            )
-          )
+          { className: 'page-title' },
+          'App Summary'
         ),
         _react2.default.createElement(
           'div',
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-12 col-md-10 mx-auto' },
+            { className: 'col-xs-12 col-md-6' },
             _react2.default.createElement(
               'div',
-              { className: 'card mt-2 mb-5' },
-              _react2.default.createElement(
-                'div',
-                { className: 'card-header' },
-                _react2.default.createElement(
-                  'h3',
-                  null,
-                  'Current App Tables'
-                ),
-                _react2.default.createElement(
-                  'h5',
-                  null,
-                  _react2.default.createElement(
-                    'strong',
-                    null,
-                    'Required Table balance: '
-                  ),
-                  state.balances && state.balances.minTableBalanceAmount ? state.balances.minTableBalanceAmount / Math.pow(10, 8) : 0,
-                  ' JUP'
-                )
-              ),
+              { className: 'card card-plain' },
               _react2.default.createElement(
                 'div',
                 { className: 'card-body' },
                 _react2.default.createElement(
-                  'div',
-                  { className: 'row' },
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'col-3 col-xs-12' },
-                    _react2.default.createElement(
-                      'h5',
-                      null,
-                      'Name'
-                    )
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'col-3 col-xs-12' },
-                    _react2.default.createElement(
-                      'h5',
-                      null,
-                      'Balance'
-                    )
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'col-3 col-xs-12' },
-                    _react2.default.createElement(
-                      'h5',
-                      null,
-                      'Notifications'
-                    )
-                  )
+                  'h6',
+                  null,
+                  'App Address:'
                 ),
                 _react2.default.createElement(
-                  'div',
-                  { className: 'row' },
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'col-12' },
-                    state.loading ? _react2.default.createElement(
-                      'p',
-                      { className: 'text-center alert alert-info' },
-                      'Loading'
-                    ) : tableList
-                  )
+                  'span',
+                  { className: 'bg-warning rounded p-1' },
+                  props.user.record.account
                 )
               )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-xs-12 col-md-6' },
+            _react2.default.createElement(
+              'div',
+              { className: 'card card-plain' },
+              _react2.default.createElement(
+                'div',
+                { className: 'card-body text-right' },
+                _react2.default.createElement(
+                  'p',
+                  null,
+                  _react2.default.createElement(
+                    'strong',
+                    null,
+                    'Current balance: '
+                  ),
+                  state.balances && state.balances.balance ? state.balances.balance / Math.pow(10, 8) : 0,
+                  ' ',
+                  'JUP',
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement(
+                    'strong',
+                    null,
+                    'Required app balance: '
+                  ),
+                  state.balances && state.balances.minAppBalanceAmount ? state.balances.minAppBalanceAmount / Math.pow(10, 8) : 0,
+                  ' ',
+                  'JUP'
+                )
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'col-12' },
+          _react2.default.createElement(
+            'div',
+            { className: 'card' },
+            _react2.default.createElement(
+              'div',
+              { className: 'card-header bg-custom-primary text-light' },
+              _react2.default.createElement(
+                'h4',
+                null,
+                'Current App Tables'
+              ),
+              _react2.default.createElement(
+                'p',
+                { className: 'mb-0' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Required Table balance: '
+                ),
+                state.balances && state.balances.minTableBalanceAmount ? state.balances.minTableBalanceAmount / Math.pow(10, 8) : 0,
+                ' ',
+                'JUP'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'card-body' },
+              state.loading ? _react2.default.createElement(
+                'p',
+                { className: 'text-center alert alert-info' },
+                'Loading'
+              ) : tableList
             )
           )
         )
@@ -39414,7 +39465,8 @@ var AdminDashboardComponentExport = function AdminDashboardComponentExport() {
     (0, _reactDom.render)(_react2.default.createElement(AdminComponent, {
       user: props.user,
       validation: props.validation,
-      public_key: props.public_key }), document.getElementById('app-admin-dashboard'));
+      public_key: props.public_key
+    }), document.getElementById('app-admin-dashboard'));
   }
 };
 
@@ -39531,15 +39583,18 @@ var HomeComponent = function (_React$Component) {
   }
 
   _createClass(HomeComponent, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         { className: 'container' },
         _react2.default.createElement(
-          'h1',
-          { className: 'text-center mt-3 mb-5' },
-          'Welcome to Gravity'
+          'div',
+          { className: 'page-title' },
+          'Welcome your Gravity app'
         )
       );
     }
@@ -39552,7 +39607,6 @@ var HomeExport = function HomeExport() {
   if (document.getElementById('home-dashboard') != null) {
     var element = document.getElementById('props');
     var props = JSON.parse(element.getAttribute('data-props'));
-
     (0, _reactDom.render)(_react2.default.createElement(HomeComponent, { user: props.user, messages: props.messages }), document.getElementById('home-dashboard'));
   }
 };
@@ -39613,6 +39667,15 @@ var LoginForm = function (_React$Component) {
   }
 
   _createClass(LoginForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      /* if (this.props.messages != null && this.props.messages.loginMessage != null){
+              this.props.messages.loginMessage.map(function(message){
+                  toastr.error(message);
+              });
+          } */
+    }
+  }, {
     key: 'handleChange',
     value: function handleChange(event) {
       this.setState({
@@ -39623,16 +39686,13 @@ var LoginForm = function (_React$Component) {
     key: 'logIn',
     value: function logIn(event) {
       event.preventDefault();
+      var page = this;
       // toastr.info('Logging in now!');
       console.log('Authentication submitted!');
-      var page = this;
 
       _axios2.default.post('/get_jupiter_account', {
         jup_passphrase: this.state.jup_passphrase
       }).then(function (response) {
-        // new_account_created = true;
-        // bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
-        // console.log(response.data) ;
         if (response.data.success === true) {
           page.setState({
             confirmation_page: true,
@@ -39651,7 +39711,7 @@ var LoginForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var comfirmationPage = _react2.default.createElement(
+      var confirmationPage = _react2.default.createElement(
         'form',
         { action: '/login', method: 'post', className: '' },
         _react2.default.createElement(
@@ -39669,10 +39729,18 @@ var LoginForm = function (_React$Component) {
           )
         ),
         _react2.default.createElement('input', { type: 'hidden', name: 'account', value: this.state.account }),
-        _react2.default.createElement('input', { type: 'hidden', name: 'accounthash', value: this.state.accounthash }),
+        _react2.default.createElement('input', {
+          type: 'hidden',
+          name: 'accounthash',
+          value: this.state.accounthash
+        }),
         _react2.default.createElement('input', { type: 'hidden', name: 'public_key', value: this.state.public_key }),
         _react2.default.createElement('input', { type: 'hidden', name: 'jupkey', value: this.state.jup_passphrase }),
-        _react2.default.createElement('input', { type: 'hidden', name: 'jup_account_id', value: this.state.jup_account_id }),
+        _react2.default.createElement('input', {
+          type: 'hidden',
+          name: 'jup_account_id',
+          value: this.state.jup_account_id
+        }),
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
@@ -39686,32 +39754,38 @@ var LoginForm = function (_React$Component) {
 
       var loginForm = _react2.default.createElement(
         'form',
-        { className: 'form-group' },
+        null,
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
           _react2.default.createElement(
             'label',
-            { htmlFor: 'inputPassphrase', className: 'h4 text-center' },
-            'Enter your Passphrase:'
+            { htmlFor: 'inputPassword' },
+            'Enter your Passphrase'
           ),
-          _react2.default.createElement('input', { className: 'form-control', id: 'inputPassphrase', type: 'password', value: this.state.jup_passphrase, onChange: this.handleChange.bind(this), placeholder: 'Your Jupiter Passphrase', autoComplete: 'current-password' })
+          _react2.default.createElement('input', {
+            type: 'password',
+            id: 'inputPassword',
+            className: 'form-control',
+            required: 'required',
+            value: this.state.jup_passphrase,
+            onChange: this.handleChange.bind(this),
+            autoComplete: 'password'
+          })
         ),
         _react2.default.createElement(
-          'div',
-          { className: 'form-group' },
-          _react2.default.createElement(
-            'button',
-            { className: 'btn btn-primary btn-block', onClick: this.logIn.bind(this) },
-            'Login'
-          )
+          'button',
+          {
+            className: 'btn btn-primary btn-block',
+            onClick: this.logIn.bind(this)
+          },
+          'Submit'
         )
       );
-
       return _react2.default.createElement(
         'div',
         null,
-        this.state.confirmation_page === true ? comfirmationPage : loginForm
+        this.state.confirmation_page === true ? confirmationPage : loginForm
       );
     }
   }]);
@@ -39956,10 +40030,10 @@ var SettingsOptions = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'container-fluid' },
+        { className: 'container' },
         _react2.default.createElement(
           'h1',
-          { className: 'page-title text-center' },
+          { className: 'page-title' },
           'My Settings'
         ),
         _react2.default.createElement(
@@ -39967,104 +40041,111 @@ var SettingsOptions = function (_React$Component) {
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'mx-auto my-4' },
+            { className: 'col-10 mx-auto my-3' },
             _react2.default.createElement(
               'div',
-              { className: '' },
+              { className: 'card' },
               _react2.default.createElement(
                 'div',
-                { className: 'text-center' },
+                { className: 'card-header bg-custom-primary text-light' },
                 _react2.default.createElement(
+                  'h5',
+                  null,
+                  'Two-factor authentication'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'card-body text-center' },
+                this.props.user.record.twofa_enabled === true && this.props.user.record.twofa_completed === true ? _react2.default.createElement(
                   'div',
-                  { className: 'card rounded' },
+                  null,
                   _react2.default.createElement(
-                    'h3',
-                    { className: 'card-header bg-dark text-light' },
-                    'Two-factor authentication'
+                    'p',
+                    { className: 'alert alert-success' },
+                    'Enabled'
                   ),
                   _react2.default.createElement(
-                    'div',
-                    { className: 'card-body col-md-8 mx-auto' },
-                    this.props.user.record.twofa_enabled === true && this.props.user.record.twofa_completed === true ? _react2.default.createElement(
-                      'div',
-                      null,
-                      _react2.default.createElement(
-                        'p',
-                        { className: 'alert alert-success' },
-                        'Enabled'
-                      ),
-                      _react2.default.createElement(
-                        'form',
-                        { method: 'POST', action: '/update_2fa_settings' },
-                        _react2.default.createElement('input', { type: 'hidden', name: 'enable_2fa', value: 'false' }),
-                        _react2.default.createElement(
-                          'button',
-                          { className: 'btn btn-warning', type: 'submit' },
-                          'Disable 2FA'
-                        )
-                      )
-                    ) : null,
-                    this.props.user.record.twofa_enabled === true && this.props.user.record.twofa_completed === false ? _react2.default.createElement(
-                      'p',
-                      { className: 'alert alert-danger' },
-                      'Started but not completed'
-                    ) : null,
-                    this.props.user.record.twofa_enabled === false ? _react2.default.createElement(
-                      'div',
-                      null,
-                      _react2.default.createElement(
-                        'p',
-                        { className: 'alert alert-warning' },
-                        'Not enabled'
-                      ),
-                      _react2.default.createElement(
-                        'form',
-                        { method: 'POST', action: '/update_2fa_settings' },
-                        _react2.default.createElement('input', { type: 'hidden', name: 'enable_2fa', value: 'true' }),
-                        _react2.default.createElement(
-                          'button',
-                          { className: 'btn btn-warning', type: 'submit' },
-                          'Enable 2FA'
-                        )
-                      )
-                    ) : null
+                    'form',
+                    { method: 'POST', action: '/update_2fa_settings' },
+                    _react2.default.createElement('input', { type: 'hidden', name: 'enable_2fa', value: 'false' }),
+                    _react2.default.createElement(
+                      'button',
+                      { className: 'btn btn-warning mx-auto', type: 'submit' },
+                      'Disable 2FA'
+                    )
+                  )
+                ) : null,
+                this.props.user.record.twofa_enabled === true && this.props.user.record.twofa_completed === false ? _react2.default.createElement(
+                  'p',
+                  { className: 'alert alert-danger' },
+                  'Started but not completed'
+                ) : null,
+                this.props.user.record.twofa_enabled === false ? _react2.default.createElement(
+                  'div',
+                  null,
+                  _react2.default.createElement(
+                    'p',
+                    { className: 'alert alert-warning' },
+                    'Not enabled'
                   ),
-                  _react2.default.createElement('br', null)
+                  _react2.default.createElement(
+                    'form',
+                    { method: 'POST', action: '/update_2fa_settings' },
+                    _react2.default.createElement('input', { type: 'hidden', name: 'enable_2fa', value: 'true' }),
+                    _react2.default.createElement(
+                      'button',
+                      { className: 'btn btn-warning mx-auto', type: 'submit' },
+                      'Enable 2FA'
+                    )
+                  )
+                ) : null
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-10 mx-auto my-3' },
+            _react2.default.createElement(
+              'div',
+              { className: 'card' },
+              _react2.default.createElement(
+                'div',
+                { className: 'card-header bg-custom-primary text-light' },
+                _react2.default.createElement(
+                  'h5',
+                  null,
+                  'API Key'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'card-body' },
+                _react2.default.createElement(
+                  'p',
+                  null,
+                  'Use the API key below if you\u2019re using an external application or bot to record info into the blockchain through your account.'
                 ),
                 _react2.default.createElement(
                   'div',
-                  { className: 'card rounded my-4' },
+                  { className: 'text-center' },
                   _react2.default.createElement(
-                    'h3',
-                    { className: 'card-header bg-dark text-light' },
-                    'API Key'
-                  ),
+                    'p',
+                    { className: 'alert alert-info auth-hash' },
+                    this.state.api_key
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'text-center' },
                   _react2.default.createElement(
-                    'div',
-                    { className: 'card-body col-md-8 p-3 mx-auto' },
-                    _react2.default.createElement(
-                      'p',
-                      null,
-                      'Use the API key below if you\u2019re using an external application or bot to record info into the blockchain through your account.'
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'text-center' },
-                      _react2.default.createElement(
-                        'p',
-                        { className: 'alert alert-info auth-hash' },
-                        this.state.api_key
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'text-center' },
-                      _react2.default.createElement(
-                        'button',
-                        { className: 'btn btn-success', type: 'submit', onClick: this.updateApiKey.bind(this) },
-                        'Create new API Key'
-                      )
-                    )
+                    'button',
+                    {
+                      className: 'btn btn-success',
+                      type: 'submit',
+                      onClick: this.updateApiKey.bind(this)
+                    },
+                    'Create new API Key'
                   )
                 )
               )
@@ -40083,7 +40164,11 @@ var SettingsExport = function SettingsExport() {
     var element = document.getElementById('props');
     var props = JSON.parse(element.getAttribute('data-props'));
 
-    (0, _reactDom.render)(_react2.default.createElement(SettingsOptions, { user: props.user, validation: props.validation, messages: props.messages }), document.getElementById('settings-options'));
+    (0, _reactDom.render)(_react2.default.createElement(SettingsOptions, {
+      user: props.user,
+      validation: props.validation,
+      messages: props.messages
+    }), document.getElementById('settings-options'));
   }
 };
 
@@ -40120,6 +40205,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// place where you'd like in your app
+
 var SignupForm = function (_React$Component) {
   _inherits(SignupForm, _React$Component);
 
@@ -40154,11 +40241,20 @@ var SignupForm = function (_React$Component) {
   }
 
   _createClass(SignupForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      /* if (this.props.messages != null && this.props.messages.signupMessage != null){
+              this.props.messages.signupMessage.map(function(message){
+                  toastr.error(message);
+              });
+          } */
+    }
+  }, {
     key: 'testConnection',
     value: function testConnection(event) {
       event.preventDefault();
       _axios2.default.post('/test_connection', {}).then(function (response) {
-        if (response.data.success === true) {
+        if (response.data.success) {
           console.log('Success');
           console.log(response.data.response);
         } else {
@@ -40172,6 +40268,7 @@ var SignupForm = function (_React$Component) {
     key: 'confirmedPassphrase',
     value: function confirmedPassphrase(event) {
       event.preventDefault();
+
       this.setState({
         passphrase_confirmation_page: true
       });
@@ -40189,7 +40286,6 @@ var SignupForm = function (_React$Component) {
             jup_account_created: true,
             generated_passphrase: response.data.result
           });
-
           _toastr2.default.success('Passphrase generated!');
         } else {
           _toastr2.default.error('There was an error in your passphrase');
@@ -40206,6 +40302,9 @@ var SignupForm = function (_React$Component) {
       var page = this;
 
       if (this.state.generated_passphrase !== this.state.passphrase_confirmation) {
+        /* this.setState({
+                  confirmation_message: 'The passphrase you entered is not correct!'
+              }); */
         _toastr2.default.error('The passphrase you entered is not correct!');
       } else {
         _axios2.default.post('/create_jupiter_account', {
@@ -40222,7 +40321,7 @@ var SignupForm = function (_React$Component) {
             page.setState({
               account_object: response.data.account,
               public_key: response.data.account.public_key,
-              confirmation_message: 'Passphrase confirmed and Jupiter account ' + response.data.account.account + ' was created for you. Please click below to finalize your account creation.'
+              confirmation_message: ' ' + response.data.account.account + ' '
             });
           } else {
             _toastr2.default.error(response.data.message);
@@ -40232,7 +40331,7 @@ var SignupForm = function (_React$Component) {
           _toastr2.default.error('There was an error!');
         });
         this.setState({
-          confirmation_message: 'Passphrase confirmed. Please confirm account details!',
+          confirmation_message: 'Loading...',
           passphrase_confirmed: true
         });
       }
@@ -40270,6 +40369,7 @@ var SignupForm = function (_React$Component) {
     key: 'registerAccount',
     value: function registerAccount(event) {
       event.preventDefault();
+
       var page = this;
 
       _axios2.default.post('/create_account', {
@@ -40282,7 +40382,7 @@ var SignupForm = function (_React$Component) {
         }
       }).then(function (response) {
         console.log(response.data);
-        if (response.data.success === true) {
+        if (response.data.success) {
           console.log(response.data);
         } else {
           console.log('There was an error creating your account');
@@ -40314,231 +40414,399 @@ var SignupForm = function (_React$Component) {
     value: function render() {
       var newAccountSummary = _react2.default.createElement(
         'form',
-        { action: '/signup', method: 'post', className: '' },
+        { action: '/signup', method: 'post', className: 'text-left' },
         _react2.default.createElement(
           'div',
-          { className: '' },
+          { className: 'col-8 mx-auto alert alert-primary text-center' },
+          _react2.default.createElement(
+            'span',
+            null,
+            'Passphrase confirmed for account'
+          ),
+          _react2.default.createElement('br', null),
+          this.state.confirmation_message
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'text-left' },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { className: 'mb-0' },
+              'First name'
+            ),
+            _react2.default.createElement('input', {
+              value: this.state.firstname,
+              name: 'firstname',
+              className: 'form-control',
+              readOnly: true
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { className: 'mb-0' },
+              'Last name'
+            ),
+            _react2.default.createElement('input', {
+              value: this.state.lastname,
+              name: 'lastname',
+              className: 'form-control',
+              readOnly: true
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { className: 'mb-0' },
+              'Email'
+            ),
+            _react2.default.createElement('input', {
+              value: this.state.email,
+              name: 'email',
+              className: 'form-control',
+              readOnly: true
+            })
+          ),
           _react2.default.createElement(
             'div',
             { className: '' },
             _react2.default.createElement(
               'div',
               null,
-              _react2.default.createElement(
-                'label',
-                null,
-                'First name'
-              ),
-              _react2.default.createElement('input', { value: this.state.firstname, name: 'firstname', className: 'form-control', disabled: true }),
-              _react2.default.createElement('input', { type: 'hidden', value: this.state.firstname, name: 'firstname', className: 'form-control' })
+              _react2.default.createElement('input', {
+                type: 'hidden',
+                name: 'account',
+                value: this.state.account_object.account
+              }),
+              _react2.default.createElement('input', {
+                type: 'hidden',
+                name: 'accounthash',
+                value: this.state.account_object.account
+              }),
+              _react2.default.createElement('input', {
+                type: 'hidden',
+                name: 'twofa_enabled',
+                value: this.state.enable_two_fa
+              }),
+              _react2.default.createElement('input', {
+                type: 'hidden',
+                name: 'public_key',
+                value: this.state.public_key
+              }),
+              _react2.default.createElement('input', {
+                type: 'hidden',
+                name: 'key',
+                value: this.state.generated_passphrase
+              }),
+              _react2.default.createElement('input', {
+                type: 'hidden',
+                name: 'jup_account_id',
+                value: this.state.account_object.jup_account_id
+              })
             ),
             _react2.default.createElement(
               'div',
-              null,
+              { className: 'form-group' },
               _react2.default.createElement(
-                'label',
+                'lable',
                 null,
-                'Last name'
-              ),
-              _react2.default.createElement('input', { value: this.state.lastname, name: 'lastname', className: 'form-control', disabled: true }),
-              _react2.default.createElement('input', { type: 'hidden', value: this.state.lastname, name: 'lastname', className: 'form-control' })
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                'label',
-                null,
-                'Email'
-              ),
-              _react2.default.createElement('input', { value: this.state.email, name: 'email', className: 'form-control', disabled: true }),
-              _react2.default.createElement('input', { type: 'hidden', value: this.state.email, name: 'email', className: 'form-control' })
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: '' },
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement('input', { type: 'hidden', name: 'account', value: this.state.account_object.account }),
-            _react2.default.createElement('input', { type: 'hidden', name: 'accounthash', value: this.state.account_object.account }),
-            _react2.default.createElement('input', { type: 'hidden', name: 'twofa_enabled', value: this.state.enable_two_fa }),
-            _react2.default.createElement('input', { type: 'hidden', name: 'public_key', value: this.state.public_key }),
-            _react2.default.createElement('input', { type: 'hidden', name: 'key', value: this.state.generated_passphrase }),
-            _react2.default.createElement('input', { type: 'hidden', name: 'jup_account_id', value: this.state.account_object.jup_account_id })
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'lable',
-              null,
-              _react2.default.createElement(
-                'strong',
-                null,
-                'Enable two-factor authentication'
-              ),
-              ' ',
-              this.state.enable_two_fa === true ? 'Yes' : 'No'
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              this.state.confirmation_message
-            ),
-            this.state.enable_two_fa === true && _react2.default.createElement(
-              'p',
-              null,
-              'You requested for two-factor authentication to be enabled. You will be redirected to the two-factor setup after clicking the button below.'
+                'Enable two-factor authentication',
+                ' ',
+                this.state.enable_two_fa ? _react2.default.createElement(
+                  'p',
+                  { className: 'm-0' },
+                  'Yes'
+                ) : _react2.default.createElement(
+                  'p',
+                  { className: 'm-0' },
+                  'No'
+                )
+              )
             )
           ),
           _react2.default.createElement(
             'div',
             null,
-            this.state.account !== '' && _react2.default.createElement('input', { type: 'submit', value: 'Complete registration', className: 'btn btn-primary' })
+            this.state.account !== '' && _react2.default.createElement(
+              'button',
+              {
+                value: 'Complete registration',
+                className: 'btn btn-primary btn-block'
+              },
+              'Complete Registration'
+            )
           )
         )
       );
 
       var generatedAccount = _react2.default.createElement(
         'div',
-        { className: 'form-group' },
+        null,
         _react2.default.createElement(
-          'div',
-          { className: '' },
-          _react2.default.createElement(
-            'h4',
-            null,
-            'Your new passphrase:'
-          ),
-          _react2.default.createElement(
-            'form',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'p',
-              { className: 'alert alert-info' },
-              this.state.generated_passphrase
-            )
-          )
+          'h6',
+          { className: 'text-center' },
+          'Your Account Passphrase'
         ),
         _react2.default.createElement(
           'div',
-          { className: '' },
+          { className: 'col-8 mx-auto alert alert-primary text-center' },
           _react2.default.createElement(
-            'h4',
+            'span',
             null,
-            'Acount Details:'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group details' },
-            _react2.default.createElement('input', { className: 'form-control', value: this.state.firstname, onChange: this.handleChange.bind(this, 'firstname'), placeholder: 'First name', type: 'text' }),
-            _react2.default.createElement('input', { className: 'form-control', value: this.state.lastname, onChange: this.handleChange.bind(this, 'lastname'), placeholder: 'Last name', type: 'text' }),
-            _react2.default.createElement('input', { className: 'form-control', value: this.state.email, onChange: this.handleChange.bind(this, 'email'), placeholder: 'Email address', type: 'email' })
+            this.state.generated_passphrase
           )
         ),
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
           _react2.default.createElement(
-            'h4',
+            'label',
+            { htmlFor: 'firstname' },
+            'First Name'
+          ),
+          _react2.default.createElement('input', {
+            type: 'text',
+            value: this.state.firstname,
+            name: 'firstname',
+            className: 'form-control',
+            onChange: this.handleChange.bind(this, 'firstname')
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group' },
+          _react2.default.createElement(
+            'label',
+            { htmlFor: 'inputLastName' },
+            'Last Name'
+          ),
+          _react2.default.createElement('input', {
+            type: 'text',
+            name: 'inputLastName',
+            value: this.state.lastname,
+            onChange: this.handleChange.bind(this, 'lastname'),
+            className: 'form-control'
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group' },
+          _react2.default.createElement(
+            'label',
+            { htmlFor: 'email' },
+            'Email Address'
+          ),
+          _react2.default.createElement('input', {
+            type: 'text',
+            name: 'email',
+            value: this.state.email,
+            onChange: this.handleChange.bind(this, 'email'),
+            className: 'form-control'
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group text-center' },
+          _react2.default.createElement(
+            'h6',
             null,
-            'Enable 2FA Security:'
+            'Would you like to enable Two-factor Authentication?'
           ),
           _react2.default.createElement(
             'div',
-            { className: 'yn-button' },
+            { className: 'custom-control custom-radio' },
+            _react2.default.createElement('input', {
+              type: 'radio',
+              id: 'customRadio1',
+              name: 'customRadio',
+              className: 'custom-control-input',
+              selected: this.state.enable_two_fa,
+              onChange: this.update2FA.bind(this, 'true')
+            }),
             _react2.default.createElement(
-              'button',
-              { className: 'btn' + (this.state.enable_two_fa === true ? ' btn-success active' : ' btn-default'), onClick: this.update2FA.bind(this, 'true') },
-              'Yes'
-            ),
+              'label',
+              { className: 'custom-control-label', htmlFor: 'customRadio1' },
+              _react2.default.createElement(
+                'p',
+                { className: 'mb-0' },
+                'Yes'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'custom-control custom-radio' },
+            _react2.default.createElement('input', {
+              type: 'radio',
+              id: 'customRadio2',
+              name: 'customRadio',
+              className: 'custom-control-input',
+              selected: !this.state.enable_two_fa,
+              onChange: this.update2FA.bind(this, 'no')
+            }),
             _react2.default.createElement(
-              'button',
-              { className: 'btn btn-default' + (this.state.enable_two_fa === false ? '  btn-danger active' : ' btn-default'), onClick: this.update2FA.bind(this, 'false') },
-              'No'
+              'label',
+              { className: 'custom-control-label', htmlFor: 'customRadio2' },
+              _react2.default.createElement(
+                'p',
+                { className: 'mb-0' },
+                'No'
+              )
             )
           )
         ),
+        this.state.enable_two_fa ? 'Enabled' : 'Disabled',
         this.state.jup_account_created === true ? _react2.default.createElement(
           'div',
           { className: 'form-group' },
           _react2.default.createElement(
             'button',
-            { disabled: !this.state.firstname || !this.state.lastname || !this.state.email, className: 'btn btn-primary btn-block', onClick: this.confirmedPassphrase.bind(this) },
-            'Create my account'
+            {
+              disabled: !this.state.firstname || !this.state.lastname || !this.state.email,
+              className: 'btn btn-primary btn-block',
+              onClick: this.confirmedPassphrase.bind(this)
+            },
+            'Submit'
           )
         ) : _react2.default.createElement(
           'div',
           { className: 'form-group' },
           _react2.default.createElement(
             'button',
-            { disabled: !this.state.firstname || !this.state.lastname || !this.state.email, className: 'btn btn-primary btn-block', onClick: this.registerAccount.bind(this) },
-            'Create my account'
+            {
+              disabled: !this.state.firstname || !this.state.lastname || !this.state.email,
+              className: 'btn btn-primary btn-block',
+              onClick: this.registerAccount.bind(this)
+            },
+            'Continue'
           )
         ),
         this.state.confirmation_message
       );
 
       var passphraseConfirmationPage = _react2.default.createElement(
-        'form',
-        { className: '' },
+        'div',
+        { className: 'jupiter-form-confirmation' },
         _react2.default.createElement(
           'div',
-          { className: 'form-group signup', id: 'jup-confirm' },
+          { className: 'form-group' },
+          _react2.default.createElement(
+            'div',
+            { className: 'text-center' },
+            this.state.confirmation_message
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group', id: 'jup-confirm' },
           _react2.default.createElement(
             'p',
             null,
-            'Please enter the passphrase of your newly created Jupiter account to confirm it.'
+            'Please enter your passphrase to confirm it.'
           ),
-          _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.passphrase_confirmation, onChange: this.handleChange.bind(this, 'passphrase_confirm') })
+          _react2.default.createElement('input', {
+            type: 'text',
+            className: 'form-control',
+            value: this.state.passphrase_confirmation,
+            onChange: this.handleChange.bind(this, 'passphrase_confirm')
+          })
         ),
         _react2.default.createElement(
           'div',
-          { className: 'form-group signup' },
+          { className: 'form-group' },
           _react2.default.createElement(
             'button',
-            { className: 'btn btn-primary', onClick: this.confirmPassphrase.bind(this) },
-            'Confirm my passphrase'
+            {
+              className: 'btn btn-primary btn-block',
+              onClick: this.confirmPassphrase.bind(this)
+            },
+            'Submit'
           )
-        ),
-        this.state.confirmation_message
+        )
       );
 
       var signupForm = _react2.default.createElement(
-        'form',
+        'div',
         { className: 'jupiter-form' },
         this.state.jup_account_created === true ? generatedAccount : _react2.default.createElement(
           'div',
-          { className: 'form-group signup' },
+          null,
           _react2.default.createElement(
             'div',
-            { className: 'form-group paragraph' },
+            { className: 'form-group' },
             _react2.default.createElement(
               'p',
               null,
-              'Gravity is a platform designed to give you quick and easy access to the Jupiter blockchain.'
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              'Access to the blockchain requires a secure passphrase. This passphrase should be written down and kept in a safe palce. Once you are ready to sign up, click the button below.'
+              _react2.default.createElement(
+                'strong',
+                null,
+                'This app is based on blockchain technology.'
+              ),
+              ' The blockchain ',
+              _react2.default.createElement(
+                'strong',
+                null,
+                'will generate'
+              ),
+              ' an account for you with a secure passphrase. This ',
+              _react2.default.createElement(
+                'strong',
+                null,
+                '12-word'
+              ),
+              ' ',
+              'passphrase should be written down ',
+              _react2.default.createElement(
+                'strong',
+                null,
+                'carefully'
+              ),
+              ' and kept in a safe place. If you lose your passphrase, you will permanently lose access to your account, there is no way to recover it!'
             )
           ),
-          _react2.default.createElement('br', null),
           _react2.default.createElement(
-            'button',
-            { className: 'btn btn-primary btn-block', onClick: this.generatePassphrase.bind(this) },
-            'Create passphrase'
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'By continuing you declare that you have taken notice of and agree on the following: the app creator has access to read all information stored within the app.'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Click on the button below to start.'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'btn btn-primary btn-block',
+                onClick: this.generatePassphrase.bind(this)
+              },
+              'Create passphrase'
+            )
           )
         )
       );
 
       return _react2.default.createElement(
         'div',
-        { className: '' },
+        null,
         this.state.passphrase_confirmation_page === true ? this.state.passphrase_confirmed === true ? newAccountSummary : passphraseConfirmationPage : signupForm
       );
     }

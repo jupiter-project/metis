@@ -19,6 +19,14 @@ class LoginForm extends React.Component {
     this.logIn = this.logIn.bind(this);
   }
 
+  componentDidMount() {
+    /* if (this.props.messages != null && this.props.messages.loginMessage != null){
+            this.props.messages.loginMessage.map(function(message){
+                toastr.error(message);
+            });
+        } */
+  }
+
   handleChange(event) {
     this.setState({
       jup_passphrase: event.target.value,
@@ -27,17 +35,14 @@ class LoginForm extends React.Component {
 
   logIn(event) {
     event.preventDefault();
+    const page = this;
     // toastr.info('Logging in now!');
     console.log('Authentication submitted!');
-    const page = this;
 
     axios.post('/get_jupiter_account', {
       jup_passphrase: this.state.jup_passphrase,
     })
       .then((response) => {
-        // new_account_created = true;
-        // bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
-        // console.log(response.data) ;
         if (response.data.success === true) {
           page.setState({
             confirmation_page: true,
@@ -51,56 +56,81 @@ class LoginForm extends React.Component {
       })
       .catch((error) => {
         console.log(error);
-        toastr.error('There was an error in verifying the passphrase with the blockchain.');
+        toastr.error(
+          'There was an error in verifying the passphrase with the blockchain.',
+        );
       });
   }
 
   render() {
-    const comfirmationPage = (
-        <form action="/login" method="post" className="">
-            <div className="form-group text-center">
-                <p>You are about to login to the account:</p>
-                <div className="h4">{this.state.account}</div>
-            </div>
-            <input type="hidden" name="account" value={this.state.account} />
-            <input type="hidden" name="accounthash" value={this.state.accounthash} />
-            <input type="hidden" name="public_key" value={this.state.public_key} />
-            <input type="hidden" name="jupkey" value={this.state.jup_passphrase} />
-            <input type="hidden" name="jup_account_id" value={this.state.jup_account_id} />
+    const confirmationPage = (
+      <form action="/login" method="post" className=''>
+        <div className="form-group text-center">
+          <p>You are about to login to the account:</p>
+          <div className="h4">{this.state.account}</div>
+        </div>
+        <input type="hidden" name="account" value={this.state.account} />
+        <input
+          type="hidden"
+          name="accounthash"
+          value={this.state.accounthash}
+        />
+        <input type="hidden" name="public_key" value={this.state.public_key} />
+        <input type="hidden" name="jupkey" value={this.state.jup_passphrase} />
+        <input
+          type="hidden"
+          name="jup_account_id"
+          value={this.state.jup_account_id}
+        />
 
-            <div className="form-group">
-                <button type="submit" className="btn btn-primary btn-block">Continue</button>
-            </div>
-        </form>
+        <div className="form-group">
+          <button type="submit" className="btn btn-primary btn-block">
+            Continue
+          </button>
+        </div>
+      </form>
     );
 
     const loginForm = (
-        <form className="form-group">
-            <div className="form-group">
-                <label htmlFor="inputPassphrase" className="h4 text-center">Enter your Passphrase:</label>
-                <input className="form-control" id="inputPassphrase" type="password" value={this.state.jup_passphrase} onChange={this.handleChange.bind(this)} placeholder="Your Jupiter Passphrase" autoComplete="current-password" />
-            </div>
-            <div className="form-group">
-                <button className="btn btn-primary btn-block" onClick={this.logIn.bind(this)}>Login</button>
-            </div>
-        </form>
-    );
-
-    return (
-        <div>
-            {this.state.confirmation_page === true ? comfirmationPage : loginForm}
+      <form>
+        <div className="form-group">
+          <label htmlFor="inputPassword">Enter your Passphrase</label>
+          <input
+            type="password"
+            id="inputPassword"
+            className="form-control"
+            required="required"
+            value={this.state.jup_passphrase}
+            onChange={this.handleChange.bind(this)}
+            autoComplete="password"
+          />
         </div>
+
+        <button
+          className="btn btn-primary btn-block"
+          onClick={this.logIn.bind(this)}
+        >
+          Submit
+        </button>
+      </form>
+    );
+    return (
+      <div>
+        {this.state.confirmation_page === true ? confirmationPage : loginForm}
+      </div>
     );
   }
 }
-
 
 const LoginExport = () => {
   if (document.getElementById('login-form') != null) {
     const element = document.getElementById('props');
     const props = JSON.parse(element.getAttribute('data-props'));
 
-    render(<LoginForm messages={props.messages} server= {props.server}/>, document.getElementById('login-form'));
+    render(
+      <LoginForm messages={props.messages} server={props.server} />,
+      document.getElementById('login-form'),
+    );
   }
 };
 

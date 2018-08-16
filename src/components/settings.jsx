@@ -18,7 +18,6 @@ class SettingsOptions extends React.Component {
     this.enableTwoFactor = this.enableTwoFactor.bind(this);
   }
 
-
   handleChange(aField, event) {
     if (aField === 'email') {
       this.setState({ email: event.target.value });
@@ -82,78 +81,95 @@ class SettingsOptions extends React.Component {
 
   render() {
     return (
-        <div className="container-fluid">
-            <h1 className="page-title text-center">My Settings</h1>
-            <div className="row">
-                <div className="mx-auto my-4">
-                    <div className="">
-                        <div className="text-center">
-                            <div className="card rounded">
-                                <h3 className="card-header bg-dark text-light">Two-factor authentication</h3>
-                                <div className="card-body col-md-8 mx-auto">
-                                    {
-                                        this.props.user.record.twofa_enabled === true
-                                        && this.props.user.record.twofa_completed === true
-                                          ? <div>
-                                                <p className="alert alert-success">Enabled</p>
-                                                <form method="POST" action="/update_2fa_settings">
-                                                    <input type="hidden" name="enable_2fa" value="false" />
-                                                    <button className="btn btn-warning" type="submit">Disable 2FA</button>
-                                                </form>
-                                            </div> : null
-                                    }
-                                    {
-                                        this.props.user.record.twofa_enabled === true
-                                        && this.props.user.record.twofa_completed === false
-                                          ? <p className="alert alert-danger">Started but not completed</p> : null
-                                    }
-                                    {
-                                        this.props.user.record.twofa_enabled === false
-                                          ? <div>
-                                                <p className="alert alert-warning">Not enabled</p>
-                                                <form method="POST" action="/update_2fa_settings">
-                                                    <input type="hidden" name="enable_2fa" value="true" />
-                                                    <button className="btn btn-warning" type="submit">Enable 2FA</button>
-                                                </form>
-                                            </div> : null
-                                    }
-                                </div>
-                                <br />
-                            </div>
+      <div className="container">
+        <h1 className="page-title">My Settings</h1>
 
-                            <div className="card rounded my-4">
-                                <h3 className="card-header bg-dark text-light">API Key</h3>
-                                <div className="card-body col-md-8 p-3 mx-auto">
-                                    <p>Use the API key below if you’re using an external
-                                        application or bot to record info into the blockchain
-                                        through your account.</p>
-                                    <div className="text-center">
-                                        <p className="alert alert-info auth-hash">{this.state.api_key}</p>
-                                    </div>
-                                    <div className="text-center">
-                                        <button className="btn btn-success" type="submit" onClick={this.updateApiKey.bind(this)}>Create new API Key</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
+        <div className="row">
+          <div className="col-10 mx-auto my-3">
+            <div className="card">
+              <div className="card-header bg-custom-primary text-light">
+                <h5>Two-factor authentication</h5>
+              </div>
+              <div className="card-body text-center">
+                {this.props.user.record.twofa_enabled === true
+                && this.props.user.record.twofa_completed === true ? (
+                  <div>
+                    <p className="alert alert-success">Enabled</p>
+                    <form method="POST" action="/update_2fa_settings">
+                      <input type="hidden" name="enable_2fa" value="false" />
+                      <button className="btn btn-warning mx-auto" type="submit">
+                        Disable 2FA
+                      </button>
+                    </form>
+                  </div>
+                  ) : null}
+                {this.props.user.record.twofa_enabled === true
+                && this.props.user.record.twofa_completed === false ? (
+                  <p className="alert alert-danger">
+                    Started but not completed
+                  </p>
+                  ) : null}
+                {this.props.user.record.twofa_enabled === false ? (
+                  <div>
+                    <p className="alert alert-warning">Not enabled</p>
+                    <form method="POST" action="/update_2fa_settings">
+                      <input type="hidden" name="enable_2fa" value="true" />
+                      <button className="btn btn-warning mx-auto" type="submit">
+                        Enable 2FA
+                      </button>
+                    </form>
+                  </div>
+                ) : null}
+              </div>
             </div>
+          </div>
+          <div className="col-10 mx-auto my-3">
+            <div className="card">
+              <div className="card-header bg-custom-primary text-light">
+                <h5>API Key</h5>
+              </div>
+              <div className="card-body">
+                <p>
+                  Use the API key below if you’re using an external application
+                  or bot to record info into the blockchain through your
+                  account.
+                </p>
+                <div className="text-center">
+                  <p className="alert alert-info auth-hash">
+                    {this.state.api_key}
+                  </p>
+                </div>
+                <div className="text-center">
+                  <button
+                    className="btn btn-success"
+                    type="submit"
+                    onClick={this.updateApiKey.bind(this)}
+                  >
+                    Create new API Key
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     );
   }
 }
-
 
 const SettingsExport = () => {
   if (document.getElementById('settings-options') != null) {
     const element = document.getElementById('props');
     const props = JSON.parse(element.getAttribute('data-props'));
 
-    render(<SettingsOptions user={props.user} validation={props.validation} messages={props.messages} />, document.getElementById('settings-options'));
+    render(
+      <SettingsOptions
+        user={props.user}
+        validation={props.validation}
+        messages={props.messages}
+      />,
+      document.getElementById('settings-options'),
+    );
   }
 };
 

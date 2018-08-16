@@ -6,57 +6,116 @@ html {
 }
 
 body {
-  overflow-x: hidden;
-  
-  
+  height: 100%;
 }
 
-.background-image {
-  background-image:
-      linear-gradient(rgba(110, 110, 110, 0.85), rgba(60, 60, 60, 0.4)),
-      url("/img/bg.jpg");
-}
-
-body.sticky-footer {
-  margin-bottom: $sticky-footer-height;
-  .content-wrapper {
-    min-height: calc(100vh - #{$sticky-footer-height} - #{$navbar-base-height});
-    color: black;
+.btn-primary {
+  background-color: $custom-primary;
+  border: none;
+  outline: none;
+  &:hover,
+  &:active {
+    background-color: darken($custom-primary, 10);
+    border: none;
+    outline: none;
   }
 }
 
-body.fixed-nav {
-  padding-top: $navbar-base-height;
+.bg-custom-primary {
+  background-color: $custom-primary;
 }
 
-.content-wrapper {
-  min-height: calc(100vh - #{$sticky-footer-height});
-  padding-top: 1rem;
+.page-title {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-weight: 400;
+  font-size: 28px;
+}
+
+#wrapper {
+  display: flex;
+  #content-wrapper {
+    overflow-x: hidden;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: $sticky-footer-height;
+  }
+}
+// Fixed Nav Option
+body.fixed-nav {
+  #content-wrapper {
+    margin-top: $navbar-base-height;
+    padding-left: $sidebar-collapsed-width;
+    padding-bottom: 0px;
+  }
+  &.sidebar-toggled {
+    #content-wrapper {
+      padding-left: 0;
+    }
+  }
+  @media (min-width: 768px) {
+    #content-wrapper {
+      padding-left: $sidebar-base-width;
+    }
+    &.sidebar-toggled {
+      #content-wrapper {
+        padding-left: $sidebar-collapsed-width;
+      }
+    }
+  }
+}
+
+#unlogged-wrapper {
+  display: flex;
+  #content-wrapper {
+    overflow-x: hidden;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: $sticky-footer-height;
+  }
+}
+// Fixed Nav Option
+body.fixed-nav {
+  #content-wrapper {
+    margin-top: $navbar-base-height;
+    padding-left: $sidebar-collapsed-width;
+  }
+  &.sidebar-toggled {
+    #content-wrapper {
+      padding-left: 0;
+    }
+  }
+  @media (min-width: 768px) {
+    #content-wrapper {
+      padding-left: $sidebar-base-width;
+    }
+    &.sidebar-toggled {
+      #content-wrapper {
+        padding-left: $sidebar-collapsed-width;
+      }
+    }
+  }
 }
 
 // Scroll to top button
 .scroll-to-top {
   position: fixed;
   right: 15px;
-  bottom: 3px;
-
+  bottom: 15px;
   display: none;
-
   width: 50px;
   height: 50px;
-
   text-align: center;
-
-  color: white;
-  background: transparent;
-
-  line-height: 45px;
+  color: $white;
+  background: fade-out($gray-800, 0.5);
+  line-height: 46px;
   &:focus,
   &:hover {
     color: white;
   }
   &:hover {
-    background: transparent;
+    background: $gray-800;
   }
   i {
     font-weight: 800;

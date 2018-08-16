@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
+// place where you'd like in your app
+
 class SignupForm extends React.Component {
   constructor(props) {
     super(props);
@@ -30,23 +32,33 @@ class SignupForm extends React.Component {
     this.generatePassphrase = this.generatePassphrase.bind(this);
   }
 
+  componentDidMount() {
+    /* if (this.props.messages != null && this.props.messages.signupMessage != null){
+            this.props.messages.signupMessage.map(function(message){
+                toastr.error(message);
+            });
+        } */
+  }
+
   testConnection(event) {
     event.preventDefault();
-    axios.post('/test_connection', {
-    }).then((response) => {
-      if (response.data.success === true) {
-        console.log('Success');
-        console.log(response.data.response);
-      } else {
-        console.log('Error');
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
+    axios.post('/test_connection', {})
+      .then((response) => {
+        if (response.data.success) {
+          console.log('Success');
+          console.log(response.data.response);
+        } else {
+          console.log('Error');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   confirmedPassphrase(event) {
     event.preventDefault();
+
     this.setState({
       passphrase_confirmation_page: true,
     });
@@ -64,7 +76,6 @@ class SignupForm extends React.Component {
             jup_account_created: true,
             generated_passphrase: response.data.result,
           });
-
           toastr.success('Passphrase generated!');
         } else {
           toastr.error('There was an error in your passphrase');
@@ -81,6 +92,9 @@ class SignupForm extends React.Component {
     const page = this;
 
     if (this.state.generated_passphrase !== this.state.passphrase_confirmation) {
+      /* this.setState({
+                confirmation_message: 'The passphrase you entered is not correct!'
+            }); */
       toastr.error('The passphrase you entered is not correct!');
     } else {
       axios.post('/create_jupiter_account', {
@@ -98,7 +112,7 @@ class SignupForm extends React.Component {
             page.setState({
               account_object: response.data.account,
               public_key: response.data.account.public_key,
-              confirmation_message: `Passphrase confirmed and Jupiter account ${response.data.account.account} was created for you. Please click below to finalize your account creation.`,
+              confirmation_message: ` ${response.data.account.account} `,
             });
           } else {
             toastr.error(response.data.message);
@@ -109,7 +123,7 @@ class SignupForm extends React.Component {
           toastr.error('There was an error!');
         });
       this.setState({
-        confirmation_message: 'Passphrase confirmed. Please confirm account details!',
+        confirmation_message: 'Loading...',
         passphrase_confirmed: true,
       });
     }
@@ -145,6 +159,7 @@ class SignupForm extends React.Component {
 
   registerAccount(event) {
     event.preventDefault();
+
     const page = this;
 
     axios.post('/create_account', {
@@ -155,20 +170,22 @@ class SignupForm extends React.Component {
         firstname: this.state.firstname,
         lastname: this.state.lastname,
       },
-    }).then((response) => {
-      console.log(response.data);
-      if (response.data.success === true) {
+    })
+      .then((response) => {
         console.log(response.data);
-      } else {
-        console.log('There was an error creating your account');
-        page.setState({
-          confirmation_message: response.data.message,
-        });
-      }
-    }).catch((error) => {
-      console.log('There was an error!');
-      console.log(error);
-    });
+        if (response.data.success) {
+          console.log(response.data);
+        } else {
+          console.log('There was an error creating your account');
+          page.setState({
+            confirmation_message: response.data.message,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log('There was an error!');
+        console.log(error);
+      });
   }
 
   update2FA(iType, event) {
@@ -186,143 +203,276 @@ class SignupForm extends React.Component {
 
   render() {
     const newAccountSummary = (
-        <form action="/signup" method="post" className="">
-            <div className="">
-            <div className="">
-                <div>
-                    <label>First name</label>
-                    <input value={this.state.firstname} name="firstname" className="form-control" disabled/>
-                    <input type="hidden" value={this.state.firstname} name="firstname" className="form-control"/>
-                </div>
+      <form action="/signup" method="post" className="text-left">
+        <div className="col-8 mx-auto alert alert-primary text-center">
+          <span>Passphrase confirmed for account</span>
+          <br />
+          {this.state.confirmation_message}
+        </div>
+        <div className="text-left">
+          <div className="form-group">
+            <label className="mb-0">First name</label>
+            <input
+              value={this.state.firstname}
+              name="firstname"
+              className="form-control"
+              readOnly
+            />
+          </div>
 
-                <div>
-                    <label>Last name</label>
-                    <input value={this.state.lastname} name="lastname" className="form-control" disabled/>
-                    <input type="hidden" value={this.state.lastname} name="lastname" className="form-control"/>
-                </div>
+          <div className="form-group">
+            <label className="mb-0">Last name</label>
+            <input
+              value={this.state.lastname}
+              name="lastname"
+              className="form-control"
+              readOnly
+            />
+          </div>
 
-                <div>
-                    <label>Email</label>
-                    <input value={this.state.email} name="email" className="form-control" disabled/>
-                    <input type="hidden" value={this.state.email} name="email" className="form-control"/>
-                </div>
+          <div className="form-group">
+            <label className="mb-0">Email</label>
+            <input
+              value={this.state.email}
+              name="email"
+              className="form-control"
+              readOnly
+            />
+          </div>
+
+          <div className=''>
+            <div>
+              <input
+                type="hidden"
+                name="account"
+                value={this.state.account_object.account}
+              />
+              <input
+                type="hidden"
+                name="accounthash"
+                value={this.state.account_object.account}
+              />
+              <input
+                type="hidden"
+                name="twofa_enabled"
+                value={this.state.enable_two_fa}
+              />
+              <input
+                type="hidden"
+                name="public_key"
+                value={this.state.public_key}
+              />
+              <input
+                type="hidden"
+                name="key"
+                value={this.state.generated_passphrase}
+              />
+              <input
+                type="hidden"
+                name="jup_account_id"
+                value={this.state.account_object.jup_account_id}
+              />
             </div>
+
+            <div className="form-group">
+              <lable>
+                Enable two-factor authentication{' '}
+                {this.state.enable_two_fa ? (
+                  <p className="m-0">Yes</p>
+                ) : (
+                  <p className="m-0">No</p>
+                )}
+              </lable>
             </div>
-            <div className="">
-                <div>
-                    <input type="hidden" name="account" value={this.state.account_object.account} />
-                    <input type="hidden" name="accounthash" value={this.state.account_object.account} />
-                    <input type="hidden" name="twofa_enabled" value={this.state.enable_two_fa} />
-                    <input type="hidden" name="public_key" value={this.state.public_key} />
-                    <input type="hidden" name="key" value={this.state.generated_passphrase} />
-                    <input type="hidden" name="jup_account_id" value={this.state.account_object.jup_account_id} />
-                </div>
+          </div>
 
-                <div>
-                    <lable><strong>Enable two-factor authentication</strong> {this.state.enable_two_fa === true ? 'Yes' : 'No'}</lable>
-
-                    <p>{this.state.confirmation_message}</p>
-
-                    {
-                    this.state.enable_two_fa === true
-                    && <p>You requested for two-factor authentication to be enabled.
-                        You will be redirected to the two-factor setup after clicking
-                        the button below.
-                        </p>
-                    }
-                </div>
-
-                <div>
-                    {
-                        this.state.account !== ''
-                        && <input type="submit" value="Complete registration" className="btn btn-primary"/>
-                    }
-                </div>
-            </div>
-        </form>
+          <div>
+            {this.state.account !== '' && (
+              <button
+                value="Complete registration"
+                className="btn btn-primary btn-block"
+              >
+                Complete Registration
+              </button>
+            )}
+          </div>
+        </div>
+      </form>
     );
 
     const generatedAccount = (
-        <div className="form-group">
-            <div className="">
-                <h4>Your new passphrase:</h4>
-                <form className="form-group">
-                <p className="alert alert-info">{this.state.generated_passphrase}</p>
-                </form>
-            </div>
-            <div className="">
-                <h4>Acount Details:</h4>
-                <div className="form-group details">
-                <input className="form-control" value={this.state.firstname} onChange={this.handleChange.bind(this, 'firstname')} placeholder="First name" type="text"/>
-                <input className="form-control" value={this.state.lastname} onChange={this.handleChange.bind(this, 'lastname')} placeholder="Last name" type="text"/>
-                <input className="form-control" value={this.state.email} onChange={this.handleChange.bind(this, 'email')} placeholder="Email address" type="email"/>
-                </div>
-            </div>
-                <div className="form-group">
-                    <h4>Enable 2FA Security:</h4>
-                    <div className="yn-button">
-
-                        <button className={`btn${(this.state.enable_two_fa === true ? ' btn-success active' : ' btn-default')}`} onClick={this.update2FA.bind(this, 'true')}>Yes</button>
-                        <button className={`btn btn-default${(this.state.enable_two_fa === false ? '  btn-danger active' : ' btn-default')}`} onClick={this.update2FA.bind(this, 'false')}>No</button>
-                    </div>
-                </div>
-            {this.state.jup_account_created === true
-              ? <div className="form-group">
-                    <button disabled={!this.state.firstname || !this.state.lastname || !this.state.email } className="btn btn-primary btn-block" onClick={this.confirmedPassphrase.bind(this)}>Create my account</button>
-                </div>
-              : <div className="form-group">
-                    <button disabled={!this.state.firstname || !this.state.lastname || !this.state.email } className="btn btn-primary btn-block" onClick={this.registerAccount.bind(this)}>Create my account</button>
-                </div>
-            }
-            {this.state.confirmation_message}
+      <div>
+        <h6 className="text-center">Your Account Passphrase</h6>
+        <div className="col-8 mx-auto alert alert-primary text-center">
+          <span>{this.state.generated_passphrase}</span>
         </div>
+        <div className="form-group">
+          <label htmlFor="firstname">First Name</label>
+          <input
+            type="text"
+            value={this.state.firstname}
+            name="firstname"
+            className="form-control"
+            onChange={this.handleChange.bind(this, 'firstname')}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="inputLastName">Last Name</label>
+          <input
+            type="text"
+            name="inputLastName"
+            value={this.state.lastname}
+            onChange={this.handleChange.bind(this, 'lastname')}
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Email Address</label>
+          <input
+            type="text"
+            name="email"
+            value={this.state.email}
+            onChange={this.handleChange.bind(this, 'email')}
+            className="form-control"
+          />
+        </div>
+        <div className="form-group text-center">
+          <h6>Would you like to enable Two-factor Authentication?</h6>
+
+          <div className="custom-control custom-radio">
+            <input
+              type="radio"
+              id="customRadio1"
+              name="customRadio"
+              className="custom-control-input"
+              selected={this.state.enable_two_fa}
+              onChange={this.update2FA.bind(this, 'true')}
+            />
+            <label className="custom-control-label" htmlFor="customRadio1">
+              <p className="mb-0">Yes</p>
+            </label>
+          </div>
+          <div className="custom-control custom-radio">
+            <input
+              type="radio"
+              id="customRadio2"
+              name="customRadio"
+              className="custom-control-input"
+              selected={!this.state.enable_two_fa}
+              onChange={this.update2FA.bind(this, 'no')}
+            />
+            <label className="custom-control-label" htmlFor="customRadio2">
+              <p className="mb-0">No</p>
+            </label>
+          </div>
+        </div>
+        {this.state.enable_two_fa ? 'Enabled' : 'Disabled'}
+        {this.state.jup_account_created === true ? (
+          <div className="form-group">
+            <button
+              disabled={
+                !this.state.firstname
+                || !this.state.lastname
+                || !this.state.email
+              }
+              className="btn btn-primary btn-block"
+              onClick={this.confirmedPassphrase.bind(this)}
+            >
+              Submit
+            </button>
+          </div>
+        ) : (
+          <div className="form-group">
+            <button
+              disabled={
+                !this.state.firstname
+                || !this.state.lastname
+                || !this.state.email
+              }
+              className="btn btn-primary btn-block"
+              onClick={this.registerAccount.bind(this)}
+            >
+              Continue
+            </button>
+          </div>
+        )}
+        {this.state.confirmation_message}
+      </div>
     );
 
-
     const passphraseConfirmationPage = (
-        <form className="">
-            <div className="form-group signup" id="jup-confirm">
-                <p>Please enter the passphrase of your newly created Jupiter account
-                    to confirm it.
-                </p>
-                <input type="text" className="form-control" value={this.state.passphrase_confirmation} onChange={this.handleChange.bind(this, 'passphrase_confirm')} />
-            </div>
-            <div className="form-group signup">
-                <button className="btn btn-primary" onClick={this.confirmPassphrase.bind(this)}>Confirm my passphrase</button>
-            </div>
-            {this.state.confirmation_message}
-        </form>
+      <div className="jupiter-form-confirmation">
+        <div className="form-group">
+          <div className="text-center">{this.state.confirmation_message}</div>
+        </div>
+        <div className="form-group" id="jup-confirm">
+          <p>Please enter your passphrase to confirm it.</p>
+          <input
+            type="text"
+            className="form-control"
+            value={this.state.passphrase_confirmation}
+            onChange={this.handleChange.bind(this, 'passphrase_confirm')}
+          />
+        </div>
+        <div className="form-group">
+          <button
+            className="btn btn-primary btn-block"
+            onClick={this.confirmPassphrase.bind(this)}
+          >
+            Submit
+          </button>
+        </div>
+      </div>
     );
 
     const signupForm = (
-        <form className="jupiter-form">
-            {this.state.jup_account_created === true ? generatedAccount
-              : <div className="form-group signup">
-                    <div className="form-group paragraph">
-                    <p>Gravity is a platform designed to give you quick
-                        and easy access to the Jupiter blockchain.</p>
-                    <p>Access to the blockchain requires a secure passphrase.
-                    This passphrase should be written down and kept in a safe palce.
-                    Once you are ready to sign up, click the button below.</p>
-                    </div>
-                    <br />
-                    <button className="btn btn-primary btn-block" onClick={this.generatePassphrase.bind(this)}>Create passphrase</button>
-                </div>
-            }
-        </form>
+      <div className="jupiter-form">
+        {this.state.jup_account_created === true ? (
+          generatedAccount
+        ) : (
+          <div>
+            <div className="form-group">
+              <p>
+                <strong>This app is based on blockchain technology.</strong> The
+                blockchain <strong>will generate</strong> an account for you
+                with a secure passphrase. This <strong>12-word</strong>{' '}
+                passphrase should be written down <strong>carefully</strong> and
+                kept in a safe place. If you lose your passphrase, you will
+                permanently lose access to your account, there is no way to
+                recover it!
+              </p>
+            </div>
+            <div className="form-group">
+              <p>
+                By continuing you declare that you have taken notice of and
+                agree on the following: the app creator has access to read all
+                information stored within the app.
+              </p>
+            </div>
+            <div className="form-group">
+              <p>Click on the button below to start.</p>
+            </div>
+            <div className="form-group">
+              <button
+                className="btn btn-primary btn-block"
+                onClick={this.generatePassphrase.bind(this)}
+              >
+                Create passphrase
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     );
 
-
     return (
-        <div className="">
-            {
-                this.state.passphrase_confirmation_page === true
-                  ? this.state.passphrase_confirmed === true
-                    ? newAccountSummary
-                    : passphraseConfirmationPage
-                  : signupForm
-            }
-        </div>
+      <div>
+        {this.state.passphrase_confirmation_page === true
+          ? this.state.passphrase_confirmed === true
+            ? newAccountSummary
+            : passphraseConfirmationPage
+          : signupForm}
+      </div>
     );
   }
 }
@@ -332,7 +482,10 @@ const SignupExport = () => {
     const element = document.getElementById('props');
     const props = JSON.parse(element.getAttribute('data-props'));
 
-    render(<SignupForm messages={props.messages} />, document.getElementById('signup-form'));
+    render(
+      <SignupForm messages={props.messages} />,
+      document.getElementById('signup-form'),
+    );
   }
 };
 

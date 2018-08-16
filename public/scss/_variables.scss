@@ -12,6 +12,8 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black: #000 !default;
 
+$custom-primary: #26313d !default;
+
 $blue: #007bff !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
@@ -23,26 +25,57 @@ $green: #28a745 !default;
 $teal: #20c997 !default;
 $cyan: #17a2b8 !default;
 
-.navbar-dark {
-    background-color: #2E3944!important;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #2E3944!important;
-    border-color: #2E3944!important;
-}
-
 // Spacing Variables
 // Change below variable if the height of the navbar changes
 $navbar-base-height: 56px;
 // Change below variable to change the width of the sidenav
-$sidenav-base-width: 250px;
+$sidebar-base-width: 225px;
 // Change below variable to change the width of the sidenav when collapsed
-$sidenav-collapsed-width: 55px;
+$sidebar-collapsed-width: 90px;
 // Change below variable to change the height of the sticky footer
-$sticky-footer-height: 56px;
+$sticky-footer-height: 80px;
 
-* {
-    font-family: 'Lato' , Arial, sans-serif;
+body {
+  font-family: "Lato", sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 400;
+    //text-decoration: underline;
+  }
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    font-weight: 400;
+  }
+  p,
+  .p {
+    font-weight: 300;
+  }
+}
+
+.card-header {
+  text-align: center;
+}
+
+footer {
+  font-weight: 400;
+}
+
+.form-sizer {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+@media (max-width: 600px) {
+  .form-sizer {
+    margin-left: 2%;
+    margin-right: 2%;
+  }
 }

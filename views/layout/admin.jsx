@@ -4,216 +4,258 @@ export default class ApplicationLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_exists: this.props.data.user || false,
+      user_exists: this.props.data.user != null || false,
     };
   }
 
-
   render() {
     const linksList = (
-        <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
-            <li className="nav-item p-2 bg-secondary rounded">
-              <div className="text-center">
-                <h4 className="text-white">Account ID</h4>
-                <a className="nav-link small" href="#">{this.props.data.user != null ? this.props.data.user.record.account : null}</a>
-              </div>
-            </li>
-            <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Charts">
-              <a className="nav-link" href="/admin">
-                <i className="fa fa-fw fa-dashboard"></i>
-                <span className="nav-link-text"> Dashboard</span>
-              </a>
-            </li>
-            <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
-              <a className="nav-link" href="/admin/tables">
-                <i className="fa fa-fw fa-table"></i>
-                <span className="nav-link-text"> Table Records</span>
-              </a>
-            </li>
-            {false && 'Generated plop links go here'}
-            <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
-              <a className="nav-link" href="/gravity">
-                <i className="fa fa-fw fa-question-circle"></i>
-                <span className="nav-link-text"> Getting Started</span>
-              </a>
-            </li>
-            <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Charts">
-              <a className="nav-link" href="https://github.com/SigwoTechnologies/jupiter-gravity/wiki" target="_blank">
-                <i className="fa fa-fw fa-area-chart"></i>
-                <span className="nav-link-text"> Gravity Docs</span>
-              </a>
-            </li>
-            <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
-              <a className="nav-link" href="/gravity#contact-tab">
-                <i className="fa fa-fw fa-table"></i>
-                <span className="nav-link-text"> Contact Us</span>
-              </a>
-            </li>
-        </ul>
+      <li className="nav-item">{false && 'Generated plop links go here'}</li>
     );
 
     const loggedHeader = (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-            <a className="navbar-brand" href="#"><img className="img" src="../img/sigwo-sheild2.png" height="48px" width="auto" /> Sigwo Technologies</a>
-            <a className="nav-link text-light" id="sidenavToggler">
-              <i className="fa fa-fw fa-angle-left"></i>
+      <nav className="navbar navbar-expand navbar-dark bg-custom-primary static-top">
+        <a className="navbar-brand mr-1" href="/gravity">
+          <i className="fa fa-fw fa-globe" /> YourBrand
+        </a>
+
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item dropdown no-arrow mx-1">
+            <a
+              className="nav-link dropdown-toggle"
+              href="#"
+              id="alertsDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i className="fa fa-fw fa-user" /> My Account
             </a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarResponsive">
-              {linksList}
-              <ul className="navbar-nav ml-auto">
-              <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle mr-lg-2" id="profileDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i className="fa fa-fw fa-user"></i> My Profile
-                  </a>
-                  <div className="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-                      <h6 className="dropdown-header">Logged in as: {this.props.data.user != null ? this.props.data.user.record.firstname : null}</h6>
-                      <div className="dropdown-divider"></div>
-                      <a className="dropdown-item" href="/">
-                          My Dashboard
-                      </a>
-                      <a className="dropdown-item" href="/admin">
-                          App Data
-                      </a>
-                      <div className="dropdown-divider"></div>
-                      <a className="dropdown-item small" href="#">
-                          Help
-                      </a>
-                      <a className="dropdown-item small" href="/settings">
-                          Settings
-                      </a>
-                      <a className="dropdown-item small" href="/logout">
-                        Sign out
-                      </a>
-                  </div>
-                </li>
-              </ul>
+            <div
+              className="dropdown-menu dropdown-menu-right"
+              aria-labelledby="alertsDropdown"
+            >
+              <a className="dropdown-item" href="/settings">
+                <i className=" fa fa-fw fa-cog"> </i> Settings
+              </a>
+              {/* <a className="dropdown-item" href="#">
+                <i className="fa fa-fw fa-support"> </i> Support
+              </a>
+              <a className="dropdown-item" href="#">
+                <i className="fa fa-fw fa-bitcoin"> </i> Fund my App
+              </a> */}
+              <div className="dropdown-divider" />
+              <a
+                className="dropdown-item"
+                href="#"
+                data-toggle="modal"
+                data-target="#logoutModal"
+              >
+                <i className="fa fa-fw fa-sign-in" /> Logout
+              </a>
             </div>
-        </nav>
+          </li>
+          {linksList}
+        </ul>
+      </nav>
     );
 
     const unloggedHeader = (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-            <a className="navbar-brand" href="#"><img className="img" src="../img/sigwo-sheild2.png" height="48px" width="auto" /> Sigwo Technologies</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarResponsive">
-              <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
-                  <li className="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
-                    <a className="nav-link" href="/gravity">
-                      <i className="fa fa-fw fa-dashboard"></i>
-                      <span className="nav-link-text"> Getting Started</span>
-                    </a>
-                  </li>
-              </ul>
-              <ul className="navbar-nav sidenav-toggler">
-                <li className="nav-item">
-                  <a className="nav-link text-center" id="sidenavToggler">
-                    <i className="fa fa-fw fa-angle-left"></i>
-                  </a>
-                </li>
-              </ul>
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <a className="nav-link" href="/signup">
-                    Sign up
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/login">
-                    <i className="fa fa-fw fa-sign-in"></i >Log in
-                  </a>
-                </li>
-              </ul>
+      <nav className="navbar navbar-expand navbar-dark bg-custom-primary static-top">
+        <div className="container-fluid">
+          <a className="navbar-brand mr-1" href="/gravity">
+            <img
+              src="/img/logo.png"
+              className="pb-1"
+              alt="sigwo"
+              height="32px"
+            />{' '}
+            Sigwo Technologies
+          </a>
+
+          <div className="d-block d-sm-none ml-auto">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link" href="/signup">
+                  Sign up
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/login">
+                  Login
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="d-none d-sm-block ml-auto">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link" href="/signup">
+                  <i className="fa fa-fw fa-user-plus" /> Sign up
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/login">
+                  <i className="fa fa-fw fa-sign-in" /> Login
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    );
+
+    const loggedWrapper = (
+      <div id="wrapper">
+        <ul className="sidebar navbar-nav">
+          <div className="card card-account bg-secondary d-none d-sm-block">
+            <div className="card-body">
+              <h5>Account ID</h5>
+              <a href="#" className="small">
+                JUP XXXX-XXXX-XXXX-XXXXX
+              </a>
             </div>
-        </nav>
+          </div>
+          <li className="nav-item">
+            <a className="nav-link" href="/">
+              <i className="fa fa-fw fa-dashboard" /> App Summary
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/admin/tables">
+              <i className="fa fa-fw fa-edit" /> Tables
+            </a>
+          </li>
+        </ul>
+        <div id="content-wrapper">
+          <div className="container-fluid">{this.props.children}</div>
+        </div>
+      </div>
     );
 
     const unloggedWrapper = (
-        <div className="content-wrapper">
-          <div className="container-fluid">
-            {this.props.children}
+      <div id="wrapper">
+        <div id="content-wrapper">
+          <div className="container" id="page-wrapper">
+            <div>{this.props.children}</div>
           </div>
         </div>
+      </div>
     );
 
     return (
-            <html>
-                <head>
-                    <meta httpEquiv="Content-Type" content= "text/html;charset=utf-8" />
-                    <title>{this.props.data.name}</title>
-                    <meta charSet="utf-8" />
-                    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-                    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-                    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
-                    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-                    <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
-                    <link href="/css/sb-admin.css" rel="stylesheet" />
-                </head>
-                <body className="sticky-footer bg-dark fixed-nav" id="page-top">
-                    <span id="toastrMessages"></span>
-                    <div id={this.props.data.dashboard === true ? 'wrapper' : 'unlogged-wrapper'}>
-                        {
-                            this.props.data.dashboard === true ? loggedHeader : unloggedHeader
-                        }
+      <html>
+        <head>
+          <meta httpEquiv="Content-Type" content="text/html;charset=utf-8" />
+          <title>{this.props.data.name}</title>
+          <meta charSet="utf-8" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          />
+          <link
+            href="/vendor/bootstrap/css/bootstrap.min.css"
+            rel="stylesheet"
+          />
+          <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+            rel="stylesheet"
+          />
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" />
+          <link
+            href="/vendor/font-awesome/css/font-awesome.min.css"
+            rel="stylesheet"
+          />
+          <link
+            href="/vendor/bootstrap/css/bootstrap.min.css"
+            rel="stylesheet"
+          />
 
+          <link
+            href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i"
+            rel="stylesheet"
+          />
 
-                        {
-                            this.props.data.dashboard === true
-                              ? <div className="content-wrapper" id="page-wrapper">
-                                  <div className="container">
-                                    {this.props.children}
-                                    <div className="background-image"></div>
-                                  </div>
-                                </div>
-                              : unloggedWrapper
-                        }
-                    </div>
-                    <footer className="sticky-footer">
-                      <div className="container">
-                        <div className="text-center">
-                          <small>Copyright © Sigwo Technologies 2018</small>
-                        </div>
-                      </div>
-                    </footer>
+          <link href="/css/sb-admin.css" rel="stylesheet" />
+          <link href="/css/react-table.css" rel="stylesheet" />
+        </head>
+        <body>
+          <span id="toastrMessages" />
+          <div
+            id={this.props.data.dashboard === true ? 'logged-in' : 'logged-out'}
+          >
+            {this.props.data.dashboard === true
+              ? loggedHeader
+              : unloggedHeader}
 
-                    <div className="modal fade show" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                      <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                            <button className="close" type="button" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                          </div>
-                          <div className="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                          <div className="modal-footer">
-                            <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a className="btn btn-primary" href="/login">Logout</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+            {this.props.data.dashboard === true
+              ? loggedWrapper
+              : unloggedWrapper}
+          </div>
+          <div
+            className="modal fade"
+            id="logoutModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby=" "
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id=" ">
+                    Ready to Leave?
+                  </h5>
+                  <button
+                    className="close"
+                    type="button"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  Select"Logout" below if you are ready to end your current
+                  session.
+                </div>
+                <div className="modal-footer">
+                  <button
+                    className="btn btn-secondary"
+                    type="button"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <a className="btn btn-primary" href="/logout">
+                    Logout
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                    <script src="/vendor/jquery/jquery.min.js"></script>
-                    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-                    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-                    <script src="/vendor/chart.js/Chart.min.js"></script>
-                    <script src="/vendor/datatables/jquery.dataTables.js"></script>
-                    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
-                    <script src="/js/sb-admin.min.js"></script>
-                    <script src="/js/sb-admin-datatables.min.js"></script>
-                    <script src="/js/sb-admin-charts.min.js"></script>
-                    <script src="/js/bundle.js" data-props={JSON.stringify(this.props.data)} id="props"></script>
-                </body>
-            </html>
+          <script src="/vendor/jquery/jquery.min.js" />
+          <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js" />
+
+          {/*
+            <script src="/vendor/chart.js/Chart.min.js" />
+            I replaced this with react-chartsjs
+            https://github.com/reactjs/react-chartjs
+          */}
+
+          <script src="/js/sb-admin.min.js" />
+          <script
+            src="/js/bundle.js"
+            data-props={JSON.stringify(this.props.data)}
+            id="props"
+          />
+        </body>
+      </html>
     );
   }
 }

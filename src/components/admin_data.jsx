@@ -154,18 +154,20 @@ class DataComponent extends React.Component {
       record => <DataRow record={record} params={self.state.params} key={record.id} />,
     );
 
-    const tableVersion = <div className="container-fluid">
-                            <table className="table table-striped">
-                                <thead>
-                                    <tr>
-                                        {headers}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {body}
-                                </tbody>
-                            </table>
-                          </div>;
+    const tableVersion = (
+      <div className="container-fluid bg-info">
+        <table className="table table-striped">
+            <thead>
+                <tr>
+                    {headers}
+                </tr>
+            </thead>
+            <tbody>
+                {body}
+            </tbody>
+        </table>
+      </div>
+    );
 
     const cardVersion = self.state.records.map(
       record => <DataCard record={record} params={self.state.params} key={record.id}/>,
