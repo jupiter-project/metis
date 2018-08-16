@@ -14,7 +14,7 @@ class Gravity {
       server: process.env.JUPITERSERVER,
       feeNQT: 500,
       deadline: 60,
-      minimumTableBalance: 100000,
+      minimumTableBalance: 50000,
       minimumAppBalance: 100000,
       moneyDecimals: 8,
     };
@@ -962,7 +962,7 @@ class Gravity {
     let server;
 
     if (amount == null) {
-      amount = this.jupiter_data.minimumTableBalance - feeNQT - tableCreation;
+      amount = this.jupiter_data.minimumAppBalance - feeNQT - tableCreation;
     }
 
     if (this.sender == null || this.sender === undefined) {
@@ -1305,11 +1305,11 @@ class Gravity {
 
       self.getBalance()
         .then((response) => {
-          if (response.minimumTableBalance === true) {
+          if (response.minimumAppBalance === true) {
             eventEmitter.emit('verified_balance');
           } else {
             console.log('Error in creating new table: insufficient app balance.');
-            console.log(`A minimum of ${parseInt((self.jupiter_data.minimumTableBalance) / (10 ** self.jupiter_data.moneyDecimals), 10)} JUP is required to create a table with Gravity.`);
+            console.log(`A minimum of ${parseInt((self.jupiter_data.minimumAppBalance) / (10 ** self.jupiter_data.moneyDecimals), 10)} JUP is required to create a table with Gravity.`);
             eventEmitter.emit('insufficient_balance');
           }
         })

@@ -95,11 +95,11 @@ class TableComponent extends React.Component {
               </td>
 
               <td>
-                <span>{this.state.balance}</span>
+              <span>{this.state.balance / (10 ** 8)} JUP</span>
               </td>
 
               <td>
-                <span className="text-danger">Low Balance</span>
+              <span className={state.low_balance ? 'text-danger' : 'text-success'}> {state.low_balance ? 'Low Balance' : 'Ready'}</span>
               </td>
               <td className="text-center">
                 <a
@@ -307,6 +307,7 @@ class AdminComponent extends React.Component {
         table={table}
         parent={this}
         key={`table-component-${index}`}
+        minimumTableBalance={state.balances.minTableBalanceAmount}
       />
     ));
 

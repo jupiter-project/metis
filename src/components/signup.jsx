@@ -366,7 +366,6 @@ class SignupForm extends React.Component {
             </label>
           </div>
         </div>
-        {this.state.enable_two_fa ? 'Enabled' : 'Disabled'}
         {this.state.jup_account_created === true ? (
           <div className="form-group">
             <button

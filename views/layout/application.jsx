@@ -136,7 +136,7 @@ export default class ApplicationLayout extends React.Component {
             <div className="card-body">
               <h5>Account ID</h5>
               <a href="#" className="small">
-                JUP XXXX-XXXX-XXXX-XXXXX
+              { this.state.user_exists ? this.props.data.user.record.account : 'JUP XXXX-XXXX-XXXX-XXXXX' }
               </a>
             </div>
           </div>

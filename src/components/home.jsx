@@ -14,7 +14,7 @@ class HomeComponent extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="page-title">Welcome your Gravity app</div>
+        <div className="page-title">Welcome to your Gravity app</div>
       </div>
     );
   }

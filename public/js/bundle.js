@@ -12111,14 +12111,14 @@ var TwoFAForm = function (_React$Component) {
     key: 'render',
     value: function render() {
       var registrationForm = _react2.default.createElement(
-        'form',
+        'div',
         null,
         _react2.default.createElement(
           'div',
           { className: 'panel panel-primary' },
           _react2.default.createElement(
             'div',
-            { className: 'form-group' },
+            { className: 'panel-heading text-center lead' },
             _react2.default.createElement(
               'div',
               { className: '' },
@@ -12157,7 +12157,7 @@ var TwoFAForm = function (_React$Component) {
       );
 
       var verificationForm = _react2.default.createElement(
-        'form',
+        'div',
         { className: 'row p-2' },
         _react2.default.createElement(
           'div',
@@ -38383,7 +38383,7 @@ var AccountComponent = function (_React$Component) {
         'div',
         { className: '' },
         _react2.default.createElement(
-          'div',
+          'h1',
           { className: 'page-title' },
           'My Account'
         ),
@@ -38455,7 +38455,7 @@ var AccountComponent = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'form-row mt-2' },
+                { className: 'form-row' },
                 _react2.default.createElement(
                   'div',
                   { className: 'col' },
@@ -38544,7 +38544,7 @@ var AccountComponent = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'form-row mt-2' },
+                { className: 'form-row' },
                 _react2.default.createElement(
                   'div',
                   { className: 'col' },
@@ -39077,7 +39077,8 @@ var TableComponent = function (_React$Component) {
                 _react2.default.createElement(
                   'span',
                   null,
-                  this.state.balance
+                  this.state.balance / Math.pow(10, 8),
+                  ' JUP'
                 )
               ),
               _react2.default.createElement(
@@ -39085,8 +39086,9 @@ var TableComponent = function (_React$Component) {
                 null,
                 _react2.default.createElement(
                   'span',
-                  { className: 'text-danger' },
-                  'Low Balance'
+                  { className: state.low_balance ? 'text-danger' : 'text-success' },
+                  ' ',
+                  state.low_balance ? 'Low Balance' : 'Ready'
                 )
               ),
               _react2.default.createElement(
@@ -39341,7 +39343,8 @@ var AdminComponent = function (_React$Component2) {
         return _react2.default.createElement(TableComponent, {
           table: table,
           parent: _this4,
-          key: 'table-component-' + index
+          key: 'table-component-' + index,
+          minimumTableBalance: state.balances.minTableBalanceAmount
         });
       });
 
@@ -39594,7 +39597,7 @@ var HomeComponent = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'page-title' },
-          'Welcome your Gravity app'
+          'Welcome to your Gravity app'
         )
       );
     }
@@ -40662,7 +40665,6 @@ var SignupForm = function (_React$Component) {
             )
           )
         ),
-        this.state.enable_two_fa ? 'Enabled' : 'Disabled',
         this.state.jup_account_created === true ? _react2.default.createElement(
           'div',
           { className: 'form-group' },

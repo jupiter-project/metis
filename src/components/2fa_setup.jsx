@@ -78,9 +78,9 @@ class TwoFAForm extends React.Component {
 
   render() {
     const registrationForm = (
-        <form>
+        <div>
             <div className="panel panel-primary">
-              <div className="form-group">
+              <div className="panel-heading text-center lead">
                   <div className="">
                     <p>You have indicated you would like to add an extra layer of security
                         to your account via two-factor authentication. If you would like to proceed,
@@ -103,11 +103,11 @@ class TwoFAForm extends React.Component {
               </div>
             <br />
             {this.state.response_message}
-        </form>
+        </div>
     );
 
     const verificationForm = (
-        <form className="row p-2">
+        <div className="row p-2">
             <div className="offset-xs-0 col-xs-12 offset-sm-4 col-sm-4">
                 <input type="text" className="form-control" value={this.state.verification_code} onChange={this.handleUpdate.bind(this)} /><br />
                 <br />
@@ -115,7 +115,7 @@ class TwoFAForm extends React.Component {
                 <br />
                 {this.state.response_message}
             </div>
-        </form>
+        </div>
     );
 
     const qrcodeToScan = (
