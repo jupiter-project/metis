@@ -4,22 +4,28 @@ export default class ApplicationLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_exists: this.props.data.user != null || false,
+      user_exists: this.props.data.user != null || false
     };
   }
 
   render() {
-    // const linksList = (
-    // );
+    const linksList = (
+      <li className="nav-item">
+        <a className="nav-link" href="/coins">
+          <i className="fa fa-table  fa-fw pr-1" />
+          <span>Coins</span>
+        </a>
+        {false && 'Generated plop links go here'}
+      </li>
+    );
 
     const loggedHeader = (
       <nav className="navbar navbar-expand navbar-dark bg-custom-primary static-top">
         <a className="navbar-brand mr-1" href="/gravity">
-          <i className="fa fa-fw fa-globe" /> YourBrand
+          <i className="fa  fa-fw pr-1 fa-globe" /> YourBrand
         </a>
 
         <ul className="navbar-nav ml-auto">
-          {false && 'Generated plop links go here'}
           <li className="nav-item dropdown no-arrow mx-1">
             <a
               className="nav-link dropdown-toggle"
@@ -30,20 +36,20 @@ export default class ApplicationLayout extends React.Component {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <i className="fa fa-fw fa-user" /> My Account
+              <i className="fa fa-fw fa-user" /> <span>My Account</span>
             </a>
             <div
               className="dropdown-menu dropdown-menu-right"
               aria-labelledby="alertsDropdown"
             >
               <a className="dropdown-item" href="/settings">
-                <i className=" fa fa-fw fa-cog"> </i> Settings
+                <i className=" fa  fa-fw fa-cog"> </i> Settings
               </a>
               {/* <a className="dropdown-item" href="#">
-                <i className="fa fa-fw fa-support"> </i> Support
+                <i className="fa  fa-fw pr-1 fa-support"> </i> Support
               </a>
               <a className="dropdown-item" href="#">
-                <i className="fa fa-fw fa-bitcoin"> </i> Fund my App
+                <i className="fa  fa-fw pr-1 fa-bitcoin"> </i> Fund my App
               </a> */}
               <div className="dropdown-divider" />
               <a
@@ -52,7 +58,7 @@ export default class ApplicationLayout extends React.Component {
                 data-toggle="modal"
                 data-target="#logoutModal"
               >
-                <i className="fa fa-fw fa-sign-in" /> Logout
+                <i className="fa  fa-fw pr-1 fa-sign-in" /> Logout
               </a>
             </div>
           </li>
@@ -70,19 +76,23 @@ export default class ApplicationLayout extends React.Component {
               alt="sigwo"
               height="32px"
             />{' '}
-            Sigwo Technologies
+            {process.env.APPNAME ? (
+              <span>YourBrand</span>
+            ) : (
+              <span>Sigwo Technologies</span>
+            )}
           </a>
 
           <div className="d-block d-sm-none ml-auto">
             <ul className="navbar-nav">
               <li className="nav-item">
                 <a className="nav-link" href="/signup">
-                  Sign up
+                  <span>Sign up</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/login">
-                  Login
+                  <span>Login</span>
                 </a>
               </li>
             </ul>
@@ -92,12 +102,13 @@ export default class ApplicationLayout extends React.Component {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <a className="nav-link" href="/signup">
-                  <i className="fa fa-fw fa-user-plus" /> Sign up
+                  <i className="fa  fa-fw pr-1 fa-user-plus" />{' '}
+                  <span>Sign up</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/login">
-                  <i className="fa fa-fw fa-sign-in" /> Login
+                  <i className="fa  fa-fw pr-1 fa-sign-in" /> <span>Login</span>
                 </a>
               </li>
             </ul>
@@ -106,28 +117,6 @@ export default class ApplicationLayout extends React.Component {
       </nav>
     );
 
-    /* const gravity_unlogged_header = (
-      <nav className="navbar navbar-expand navbar-dark bg-custom-primary static-top">
-        <a className="navbar-brand mr-1" href="/gravity">
-          <img src="/img/logo.png" className="pb-1" alt="sigwo" height="32px" />{" "}
-          Sigwo Technologies
-        </a>
-
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <a className="nav-link" href="/signup">
-              <i className="fa fa-fw fa-user-plus" /> Sign up
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/login">
-              <i className="fa fa-fw fa-sign-in" /> Login
-            </a>
-          </li>
-        </ul>
-      </nav>
-    ); */
-
     const loggedWrapper = (
       <div id="wrapper">
         <ul className="sidebar navbar-nav">
@@ -135,38 +124,90 @@ export default class ApplicationLayout extends React.Component {
             <div className="card-body">
               <h5>Account ID</h5>
               <a href="#" className="small">
-              { this.state.user_exists ? this.props.data.user.record.account : 'JUP XXXX-XXXX-XXXX-XXXXX' }
+                {this.state.user_exists
+                  ? this.props.data.user.record.account
+                  : 'JUP XXXX-XXXX-XXXX-XXXXX'}
               </a>
             </div>
           </div>
-          <li className="nav-item active">
+          <li className="nav-item">
             <a className="nav-link" href="/">
-              <i className="fa fa-fw fa-dashboard" />
+              <i className="fa  fa-fw pr-1 fa-dashboard" />
               <span>Dashboard</span>
             </a>
           </li>
-          <li className="nav-item active">
+          <li className="nav-item">
             <a className="nav-link" href="/account">
-              <i className="fa fa-fw fa-edit" />
+              <i className="fa  fa-fw pr-1 fa-edit" />
               <span>My Profile</span>
             </a>
           </li>
+          {linksList}
         </ul>
         <div id="content-wrapper">
-          <div className="container-fluid">{this.props.children}</div>
+          <div className="container-fluid">
+            {this.props.children}
+            <div className="fixed-bottom">
+              <footer className="sticky-footer">
+                <div className="container-fluid my-auto">
+                  <div className="copyright text-center my-auto">
+                    {process.env.APPNAME ? (
+                      <div>
+                        <div>Copyright © YourBrand 2018</div>
+                        <div className="mt-2 small">powered by Gravity</div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div>Copyright © Sigwo Technologies 2018</div>
+                        <div className="mt-2 small">powered by Gravity</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </footer>
+            </div>
+          </div>
         </div>
       </div>
     );
 
     const unloggedWrapper = (
       <div id="wrapper">
+        <ul className="sidebar navbar-nav">
+          <li className="nav-item">
+            <a className="nav-link" href="https://docs.gravity.com">
+              <i className="fa  fa-fw pr-1 fa-file" />
+              <span>Documents</span>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="https://github.com/SigwoTechnologies/jupiter-gravity"
+            >
+              <i className="fa  fa-fw pr-1 fa-github" />
+              <span>GitHub</span>
+            </a>
+          </li>
+        </ul>
+
         <div id="content-wrapper">
           <div className="container">
             <div>{this.props.children}</div>
-            <footer className="fixed-bottom py-3 mt-2 bg-custom-primary text-light">
-              <div className="container-fluid">
-                <div className="text-center">
-                  <small>Copyright © Sigwo Technologies 2018</small>
+            <footer className="sticky-footer">
+              <div className="container-fluid my-auto">
+                <div className="copyright text-center my-auto">
+                  {process.env.APPNAME ? (
+                    <div>
+                      <div>Copyright © YourBrand 2018</div>
+                      <div className="mt-2 small">powered by Gravity</div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div>Copyright © Sigwo Technologies 2018</div>
+                      <div className="mt-2 small">powered by Gravity</div>
+                    </div>
+                  )}
                 </div>
               </div>
             </footer>
@@ -203,21 +244,18 @@ export default class ApplicationLayout extends React.Component {
           />
 
           <link
-            href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i"
+            href="https://fonts.googleapis.com/css?family=Lato: 300,300i,400,400i"
             rel="stylesheet"
           />
 
           <link href="/css/sb-admin.css" rel="stylesheet" />
-          <link href="/css/react-table.css" rel="stylesheet" />
         </head>
         <body>
           <span id="toastrMessages" />
           <div
             id={this.props.data.dashboard === true ? 'logged-in' : 'logged-out'}
           >
-            {this.props.data.dashboard === true
-              ? loggedHeader
-              : unloggedHeader}
+            {this.props.data.dashboard === true ? loggedHeader : unloggedHeader}
 
             {this.props.data.dashboard === true
               ? loggedWrapper
@@ -270,15 +308,14 @@ export default class ApplicationLayout extends React.Component {
           <script src="/vendor/jquery/jquery.min.js" />
           <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js" />
 
-
           {/*
             <script src="/vendor/chart.js/Chart.min.js" />
             I replaced this with react-chartsjs
             https://github.com/reactjs/react-chartjs
+
           */}
 
           <script src="/js/sb-admin.min.js" />
-
 
           <script
             src="/js/bundle.js"

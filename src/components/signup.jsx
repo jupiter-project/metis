@@ -23,7 +23,7 @@ class SignupForm extends React.Component {
       passphrase_confirmed: false,
       confirmation_message: '',
       account_object: '',
-      public_key: '',
+      public_key: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.registerAccount = this.registerAccount.bind(this);
@@ -42,8 +42,9 @@ class SignupForm extends React.Component {
 
   testConnection(event) {
     event.preventDefault();
-    axios.post('/test_connection', {})
-      .then((response) => {
+    axios
+      .post('/test_connection', {})
+      .then(response => {
         if (response.data.success) {
           console.log('Success');
           console.log(response.data.response);
@@ -51,7 +52,7 @@ class SignupForm extends React.Component {
           console.log('Error');
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }
@@ -60,7 +61,7 @@ class SignupForm extends React.Component {
     event.preventDefault();
 
     this.setState({
-      passphrase_confirmation_page: true,
+      passphrase_confirmation_page: true
     });
   }
 
@@ -68,20 +69,21 @@ class SignupForm extends React.Component {
     event.preventDefault();
     const page = this;
 
-    axios.get('/create_passphrase')
-      .then((response) => {
+    axios
+      .get('/create_passphrase')
+      .then(response => {
         if (response.data.success === true) {
           console.log(response.data.message);
           page.setState({
             jup_account_created: true,
-            generated_passphrase: response.data.result,
+            generated_passphrase: response.data.result
           });
           toastr.success('Passphrase generated!');
         } else {
           toastr.error('There was an error in your passphrase');
         }
       })
-      .catch((error) => {
+      .catch(error => {
         toastr.error('There was an error in generating passphrase');
         console.log(error);
       });
@@ -91,40 +93,43 @@ class SignupForm extends React.Component {
     event.preventDefault();
     const page = this;
 
-    if (this.state.generated_passphrase !== this.state.passphrase_confirmation) {
+    if (
+      this.state.generated_passphrase !== this.state.passphrase_confirmation
+    ) {
       /* this.setState({
                 confirmation_message: 'The passphrase you entered is not correct!'
             }); */
       toastr.error('The passphrase you entered is not correct!');
     } else {
-      axios.post('/create_jupiter_account', {
-        account_data: {
-          passphrase: this.state.generated_passphrase,
-          email: this.state.email,
-          firstname: this.state.firstname,
-          lastname: this.state.lastname,
-          twofa_enabled: this.state.twofa_enabled,
-        },
-      })
-        .then((response) => {
+      axios
+        .post('/create_jupiter_account', {
+          account_data: {
+            passphrase: this.state.generated_passphrase,
+            email: this.state.email,
+            firstname: this.state.firstname,
+            lastname: this.state.lastname,
+            twofa_enabled: this.state.twofa_enabled
+          }
+        })
+        .then(response => {
           if (response.data.success === true) {
             console.log(response.data);
             page.setState({
               account_object: response.data.account,
               public_key: response.data.account.public_key,
-              confirmation_message: ` ${response.data.account.account} `,
+              confirmation_message: ` ${response.data.account.account} `
             });
           } else {
             toastr.error(response.data.message);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
           toastr.error('There was an error!');
         });
       this.setState({
         confirmation_message: 'Loading...',
-        passphrase_confirmed: true,
+        passphrase_confirmed: true
       });
     }
   }
@@ -132,27 +137,27 @@ class SignupForm extends React.Component {
   handleChange(iType, event) {
     if (iType === 'account') {
       this.setState({
-        jup_account: event.target.value,
+        jup_account: event.target.value
       });
     } else if (iType === 'pass') {
       this.setState({
-        jup_passphrase: event.target.value,
+        jup_passphrase: event.target.value
       });
     } else if (iType === 'firstname') {
       this.setState({
-        firstname: event.target.value,
+        firstname: event.target.value
       });
     } else if (iType === 'lastname') {
       this.setState({
-        lastname: event.target.value,
+        lastname: event.target.value
       });
     } else if (iType === 'email') {
       this.setState({
-        email: event.target.value,
+        email: event.target.value
       });
     } else if (iType === 'passphrase_confirm') {
       this.setState({
-        passphrase_confirmation: event.target.value,
+        passphrase_confirmation: event.target.value
       });
     }
   }
@@ -162,27 +167,28 @@ class SignupForm extends React.Component {
 
     const page = this;
 
-    axios.post('/create_account', {
-      account_data: {
-        passphrase: this.state.generated_passphrase,
-        email: this.state.email,
-        twofa_enabled: this.state.enable_two_fa,
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
-      },
-    })
-      .then((response) => {
+    axios
+      .post('/create_account', {
+        account_data: {
+          passphrase: this.state.generated_passphrase,
+          email: this.state.email,
+          twofa_enabled: this.state.enable_two_fa,
+          firstname: this.state.firstname,
+          lastname: this.state.lastname
+        }
+      })
+      .then(response => {
         console.log(response.data);
         if (response.data.success) {
           console.log(response.data);
         } else {
           console.log('There was an error creating your account');
           page.setState({
-            confirmation_message: response.data.message,
+            confirmation_message: response.data.message
           });
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('There was an error!');
         console.log(error);
       });
@@ -192,11 +198,11 @@ class SignupForm extends React.Component {
     event.preventDefault();
     if (iType === 'true') {
       this.setState({
-        enable_two_fa: true,
+        enable_two_fa: true
       });
     } else {
       this.setState({
-        enable_two_fa: false,
+        enable_two_fa: false
       });
     }
   }
@@ -240,7 +246,7 @@ class SignupForm extends React.Component {
             />
           </div>
 
-          <div className=''>
+          <div className="">
             <div>
               <input
                 type="hidden"
@@ -287,7 +293,7 @@ class SignupForm extends React.Component {
           </div>
 
           <div>
-            {this.state.account !== '' && (
+            {this.state.account !== ' ' && (
               <button
                 value="Complete registration"
                 className="btn btn-primary btn-block"
@@ -370,9 +376,9 @@ class SignupForm extends React.Component {
           <div className="form-group">
             <button
               disabled={
-                !this.state.firstname
-                || !this.state.lastname
-                || !this.state.email
+                !this.state.firstname ||
+                !this.state.lastname ||
+                !this.state.email
               }
               className="btn btn-primary btn-block"
               onClick={this.confirmedPassphrase.bind(this)}
@@ -384,9 +390,9 @@ class SignupForm extends React.Component {
           <div className="form-group">
             <button
               disabled={
-                !this.state.firstname
-                || !this.state.lastname
-                || !this.state.email
+                !this.state.firstname ||
+                !this.state.lastname ||
+                !this.state.email
               }
               className="btn btn-primary btn-block"
               onClick={this.registerAccount.bind(this)}
@@ -405,7 +411,7 @@ class SignupForm extends React.Component {
           <div className="text-center">{this.state.confirmation_message}</div>
         </div>
         <div className="form-group" id="jup-confirm">
-          <p>Please enter your passphrase to confirm it.</p>
+          Please enter your passphrase to confirm it.
           <input
             type="text"
             className="form-control"
@@ -431,25 +437,20 @@ class SignupForm extends React.Component {
         ) : (
           <div>
             <div className="form-group">
-              <p>
-                <strong>This app is based on blockchain technology.</strong> The
-                blockchain <strong>will generate</strong> an account for you
-                with a secure passphrase. This <strong>12-word</strong>{' '}
-                passphrase should be written down <strong>carefully</strong> and
-                kept in a safe place. If you lose your passphrase, you will
-                permanently lose access to your account, there is no way to
-                recover it!
-              </p>
+              <strong>This app is based on blockchain technology.</strong> The
+              blockchain <strong>will generate</strong> an account for you with
+              a secure passphrase. This <strong>12-word</strong> passphrase
+              should be written down <strong>carefully</strong> and kept in a
+              safe place. If you lose your passphrase, you will permanently lose
+              access to your account, there is no way to recover it!
             </div>
             <div className="form-group">
-              <p>
-                By continuing you declare that you have taken notice of and
-                agree on the following: the app creator has access to read all
-                information stored within the app.
-              </p>
+              By continuing you declare that you have taken notice of and agree
+              on the following: the app creator has access to read all
+              information stored within the app.
             </div>
             <div className="form-group">
-              <p>Click on the button below to start.</p>
+              Click on the button below to start.
             </div>
             <div className="form-group">
               <button
@@ -483,7 +484,7 @@ const SignupExport = () => {
 
     render(
       <SignupForm messages={props.messages} />,
-      document.getElementById('signup-form'),
+      document.getElementById('signup-form')
     );
   }
 };

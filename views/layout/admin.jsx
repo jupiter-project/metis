@@ -4,15 +4,11 @@ export default class ApplicationLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_exists: this.props.data.user != null || false,
+      user_exists: this.props.data.user != null || false
     };
   }
 
   render() {
-    const linksList = (
-      <li className="nav-item">{false && 'Generated plop links go here'}</li>
-    );
-
     const loggedHeader = (
       <nav className="navbar navbar-expand navbar-dark bg-custom-primary static-top">
         <a className="navbar-brand mr-1" href="/gravity">
@@ -56,7 +52,6 @@ export default class ApplicationLayout extends React.Component {
               </a>
             </div>
           </li>
-          {linksList}
         </ul>
       </nav>
     );
@@ -114,7 +109,9 @@ export default class ApplicationLayout extends React.Component {
             <div className="card-body">
               <h5>Account ID</h5>
               <a href="#" className="small">
-              { this.state.user_exists ? this.props.data.user.record.account : 'JUP XXXX-XXXX-XXXX-XXXXX' }
+                {this.state.user_exists
+                  ? this.props.data.user.record.account
+                  : 'JUP XXXX-XXXX-XXXX-XXXXX'}
               </a>
             </div>
           </div>
@@ -157,10 +154,6 @@ export default class ApplicationLayout extends React.Component {
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
           <link
-            href="/vendor/bootstrap/css/bootstrap.min.css"
-            rel="stylesheet"
-          />
-          <link
             href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
             rel="stylesheet"
           />
@@ -181,21 +174,19 @@ export default class ApplicationLayout extends React.Component {
           />
 
           <link href="/css/sb-admin.css" rel="stylesheet" />
-          <link href="/css/react-table.css" rel="stylesheet" />
         </head>
         <body>
           <span id="toastrMessages" />
           <div
             id={this.props.data.dashboard === true ? 'logged-in' : 'logged-out'}
           >
-            {this.props.data.dashboard === true
-              ? loggedHeader
-              : unloggedHeader}
+            {this.props.data.dashboard === true ? loggedHeader : unloggedHeader}
 
             {this.props.data.dashboard === true
               ? loggedWrapper
               : unloggedWrapper}
           </div>
+
           <div
             className="modal fade"
             id="logoutModal"
@@ -246,9 +237,11 @@ export default class ApplicationLayout extends React.Component {
             <script src="/vendor/chart.js/Chart.min.js" />
             I replaced this with react-chartsjs
             https://github.com/reactjs/react-chartjs
+
           */}
 
           <script src="/js/sb-admin.min.js" />
+
           <script
             src="/js/bundle.js"
             data-props={JSON.stringify(this.props.data)}

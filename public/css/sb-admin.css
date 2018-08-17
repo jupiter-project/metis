@@ -45,6 +45,10 @@ footer {
   }
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 html {
   position: relative;
   min-height: 100%;
@@ -145,6 +149,9 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   width: 50px;
   height: 50px;
   text-align: center;
+  color: white;
+  background: transparent;
+  line-height: 45px;
   color: #fff;
   background: rgba(52, 58, 64, 0.5);
   line-height: 46px;
@@ -155,7 +162,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 }
 
 .scroll-to-top:hover {
-  background: #343a40;
+  background: transparent;
 }
 
 .scroll-to-top i {
@@ -446,6 +453,10 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   padding-bottom: calc(var(--input-padding-y) / 3);
   font-size: 12px;
   color: #777;
+}
+
+#sidenavToggler {
+  background-color: rgba(0, 0, 0, 0.2) !important;
 }
 
 footer.sticky-footer {

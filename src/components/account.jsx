@@ -15,7 +15,7 @@ class AccountComponent extends React.Component {
       saved_email: this.props.user.record.email,
       saved_firstname: this.props.user.record.firstname,
       saved_lastname: this.props.user.record.lastname,
-      submitted: false,
+      submitted: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -47,39 +47,40 @@ class AccountComponent extends React.Component {
     const page = this;
 
     this.setState({
-      submitted: true,
+      submitted: true
     });
 
-    axios.put('/account', {
-      account: {
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
-        email: this.state.email,
-        api_key: this.props.user.api_key,
-        public_key: this.props.public_key,
-      },
-    })
-      .then((response) => {
+    axios
+      .put('/account', {
+        account: {
+          firstname: this.state.firstname,
+          lastname: this.state.lastname,
+          email: this.state.email,
+          api_key: this.props.user.api_key,
+          public_key: this.props.public_key
+        }
+      })
+      .then(response => {
         if (response.data.success === true) {
           page.setState({
             account_editing_mode: false,
             saved_email: page.state.email,
             saved_firstname: page.state.firstname,
             saved_lastname: page.state.lastname,
-            submitted: false,
+            submitted: false
           });
           toastr.success(
-            'It will take a few minutes for the changes to reflect in your end',
+            'It will take a few minutes for the changes to reflect in your end'
           );
           toastr.success(
-            'Account update pushed to the blockchain for approval.',
+            'Account update pushed to the blockchain for approval.'
           );
         } else {
           if (
-            response.data.validations != null
-            && response.data.validations.messages != null
+            response.data.validations != null &&
+            response.data.validations.messages != null
           ) {
-            response.data.validations.messages.map((message) => {
+            response.data.validations.messages.map(message => {
               toastr.error(message);
               return null;
             });
@@ -87,7 +88,7 @@ class AccountComponent extends React.Component {
           toastr.error(response.data.message);
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
         toastr.error('There was an error');
       });
@@ -95,18 +96,19 @@ class AccountComponent extends React.Component {
 
   render() {
     return (
-      <div className="">
-        <h1 className="page-title">My Account</h1>
+      <div className="container">
+        <div className="page-title">My Profile</div>
         <div className="row">
           <div className="card card-register mx-auto my-4">
-            <h3 className="card-header bg-custom-primary text-white">
-              Account information
-            </h3>
+            <div className="card-header bg-custom-primary text-light">
+              <h5>Account information</h5>
+            </div>
             {this.state.account_editing_mode === true ? (
               <form className="card-body">
                 <div className="form-row">
                   <div className="form-group col-md-6">
                     <label htmlFor="inputFirstName">First Name</label>
+
                     <input
                       value={this.state.firstname}
                       onChange={this.handleChange.bind(this, 'firstname')}
@@ -127,97 +129,99 @@ class AccountComponent extends React.Component {
                   </div>
                 </div>
                 <div className="form-group">
-                          <label htmlFor="inputEmailAddress">Email Address</label>
-                          <input
-                            value={this.state.email}
-                            onChange={this.handleChange.bind(this, 'email')}
-                            type="email"
-                            className="form-control"
-                            id="inputEmailAddress"
-                          />
-                        </div>
-                        <div className="form-row">
-                          <div className="col">
-                            <button
-                              type="button"
-                              className="btn btn-success"
-                              onClick={this.updateAccountInfo.bind(this)}
-                              disabled={this.state.submitted}
-                            >
-                              <i className="glyphicon glyphicon-edit" />{' '}
-                              {this.state.submitted ? 'Saving...' : 'Save'}
-                            </button>
-                          </div>
-                          <div className="col text-right">
-                            <button
-                              type="button"
-                              className="btn btn-danger ml-auto"
-                              onClick={this.switchMode.bind(this, 'account')}
-                            >
-                              <i className="glyphicon glyphicon-edit" /> Cancel
-                            </button>
-                          </div>
-                        </div>
-                      </form>
-            ) : (
-                      <form className="card-body">
-                        <div className="form-row">
-                          <div className="form-group col-md-6">
-                            <label htmlFor="inputFirstName">First Name</label>
-                            <input
-                              value={this.state.saved_firstname}
-                              type="name"
-                              className="form-control"
-                              id="inputFirstName"
-                              disabled
-                            />
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label htmlFor="inputLastName">Last Name</label>
-                            <input
-                              value={this.state.saved_lastname}
-                              type="name"
-                              className="form-control"
-                              id="inputLastName"
-                              disabled
-                            />
-                          </div>
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="inputEmailAddress">Email Address</label>
-                          <input
-                            value={this.state.saved_email}
-                            type="email"
-                            className="form-control"
-                            id="inputEmailAddress"
-                            disabled
-                          />
-                        </div>
-                        <div className="form-row">
-                          <div className="col">
-                            <button
-                              type="button"
-                              className="btn btn-default"
-                              onClick={this.switchMode.bind(this, 'account')}
-                            >
-                              <i className="glyphicon glyphicon-edit" /> Edit
-                            </button>
-                          </div>
-                          <div className="col text-right">
-                            <button
-                              type="button"
-                              className="btn btn-default ml-auto"
-                              disabled
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        </div>
-                      </form>
-            )}
+                  <label htmlFor="inputEmailAddress">Email Address</label>
+                  <input
+                    value={this.state.email}
+                    onChange={this.handleChange.bind(this, 'email')}
+                    type="email"
+                    className="form-control"
+                    id="inputEmailAddress"
+                  />
+                </div>
+                <div className="form-row mt-2">
+                  <div className="col">
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      onClick={this.updateAccountInfo.bind(this)}
+                      disabled={this.state.submitted}
+                    >
+                      <i className="glyphicon glyphicon-edit" />
+                      {''}
+                      {this.state.submitted ? 'Saving...' : 'Save'}
+                    </button>
+                  </div>
+                  <div className="col text-right">
+                    <button
+                      type="button"
+                      className="btn btn-danger ml-auto"
+                      onClick={this.switchMode.bind(this, 'account')}
+                    >
+                      <i className="glyphicon glyphicon-edit" /> Cancel
+                    </button>
                   </div>
                 </div>
-              </div>
+              </form>
+            ) : (
+              <form className="card-body">
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                    <label htmlFor="inputFirstName">First Name</label>
+
+                    <input
+                      value={this.state.saved_firstname}
+                      type="name"
+                      className="form-control"
+                      id="inputFirstName"
+                      disabled
+                    />
+                  </div>
+                  <div className="form-group col-md-6">
+                    <label htmlFor="inputLastName">Last Name</label>
+                    <input
+                      value={this.state.saved_lastname}
+                      type="name"
+                      className="form-control"
+                      id="inputLastName"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="inputEmailAddress">Email Address</label>
+                  <input
+                    value={this.state.saved_email}
+                    type="email"
+                    className="form-control"
+                    id="inputEmailAddress"
+                    disabled
+                  />
+                </div>
+                <div className="form-row mt-2">
+                  <div className="col">
+                    <button
+                      type="button"
+                      className="btn btn-default"
+                      onClick={this.switchMode.bind(this, 'account')}
+                    >
+                      <i className="glyphicon glyphicon-edit" /> Edit
+                    </button>
+                  </div>
+                  <div className="col text-right">
+                    <button
+                      type="button"
+                      className="btn btn-default ml-auto"
+                      disabled
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
     );
   }
 }
@@ -229,7 +233,7 @@ const AccountExport = () => {
 
     render(
       <AccountComponent user={props.user} messages={props.messages} />,
-      document.getElementById('account-section'),
+      document.getElementById('account-section')
     );
   }
 };

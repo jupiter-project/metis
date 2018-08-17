@@ -10,7 +10,7 @@ class SettingsOptions extends React.Component {
       user: this.props.user,
       editing_mode: false,
       currency: '',
-      api_key: this.props.user.record.api_key,
+      api_key: this.props.user.record.api_key
     };
     this.handleChange = this.handleChange.bind(this);
     this.switchMode = this.switchMode.bind(this);
@@ -47,22 +47,28 @@ class SettingsOptions extends React.Component {
     event.preventDefault();
     console.log('Updating api key');
     const page = this;
-    if (window.confirm('Creating a new API Key will delete your previous one. Any external apps or services using your previous key will need to be updated. Are you sure you wish to continue?')) {
-      axios.post('/update_api_key', {
-        id: this.props.user.id,
-        api_key: this.props.user.record.api_key,
-      })
-        .then((response) => {
+    if (
+      window.confirm(
+        'Creating a new API Key will delete your previous one. Any external apps or services using your previous key will need to be updated. Are you sure you wish to continue?'
+      )
+    ) {
+      axios
+        .post('/update_api_key', {
+          id: this.props.user.id,
+          api_key: this.props.user.record.api_key
+        })
+        .then(response => {
           if (response.data.success === true) {
             page.setState({
-              api_key: response.data.api_key,
+              api_key: response.data.api_key
             });
             toastr.success('API Key updated!');
           } else {
             toastr.error('There was an error with updating your API Key');
             console.log(response.data.error);
           }
-        }).catch((error) => {
+        })
+        .catch(error => {
           toastr.error('There was an error with updating your API Key');
           console.log(error);
         });
@@ -72,7 +78,11 @@ class SettingsOptions extends React.Component {
   enableTwoFactor(event) {
     event.preventDefault();
 
-    if (window.confirm('Are you sure you want to enable two factor authentication?') === true) {
+    if (
+      window.confirm(
+        'Are you sure you want to enable two factor authentication?'
+      ) === true
+    ) {
       console.log('Start 2fa process');
     } else {
       console.log('2fa setup cancelled');
@@ -82,7 +92,7 @@ class SettingsOptions extends React.Component {
   render() {
     return (
       <div className="container">
-        <h1 className="page-title">My Settings</h1>
+        <div className="page-title">My Settings</div>
 
         <div className="row">
           <div className="col-10 mx-auto my-3">
@@ -91,8 +101,8 @@ class SettingsOptions extends React.Component {
                 <h5>Two-factor authentication</h5>
               </div>
               <div className="card-body text-center">
-                {this.props.user.record.twofa_enabled === true
-                && this.props.user.record.twofa_completed === true ? (
+                {this.props.user.record.twofa_enabled === true &&
+                this.props.user.record.twofa_completed === true ? (
                   <div>
                     <p className="alert alert-success">Enabled</p>
                     <form method="POST" action="/update_2fa_settings">
@@ -102,13 +112,13 @@ class SettingsOptions extends React.Component {
                       </button>
                     </form>
                   </div>
-                  ) : null}
-                {this.props.user.record.twofa_enabled === true
-                && this.props.user.record.twofa_completed === false ? (
+                ) : null}
+                {this.props.user.record.twofa_enabled === true &&
+                this.props.user.record.twofa_completed === false ? (
                   <p className="alert alert-danger">
                     Started but not completed
                   </p>
-                  ) : null}
+                ) : null}
                 {this.props.user.record.twofa_enabled === false ? (
                   <div>
                     <p className="alert alert-warning">Not enabled</p>
@@ -168,7 +178,7 @@ const SettingsExport = () => {
         validation={props.validation}
         messages={props.messages}
       />,
-      document.getElementById('settings-options'),
+      document.getElementById('settings-options')
     );
   }
 };

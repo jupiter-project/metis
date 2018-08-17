@@ -5,7 +5,7 @@ class HomeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.user,
+      user: this.props.user
     };
   }
 
@@ -26,7 +26,7 @@ const HomeExport = () => {
     const props = JSON.parse(element.getAttribute('data-props'));
     render(
       <HomeComponent user={props.user} messages={props.messages} />,
-      document.getElementById('home-dashboard'),
+      document.getElementById('home-dashboard')
     );
   }
 };
