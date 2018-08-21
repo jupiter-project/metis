@@ -442,7 +442,7 @@ class SignupForm extends React.Component {
               a secure passphrase. This <strong>12-word</strong> passphrase
               should be written down <strong>carefully</strong> and kept in a
               safe place. If you lose your passphrase, you will permanently lose
-              access to your account, there is no way to recover it!
+              access to your account, there is no way to recover it.
             </div>
             <div className="form-group">
               By continuing you declare that you have taken notice of and agree
