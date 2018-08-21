@@ -102,7 +102,7 @@ class TwoFAForm extends React.Component {
                 className="btn btn-primary"
                 onClick={this.start2fa.bind(this)}
               >
-                Enable two-factor authentication
+                Enable Two-factor Authentication
               </button>
               <form method="POST" action="/update_2fa_settings">
                 <input type="hidden" name="enable_2fa" value={false} />
