@@ -1340,7 +1340,7 @@ class Gravity {
 
       rl.question('Please provide an encryption password for your Jupiter data:\n', (answer2) => {
         password = answer2;
-        rl.question('What is the IP address/URL of your Jupiter server?\n', (answer) => {
+        rl.question('What is the URL of your Jupiter server? Do not use IP unless you also use the port!\n', (answer) => {
           server = answer;
           const currentData = {
             'Name of the app': appname,
