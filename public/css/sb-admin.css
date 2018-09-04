@@ -1,36 +1,5 @@
-body {
-  font-family: "Lato", sans-serif;
-}
-
-body h1,
-body h2,
-body h3,
-body h4,
-body h5,
-body h6 {
-  font-weight: 400;
-}
-
-body .h1,
-body .h2,
-body .h3,
-body .h4,
-body .h5,
-body .h6 {
-  font-weight: 400;
-}
-
-body p,
-body .p {
-  font-weight: 300;
-}
-
 .card-header {
   text-align: center;
-}
-
-footer {
-  font-weight: 400;
 }
 
 .form-sizer {
@@ -70,7 +39,7 @@ body {
   outline: none;
 }
 
-.bg-custom-primary {
+.bg-custom {
   background-color: #26313d;
 }
 
@@ -90,7 +59,7 @@ body {
   overflow-x: hidden;
   width: 100%;
   padding-top: 1rem;
-  padding-bottom: 80px;
+  padding-bottom: 60px;
 }
 
 body.fixed-nav #content-wrapper {
@@ -120,7 +89,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   overflow-x: hidden;
   width: 100%;
   padding-top: 1rem;
-  padding-bottom: 80px;
+  padding-bottom: 60px;
 }
 
 body.fixed-nav #content-wrapper {
@@ -185,6 +154,27 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   z-index: 1;
 }
 
+.navbar-custom {
+  background-color: #26313d;
+  color: #fff;
+}
+
+.navbar-custom .navbar-brand {
+  color: #fff;
+}
+
+.navbar-custom .navbar-brand:active, .navbar-custom .navbar-brand:focus, .navbar-custom .navbar-brand:hover {
+  color: #fff;
+}
+
+.navbar-custom a {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.navbar-custom a:active, .navbar-custom a:focus, .navbar-custom a:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .navbar-nav .form-inline .input-group {
   width: 100%;
 }
@@ -232,7 +222,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .sidebar {
   width: 90px !important;
-  background-color: #212529;
+  background-color: #495057;
   min-height: calc(100vh - 56px);
 }
 
@@ -268,11 +258,12 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 }
 
 .sidebar .nav-item .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .sidebar .nav-item .nav-link:active, .sidebar .nav-item .nav-link:focus, .sidebar .nav-item .nav-link:hover {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #868e96;
 }
 
 .sidebar.toggled {
@@ -465,7 +456,7 @@ footer.sticky-footer {
   right: 0;
   bottom: 0;
   width: calc(100% - 90px);
-  height: 80px;
+  height: 60px;
   background-color: #e9ecef;
 }
 

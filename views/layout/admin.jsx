@@ -10,7 +10,7 @@ export default class ApplicationLayout extends React.Component {
 
   render() {
     const loggedHeader = (
-      <nav className="navbar navbar-expand navbar-dark bg-custom-primary static-top">
+      <nav className="navbar navbar-expand navbar-custom static-top">
         <a className="navbar-brand mr-1" href="/gravity">
           <i className="fa fa-fw fa-globe" /> YourBrand
         </a>
@@ -57,7 +57,7 @@ export default class ApplicationLayout extends React.Component {
     );
 
     const unloggedHeader = (
-      <nav className="navbar navbar-expand navbar-dark bg-custom-primary static-top">
+      <nav className="navbar navbar-expand navbar-custom static-top">
         <div className="container-fluid">
           <a className="navbar-brand mr-1" href="/gravity">
             <img

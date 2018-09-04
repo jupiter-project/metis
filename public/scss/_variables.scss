@@ -33,39 +33,10 @@ $sidebar-base-width: 225px;
 // Change below variable to change the width of the sidenav when collapsed
 $sidebar-collapsed-width: 90px;
 // Change below variable to change the height of the sticky footer
-$sticky-footer-height: 80px;
-
-body {
-  font-family: "Lato", sans-serif;
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-weight: 400;
-    //text-decoration: underline;
-  }
-  .h1,
-  .h2,
-  .h3,
-  .h4,
-  .h5,
-  .h6 {
-    font-weight: 400;
-  }
-  p,
-  .p {
-    font-weight: 300;
-  }
-}
+$sticky-footer-height: 60px;
 
 .card-header {
   text-align: center;
-}
-
-footer {
-  font-weight: 400;
 }
 
 .form-sizer {

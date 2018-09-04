@@ -10,8 +10,8 @@ class GravityPage extends React.Component {
         <div className="row">
           <div className="col-md-6 mx-auto col-xs-12">
             <div className="card">
-              <div className="card-header">
-                <h5>Application Status</h5>
+              <div className="card-header bg-custom text-light h5">
+                Application Status
               </div>
               <div className="card-body">
                 <div className="table-responsive">

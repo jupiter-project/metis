@@ -1,5 +1,25 @@
-.navbar-nav {
+.navbar-custom {
+  background-color: $custom-primary;
+  color: $white;
+  .navbar-brand {
+    color: $white;
+    &:active,
+    &:focus,
+    &:hover {
+      color: $white;
+    }
+  }
+  a {
+    color: fade-out($white, 0.2);
+    &:active,
+    &:focus,
+    &:hover {
+      color: fade-out($white, 0.4);
+    }
+  }
+}
 
+.navbar-nav {
   .form-inline .input-group {
     width: 100%;
   }
@@ -49,28 +69,29 @@
     }
   }
 
-  @media(min-width: 768px) {
-
+  @media (min-width: 768px) {
     .form-inline .input-group {
       width: auto;
     }
-
   }
-
 }
 
 .sidebar {
   width: $sidebar-collapsed-width !important;
-  background-color: $gray-900;
+  // Transparent background
+  //background-color: rgba(0, 0, 0, 0.4);
+  // static color background
+  background-color: $gray-700;
   min-height: calc(100vh - #{$navbar-base-height});
   @include sidebar-icons;
   .nav-item {
     .nav-link {
-      color: fade-out($white, 0.5);
+      color: fade-out($white, 0.2);
       &:active,
       &:focus,
       &:hover {
-        color: fade-out($white, 0.25);
+        color: fade-out($white, 0.2);
+        background-color: $gray-600;
       }
     }
   }

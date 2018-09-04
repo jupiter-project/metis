@@ -97,7 +97,7 @@ class SettingsOptions extends React.Component {
         <div className="row">
           <div className="col-10 mx-auto my-3">
             <div className="card">
-              <div className="card-header bg-custom-primary text-light">
+              <div className="card-header bg-custom text-light">
                 <h5>Two-factor authentication</h5>
               </div>
               <div className="card-body text-center">
@@ -135,7 +135,7 @@ class SettingsOptions extends React.Component {
           </div>
           <div className="col-10 mx-auto my-3">
             <div className="card">
-              <div className="card-header bg-custom-primary text-light">
+              <div className="card-header bg-custom text-light">
                 <h5>API Key</h5>
               </div>
               <div className="card-body">

@@ -353,7 +353,7 @@ class AdminComponent extends React.Component {
         <div className="row">
           <div className="col-xs-12 col-md-8 mx-auto">
             <div className="card">
-              <div className="card-header bg-custom-primary text-light">
+              <div className="card-header bg-custom text-light">
                 <h4>Current App Tables</h4>
                 <p className="mb-0">
                   <strong>Required Table balance: </strong>

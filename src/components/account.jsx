@@ -100,7 +100,7 @@ class AccountComponent extends React.Component {
         <div className="page-title">My Profile</div>
         <div className="row">
           <div className="card card-register mx-auto my-4">
-            <div className="card-header bg-custom-primary text-light">
+            <div className="card-header bg-custom text-light">
               <h5>Account information</h5>
             </div>
             {this.state.account_editing_mode === true ? (
