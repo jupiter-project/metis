@@ -1595,93 +1595,59 @@ class Gravity {
 
     rl.question('What is the name of the app?\n', answer1 => {
       appname = answer1;
+      rl.question('Please provide an encryption password for your Jupiter data:\n', (answer2) => {
+        password = answer2;
+        rl.question('What is the URL of your Jupiter server? Do not use IP unless you also use the port!\n', (answer) => {
+          server = answer;
+          const currentData = {
+            'Name of the app': appname,
+            'Password  for encryption': password,
+            'Jupiter Server': server,
+          };
+          console.log('Please verify the data you entered:');
+          console.log(currentData);
+          console.log('');
+          rl.question("You are about to create a Jupiter account which will hold your Gravity app's data. Is the information provided above accurate? If so, press ENTER. If not, press CTRL+C to cancel and rerun command.\n", () => {
+            passphrase = methods.generate_passphrase();
 
-      rl.question(
-        'Please provide an encryption password for your Jupiter data:\n',
-        answer2 => {
-          password = answer2;
-          rl.question(
-            'What is the IP address/URL of your Jupiter server?\n',
-            answer => {
-              server = answer;
-              const currentData = {
-                'Name of the app': appname,
-                'Password  for encryption': password,
-                'Jupiter server': server
-              };
-              console.log('Please verify the data you entered:');
-              console.log(currentData);
-              console.log('');
-              rl.question(
-                "You are about to create a Jupiter account which will hold your Gravity app's data. Is the information provided above accurate? If so, press ENTER. If not, press CTRL+C to cancel and rerun command.\n",
-                () => {
-                  passphrase = methods.generate_passphrase();
+            axios.get(`${server}/nxt?requestType=getAccountId&secretPhrase=${passphrase}`)
+              .then((response) => {
+                const address = response.data.accountRS;
+                const { publicKey } = response.data;
 
-                  axios
-                    .get(
-                      `${server}/nxt?requestType=getAccountId&secretPhrase=${passphrase}`
-                    )
-                    .then(response => {
-                      const address = response.data.accountRS;
-                      const { publicKey } = response.data;
+                if (address) {
+                  const configuration = {
+                    APPNAME: appname,
+                    JUPITERSERVER: server,
+                    APP_ACCOUNT: passphrase,
+                    APP_ACCOUNT_ADDRESS: address,
+                    APP_PUBLIC_KEY: publicKey,
+                    ENCRYPT_ALGORITHM: 'aes-128-cbc',
+                    ENCRYPT_PASSWORD: password,
+                    APP_ACCOUNT_ID: publicKey,
+                  };
+                  const envVariables = configuration;
+                  let envVariablesInString = '';
+                  envVariables.SESSION_SECRET = 'session_secret_key_here';
 
-                      if (address) {
-                        const configuration = {
-                          APPNAME: appname,
-                          JUPITERSERVER: server,
-                          APP_ACCOUNT: passphrase,
-                          APP_ACCOUNT_ADDRESS: address,
-                          APP_PUBLIC_KEY: publicKey,
-                          ENCRYPT_ALGORITHM: 'aes-128-cbc',
-                          ENCRYPT_PASSWORD: password,
-                          APP_ACCOUNT_ID: publicKey
-                        };
-                        const envVariables = configuration;
-                        let envVariablesInString = '';
-                        envVariables.SESSION_SECRET = 'session_secret_key_here';
+                  const fs = require('fs');
 
-                        const fs = require('fs');
+                  // We prepare the string that will be used to create the .gravity file
+                  const objectInString = `module.exports=${JSON.stringify(configuration)}`;
+                  const moduleInString = objectInString.replace(/={/g, '={\n').replace(/","/g, '",\n"').replace(/"}/g, '"\n}');
 
-                        // We prepare the string that will be used to create the .gravity file
-                        const objectInString = `module.exports=${JSON.stringify(
-                          configuration
-                        )}`;
-                        const moduleInString = objectInString
-                          .replace(/={/g, '={\n')
-                          .replace(/","/g, '",\n"')
-                          .replace(/"}/g, '"\n}');
+                  // We prepare the string that will be used to create the .env file
+                  Object.keys(envVariables).forEach((key) => {
+                    envVariablesInString = `${envVariablesInString + key.toUpperCase()}='${envVariables[key]}'\n`;
+                  });
 
-                        // We prepare the string that will be used to create the .env file
-                        Object.keys(envVariables).forEach(key => {
-                          envVariablesInString = `${envVariablesInString +
-                            key.toUpperCase()}='${envVariables[key]}'\n`;
-                        });
-
-                        fs.writeFile('.gravity.js', moduleInString, err => {
-                          if (err) {
-                            return console.log(err);
-                          }
-                          fs.writeFile('.env', envVariablesInString, error => {
-                            if (error) {
-                              return console.log(error);
-                            }
-                            console.log(
-                              '\nSuccess! .gravity and .env files generated!'
-                            );
-                            console.log(
-                              '\nPlease write down a 12-word passphrase and account address assigned to your app as well as the password assigned for encryption (See .env or .gravity files). If you lose your passphrase or your encryption password, you will lose access to all your saved data.'
-                            );
-                            console.log(
-                              '\nIn order to begin saving information into the Jupiter blockchain, you will need to obtain Jupiter tokens from: https://exchange.darcr.us.'
-                            );
-                            rl.close();
-                            return null;
-                          });
-                          return null;
-                        });
-                      } else {
-                        console.log(response.data.message);
-                        rl.close();
+                  fs.writeFile('.gravity.js', moduleInString, (err) => {
+                    if (err) {
+                      return console.log(err);
+                    }
+                    fs.writeFile('.env', envVariablesInString, (error) => {
+                      if (error) {
+                        return console.log(error);
                       }
                     })
                     .catch(error => {
