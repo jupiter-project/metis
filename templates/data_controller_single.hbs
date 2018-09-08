@@ -1,120 +1,93 @@
-module.exports = function(app, passport, React, ReactDOMServer) {
-    var session = require('express-session');
-    var flash = require('connect-flash');
-    var Queue = require('bull');
-    var controller = require('../config/controller.js');
 
-    //===========================================================
-    // This constains constants needed to connect with Jupiter
-    //===========================================================
+import axios from 'axios';
+import events from 'events';
+import { gravity } from '../config/gravity';
+import controller from '../config/controller';
+import User from '../models/user';
 
-    var axios = require('axios');
+module.exports = (app, passport, React, ReactDOMServer) => {
+  const {{page_name}}Page = require('../views/{{view_file_name}}.jsx');
 
-    //Loads Gravity module
-    var gravity = require('../config/gravity.js');
+  app.get('/{{view_file_name}}', controller.isLoggedIn, (req, res) => {
+    const messages = req.session.flash;
+    req.session.flash = null;
 
+    const {{records}}_page = ReactDOMServer.renderToString(
+        React.createElement({{page_name}}Page, { messages, name: '{{app_name}} - {{page_name}}', user: req.user, dashboard: {{dashboard}}, validation: req.session.jup_key })
+    );
 
-    const {{page_name}}Page = require('../views/{{view_file_name}}.jsx');
+    res.send({{records}}_page);
+  });
 
+  app.get('/api/{{records}}', controller.isLoggedIn, (req, res) => {
+    gravity.getRecords(req.user.record.account, process.env.{{env_name}}_RECORD_ADDRESS, process.env.{{env_name}}_RECORD, {size: 'last'})
+      .then((response) => {
+        const {{records}}= response.record;
+        res.send({ success: true, {{records}}: {{records}}.account_record, message: 'Retrieved {{records}} info');
+      })
+      .catch((error) => {
+        res.send({ success: false, errors: error });
+      });
+  });
 
-    app.get('/{{view_file_name}}', controller.isLoggedIn, (req, res) => {
-        var messages = req.session.flash;
-        req.session.flash = null;
+  // ===============================================================================
+  // Record {{model_name}}
+  // ===============================================================================
+  app.post('/api/{{records}}', (req, res) => {
+    const eventEmitter = new events.EventEmitter();
+    const data = req.body
+    const {{model_name}} = require('../models/{{model_file_name}}');
+    const {{model_file_name}} = new {{model_name}}({{#each attributes}}data.{{@key}}{{#if @last}}{{else}}, {{/if}}{{/each}});
+    let errors;
+    let jup_account;
 
-        var {{records}}_page = ReactDOMServer.renderToString(
-            React.createElement({{page_name}}Page, { name: '{{app_name}} - {{page_name}}', user: req.user, dashboard: {{dashboard}}, validation: req.session.jup_key, messages: messages })
-        );
+    eventEmitter.on('address_verification', () => {
+      // console.log('Address verified');
+      // If there are no errors, rest of the code is executed
+      if ({{model_file_name}}.verify().errors === false) {
+        const record = {
+          {{model_file_name}}_record: {
+            {{#each attributes}}
+            {{@key}}: data.{{@key}},
+            {{/each}}
+            date: Date.now(),
+          },
+        };
 
-        res.send({{records}}_page);
+        if (data.public_key) {
+          const call_url = gravity.jupiter_data.server + '/nxt?requestType=sendMessage&secretPhrase=' + process.env.{{env_name}}_RECORD + '&recipient=' + jup_account + '&messageToEncrypt=' + JSON.stringify(record) + '&feeNQT=' + gravity.jupiter_data.feeNQT + '&deadline=' + gravity.jupiter_data.deadline + '&recipientPublicKey=' + data.public_key + '&compressMessageToEncrypt=true';
+        } else {
+          const call_url = gravity.jupiter_data.server + '/nxt?requestType=sendMessage&secretPhrase=' + process.env.{{env_name}}_RECORD + '&recipient=' + jup_account + '&messageToEncrypt=' + JSON.stringify(record) + '&feeNQT=' + gravity.jupiter_data.feeNQT + '&deadline=' + gravity.jupiter_data.deadline + '&compressMessageToEncrypt=true';
+        }
+
+        axios.post(call_url)
+          .then((response) => {
+            if (response.data.broadcasted && response.data.broadcasted === true) {
+              res.send({ success: true, message: '{{model_name}} record saved', data: data, jupiter_response: response.data });
+            } else if (response.data.errorDescription) {
+              res.send({ success: false, message: response.data.errorDescription, jupiter_response: response.data });
+            } else {
+              res.send({ success: false, message: 'Unable to save data in blockchain', jupiter_response: response.data });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            res.send({ success: false, message: 'There was an error', error: error });
+          });
+      } else {
+        res.send({ success: false, message: 'There was an error', {{model_file_name}}: {{model_file_name}}, validations: {{model_file_name}}.verify() });
+      }
     });
 
-
-
-
-    app.get('/api/{{records}}', controller.isLoggedIn, (req, res) => {
-        
-        var {{records}};
-
-        gravity.get_records(req.user.record.account, process.env.{{env_name}}_RECORD_ADDRESS, process.env.{{env_name}}_RECORD, {size: 'last'})
-            .then(function(response) {
-                {{records}}= response.record;
-                res.send({ success: true, {{records}}: {{records}}.account_record, message: 'Retrieved {{records}} info');
-            })
-            .catch(function(error) {
-                res.send({ success: false, errors: error });
-            });
-    })
-
-
-    //===============================================================================
-    // Record {{model_name}}
-    //===============================================================================
-    app.post('/api/{{records}}', (req, res) => {
-        var events = require('events');
-        var eventEmitter = new events.EventEmitter();
-
-        var data = req.body
-
-        var errors, jup_account;
-
-        var {{model_name}} = require('../models/{{model_file_name}}');
-
-        var {{model_file_name}} = new {{model_name}}({{#each attributes}}data.{{@key}}{{#if @last}}{{else}}, {{/if}}{{/each}});
-
-        eventEmitter.on('address_verification', function() {
-            console.log('Address verified');
-            //If there are no errors, rest of the code is executed
-            if ({{model_file_name}}.verify().errors == false) {
-                var record = {
-                    {{model_file_name}}_record: {
-                        {{#each attributes}}
-                        {{@key}}: data.{{@key}},
-                        {{/each}}
-                        date: Date.now()
-                    }
-                }
-
-                if (data.public_key != null) {
-                    var call_url = gravity.jupiter_data.server + '/nxt?requestType=sendMessage&secretPhrase=' + process.env.{{env_name}}_RECORD + '&recipient=' + jup_account + '&messageToEncrypt=' + JSON.stringify(record) + '&feeNQT=' + gravity.jupiter_data.feeNQT + '&deadline=' + gravity.jupiter_data.deadline + '&recipientPublicKey=' + data.public_key + '&compressMessageToEncrypt=true'
-                } else {
-                    var call_url = gravity.jupiter_data.server + '/nxt?requestType=sendMessage&secretPhrase=' + process.env.{{env_name}}_RECORD + '&recipient=' + jup_account + '&messageToEncrypt=' + JSON.stringify(record) + '&feeNQT=' + gravity.jupiter_data.feeNQT + '&deadline=' + gravity.jupiter_data.deadline + '&compressMessageToEncrypt=true'
-                }
-
-                axios.post(call_url)
-                    .then(function(response) {
-                        if (response.data.broadcasted != null && response.data.broadcasted == true) {
-                            res.send({ success: true, message: '{{model_name}} record saved', data: data, jupiter_response: response.data })
-                        } else if (response.data.errorDescription != null) {
-                            res.send({ success: false, message: response.data.errorDescription, jupiter_response: response.data });
-                        } else {
-                            res.send({ success: false, message: 'Unable to save data in blockchain', jupiter_response: response.data });
-                        }
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                        res.send({ success: false, message: 'There was an error', error: error });
-                    });
-            } else {
-                res.send({ success: false, message: 'There was an error', {{model_file_name}}: {{model_file_name}}, validations: {{model_file_name}}.verify() });
-            }
-        })
-
-
-        var mongoose = require('mongoose');
-
-        const User = require("../models/user");
-
-        User.findOne({ 'api.generated_key': data.api_key }, (err, user) => {
-            if (err) {
-                res.send({ success: false, message: 'There was an error validating your account', error: err });
-            } else if (data.address != user.record.account) {
-                res.send({ success: false, message: 'The api key you provided is not associated with the account number your provided' });
-            } else {
-                jup_account = data.address
-                eventEmitter.emit('address_verification');
-            }
-        });
-
+    User.findOne({ 'api.generated_key': data.api_key }, (err, user) => {
+      if (err) {
+        res.send({ success: false, message: 'There was an error validating your account', error: err });
+      } else if (data.address !== user.record.account) {
+        res.send({ success: false, message: 'The api key you provided is not associated with the account number your provided' });
+      } else {
+        jup_account = data.address;
+        eventEmitter.emit('address_verification');
+      }
     });
-
-}
+  });
+};

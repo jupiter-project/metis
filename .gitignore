@@ -7,6 +7,8 @@
 # Ignore bundler config.
 /.bundle
 
+public/js/bundle.js
+
 # Ignore package-lock.json because it gets us in trouble
 package-lock.json
 *.swp
@@ -24,5 +26,6 @@ package-lock.json
 # Ignore package-lock
 package-lock.json
 
-.env
-.gravity.js
+.env*
+.gravity*.js
+.eslintrc.js

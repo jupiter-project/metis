@@ -2,36 +2,36 @@ import React from 'react';
 import {render} from 'react-dom';
 
 class {{component_name}}Component extends React.Component {
-    constructor(props){
-        super(props);
-        this.state={
-
-        }
-    }
-
-    componentDidMount(){
+  constructor(props){
+    super(props);
+    this.state={
 
     }
+  }
 
-    render(){
+  render() {
+    return(
+        <div className="container">
+            <h1 className="page-title">{{name_of_component}}</h1>
 
-        return(
-            <div className="container">
-                <h1 className="page-title">{{name_of_component}}</h1>
-
-            </div>
-        )
-    }
-};
-
-var {{component_name}}Export= () => {
-    if (document.getElementById('{{component_name}}Component')!= null){
-        var element= document.getElementById('props');
-        var props= JSON.parse(element.getAttribute('data-props'));
-        
-        render(<{{component_name}}Component  user={props.user} validation={props.validation} />, 
-            document.getElementById('{{component_name}}Component'));
-    } 
+        </div>
+    );
+  }
 }
+
+const {{component_name}}Export = () => {
+  if (document.getElementById('{{component_name}}Component') != null) {
+    const element = document.getElementById('props');
+    const props = JSON.parse(element.getAttribute('data-props'));
+    
+    render(
+      <{{component_name}}Component
+      user={props.user}
+      validation={props.validation}
+      />, 
+      document.getElementById('{{component_name}}Component'),
+    );
+  } 
+};
 
 module.exports= {{component_name}}Export();

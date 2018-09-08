@@ -1,18 +1,23 @@
-module.exports = function(app, passport, React, ReactDOMServer) {
-    const session = require('express-session');
-    const flash = require('connect-flash');
-    const controller = require('../config/controller.js');
+import controller from '../config/controller';
 
-    app.get('/{{view_file_name}}', controller.isLoggedIn, (req, res) => {
-        var messages = req.session.flash;
-        req.session.flash = null;
+module.exports = (app, passport, React, ReactDOMServer) => {
+  app.get('/{{view_file_name}}', controller.isLoggedIn, (req, res) => {
+    const messages = req.session.flash;
+    req.session.flash = null;
 
-        const PageFile = require('../views/{{view_file_name}}.jsx');
+    const PageFile = require('../views/{{view_file_name}}.jsx');
 
-        var page = ReactDOMServer.renderToString(
-            React.createElement(PageFile, { name: '{{app_name}} - {{page_name}}', user: req.user, dashboard: {{dashboard}}, public_key: req.session.public_key, validation: req.session.jup_key, messages: messages })
-        );
+    const page = ReactDOMServer.renderToString(
+      React.createElement(PageFile, {
+        messages,
+        name: '{{app_name}} - {{page_name}}',
+        user: req.user,
+        dashboard: {{dashboard}},
+        public_key: req.session.public_key,
+        validation: req.session.jup_key,
+      }),
+    );
 
-        res.send(page);
-    });
-}
+    res.send(page);
+  });
+};
