@@ -13,7 +13,7 @@ class LoginForm extends React.Component {
       confirmation_page: false,
       account: '',
       accounthash: '',
-      public_key: ''
+      public_key: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
 
   handleChange(event) {
     this.setState({
-      jup_passphrase: event.target.value
+      jup_passphrase: event.target.value,
     });
   }
 
@@ -41,25 +41,23 @@ class LoginForm extends React.Component {
 
     axios
       .post('/get_jupiter_account', {
-        jup_passphrase: this.state.jup_passphrase
+        jup_passphrase: this.state.jup_passphrase,
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.success === true) {
           page.setState({
             confirmation_page: true,
             account: response.data.account,
             accounthash: response.data.accounthash,
-            public_key: response.data.public_key
+            public_key: response.data.public_key,
           });
         } else {
           toastr.error(response.data.message);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
-        toastr.error(
-          'There was an error in verifying the passphrase with the blockchain.'
-        );
+        toastr.error('There was an error in verifying the passphrase with the blockchain.');
       });
   }
 
@@ -130,7 +128,7 @@ const LoginExport = () => {
 
     render(
       <LoginForm messages={props.messages} server={props.server} />,
-      document.getElementById('login-form')
+      document.getElementById('login-form'),
     );
   }
 };
