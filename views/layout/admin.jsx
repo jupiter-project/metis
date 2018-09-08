@@ -73,7 +73,7 @@ export default class ApplicationLayout extends React.Component {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <a className="nav-link" href="/signup">
-                  Sign up
+                  Sign Up
                 </a>
               </li>
               <li className="nav-item">

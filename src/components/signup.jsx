@@ -282,7 +282,7 @@ class SignupForm extends React.Component {
 
             <div className="form-group">
               <lable>
-                Enable two-factor authentication{' '}
+                Enable Two-factor Authentication{' '}
                 {this.state.enable_two_fa ? (
                   <p className="m-0">Yes</p>
                 ) : (
@@ -442,7 +442,7 @@ class SignupForm extends React.Component {
               a secure passphrase. This <strong>12-word</strong> passphrase
               should be written down <strong>carefully</strong> and kept in a
               safe place. If you lose your passphrase, you will permanently lose
-              access to your account, there is no way to recover it!
+              access to your account, there is no way to recover it.
             </div>
             <div className="form-group">
               By continuing you declare that you have taken notice of and agree
@@ -457,7 +457,7 @@ class SignupForm extends React.Component {
                 className="btn btn-primary btn-block"
                 onClick={this.generatePassphrase.bind(this)}
               >
-                Create passphrase
+                Create Passphrase
               </button>
             </div>
           </div>
