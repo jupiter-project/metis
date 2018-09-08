@@ -17,6 +17,14 @@
       color: fade-out($white, 0.4);
     }
   }
+  a.dropdown-item {
+    color: fade-out($black, 0.2);
+    &:active,
+    &:focus,
+    &:hover {
+      color: fade-out($black, 0.4);
+    }
+  }
 }
 
 .navbar-nav {

@@ -175,6 +175,14 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   color: rgba(255, 255, 255, 0.6);
 }
 
+.navbar-custom a.dropdown-item {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.navbar-custom a.dropdown-item:active, .navbar-custom a.dropdown-item:focus, .navbar-custom a.dropdown-item:hover {
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .navbar-nav .form-inline .input-group {
   width: 100%;
 }

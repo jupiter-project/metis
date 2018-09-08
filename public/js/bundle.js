@@ -38416,7 +38416,7 @@ var AccountComponent = function (_React$Component) {
             { className: 'card card-register mx-auto my-4' },
             _react2.default.createElement(
               'div',
-              { className: 'card-header bg-custom-primary text-light' },
+              { className: 'card-header bg-custom text-light' },
               _react2.default.createElement(
                 'h5',
                 null,
@@ -39445,7 +39445,7 @@ var AdminComponent = function (_React$Component2) {
               { className: 'card' },
               _react2.default.createElement(
                 'div',
-                { className: 'card-header bg-custom-primary text-light' },
+                { className: 'card-header bg-custom text-light' },
                 _react2.default.createElement(
                   'h4',
                   null,
@@ -40072,7 +40072,7 @@ var SettingsOptions = function (_React$Component) {
               { className: 'card' },
               _react2.default.createElement(
                 'div',
-                { className: 'card-header bg-custom-primary text-light' },
+                { className: 'card-header bg-custom text-light' },
                 _react2.default.createElement(
                   'h5',
                   null,
@@ -40136,7 +40136,7 @@ var SettingsOptions = function (_React$Component) {
               { className: 'card' },
               _react2.default.createElement(
                 'div',
-                { className: 'card-header bg-custom-primary text-light' },
+                { className: 'card-header bg-custom text-light' },
                 _react2.default.createElement(
                   'h5',
                   null,
