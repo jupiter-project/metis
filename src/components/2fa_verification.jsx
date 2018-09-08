@@ -14,7 +14,7 @@ class TwoFAVerificationForm extends React.Component {
       qrcode_url: '',
       secret_key: this.props.user.record.secret_key,
       verification_code: '',
-      verification_response: ''
+      verification_response: '',
     };
     this.handleUpdate = this.handleUpdate.bind(this);
     this.verifyCode = this.verifyCode.bind(this);
@@ -22,7 +22,7 @@ class TwoFAVerificationForm extends React.Component {
 
   handleUpdate(event) {
     this.setState({
-      verification_code: event.target.value
+      verification_code: event.target.value,
     });
   }
 
@@ -32,16 +32,16 @@ class TwoFAVerificationForm extends React.Component {
     axios
       .post('/verify_code', {
         verification_code: this.state.verification_code,
-        id: this.props.user.id
+        id: this.props.user.id,
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.status === 'success') {
           window.location.replace('/');
         } else {
           toastr.error(response.data.message);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         toastr.error('There was an error');
       });
@@ -84,7 +84,7 @@ const TwofaVerificationExport = () => {
 
     render(
       <TwoFAVerificationForm user={props.user} messages={props.messages} />,
-      document.getElementById('2fa-verification-area')
+      document.getElementById('2fa-verification-area'),
     );
   }
 };

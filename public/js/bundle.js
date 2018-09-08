@@ -12118,7 +12118,7 @@ var TwoFAForm = function (_React$Component) {
           { className: 'panel panel-primary' },
           _react2.default.createElement(
             'div',
-            { className: 'panel-heading text-center lead' },
+            { className: 'form-group' },
             _react2.default.createElement(
               'div',
               { className: '' },
@@ -12135,8 +12135,11 @@ var TwoFAForm = function (_React$Component) {
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 'button',
-                { className: 'btn btn-primary', onClick: this.start2fa.bind(this) },
-                'Enable two-factor authentication'
+                {
+                  className: 'btn btn-primary',
+                  onClick: this.start2fa.bind(this)
+                },
+                'Enable Two-factor Authentication'
               ),
               _react2.default.createElement(
                 'form',
@@ -12162,12 +12165,21 @@ var TwoFAForm = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'offset-xs-0 col-xs-12 offset-sm-4 col-sm-4' },
-          _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.verification_code, onChange: this.handleUpdate.bind(this) }),
+          _react2.default.createElement('input', {
+            type: 'text',
+            className: 'form-control',
+            value: this.state.verification_code,
+            onChange: this.handleUpdate.bind(this)
+          }),
           _react2.default.createElement('br', null),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
             'button',
-            { type: 'submit', className: 'btn btn-primary', onClick: this.verifyCode.bind(this) },
+            {
+              type: 'submit',
+              className: 'btn btn-primary',
+              onClick: this.verifyCode.bind(this)
+            },
             'Verify code'
           ),
           _react2.default.createElement('br', null),
@@ -38211,21 +38223,30 @@ var TwoFAVerificationForm = function (_React$Component) {
         null,
         _react2.default.createElement(
           'div',
-          { className: 'row r-2' },
+          { className: 'form-row' },
           _react2.default.createElement(
             'div',
-            { className: 'offset-xs-0 col-xs-12 offset-sm-4 col-sm-4' },
+            { className: 'col-xs-12 col-md-4 mx-auto' },
             _react2.default.createElement(
               'p',
               null,
               'Please put in your 6-digit authentication code.'
             ),
-            _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.verification_code, onChange: this.handleUpdate.bind(this) }),
+            _react2.default.createElement('input', {
+              type: 'text',
+              className: 'form-control',
+              value: this.state.verification_code,
+              onChange: this.handleUpdate.bind(this)
+            }),
             _react2.default.createElement('br', null),
             _react2.default.createElement('br', null),
             _react2.default.createElement(
               'button',
-              { type: 'submit', className: 'btn btn-primary', onClick: this.verifyCode.bind(this) },
+              {
+                type: 'submit',
+                className: 'btn btn-primary',
+                onClick: this.verifyCode.bind(this)
+              },
               'Verify code'
             )
           )
@@ -38381,11 +38402,11 @@ var AccountComponent = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: '' },
+        { className: 'container' },
         _react2.default.createElement(
-          'h1',
+          'div',
           { className: 'page-title' },
-          'My Account'
+          'My Profile'
         ),
         _react2.default.createElement(
           'div',
@@ -38394,9 +38415,13 @@ var AccountComponent = function (_React$Component) {
             'div',
             { className: 'card card-register mx-auto my-4' },
             _react2.default.createElement(
-              'h3',
-              { className: 'card-header bg-custom-primary text-white' },
-              'Account information'
+              'div',
+              { className: 'card-header bg-custom-primary text-light' },
+              _react2.default.createElement(
+                'h5',
+                null,
+                'Account information'
+              )
             ),
             this.state.account_editing_mode === true ? _react2.default.createElement(
               'form',
@@ -38455,7 +38480,7 @@ var AccountComponent = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'form-row' },
+                { className: 'form-row mt-2' },
                 _react2.default.createElement(
                   'div',
                   { className: 'col' },
@@ -38468,7 +38493,7 @@ var AccountComponent = function (_React$Component) {
                       disabled: this.state.submitted
                     },
                     _react2.default.createElement('i', { className: 'glyphicon glyphicon-edit' }),
-                    ' ',
+                    '',
                     this.state.submitted ? 'Saving...' : 'Save'
                   )
                 ),
@@ -38544,7 +38569,7 @@ var AccountComponent = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'form-row' },
+                { className: 'form-row mt-2' },
                 _react2.default.createElement(
                   'div',
                   { className: 'col' },
@@ -38842,16 +38867,16 @@ var DataComponent = function (_React$Component3) {
 
       var tableVersion = _react2.default.createElement(
         'div',
-        { className: 'container-fluid bg-info' },
+        { className: 'table-responsive' },
         _react2.default.createElement(
           'table',
-          { className: 'table table-striped' },
+          { className: 'table table-striped table-bordered', style: {} },
           _react2.default.createElement(
             'thead',
             null,
             _react2.default.createElement(
               'tr',
-              null,
+              { style: { minWidth: '200px' } },
               headers
             )
           ),
@@ -38870,7 +38895,10 @@ var DataComponent = function (_React$Component3) {
       var tables = this.state.tables.map(function (table) {
         return _react2.default.createElement(
           'button',
-          { className: 'btn btn-link', onClick: _this4.loadTableData.bind(_this4, table) },
+          {
+            className: 'btn btn-link',
+            onClick: _this4.loadTableData.bind(_this4, table)
+          },
           table
         );
       });
@@ -38882,32 +38910,48 @@ var DataComponent = function (_React$Component3) {
         );
       });
 
-      var dataDisplay = this.state.table_display ? tableVersion : cardVersion;
+      var dataDisplay = this.state.table_display ? cardVersion : tableVersion;
 
       return _react2.default.createElement(
         'div',
-        { className: 'container-fluid' },
+        null,
         _react2.default.createElement(
           'div',
-          { className: 'container text-center' },
-          tables
+          { className: 'page-title' },
+          'Current Tables: ',
+          this.state.table
         ),
         _react2.default.createElement(
           'div',
-          { className: 'text-center' },
+          { className: 'container' },
           _react2.default.createElement(
-            'h2',
-            null,
-            'Current table: ',
-            this.state.table
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-xs-12 card card-plain mx-auto' },
+              _react2.default.createElement(
+                'div',
+                { className: 'card-body' },
+                tables
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'col-md-12 card' },
+              _react2.default.createElement(
+                'div',
+                { className: 'card-body p-2' },
+                this.state.loading ? _react2.default.createElement(
+                  'p',
+                  { className: 'alert alert-info' },
+                  'Loading'
+                ) : dataDisplay,
+                this.state.raw_data.length > 0 ? rawData : null
+              )
+            )
           )
-        ),
-        this.state.loading ? _react2.default.createElement(
-          'p',
-          { className: 'alert alert-info' },
-          'Loading'
-        ) : dataDisplay,
-        this.state.raw_data.length > 0 ? rawData : null
+        )
       );
     }
   }]);
@@ -38977,11 +39021,17 @@ function getBalance(secret, address, apiKey, publicKey) {
         resolve(response.data);
       } else {
         console.log(response.data);
-        reject({ success: false, message: 'Error obtaining balance of ' + address });
+        reject({
+          success: false,
+          message: 'Error obtaining balance of ' + address
+        });
       }
     }).catch(function (error) {
       console.log(error);
-      reject({ success: false, message: 'Error obtaining balance of ' + address });
+      reject({
+        success: false,
+        message: 'Error obtaining balance of ' + address
+      });
     });
   });
 }
@@ -39064,10 +39114,19 @@ var TableComponent = function (_React$Component) {
               null,
               _react2.default.createElement(
                 'td',
-                { style: { minWidth: '100px' } },
+                null,
                 _react2.default.createElement(
-                  'span',
-                  null,
+                  'a',
+                  {
+                    className: 'footer-link text-primary',
+                    href: '#',
+                    onClick: function onClick() {
+                      return _this2.setState({ open: !_this2.state.open });
+                    },
+                    'data-toggle': 'collapse',
+                    'data-target': '#collapse-' + this.state.name,
+                    'aria-controls': 'collapse-' + this.state.name
+                  },
                   this.state.name
                 )
               ),
@@ -39086,35 +39145,10 @@ var TableComponent = function (_React$Component) {
                 null,
                 _react2.default.createElement(
                   'span',
-                  { className: state.low_balance ? 'text-danger' : 'text-success' },
-                  ' ',
-                  state.low_balance ? 'Low Balance' : 'Ready'
-                )
-              ),
-              _react2.default.createElement(
-                'td',
-                { className: 'text-center' },
-                _react2.default.createElement(
-                  'a',
                   {
-                    className: 'footer-link text-primary',
-                    href: '#',
-                    onClick: function onClick() {
-                      return _this2.setState({ open: !_this2.state.open });
-                    },
-                    'data-toggle': 'collapse',
-                    'data-target': '#collapse-' + this.state.name,
-                    'aria-controls': 'collapse-' + this.state.name
+                    className: state.low_balance ? 'text-danger' : 'text-success'
                   },
-                  this.state.open ? _react2.default.createElement(
-                    'span',
-                    { className: 'h5' },
-                    'less details'
-                  ) : _react2.default.createElement(
-                    'span',
-                    { className: 'h5' },
-                    'more details'
-                  )
+                  state.low_balance ? 'Low Balance' : 'Ready'
                 )
               )
             )
@@ -39156,37 +39190,6 @@ var TableComponent = function (_React$Component) {
                 _react2.default.createElement(
                   'strong',
                   null,
-                  'Passphrase:'
-                ),
-                ' ',
-                state.show_passphrase ? _react2.default.createElement(
-                  'span',
-                  null,
-                  data.passphrase,
-                  ' ',
-                  _react2.default.createElement(
-                    'button',
-                    {
-                      className: 'btn btn-danger',
-                      onClick: this.showPassphrase.bind(this)
-                    },
-                    'Hide'
-                  )
-                ) : _react2.default.createElement(
-                  'button',
-                  {
-                    className: 'btn btn-default',
-                    onClick: this.showPassphrase.bind(this)
-                  },
-                  'Show passphrase'
-                )
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'strong',
-                  null,
                   'Public Key:'
                 ),
                 ' ',
@@ -39195,18 +39198,32 @@ var TableComponent = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'form-group' },
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  'Current balance: '
-                ),
-                _react2.default.createElement(
+                state.show_passphrase ? _react2.default.createElement(
                   'span',
+                  null,
+                  _react2.default.createElement(
+                    'button',
+                    {
+                      className: 'btn btn-danger',
+                      onClick: this.showPassphrase.bind(this)
+                    },
+                    'Hide passphrase'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    {
+                      className: 'my-2 p-2 rounded ',
+                      style: { background: '#ced4da' }
+                    },
+                    data.passphrase
+                  )
+                ) : _react2.default.createElement(
+                  'button',
                   {
-                    className: state.low_balance ? 'alert alert-warning p-1' : 'alert alert-info p-1'
+                    className: 'btn btn-default',
+                    onClick: this.showPassphrase.bind(this)
                   },
-                  state.balance / Math.pow(10, 8),
-                  ' JUP'
+                  'Show passphrase'
                 )
               )
             )
@@ -39358,58 +39375,60 @@ var AdminComponent = function (_React$Component2) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'row' },
+          { className: 'container' },
           _react2.default.createElement(
             'div',
-            { className: 'col-xs-12 col-md-6' },
+            { className: 'row' },
             _react2.default.createElement(
               'div',
-              { className: 'card card-plain' },
+              { className: 'col-xs-12 col-md-6' },
               _react2.default.createElement(
                 'div',
-                { className: 'card-body' },
+                { className: 'card card-plain' },
                 _react2.default.createElement(
-                  'h6',
-                  null,
-                  'App Address:'
-                ),
-                _react2.default.createElement(
-                  'span',
-                  { className: 'bg-warning rounded p-1' },
-                  props.user.record.account
+                  'div',
+                  { className: 'card-body' },
+                  _react2.default.createElement(
+                    'h6',
+                    null,
+                    'App Address:'
+                  ),
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'bg-warning rounded p-1' },
+                    props.user.record.account
+                  )
                 )
               )
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'col-xs-12 col-md-6' },
+            ),
             _react2.default.createElement(
               'div',
-              { className: 'card card-plain' },
+              { className: 'col-xs-12 col-md-6' },
               _react2.default.createElement(
                 'div',
-                { className: 'card-body text-right' },
+                { className: 'card card-plain' },
                 _react2.default.createElement(
-                  'p',
-                  null,
+                  'div',
+                  { className: 'card-body text-right' },
                   _react2.default.createElement(
-                    'strong',
+                    'p',
                     null,
-                    'Current balance: '
-                  ),
-                  state.balances && state.balances.balance ? state.balances.balance / Math.pow(10, 8) : 0,
-                  ' ',
-                  'JUP',
-                  _react2.default.createElement('br', null),
-                  _react2.default.createElement(
-                    'strong',
-                    null,
-                    'Required app balance: '
-                  ),
-                  state.balances && state.balances.minAppBalanceAmount ? state.balances.minAppBalanceAmount / Math.pow(10, 8) : 0,
-                  ' ',
-                  'JUP'
+                    _react2.default.createElement(
+                      'strong',
+                      null,
+                      'Current balance: '
+                    ),
+                    state.balances && state.balances.balance ? state.balances.balance / Math.pow(10, 8) : 0,
+                    'JUP',
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                      'strong',
+                      null,
+                      'Required app balance: '
+                    ),
+                    state.balances && state.balances.minAppBalanceAmount ? state.balances.minAppBalanceAmount / Math.pow(10, 8) : 0,
+                    'JUP'
+                  )
                 )
               )
             )
@@ -39417,39 +39436,42 @@ var AdminComponent = function (_React$Component2) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'col-12' },
+          { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'card' },
+            { className: 'col-xs-12 col-md-8 mx-auto' },
             _react2.default.createElement(
               'div',
-              { className: 'card-header bg-custom-primary text-light' },
+              { className: 'card' },
               _react2.default.createElement(
-                'h4',
-                null,
-                'Current App Tables'
+                'div',
+                { className: 'card-header bg-custom-primary text-light' },
+                _react2.default.createElement(
+                  'h4',
+                  null,
+                  'Current App Tables'
+                ),
+                _react2.default.createElement(
+                  'p',
+                  { className: 'mb-0' },
+                  _react2.default.createElement(
+                    'strong',
+                    null,
+                    'Required Table balance: '
+                  ),
+                  state.balances && state.balances.minTableBalanceAmount ? state.balances.minTableBalanceAmount / Math.pow(10, 8) : 0,
+                  'JUP'
+                )
               ),
               _react2.default.createElement(
-                'p',
-                { className: 'mb-0' },
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  'Required Table balance: '
-                ),
-                state.balances && state.balances.minTableBalanceAmount ? state.balances.minTableBalanceAmount / Math.pow(10, 8) : 0,
-                ' ',
-                'JUP'
+                'div',
+                { className: 'card-body p-2' },
+                state.loading ? _react2.default.createElement(
+                  'p',
+                  { className: 'text-center alert alert-info' },
+                  'Loading'
+                ) : tableList
               )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'card-body' },
-              state.loading ? _react2.default.createElement(
-                'p',
-                { className: 'text-center alert alert-info' },
-                'Loading'
-              ) : tableList
             )
           )
         )
@@ -40035,7 +40057,7 @@ var SettingsOptions = function (_React$Component) {
         'div',
         { className: 'container' },
         _react2.default.createElement(
-          'h1',
+          'div',
           { className: 'page-title' },
           'My Settings'
         ),
@@ -40520,7 +40542,7 @@ var SignupForm = function (_React$Component) {
               _react2.default.createElement(
                 'lable',
                 null,
-                'Enable two-factor authentication',
+                'Enable Two-factor Authentication',
                 ' ',
                 this.state.enable_two_fa ? _react2.default.createElement(
                   'p',
@@ -40537,7 +40559,7 @@ var SignupForm = function (_React$Component) {
           _react2.default.createElement(
             'div',
             null,
-            this.state.account !== '' && _react2.default.createElement(
+            this.state.account !== ' ' && _react2.default.createElement(
               'button',
               {
                 value: 'Complete registration',
@@ -40708,11 +40730,7 @@ var SignupForm = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'form-group', id: 'jup-confirm' },
-          _react2.default.createElement(
-            'p',
-            null,
-            'Please enter your passphrase to confirm it.'
-          ),
+          'Please enter your passphrase to confirm it.',
           _react2.default.createElement('input', {
             type: 'text',
             className: 'form-control',
@@ -40744,52 +40762,39 @@ var SignupForm = function (_React$Component) {
             'div',
             { className: 'form-group' },
             _react2.default.createElement(
-              'p',
+              'strong',
               null,
-              _react2.default.createElement(
-                'strong',
-                null,
-                'This app is based on blockchain technology.'
-              ),
-              ' The blockchain ',
-              _react2.default.createElement(
-                'strong',
-                null,
-                'will generate'
-              ),
-              ' an account for you with a secure passphrase. This ',
-              _react2.default.createElement(
-                'strong',
-                null,
-                '12-word'
-              ),
-              ' ',
-              'passphrase should be written down ',
-              _react2.default.createElement(
-                'strong',
-                null,
-                'carefully'
-              ),
-              ' and kept in a safe place. If you lose your passphrase, you will permanently lose access to your account, there is no way to recover it!'
-            )
+              'This app is based on blockchain technology.'
+            ),
+            ' The blockchain ',
+            _react2.default.createElement(
+              'strong',
+              null,
+              'will generate'
+            ),
+            ' an account for you with a secure passphrase. This ',
+            _react2.default.createElement(
+              'strong',
+              null,
+              '12-word'
+            ),
+            ' passphrase should be written down ',
+            _react2.default.createElement(
+              'strong',
+              null,
+              'carefully'
+            ),
+            ' and kept in a safe place. If you lose your passphrase, you will permanently lose access to your account, there is no way to recover it.'
           ),
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
-            _react2.default.createElement(
-              'p',
-              null,
-              'By continuing you declare that you have taken notice of and agree on the following: the app creator has access to read all information stored within the app.'
-            )
+            'By continuing you declare that you have taken notice of and agree on the following: the app creator has access to read all information stored within the app.'
           ),
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
-            _react2.default.createElement(
-              'p',
-              null,
-              'Click on the button below to start.'
-            )
+            'Click on the button below to start.'
           ),
           _react2.default.createElement(
             'div',
@@ -40800,7 +40805,7 @@ var SignupForm = function (_React$Component) {
                 className: 'btn btn-primary btn-block',
                 onClick: this.generatePassphrase.bind(this)
               },
-              'Create passphrase'
+              'Create Passphrase'
             )
           )
         )

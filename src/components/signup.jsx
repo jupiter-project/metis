@@ -23,7 +23,7 @@ class SignupForm extends React.Component {
       passphrase_confirmed: false,
       confirmation_message: '',
       account_object: '',
-      public_key: ''
+      public_key: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.registerAccount = this.registerAccount.bind(this);
@@ -42,9 +42,8 @@ class SignupForm extends React.Component {
 
   testConnection(event) {
     event.preventDefault();
-    axios
-      .post('/test_connection', {})
-      .then(response => {
+    axios.post('/test_connection', {})
+      .then((response) => {
         if (response.data.success) {
           console.log('Success');
           console.log(response.data.response);
@@ -52,7 +51,7 @@ class SignupForm extends React.Component {
           console.log('Error');
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -61,7 +60,7 @@ class SignupForm extends React.Component {
     event.preventDefault();
 
     this.setState({
-      passphrase_confirmation_page: true
+      passphrase_confirmation_page: true,
     });
   }
 
@@ -71,19 +70,19 @@ class SignupForm extends React.Component {
 
     axios
       .get('/create_passphrase')
-      .then(response => {
+      .then((response) => {
         if (response.data.success === true) {
           console.log(response.data.message);
           page.setState({
             jup_account_created: true,
-            generated_passphrase: response.data.result
+            generated_passphrase: response.data.result,
           });
           toastr.success('Passphrase generated!');
         } else {
           toastr.error('There was an error in your passphrase');
         }
       })
-      .catch(error => {
+      .catch((error) => {
         toastr.error('There was an error in generating passphrase');
         console.log(error);
       });
@@ -108,28 +107,28 @@ class SignupForm extends React.Component {
             email: this.state.email,
             firstname: this.state.firstname,
             lastname: this.state.lastname,
-            twofa_enabled: this.state.twofa_enabled
-          }
+            twofa_enabled: this.state.twofa_enabled,
+          },
         })
-        .then(response => {
+        .then((response) => {
           if (response.data.success === true) {
             console.log(response.data);
             page.setState({
               account_object: response.data.account,
               public_key: response.data.account.public_key,
-              confirmation_message: ` ${response.data.account.account} `
+              confirmation_message: ` ${response.data.account.account} `,
             });
           } else {
             toastr.error(response.data.message);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
           toastr.error('There was an error!');
         });
       this.setState({
         confirmation_message: 'Loading...',
-        passphrase_confirmed: true
+        passphrase_confirmed: true,
       });
     }
   }
@@ -137,27 +136,27 @@ class SignupForm extends React.Component {
   handleChange(iType, event) {
     if (iType === 'account') {
       this.setState({
-        jup_account: event.target.value
+        jup_account: event.target.value,
       });
     } else if (iType === 'pass') {
       this.setState({
-        jup_passphrase: event.target.value
+        jup_passphrase: event.target.value,
       });
     } else if (iType === 'firstname') {
       this.setState({
-        firstname: event.target.value
+        firstname: event.target.value,
       });
     } else if (iType === 'lastname') {
       this.setState({
-        lastname: event.target.value
+        lastname: event.target.value,
       });
     } else if (iType === 'email') {
       this.setState({
-        email: event.target.value
+        email: event.target.value,
       });
     } else if (iType === 'passphrase_confirm') {
       this.setState({
-        passphrase_confirmation: event.target.value
+        passphrase_confirmation: event.target.value,
       });
     }
   }
@@ -174,21 +173,21 @@ class SignupForm extends React.Component {
           email: this.state.email,
           twofa_enabled: this.state.enable_two_fa,
           firstname: this.state.firstname,
-          lastname: this.state.lastname
-        }
+          lastname: this.state.lastname,
+        },
       })
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         if (response.data.success) {
           console.log(response.data);
         } else {
           console.log('There was an error creating your account');
           page.setState({
-            confirmation_message: response.data.message
+            confirmation_message: response.data.message,
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('There was an error!');
         console.log(error);
       });
@@ -198,11 +197,11 @@ class SignupForm extends React.Component {
     event.preventDefault();
     if (iType === 'true') {
       this.setState({
-        enable_two_fa: true
+        enable_two_fa: true,
       });
     } else {
       this.setState({
-        enable_two_fa: false
+        enable_two_fa: false,
       });
     }
   }
@@ -376,9 +375,9 @@ class SignupForm extends React.Component {
           <div className="form-group">
             <button
               disabled={
-                !this.state.firstname ||
-                !this.state.lastname ||
-                !this.state.email
+                !this.state.firstname
+                || !this.state.lastname
+                || !this.state.email
               }
               className="btn btn-primary btn-block"
               onClick={this.confirmedPassphrase.bind(this)}
@@ -390,9 +389,9 @@ class SignupForm extends React.Component {
           <div className="form-group">
             <button
               disabled={
-                !this.state.firstname ||
-                !this.state.lastname ||
-                !this.state.email
+                !this.state.firstname
+                || !this.state.lastname
+                || !this.state.email
               }
               className="btn btn-primary btn-block"
               onClick={this.registerAccount.bind(this)}
@@ -484,7 +483,7 @@ const SignupExport = () => {
 
     render(
       <SignupForm messages={props.messages} />,
-      document.getElementById('signup-form')
+      document.getElementById('signup-form'),
     );
   }
 };

@@ -15,7 +15,7 @@ class TwoFAForm extends React.Component {
       qrcode_url: '',
       secret_key: this.props.user.record.secret_key,
       verification_code: '',
-      verification_response: ''
+      verification_response: '',
     };
 
     this.start2fa = this.start2fa.bind(this);
@@ -25,7 +25,7 @@ class TwoFAForm extends React.Component {
 
   handleUpdate(event) {
     this.setState({
-      verification_code: event.target.value
+      verification_code: event.target.value,
     });
   }
 
@@ -35,16 +35,16 @@ class TwoFAForm extends React.Component {
     axios
       .post('/verify_code_and_save', {
         verification_code: this.state.verification_code,
-        id: this.props.user.id
+        id: this.props.user.id,
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.status === 'success') {
           window.location.replace('/');
         } else {
           toastr.error(response.data.message);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -55,9 +55,9 @@ class TwoFAForm extends React.Component {
 
     axios
       .post('/start2fa', {
-        id: this.props.user.record.id
+        id: this.props.user.record.id,
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.status === 'error') {
           console.log('There was an error');
         } else if (response.data.status === 'success') {
@@ -68,15 +68,15 @@ class TwoFAForm extends React.Component {
             }
             self.setState({
               authentication_requested: true,
-              qrcode_url: imageData
+              qrcode_url: imageData,
             });
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         self.setState({
-          response_message: 'There was an error'
+          response_message: 'There was an error',
         });
       });
   }
@@ -157,9 +157,9 @@ class TwoFAForm extends React.Component {
 
     return (
       <div>
-        {this.state.secret_key != null &&
-        this.state.secret_key !== '' &&
-        this.state.twofa_completed === true ? (
+        {this.state.secret_key != null
+        && this.state.secret_key !== ''
+        && this.state.twofa_completed === true ? (
           <div>
             Your already have a secret key on file
             <br />
@@ -167,13 +167,13 @@ class TwoFAForm extends React.Component {
             <br />
             {this.state.verification_response}
           </div>
-        ) : (
+          ) : (
           <div>
             {this.state.authentication_requested === true
               ? qrcodeToScan
               : registrationForm}
           </div>
-        )}
+          )}
       </div>
     );
   }
@@ -186,7 +186,7 @@ const TwofaExport = () => {
 
     render(
       <TwoFAForm user={props.user} messages={props.messages} />,
-      document.getElementById('2fa-setup-area')
+      document.getElementById('2fa-setup-area'),
     );
   }
 };
