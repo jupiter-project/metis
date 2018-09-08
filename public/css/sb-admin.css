@@ -66,18 +66,22 @@ body.fixed-nav #content-wrapper {
   margin-top: 56px;
   padding-left: 90px;
   padding-bottom: 0px;
+  padding-bottom: 60px;
 }
 
 body.fixed-nav.sidebar-toggled #content-wrapper {
   padding-left: 0;
+  padding-bottom: 60px;
 }
 
 @media (min-width: 768px) {
   body.fixed-nav #content-wrapper {
     padding-left: 225px;
+    padding-bottom: 60px;
   }
   body.fixed-nav.sidebar-toggled #content-wrapper {
     padding-left: 90px;
+    padding-bottom: 60px;
   }
 }
 
@@ -95,18 +99,22 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 body.fixed-nav #content-wrapper {
   margin-top: 56px;
   padding-left: 90px;
+  padding-bottom: 60px;
 }
 
 body.fixed-nav.sidebar-toggled #content-wrapper {
   padding-left: 0;
+  padding-bottom: 60px;
 }
 
 @media (min-width: 768px) {
   body.fixed-nav #content-wrapper {
     padding-left: 225px;
+    padding-bottom: 60px;
   }
   body.fixed-nav.sidebar-toggled #content-wrapper {
     padding-left: 90px;
+    padding-bottom: 60px;
   }
 }
 
@@ -181,6 +189,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .navbar-custom a.dropdown-item:active, .navbar-custom a.dropdown-item:focus, .navbar-custom a.dropdown-item:hover {
   color: rgba(0, 0, 0, 0.6);
+  background-color: transparent;
 }
 
 .navbar-nav .form-inline .input-group {

@@ -211,7 +211,7 @@ export default class ApplicationLayout extends React.Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  Select"Logout" below if you are ready to end your current
+                  Select "Logout" below if you are ready to end your current
                   session.
                 </div>
                 <div className="modal-footer">

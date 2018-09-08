@@ -52,19 +52,23 @@ body.fixed-nav {
     margin-top: $navbar-base-height;
     padding-left: $sidebar-collapsed-width;
     padding-bottom: 0px;
+    padding-bottom: $sticky-footer-height;
   }
   &.sidebar-toggled {
     #content-wrapper {
       padding-left: 0;
+      padding-bottom: $sticky-footer-height;
     }
   }
   @media (min-width: 768px) {
     #content-wrapper {
       padding-left: $sidebar-base-width;
+      padding-bottom: $sticky-footer-height;
     }
     &.sidebar-toggled {
       #content-wrapper {
         padding-left: $sidebar-collapsed-width;
+        padding-bottom: $sticky-footer-height;
       }
     }
   }
@@ -84,19 +88,23 @@ body.fixed-nav {
   #content-wrapper {
     margin-top: $navbar-base-height;
     padding-left: $sidebar-collapsed-width;
+    padding-bottom: $sticky-footer-height;
   }
   &.sidebar-toggled {
     #content-wrapper {
       padding-left: 0;
+      padding-bottom: $sticky-footer-height;
     }
   }
   @media (min-width: 768px) {
     #content-wrapper {
       padding-left: $sidebar-base-width;
+      padding-bottom: $sticky-footer-height;
     }
     &.sidebar-toggled {
       #content-wrapper {
         padding-left: $sidebar-collapsed-width;
+        padding-bottom: $sticky-footer-height;
       }
     }
   }
