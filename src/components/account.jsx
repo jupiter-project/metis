@@ -15,7 +15,7 @@ class AccountComponent extends React.Component {
       saved_email: this.props.user.record.email,
       saved_firstname: this.props.user.record.firstname,
       saved_lastname: this.props.user.record.lastname,
-      submitted: false
+      submitted: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -47,7 +47,7 @@ class AccountComponent extends React.Component {
     const page = this;
 
     this.setState({
-      submitted: true
+      submitted: true,
     });
 
     axios
@@ -57,30 +57,26 @@ class AccountComponent extends React.Component {
           lastname: this.state.lastname,
           email: this.state.email,
           api_key: this.props.user.api_key,
-          public_key: this.props.public_key
-        }
+          public_key: this.props.public_key,
+        },
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.success === true) {
           page.setState({
             account_editing_mode: false,
             saved_email: page.state.email,
             saved_firstname: page.state.firstname,
             saved_lastname: page.state.lastname,
-            submitted: false
+            submitted: false,
           });
-          toastr.success(
-            'It will take a few minutes for the changes to reflect in your end'
-          );
-          toastr.success(
-            'Account update pushed to the blockchain for approval.'
-          );
+          toastr.success('It will take a few minutes for the changes to reflect in your end');
+          toastr.success('Account update pushed to the blockchain for approval.');
         } else {
           if (
-            response.data.validations != null &&
-            response.data.validations.messages != null
+            response.data.validations != null
+            && response.data.validations.messages != null
           ) {
-            response.data.validations.messages.map(message => {
+            response.data.validations.messages.map((message) => {
               toastr.error(message);
               return null;
             });
@@ -88,7 +84,7 @@ class AccountComponent extends React.Component {
           toastr.error(response.data.message);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         toastr.error('There was an error');
       });
@@ -233,7 +229,7 @@ const AccountExport = () => {
 
     render(
       <AccountComponent user={props.user} messages={props.messages} />,
-      document.getElementById('account-section')
+      document.getElementById('account-section'),
     );
   }
 };

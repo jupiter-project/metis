@@ -1,4 +1,3 @@
-
 const axios = require('axios');
 const crypto = require('crypto');
 const events = require('events');
@@ -37,7 +36,11 @@ class Gravity {
       self.loadAppData()
         .then((response) => {
           if (returnType === 'console') {
-            console.log(`Database tables associated with your app ${response.app.appData.name} (${response.app.address})`);
+            console.log(
+              `Database tables associated with your app ${
+                response.app.appData.name
+              } (${response.app.address})`,
+            );
             console.log(response.tables);
             console.log('If you wish to show table details, run "npm run gravity:db"');
             console.log('If you wish to add a new table, run "npm run gravity:db:add"');
@@ -235,10 +238,8 @@ class Gravity {
           const tableData = [];
           /* Object.keys(currentList).forEach((i) => {
             const thisKey = currentList[i];
-
             // We need to sort the the list we are about to call
             self.sortBySubkey(tablesRetrieved[thisKey], thisKey, 'date');
-
             // Once we do this, we can obtain the last record and push to the tableData variable
             // NOTE: We'll expand validation of tables in future releases
             tableData.push(tablesRetrieved[thisKey][0]);

@@ -7,8 +7,8 @@ function getBalance(secret, address, apiKey, publicKey) {
   const config = {
     headers: {
       user_api_key: apiKey,
-      user_public_key: publicKey
-    }
+      user_public_key: publicKey,
+    },
   };
 
   return new Promise((resolve, reject) => {
@@ -16,26 +16,26 @@ function getBalance(secret, address, apiKey, publicKey) {
       .post(
         '/admin/api/tables/balance',
         {
-          account: secret
+          account: secret,
         },
-        config
+        config,
       )
-      .then(response => {
+      .then((response) => {
         if (response.data.success === true) {
           resolve(response.data);
         } else {
           console.log(response.data);
           reject({
             success: false,
-            message: `Error obtaining balance of ${address}`
+            message: `Error obtaining balance of ${address}`,
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         reject({
           success: false,
-          message: `Error obtaining balance of ${address}`
+          message: `Error obtaining balance of ${address}`,
         });
       });
   });
@@ -49,7 +49,7 @@ class TableComponent extends React.Component {
       name: Object.keys(this.props.table),
       balance: 0,
       low_balance: true,
-      show_passphrase: false
+      show_passphrase: false,
     };
   }
 
@@ -59,7 +59,7 @@ class TableComponent extends React.Component {
 
   showPassphrase() {
     this.setState({
-      show_passphrase: !this.state.show_passphrase
+      show_passphrase: !this.state.show_passphrase,
     });
   }
 
@@ -74,20 +74,20 @@ class TableComponent extends React.Component {
       data.passphrase,
       data.address,
       user.record.api_key,
-      data.public_key
+      data.public_key,
     )
-      .then(response => {
+      .then((response) => {
         if (response.success) {
           self.setState({
             balance: response.balances ? response.balances.balance : 0,
-            low_balance: !response.balances.minimumTableBalance
+            low_balance: !response.balances.minimumTableBalance,
           });
         } else {
           console.log(response);
           toastr.error('There was an error loading app address balance');
         }
       })
-      .catch(error => {
+      .catch((error) => {
         toastr.error(error.message);
       });
   }
@@ -115,7 +115,7 @@ class TableComponent extends React.Component {
               </td>
 
               <td>
-                <span>{this.state.balance / 10 ** 8} JUP</span>
+                <span>{this.state.balance / (10 ** 8)} JUP</span>
               </td>
 
               <td>
@@ -137,7 +137,7 @@ class TableComponent extends React.Component {
             className="card-body w-100"
             style={{
               borderRight: '4px solid lightgray',
-              borderLeft: '4px solid lightgray'
+              borderLeft: '4px solid lightgray',
             }}
           >
             <div className="text-left">
@@ -190,7 +190,7 @@ class AdminComponent extends React.Component {
       tables: [],
       application: {},
       balances: {},
-      loading: true
+      loading: true,
     };
   }
 
@@ -206,19 +206,19 @@ class AdminComponent extends React.Component {
       user.record.secret,
       user.record.account,
       user.record.api_key,
-      this.props.public_key
+      this.props.public_key,
     )
-      .then(response => {
+      .then((response) => {
         if (response.success) {
           self.setState({
-            balances: response.balances
+            balances: response.balances,
           });
         } else {
           console.log(response);
           toastr.error('There was an error loading app address balance');
         }
       })
-      .catch(error => {
+      .catch((error) => {
         toastr.error(error.message);
       });
   }
@@ -229,13 +229,13 @@ class AdminComponent extends React.Component {
     const config = {
       headers: {
         user_api_key: this.props.user ? this.props.user.record.api_key : null,
-        user_public_key: this.props.public_key
-      }
+        user_public_key: this.props.public_key,
+      },
     };
 
     axios
       .get('/admin/api/app', config)
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         if (response.data.success === true) {
           page.setState({
@@ -244,13 +244,13 @@ class AdminComponent extends React.Component {
               response.data.application && response.data.application.tables
                 ? response.data.application.tables
                 : [],
-            loading: false
+            loading: false,
           });
         } else {
           toastr.error("Error obtaining your app's data");
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         toastr.error('There was an error');
       });
@@ -261,34 +261,34 @@ class AdminComponent extends React.Component {
     const config = {
       headers: {
         user_api_key: this.props.user ? this.props.user.record.api_key : null,
-        user_public_key: this.props.public_key
-      }
+        user_public_key: this.props.public_key,
+      },
     };
 
     page.setState({
-      loading: true
+      loading: true,
     });
 
     axios
       .get(`/admin/api/${table}`, config)
-      .then(response => {
+      .then((response) => {
         if (response.data.success === true) {
           page.setState({
             records: response.data.records,
             params: response.data.params,
-            loading: false
+            loading: false,
           });
         } else {
           page.setState({
             records: [],
             params: [],
-            loading: false
+            loading: false,
           });
 
           if (
-            response.data.error &&
-            response.data.error === 'table-not-found' &&
-            page.state.tables.length > 0
+            response.data.error
+            && response.data.error === 'table-not-found'
+            && page.state.tables.length > 0
           ) {
             toastr.error('Table in database but app has no model file for it!');
           } else {
@@ -296,7 +296,7 @@ class AdminComponent extends React.Component {
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         toastr.error('There was an error');
       });
@@ -335,13 +335,13 @@ class AdminComponent extends React.Component {
                   <p>
                     <strong>Current balance: </strong>
                     {state.balances && state.balances.balance
-                      ? state.balances.balance / 10 ** 8
+                      ? state.balances.balance / (10 ** 8)
                       : 0}
                     JUP
                     <br />
                     <strong>Required app balance: </strong>
                     {state.balances && state.balances.minAppBalanceAmount
-                      ? state.balances.minAppBalanceAmount / 10 ** 8
+                      ? state.balances.minAppBalanceAmount / (10 ** 8)
                       : 0}
                     JUP
                   </p>
@@ -358,7 +358,7 @@ class AdminComponent extends React.Component {
                 <p className="mb-0">
                   <strong>Required Table balance: </strong>
                   {state.balances && state.balances.minTableBalanceAmount
-                    ? state.balances.minTableBalanceAmount / 10 ** 8
+                    ? state.balances.minTableBalanceAmount / (10 ** 8)
                     : 0}
                   JUP
                 </p>
@@ -389,7 +389,7 @@ const AdminDashboardComponentExport = () => {
         validation={props.validation}
         public_key={props.public_key}
       />,
-      document.getElementById('app-admin-dashboard')
+      document.getElementById('app-admin-dashboard'),
     );
   }
 };

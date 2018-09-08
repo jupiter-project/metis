@@ -4,7 +4,7 @@ export default class ApplicationLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_exists: this.props.data.user != null || false
+      user_exists: this.props.data.user != null || false,
     };
   }
 
@@ -73,7 +73,7 @@ export default class ApplicationLayout extends React.Component {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <a className="nav-link" href="/signup">
-                  Sign up
+                  Sign Up
                 </a>
               </li>
               <li className="nav-item">

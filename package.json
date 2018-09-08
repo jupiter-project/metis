@@ -5,7 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "node server.js",
+    "test": "echo \"Error: no test specified yet\" && exit 0",
     "start": "webpack && node server.js",
     "gravity:db": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.loadTables('console');\"",
     "gravity:db:create": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.createAppDatabase();\"",

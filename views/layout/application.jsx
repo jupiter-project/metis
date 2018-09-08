@@ -4,17 +4,13 @@ export default class ApplicationLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_exists: this.props.data.user != null || false
+      user_exists: this.props.data.user != null || false,
     };
   }
 
   render() {
     const linksList = (
       <li className="nav-item">
-        <a className="nav-link" href="/coins">
-          <i className="fa fa-table  fa-fw pr-1" />
-          <span>Coins</span>
-        </a>
         {false && 'Generated plop links go here'}
       </li>
     );
@@ -87,7 +83,7 @@ export default class ApplicationLayout extends React.Component {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <a className="nav-link" href="/signup">
-                  <span>Sign up</span>
+                  <span>Sign Up</span>
                 </a>
               </li>
               <li className="nav-item">
@@ -103,7 +99,7 @@ export default class ApplicationLayout extends React.Component {
               <li className="nav-item">
                 <a className="nav-link" href="/signup">
                   <i className="fa  fa-fw pr-1 fa-user-plus" />{' '}
-                  <span>Sign up</span>
+                  <span>Sign Up</span>
                 </a>
               </li>
               <li className="nav-item">
@@ -153,12 +149,12 @@ export default class ApplicationLayout extends React.Component {
                   <div className="copyright text-center my-auto">
                     {process.env.APPNAME ? (
                       <div>
-                        <div>Copyright © YourBrand 2018</div>
+                        <div>Copyright © 2018 YourBrand</div>
                         <div className="mt-2 small">powered by Gravity</div>
                       </div>
                     ) : (
                       <div>
-                        <div>Copyright © Sigwo Technologies 2018</div>
+                        <div>Copyright © 2018 Sigwo Technologies</div>
                         <div className="mt-2 small">powered by Gravity</div>
                       </div>
                     )}
@@ -194,23 +190,25 @@ export default class ApplicationLayout extends React.Component {
         <div id="content-wrapper">
           <div className="container-fluid">
             <div>{this.props.children}</div>
-            {/*<footer className="sticky-footer">
-              <div className="container-fluid my-auto">
-                <div className="copyright text-center my-auto">
-                  {process.env.APPNAME ? (
-                    <div>
-                      <div>Copyright © YourBrand 2018</div>
-                      <div className="mt-2 small">powered by Gravity</div>
-                    </div>
-                  ) : (
-                    <div>
-                      <div>Copyright © Sigwo Technologies 2018</div>
-                      <div className="mt-2 small">powered by Gravity</div>
-                    </div>
-                  )}
+            <div className="fixed-bottom">
+              <footer className="sticky-footer">
+                <div className="container-fluid my-auto">
+                  <div className="copyright text-center my-auto">
+                    {process.env.APPNAME ? (
+                      <div>
+                        <div>Copyright © 2018 YourBrand</div>
+                        <div className="mt-2 small">powered by Gravity</div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div>Copyright © 2018 Sigwo Technologies</div>
+                        <div className="mt-2 small">powered by Gravity</div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </footer>*/}
+              </footer>
+            </div>
           </div>
         </div>
       </div>
