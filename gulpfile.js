@@ -1,12 +1,8 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
-var pug = require('gulp-pug');
-var beautify = require('gulp-html-beautify');
-var pkg = require('./package.json');
 
 // Copy third party libraries from /node_modules into /vendor
 gulp.task('vendor', function() {
