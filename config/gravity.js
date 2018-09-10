@@ -1341,12 +1341,12 @@ class Gravity {
 
       rl.question('Please provide an encryption password for your Jupiter data:\n', (answer2) => {
         password = answer2;
-        rl.question('What is the URL of your Jupiter server? Do not use IP unless you also use the port!\n', (answer) => {
+        rl.question('What is the URL/IP of your Jupiter server? Do not use IP unless you also use the port!\n', (answer) => {
           server = answer;
           const currentData = {
             'Name of the app': appname,
-            'Password  for encryption': password,
-            'Jupiter Server': server,
+            'Password for encryption': password,
+            'Jupiter server': server,
           };
           console.log('Please verify the data you entered:');
           console.log(currentData);
@@ -1393,9 +1393,9 @@ class Gravity {
                       if (error) {
                         return console.log(error);
                       }
-                      console.log('\nSuccess! .gravity and .env files generated!');
-                      console.log('\nPlease write down a 12-word passphrase and account address assigned to your app as well as the password assigned for encryption (See .env or .gravity files). If you lose your passphrase or your encryption password, you will lose access to all your saved data.');
-                      console.log('\nIn order to begin saving information into the Jupiter blockchain, you will need to obtain Jupiter tokens from: https://exchange.darcr.us.');
+                      console.log('\nSuccess! .gravity.js and .env files generated!');
+                      console.log('\nPlease write down the 12-word passphrase and account address assigned to your app as well as the password assigned for encryption (See .env or .gravity.js files). If you lose your passphrase or your encryption password, you will lose access to all saved data.');
+                      console.log('\nIn order to begin saving information into the Jupiter blockchain, you will need to obtain Jupiter tokens from https://exchange.darcr.us.');
                       rl.close();
                       return null;
                     });
