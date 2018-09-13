@@ -27,6 +27,11 @@ body {
   height: 100%;
 }
 
+.btn:focus, .btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
 .btn-primary {
   background-color: #26313d;
   border: none;

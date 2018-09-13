@@ -8,10 +8,10 @@ class GravityPage extends React.Component {
         <div className="page-title">Welcome to your Gravity App</div>
 
         <div className="row">
-          <div className="col-md-6 mx-auto col-xs-12">
+          <div className="mx-auto">
             <div className="card">
               <div className="card-header bg-custom text-light h5">
-                Application Status
+                App Status
               </div>
               <div className="card-body">
                 <div className="table-responsive">
@@ -22,7 +22,7 @@ class GravityPage extends React.Component {
                   >
                     <tbody>
                       <tr>
-                        <td>Application Passphrase</td>
+                        <td>App Passphrase</td>
                         <td
                           className={
                             this.props.requirements.passphrase
@@ -36,7 +36,7 @@ class GravityPage extends React.Component {
                         </td>
                       </tr>
                       <tr>
-                        <td>Application Address</td>
+                        <td>App Address</td>
                         <td
                           className={
                             this.props.requirements.address
@@ -50,7 +50,7 @@ class GravityPage extends React.Component {
                         </td>
                       </tr>
                       <tr>
-                        <td>Application Public Key</td>
+                        <td>App Public Key</td>
                         <td
                           className={
                             this.props.requirements.public_key
@@ -64,7 +64,7 @@ class GravityPage extends React.Component {
                         </td>
                       </tr>
                       <tr>
-                        <td>Application Data Encryption</td>
+                        <td>App Data Encryption</td>
                         <td
                           className={
                             this.props.requirements.encryption

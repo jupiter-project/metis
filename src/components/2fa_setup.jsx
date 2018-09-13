@@ -94,7 +94,7 @@ class TwoFAForm extends React.Component {
               </p>
               <p>
                 Once you have enabled two-factor authentication, you will need
-                to provide a verification code every time you wish to login.
+                to provide a verification code every time you wish to log in.
               </p>
 
               <br />
