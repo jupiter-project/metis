@@ -7,9 +7,7 @@ class GravityPage extends React.Component {
       <ApplicationLayout data={this.props}>
         <div className="page-title">Welcome to your Gravity App</div>
 
-        <div className="row">
-          <div className="mx-auto">
-            <div className="card">
+            <div className="card card-register mx-auto">
               <div className="card-header bg-custom text-light h5">
                 App Status
               </div>
@@ -82,8 +80,6 @@ class GravityPage extends React.Component {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
       </ApplicationLayout>
     );
   }

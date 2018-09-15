@@ -27,21 +27,44 @@ body {
   height: 100%;
 }
 
-.btn:focus, .btn:active {
+/* .btn:focus, .btn:active {
   outline: none !important;
   box-shadow: none;
 }
 
 .btn-primary {
-  background-color: #26313d;
+  background-color: $custom-primary;
   border: none;
   outline: none;
+  &:hover,
+  &:active {
+    background-color: darken($custom-primary, 10);
+    border: none;
+    outline: none;
+  }
+} */
+.btn {
+  border: 0 none;
 }
 
-.btn-primary:hover, .btn-primary:active {
-  background-color: #12181e;
+.btn:focus, .btn:active:focus, .btn.active:focus {
+  outline: 0 none;
+}
+
+.btn-primary {
+  background: #26313d;
+  color: #ffffff;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+  background: #12181e;
+  box-shadow: none;
   border: none;
-  outline: none;
+}
+
+.btn-primary:active, .btn-primary.active {
+  background: #12181e;
+  box-shadow: none;
 }
 
 .bg-custom {
@@ -243,6 +266,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 }
 
 .sidebar {
+  display: none;
   width: 90px !important;
   background-color: #495057;
   min-height: calc(100vh - 56px);
@@ -295,6 +319,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 @media (min-width: 768px) {
   .sidebar {
+    display: flex;
     width: 225px !important;
   }
   .sidebar .nav-item .nav-link {
@@ -345,6 +370,31 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   .sidebar.toggled .nav-item.dropdown .dropdown-toggle::after {
     display: none;
   }
+}
+
+#mobile-menu {
+  z-index: 1000;
+  position: absolute;
+  width: 100%;
+  background: #495057;
+}
+
+#mobile-menu .nav-item .nav-link {
+  padding-left: 20px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#mobile-menu .nav-item .nav-link:active, #mobile-menu .nav-item .nav-link:focus, #mobile-menu .nav-item .nav-link:hover {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #868e96;
+}
+
+#mobile-menu a {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#mobile-menu a:active, #mobile-menu a:focus, #mobile-menu a:hover {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .sidebar.fixed-top {
