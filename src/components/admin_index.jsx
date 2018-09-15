@@ -101,24 +101,21 @@ class TableComponent extends React.Component {
         <table className="table mb-0" style={{ border: '1px solid lightgray' }}>
           <tbody>
             <tr>
-              <td>
-                <a
-                  className="footer-link text-primary"
-                  href="#"
-                  onClick={() => this.setState({ open: !this.state.open })}
-                  data-toggle="collapse"
-                  data-target={`#collapse-${this.state.name}`}
-                  aria-controls={`collapse-${this.state.name}`}
-                >
-                  {this.state.name}
-                </a>
+              <td 
+                onClick={() => this.setState({ open: !this.state.open })}
+                data-toggle="collapse"
+                data-target={`#collapse-${this.state.name}`}
+                aria-controls={`collapse-${this.state.name}`}
+                className="w-25"
+              >
+                  {this.state.open ? <i className="fa fa-fw fa-minus small" /> : <i className="fa fa-fw fa-plus small" />} <strong>{this.state.name}</strong>
               </td>
 
-              <td>
-                <span>{this.state.balance / (10 ** 8)} JUP</span>
+              <td className="w-50">
+                <strong>{this.state.balance / (10 ** 8)} JUP</strong>
               </td>
 
-              <td>
+              <td className="w-25">
                 <span
                   className={state.low_balance ? 'text-danger' : 'text-success'}
                 >
@@ -318,33 +315,35 @@ class AdminComponent extends React.Component {
       <div className="">
         <div className="page-title">App Summary</div>
         <div className="container">
-          <div className="row">
-            <div className="col-xs-12 col-md-6">
-              <div className="card card-plain">
-                <div className="card-body">
-                  <h6>App Address:</h6>
-                  <span className="bg-warning rounded p-1">
-                    {props.user.record.account}
-                  </span>
+          <div className="card card-plain">
+            <div className="row">
+              <div className="col-xs-12 col-md-6">
+                <div className="card card-plain">
+                  <div className="card-body">
+                    <h6>App Address:</h6>
+                    <span className="bg-warning rounded p-1">
+                      {props.user.record.account}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-xs-12 col-md-6">
-              <div className="card card-plain">
-                <div className="card-body text-right">
-                  <p>
-                    <strong>Current balance: </strong>
-                    {state.balances && state.balances.balance
-                      ? state.balances.balance / (10 ** 8)
-                      : 0}
-                    JUP
-                    <br />
-                    <strong>Required app balance: </strong>
-                    {state.balances && state.balances.minAppBalanceAmount
-                      ? state.balances.minAppBalanceAmount / (10 ** 8)
-                      : 0}
-                    JUP
-                  </p>
+              <div className="col-xs-12 col-md-6">
+                <div className="card card-plain">
+                  <div className="card-body text-right">
+                    <p>
+                      <strong>Current balance: </strong>
+                      {state.balances && state.balances.balance
+                        ? state.balances.balance / (10 ** 8)
+                        : 0}
+                      JUP
+                      <br />
+                      <strong>Required app balance: </strong>
+                      {state.balances && state.balances.minAppBalanceAmount
+                        ? state.balances.minAppBalanceAmount / (10 ** 8)
+                        : 0}
+                      JUP
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

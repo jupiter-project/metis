@@ -39,7 +39,7 @@ export default class ApplicationLayout extends React.Component {
         </a>
 
         <button
-          className="btn btn-link btn-sm text-white d-block d-lg-none ml-auto"
+          className="btn btn-link btn-sm text-white d-block d-md-none ml-auto"
           href="/#"
           data-toggle="collapse"
           data-target="#mobile-menu"
