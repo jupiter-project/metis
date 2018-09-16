@@ -436,10 +436,10 @@ class SignupForm extends React.Component {
         ) : (
           <div>
             <div className="form-group">
-              <strong>This app is based on blockchain technology.</strong> The
-              blockchain <strong>will generate</strong> an account for you with
-              a secure passphrase. This <strong>12-word</strong> passphrase
-              should be written down <strong>carefully</strong> and kept in a
+              This app is based on blockchain technology. The
+              blockchain will generate an account for you with
+              a secure passphrase. This 12-word passphrase
+              should be written down carefully and kept in a
               safe place. If you lose your passphrase, you will permanently lose
               access to your account, there is no way to recover it.
             </div>
@@ -451,9 +451,9 @@ class SignupForm extends React.Component {
             <div className="form-group">
               Click on the button below to start.
             </div>
-            <div className="form-group">
+            <div className="form-group text-center">
               <button
-                className="btn btn-primary btn-block"
+                className="btn btn-primary"
                 onClick={this.generatePassphrase.bind(this)}
               >
                 Create Passphrase
