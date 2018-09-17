@@ -38381,7 +38381,7 @@ var AccountComponent = function (_React$Component) {
             saved_lastname: page.state.lastname,
             submitted: false
           });
-          _toastr2.default.success('It will take a few minutes for the changes to reflect in your end');
+          // toastr.success('It will take a few minutes for the changes to reflect in your end');
           _toastr2.default.success('Account update pushed to the blockchain for approval.');
         } else {
           if (response.data.validations != null && response.data.validations.messages != null) {
