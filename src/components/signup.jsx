@@ -405,14 +405,15 @@ class SignupForm extends React.Component {
     );
 
     const passphraseConfirmationPage = (
-      <div className="jupiter-form-confirmation">
+      <form className="jupiter-form-confirmation">
         <div className="form-group">
           <div className="text-center">{this.state.confirmation_message}</div>
         </div>
         <div className="form-group" id="jup-confirm">
           Please enter your passphrase to confirm it.
           <input
-            type="text"
+            type="password"
+            autoComplete="confirm-password"
             className="form-control"
             value={this.state.passphrase_confirmation}
             onChange={this.handleChange.bind(this, 'passphrase_confirm')}
@@ -426,7 +427,7 @@ class SignupForm extends React.Component {
             Submit
           </button>
         </div>
-      </div>
+      </form>
     );
 
     const signupForm = (
