@@ -250,32 +250,32 @@ class SignupForm extends React.Component {
               <input
                 type="hidden"
                 name="account"
-                value={this.state.account_object.account}
+                defaultValue={this.state.account_object.account}
               />
               <input
                 type="hidden"
                 name="accounthash"
-                value={this.state.account_object.account}
+                defaultValue={this.state.account_object.account}
               />
               <input
                 type="hidden"
                 name="twofa_enabled"
-                value={this.state.enable_two_fa}
+                defaultValue={this.state.enable_two_fa}
               />
               <input
                 type="hidden"
                 name="public_key"
-                value={this.state.public_key}
+                defaultValue={this.state.public_key}
               />
               <input
                 type="hidden"
                 name="key"
-                value={this.state.generated_passphrase}
+                defaultValue={this.state.generated_passphrase}
               />
               <input
                 type="hidden"
                 name="jup_account_id"
-                value={this.state.account_object.jup_account_id}
+                defaultValue={this.state.account_object.jup_account_id}
               />
             </div>
 
@@ -405,14 +405,15 @@ class SignupForm extends React.Component {
     );
 
     const passphraseConfirmationPage = (
-      <div className="jupiter-form-confirmation">
+      <form className="jupiter-form-confirmation">
         <div className="form-group">
           <div className="text-center">{this.state.confirmation_message}</div>
         </div>
         <div className="form-group" id="jup-confirm">
           Please enter your passphrase to confirm it.
           <input
-            type="text"
+            type="password"
+            autoComplete="confirm-password"
             className="form-control"
             value={this.state.passphrase_confirmation}
             onChange={this.handleChange.bind(this, 'passphrase_confirm')}
@@ -426,7 +427,7 @@ class SignupForm extends React.Component {
             Submit
           </button>
         </div>
-      </div>
+      </form>
     );
 
     const signupForm = (
