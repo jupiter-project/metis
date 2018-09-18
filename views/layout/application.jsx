@@ -417,7 +417,7 @@ export default class ApplicationLayout extends React.Component {
                   >
                     Cancel
                   </button>
-                  <a className="btn btn-primary" href="/logout">
+                  <a className="btn btn-custom" href="/logout">
                     Log out
                   </a>
                 </div>

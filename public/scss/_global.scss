@@ -11,51 +11,19 @@ html {
 
 body {
   height: 100%;
+
 }
 
-/* .btn:focus, .btn:active {
-  outline: none !important;
-  box-shadow: none;
-}
-
-.btn-primary {
-  background-color: $custom-primary;
-  border: none;
+input[type="text"], input[type="password"], input[type="radio"], textarea {
   outline: none;
-  &:hover,
-  &:active {
-    background-color: darken($custom-primary, 10);
-    border: none;
-    outline: none;
-  }
-} */
+  box-shadow:none !important;
+  border:1px solid #ccc !important;
+}
 
-.btn {
-    //padding: 14px 24px;
-    border: 0 none;
-    //font-weight: 700;
-    //letter-spacing: 1px;
-    //text-transform: uppercase;
-}
- 
-.btn:focus, .btn:active:focus, .btn.active:focus {
-    outline: 0 none;
-}
- 
-.btn-primary {
-    background: $custom-primary;
-    color: #ffffff;
-}
- 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
-    background: darken($custom-primary, 10);
-    box-shadow: none;
-    border: none;
-}
- 
-.btn-primary:active, .btn-primary.active {
-    background: darken($custom-primary, 10);
-    box-shadow: none;
+button, a, button.close, .btn-link {
+  outline: none;
+  box-shadow:none !important;
+  border:none !important;
 }
 
 .bg-custom {

@@ -99,7 +99,7 @@ class TwoFAForm extends React.Component {
 
               <br />
               <button
-                className="btn btn-primary"
+                className="btn btn-custom"
                 onClick={this.start2fa.bind(this)}
               >
                 Enable Two-factor Authentication
@@ -132,7 +132,7 @@ class TwoFAForm extends React.Component {
           <br />
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-custom"
             onClick={this.verifyCode.bind(this)}
           >
             Verify code

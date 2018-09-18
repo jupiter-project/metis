@@ -291,11 +291,11 @@ class SignupForm extends React.Component {
             </div>
           </div>
 
-          <div>
+          <div className="text-center">
             {this.state.account !== ' ' && (
               <button
                 value="Complete registration"
-                className="btn btn-primary btn-block"
+                className="btn btn-custom"
               >
                 Complete Registration
               </button>
@@ -372,28 +372,28 @@ class SignupForm extends React.Component {
           </div>
         </div>
         {this.state.jup_account_created === true ? (
-          <div className="form-group">
+          <div className="form-group text-center">
             <button
               disabled={
                 !this.state.firstname
                 || !this.state.lastname
                 || !this.state.email
               }
-              className="btn btn-primary btn-block"
+              className="btn btn-custom"
               onClick={this.confirmedPassphrase.bind(this)}
             >
               Submit
             </button>
           </div>
         ) : (
-          <div className="form-group">
+          <div className="form-group text-center">
             <button
               disabled={
                 !this.state.firstname
                 || !this.state.lastname
                 || !this.state.email
               }
-              className="btn btn-primary btn-block"
+              className="btn btn-custom"
               onClick={this.registerAccount.bind(this)}
             >
               Continue
@@ -419,9 +419,9 @@ class SignupForm extends React.Component {
             onChange={this.handleChange.bind(this, 'passphrase_confirm')}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group text-center">
           <button
-            className="btn btn-primary btn-block"
+            className="btn btn-custom"
             onClick={this.confirmPassphrase.bind(this)}
           >
             Submit
@@ -454,7 +454,7 @@ class SignupForm extends React.Component {
             </div>
             <div className="form-group text-center">
               <button
-                className="btn btn-primary"
+                className="btn btn-custom"
                 onClick={this.generatePassphrase.bind(this)}
               >
                 Create Passphrase
