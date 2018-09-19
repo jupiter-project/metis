@@ -17,7 +17,7 @@ export default class ApplicationLayout extends React.Component {
 
     const loggedHeader = (
       <nav className="navbar navbar-expand navbar-custom static-top">
-        <a className="navbar-brand" href="/gravity">
+        <a className="navbar-brand" href="/">
           {process.env.APPNAME ? (
             <div>
               <i className="fa fa-fw fa-globe" alt="yourBrand" />
@@ -126,14 +126,14 @@ export default class ApplicationLayout extends React.Component {
                 <a className="nav-link" href="/signup">
                   <i className="fa fa-fw fa-user-plus" />
                   {' '}
-                  <span>Sign Up</span>
+                  <span>Sign up</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/login">
                   <i className="fa fa-fw fa-sign-in" />
                   {' '}
-                  <span>Log in</span>
+                  <span>Login</span>
                 </a>
               </li>
             </ul>
@@ -253,10 +253,10 @@ export default class ApplicationLayout extends React.Component {
       <div id="wrapper">
         <ul className="sidebar navbar-nav d-none d-lg-block">
           <li className="nav-item">
-            <a className="nav-link" href="https://docs.gravity.com">
+            <a className="nav-link" href="https://docs.sigwo.com">
               <i className="fa fa-fw fa-file" />
               {' '}
-              <span>Documents</span>
+              <span>Documentation</span>
             </a>
           </li>
           <li className="nav-item">
@@ -275,10 +275,10 @@ export default class ApplicationLayout extends React.Component {
           <ul className="navbar-nav d-block d-lg-none text-left">
             <ul className="nav flex-column">
               <li className="nav-item">
-                <a className="nav-link" href="https://docs.gravity.com">
+                <a className="nav-link" href="https://docs.sigwo.com">
                   <i className="fa fa-fw fa-file" />
                   {' '}
-                  <span>Documents</span>
+                  <span>Documentation</span>
                 </a>
               </li>
               <li className="nav-item">
@@ -302,7 +302,7 @@ export default class ApplicationLayout extends React.Component {
                 <a className="nav-link" href="/login">
                   <i className="fa fa-fw fa-sign-in" />
                   {' '}
-                  <span>Log in</span>
+                  <span>Login</span>
                 </a>
               </li>
             </ul>

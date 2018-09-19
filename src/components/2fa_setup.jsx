@@ -89,11 +89,11 @@ class TwoFAForm extends React.Component {
             <div className="">
               <p>
                 You have indicated you would like to add an extra layer of
-                security to your account via two-factor authentication. If you
+                security to your account via Two-Factor Authentication. If you
                 would like to proceed, please click on the button below.
               </p>
               <p>
-                Once you have enabled two-factor authentication, you will need
+                Once you have enabled Two-Factor Authentication, you will need
                 to provide a verification code every time you wish to log in.
               </p>
 
@@ -102,7 +102,7 @@ class TwoFAForm extends React.Component {
                 className="btn btn-custom"
                 onClick={this.start2fa.bind(this)}
               >
-                Enable Two-factor Authentication
+                Enable Two-Factor Authentication
               </button>
               <form method="POST" action="/update_2fa_settings">
                 <input type="hidden" name="enable_2fa" value={false} />

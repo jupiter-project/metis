@@ -46,7 +46,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const SignupPage = require('../views/signup.jsx');
 
     page = ReactDOMServer.renderToString(
-      React.createElement(SignupPage, { messages, name: 'Gravity - Create an account', dashboard: false }),
+      React.createElement(SignupPage, { messages, name: 'Gravity - Sign up', dashboard: false }),
     );
     res.send(page);
   });
