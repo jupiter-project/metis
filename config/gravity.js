@@ -924,7 +924,7 @@ class Gravity {
           })
           .catch((error) => {
             console.log(error);
-            reject({ success: false, message: 'There wass an error obtaining account Jupiter balance' });
+            reject({ success: false, message: 'There was an error obtaining account Jupiter balance' });
           });
       } else {
         account = accountId;
@@ -1047,6 +1047,8 @@ class Gravity {
               message: `Table ${tableName} pushed to the blockchain and funded.`,
               data: response.data,
               jupiter_response: response.data,
+              tables: tableList,
+              others: self.tables,
             });
           })
           .catch((err) => {
@@ -1059,16 +1061,13 @@ class Gravity {
       eventEmitter.on('address_retrieved', () => {
         const encryptedData = self.encrypt(JSON.stringify(record));
         const encryptedTableData = self.encrypt(JSON.stringify(tableListRecord));
-        // var decrypted_data = self.decrypt(encryptedData);
-        // console.log(decrypted_data);
-        // console.log(JSON.parse(decrypted_data));
 
         const callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encryptedData}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
 
 
         axios.post(callUrl)
           .then((response) => {
-            if (response.data.broadcasted != null && response.data.broadcasted === true) {
+            if (response.data.broadcasted && response.data.broadcasted === true) {
               console.log(`Table ${tableName} pushed to the blockchain and linked to your account.`);
               eventEmitter.emit('table_created');
             } else if (response.data.errorDescription != null) {
@@ -1120,15 +1119,15 @@ class Gravity {
       });
 
       eventEmitter.on('tableName_obtained', () => {
-        if (self.tables.indexOf(tableName) >= 0) {
-          console.log(`Error: Unable to save table. ${tableName} is already in the database`);
+        if (self.tables.indexOf(tableName) >= 0 || tableList.indexOf(tableName) >= 0) {
           rl.close();
+          reject(`Error: Unable to save table. ${tableName} is already in the database`);
         } else {
           passphrase = self.generate_passphrase();
 
           self.createNewAddress(passphrase)
             .then((response) => {
-              if (response.success === true && response.address.length > 0) {
+              if (response.success === true && response.address && response.address.length > 0) {
                 ({ address } = response);
                 record = {
                   [tableName]: {
@@ -1145,23 +1144,25 @@ class Gravity {
 
                 eventEmitter.emit('address_retrieved');
               } else {
-                console.log('There was an error');
                 console.log(response);
+                reject('There was an error');
               }
             })
             .catch((error) => {
               console.log(error);
               rl.close();
+              reject('Error creating Jupiter address for your table.');
             });
         }
       });
 
       eventEmitter.on('verified_balance', () => {
         if (gravity.APP_ACCOUNT === undefined || gravity.APP_ACCOUNT === '' || gravity.APP_ACCOUNT == null) {
-          console.log('Error: .gravity file does not contain seedphrase for app. Please provide one.');
+          rl.close();
+          reject('Error: .gravity file does not contain seedphrase for app. Please provide one.');
         } else {
           self.loadAppData()
-            .then((response) => {
+            .then(async (response) => {
               if (response.tables === undefined
                 || response.tables == null
                 || response.tables.length === 0) {
@@ -1173,14 +1174,14 @@ class Gravity {
               console.log('You are about to create a new database table for your Gravity app.');
               console.log('The following tables are already linked to your database:');
               console.log(tableList);
-              rl.question('What will be the name of your new table?\n', (answer) => {
-                tableName = answer;
-                eventEmitter.emit('tableName_obtained');
-              });
+              const answer = await rl.question('What will be the name of your new table?\n');
+              tableName = answer;
+              eventEmitter.emit('tableName_obtained');
             })
             .catch((error) => {
-              console.log('Error in creating table');
               console.log(error);
+              rl.close();
+              reject('Error in creating table');
             });
         }
       });
@@ -1191,7 +1192,7 @@ class Gravity {
             eventEmitter.emit('verified_balance');
           } else {
             console.log('Error in creating new table: insufficient app balance.');
-            console.log(`A minimum of ${parseInt((self.jupiter_data.minimumAppBalance) / (10 ** self.jupiter_data.moneyDecimals), 10)} JUP is required to create a table with Gravity.`);
+            console.log(`A minimum of ${parseFloat((self.jupiter_data.minimumAppBalance) / (10 ** self.jupiter_data.moneyDecimals))} JUP is required to create a table with Gravity.`);
             eventEmitter.emit('insufficient_balance');
           }
         })

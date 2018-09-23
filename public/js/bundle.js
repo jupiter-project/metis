@@ -12130,7 +12130,7 @@ var TwoFAForm = function (_React$Component) {
               _react2.default.createElement(
                 'p',
                 null,
-                'Once you have enabled two-factor authentication, you will need to provide a verification code every time you wish to login.'
+                'Once you have enabled two-factor authentication, you will need to provide a verification code every time you wish to log in.'
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
@@ -39114,27 +39114,28 @@ var TableComponent = function (_React$Component) {
               null,
               _react2.default.createElement(
                 'td',
-                null,
-                _react2.default.createElement(
-                  'a',
-                  {
-                    className: 'footer-link text-primary',
-                    href: '#',
-                    onClick: function onClick() {
-                      return _this2.setState({ open: !_this2.state.open });
-                    },
-                    'data-toggle': 'collapse',
-                    'data-target': '#collapse-' + this.state.name,
-                    'aria-controls': 'collapse-' + this.state.name
+                {
+                  onClick: function onClick() {
+                    return _this2.setState({ open: !_this2.state.open });
                   },
+                  'data-toggle': 'collapse',
+                  'data-target': '#collapse-' + this.state.name,
+                  'aria-controls': 'collapse-' + this.state.name,
+                  className: 'w-25'
+                },
+                this.state.open ? _react2.default.createElement('i', { className: 'fa fa-fw fa-minus small' }) : _react2.default.createElement('i', { className: 'fa fa-fw fa-plus small' }),
+                ' ',
+                _react2.default.createElement(
+                  'strong',
+                  null,
                   this.state.name
                 )
               ),
               _react2.default.createElement(
                 'td',
-                null,
+                { className: 'w-50' },
                 _react2.default.createElement(
-                  'span',
+                  'strong',
                   null,
                   this.state.balance / Math.pow(10, 8),
                   ' JUP'
@@ -39142,7 +39143,7 @@ var TableComponent = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'td',
-                null,
+                { className: 'w-25' },
                 _react2.default.createElement(
                   'span',
                   {
@@ -39378,56 +39379,60 @@ var AdminComponent = function (_React$Component2) {
           { className: 'container' },
           _react2.default.createElement(
             'div',
-            { className: 'row' },
+            { className: 'card card-plain' },
             _react2.default.createElement(
               'div',
-              { className: 'col-xs-12 col-md-6' },
+              { className: 'row' },
               _react2.default.createElement(
                 'div',
-                { className: 'card card-plain' },
+                { className: 'col-xs-12 col-md-6' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'card-body' },
+                  { className: 'card card-plain' },
                   _react2.default.createElement(
-                    'h6',
-                    null,
-                    'App Address:'
-                  ),
-                  _react2.default.createElement(
-                    'span',
-                    { className: 'bg-warning rounded p-1' },
-                    props.user.record.account
+                    'div',
+                    { className: 'card-body' },
+                    _react2.default.createElement(
+                      'h6',
+                      null,
+                      'App Address:'
+                    ),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'bg-warning rounded p-1' },
+                      props.user.record.account
+                    )
                   )
                 )
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'col-xs-12 col-md-6' },
+              ),
               _react2.default.createElement(
                 'div',
-                { className: 'card card-plain' },
+                { className: 'col-xs-12 col-md-6' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'card-body text-right' },
+                  { className: 'card card-plain' },
                   _react2.default.createElement(
-                    'p',
-                    null,
+                    'div',
+                    { className: 'card-body text-right' },
                     _react2.default.createElement(
-                      'strong',
+                      'p',
                       null,
-                      'Current balance: '
-                    ),
-                    state.balances && state.balances.balance ? state.balances.balance / Math.pow(10, 8) : 0,
-                    'JUP',
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement(
-                      'strong',
-                      null,
-                      'Required app balance: '
-                    ),
-                    state.balances && state.balances.minAppBalanceAmount ? state.balances.minAppBalanceAmount / Math.pow(10, 8) : 0,
-                    'JUP'
+                      _react2.default.createElement(
+                        'strong',
+                        null,
+                        'Current balance: '
+                      ),
+                      state.balances && state.balances.balance ? state.balances.balance / Math.pow(10, 8) : 0,
+                      'JUP',
+                      _react2.default.createElement('br', null),
+                      _react2.default.createElement(
+                        'strong',
+                        null,
+                        'Required app balance: '
+                      ),
+                      state.balances && state.balances.minAppBalanceAmount ? state.balances.minAppBalanceAmount / Math.pow(10, 8) : 0,
+                      'JUP'
+                    )
                   )
                 )
               )
@@ -40761,30 +40766,7 @@ var SignupForm = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
-            _react2.default.createElement(
-              'strong',
-              null,
-              'This app is based on blockchain technology.'
-            ),
-            ' The blockchain ',
-            _react2.default.createElement(
-              'strong',
-              null,
-              'will generate'
-            ),
-            ' an account for you with a secure passphrase. This ',
-            _react2.default.createElement(
-              'strong',
-              null,
-              '12-word'
-            ),
-            ' passphrase should be written down ',
-            _react2.default.createElement(
-              'strong',
-              null,
-              'carefully'
-            ),
-            ' and kept in a safe place. If you lose your passphrase, you will permanently lose access to your account, there is no way to recover it.'
+            'This app is based on blockchain technology. The blockchain will generate an account for you with a secure passphrase. This 12-word passphrase should be written down carefully and kept in a safe place. If you lose your passphrase, you will permanently lose access to your account, there is no way to recover it.'
           ),
           _react2.default.createElement(
             'div',
@@ -40798,11 +40780,11 @@ var SignupForm = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'form-group' },
+            { className: 'form-group text-center' },
             _react2.default.createElement(
               'button',
               {
-                className: 'btn btn-primary btn-block',
+                className: 'btn btn-primary',
                 onClick: this.generatePassphrase.bind(this)
               },
               'Create Passphrase'
