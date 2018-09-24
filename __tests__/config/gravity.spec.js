@@ -443,13 +443,31 @@ describe('Gravity', () => {
           expect(response).toBe(`Error: Unable to save table. ${tableName} is already in the database`);
         });
 
+        it('should return an error if table name is undefined', async () => {
+          tableName = undefined;
+          try {
+            response = await gravity.createTable();
+          } catch (e) {
+            response = e;
+          }
+          expect(response).toBe('Table name cannot be undefined');
+
+          tableName = 'undefined';
+          try {
+            response = await gravity.createTable();
+          } catch (e) {
+            response = e;
+          }
+          expect(response).toBe('Table name cannot be undefined');
+        });
+
         it('should close interactive console every time method is completed', async () => {
           try {
             response = await gravity.createTable();
           } catch (e) {
             response = e;
           }
-          expect(closeCalls).toBe(7);
+          expect(closeCalls).toBe(9);
         });
       });
     });

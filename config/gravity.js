@@ -1182,7 +1182,11 @@ class Gravity {
               try {
                 const answer = await self.makeQuestion('What will be the name of your new table?\n');
                 tableName = answer;
-                eventEmitter.emit('tableName_obtained');
+                if (tableName === 'undefined' || tableName === undefined) {
+                  reject('Table name cannot be undefined');
+                } else {
+                  eventEmitter.emit('tableName_obtained');
+                }
               } catch (e) {
                 reject(e);
               }
