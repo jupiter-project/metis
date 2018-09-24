@@ -1,5 +1,4 @@
 import axios from 'axios';
-import readline from 'readline';
 import { gravity } from '../../config/gravity';
 
 let gravityFile;
@@ -249,15 +248,12 @@ describe('Gravity', () => {
           consoleCalls = [];
           // getCalls = [];
           postCalls = [];
-
-          readline.createInterface = () => ({
-            close: jest.fn(() => { closeCalls += 1; }),
-            question: jest.fn((quest) => {
-              consoleCalls.push(quest);
-              questionCalls += 1;
-              return tableName;
-            }),
-          });
+          gravity.makeQuestion = (question) => {
+            closeCalls += 1;
+            consoleCalls.push(question);
+            questionCalls += 1;
+            return tableName;
+          };
 
           gravity.loadAppData = jest.fn((tableDetails) => {
             const tables = tableDetails || ['users'];
@@ -420,6 +416,8 @@ describe('Gravity', () => {
           } catch (e) {
             response = e;
           }
+
+          // This scenario does not ask a question so it does not oen the interactive interface
           expect(response).toBe("Please send JUP to your app's address and retry command");
           expect(consoleCalls.length).toBe(2);
           expect(consoleCalls[0]).toBe('Error in creating new table: insufficient app balance.');
@@ -451,7 +449,7 @@ describe('Gravity', () => {
           } catch (e) {
             response = e;
           }
-          expect(closeCalls).toBe(8);
+          expect(closeCalls).toBe(7);
         });
       });
     });

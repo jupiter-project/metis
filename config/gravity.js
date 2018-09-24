@@ -1008,16 +1008,30 @@ class Gravity {
   // from the console. They generate files and make calls to Jupiter to record data
   //------------------------------------------------------------------------------------------
 
+  makeQuestion(question) {
+    const readline = require('readline');
+    return new Promise((resolve, reject) => {
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+      });
+
+      rl.question(question, (answer) => {
+        if (!answer) {
+          reject('Answer cannot be undefined');
+        } else {
+          resolve(answer);
+        }
+        rl.close();
+      });
+    });
+  }
+
   // This method creates a table
   createTable() {
     const gravity = require('../.gravity.js');
     const eventEmitter = new events.EventEmitter();
     const self = this;
-    const readline = require('readline');
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
     // let valid_table = true;
     let tableList = [];
     // let app;
@@ -1031,7 +1045,6 @@ class Gravity {
 
     return new Promise((resolve, reject) => {
       eventEmitter.on('insufficient_balance', () => {
-        rl.close();
         reject("Please send JUP to your app's address and retry command");
       });
 
@@ -1041,7 +1054,6 @@ class Gravity {
         self.sendMoney(address)
           .then((response) => {
             console.log(`Table ${tableName} funded with JUP.`);
-            rl.close();
             resolve({
               success: true,
               message: `Table ${tableName} pushed to the blockchain and funded.`,
@@ -1053,7 +1065,6 @@ class Gravity {
           })
           .catch((err) => {
             console.log(err);
-            rl.close();
             reject({ success: false, message: 'Unable to send Jupiter to new table address' });
           });
       });
@@ -1075,7 +1086,6 @@ class Gravity {
               console.log(response);
               console.log(response.data);
               console.log(`Error: ${response.data.errorDescription}`);
-              rl.close();
               reject({
                 success: false,
                 message: response.data.errorDescription,
@@ -1084,14 +1094,12 @@ class Gravity {
             } else {
               console.log('Unable to save data in the blockchain');
               console.log(response.data);
-              rl.close();
               reject({ success: false, message: 'Unable to save data in the blockchain', jupiter_response: response.data });
             }
           })
           .catch((error) => {
             console.log('There was an error');
             console.log(error);
-            rl.close();
             reject({ success: false, message: 'There was an error', error: error.response });
           });
 
@@ -1120,7 +1128,6 @@ class Gravity {
 
       eventEmitter.on('tableName_obtained', () => {
         if (self.tables.indexOf(tableName) >= 0 || tableList.indexOf(tableName) >= 0) {
-          rl.close();
           reject(`Error: Unable to save table. ${tableName} is already in the database`);
         } else {
           passphrase = self.generate_passphrase();
@@ -1150,7 +1157,6 @@ class Gravity {
             })
             .catch((error) => {
               console.log(error);
-              rl.close();
               reject('Error creating Jupiter address for your table.');
             });
         }
@@ -1158,7 +1164,6 @@ class Gravity {
 
       eventEmitter.on('verified_balance', () => {
         if (gravity.APP_ACCOUNT === undefined || gravity.APP_ACCOUNT === '' || gravity.APP_ACCOUNT == null) {
-          rl.close();
           reject('Error: .gravity file does not contain seedphrase for app. Please provide one.');
         } else {
           self.loadAppData()
@@ -1174,13 +1179,16 @@ class Gravity {
               console.log('You are about to create a new database table for your Gravity app.');
               console.log('The following tables are already linked to your database:');
               console.log(tableList);
-              const answer = await rl.question('What will be the name of your new table?\n');
-              tableName = answer;
-              eventEmitter.emit('tableName_obtained');
+              try {
+                const answer = await self.makeQuestion('What will be the name of your new table?\n');
+                tableName = answer;
+                eventEmitter.emit('tableName_obtained');
+              } catch (e) {
+                reject(e);
+              }
             })
             .catch((error) => {
               console.log(error);
-              rl.close();
               reject('Error in creating table');
             });
         }
