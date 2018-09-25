@@ -30,7 +30,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const LoginPage = require('../views/login.jsx');
 
     page = ReactDOMServer.renderToString(
-      React.createElement(LoginPage, { messages, name: 'Gravity - Login to your account', dashboard: false }),
+      React.createElement(LoginPage, { messages, name: 'Gravity - Login', dashboard: false }),
     );
     res.send(page);
   });
