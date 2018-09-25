@@ -314,7 +314,7 @@ class AdminComponent extends React.Component {
     return (
       <div className="">
         <div className="page-title">App Summary</div>
-        <div className="container">
+        {/*<div className="container">
           <div className="card card-plain">
             <div className="row">
               <div className="col-xs-12 col-md-6">
@@ -348,7 +348,32 @@ class AdminComponent extends React.Component {
               </div>
             </div>
           </div>
+        </div>*/}
+        <div className="text-center">
+          <div className="mb-3">
+            <h6>App Address:</h6>
+            <span className="bg-warning rounded p-1">
+              {props.user.record.account}
+            </span>
+          </div>
+
+          <div className="mb-4">
+            <p>
+              <strong>Current balance: </strong>
+              {state.balances && state.balances.balance
+                ? state.balances.balance / (10 ** 8)
+                : 0}
+              JUP
+              <br />
+              <strong>Required app balance: </strong>
+              {state.balances && state.balances.minAppBalanceAmount
+                ? state.balances.minAppBalanceAmount / (10 ** 8)
+                : 0}
+              JUP
+            </p>
+          </div>
         </div>
+        
         <div className="row">
           <div className="col-xs-12 col-md-8 mx-auto">
             <div className="card">
