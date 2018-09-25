@@ -160,7 +160,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const checkCode = ReactDOMServer.renderToString(
       React.createElement(VerificationPage, {
         messages,
-        name: 'Gravity - Two-factor authentication',
+        name: 'Gravity - Two-Factor Authentication',
         user: req.user,
         dashboard: true,
       }),

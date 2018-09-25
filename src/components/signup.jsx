@@ -210,14 +210,15 @@ class SignupForm extends React.Component {
     const newAccountSummary = (
       <form action="/signup" method="post" className="text-left">
         <div className="col-8 mx-auto alert alert-primary text-center">
-          <span>Passphrase confirmed for account</span>
+          <span>Passphrase confirmed. Your account ID is:</span>
           <br />
           {this.state.confirmation_message}
         </div>
         <div className="text-left">
           <div className="form-group">
-            <label className="mb-0">First name</label>
+            <label htmlFor="firstname">First Name</label>
             <input
+              type="text"
               value={this.state.firstname}
               name="firstname"
               className="form-control"
@@ -226,8 +227,9 @@ class SignupForm extends React.Component {
           </div>
 
           <div className="form-group">
-            <label className="mb-0">Last name</label>
+            <label htmlFor="lastname">Last Name</label>
             <input
+              type="text"
               value={this.state.lastname}
               name="lastname"
               className="form-control"
@@ -236,8 +238,9 @@ class SignupForm extends React.Component {
           </div>
 
           <div className="form-group">
-            <label className="mb-0">Email</label>
+            <label htmlFor="email">Email Address</label>
             <input
+              type="text"
               value={this.state.email}
               name="email"
               className="form-control"
@@ -281,7 +284,7 @@ class SignupForm extends React.Component {
 
             <div className="form-group">
               <lable>
-                Enable Two-factor Authentication{' '}
+                Enable Two-Factor Authentication{' '}
                 {this.state.enable_two_fa ? (
                   <p className="m-0">Yes</p>
                 ) : (
@@ -308,8 +311,12 @@ class SignupForm extends React.Component {
     const generatedAccount = (
       <div>
         <h6 className="text-center">Your Account Passphrase</h6>
-        <div className="col-8 mx-auto alert alert-primary text-center">
+        <div className="col-xs-12 col-sm-8 mx-auto alert alert-primary text-center">
           <span>{this.state.generated_passphrase}</span>
+        </div>
+        <div className="form-group my-4">
+          <p>Carefully write down your 12-word passphrase on a piece of paper or alternatively, securely save it in an encrypted document. The order of the words is important and all are lowercase.</p>
+          <p>Never disclose your passphrase!</p>
         </div>
         <div className="form-group">
           <label htmlFor="firstname">First Name</label>
@@ -410,9 +417,10 @@ class SignupForm extends React.Component {
           <div className="text-center">{this.state.confirmation_message}</div>
         </div>
         <div className="form-group" id="jup-confirm">
-          Please enter your passphrase to confirm it.
+          <label htmlFor="confirmPassphrase">Please enter your passphrase to verify you wrote it down correctly.</label>
           <input
             type="password"
+            name="confirmPassphrase"
             autoComplete="confirm-password"
             className="form-control"
             value={this.state.passphrase_confirmation}
@@ -424,7 +432,7 @@ class SignupForm extends React.Component {
             className="btn btn-custom"
             onClick={this.confirmPassphrase.bind(this)}
           >
-            Submit
+            Verify
           </button>
         </div>
       </form>
@@ -457,7 +465,7 @@ class SignupForm extends React.Component {
                 className="btn btn-custom"
                 onClick={this.generatePassphrase.bind(this)}
               >
-                Create Passphrase
+                Generate Passphrase
               </button>
             </div>
           </div>
