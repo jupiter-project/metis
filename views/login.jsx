@@ -5,7 +5,7 @@ class LoginPage extends React.Component {
   render() {
     return (
       <ApplicationLayout data={this.props}>
-        <div className="card card-login mx-auto mt-5">
+        <div className="card card-register mx-auto mt-5">
           <div className="card-header bg-custom text-light h5">
             Login
           </div>
