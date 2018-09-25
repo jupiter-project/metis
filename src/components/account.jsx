@@ -69,7 +69,7 @@ class AccountComponent extends React.Component {
             saved_lastname: page.state.lastname,
             submitted: false,
           });
-          toastr.success('It will take a few minutes for the changes to reflect in your end');
+          // toastr.success('It will take a few minutes for the changes to reflect in your end');
           toastr.success('Account update pushed to the blockchain for approval.');
         } else {
           if (
