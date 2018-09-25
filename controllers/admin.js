@@ -19,7 +19,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     page = ReactDOMServer.renderToString(
       React.createElement(Page, {
         messages,
-        name: 'Gravity - Admin',
+        name: 'Gravity - App Summary',
         user: req.user,
         dashboard: true,
         public_key: req.session.public_key,
@@ -37,7 +37,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     page = ReactDOMServer.renderToString(
       React.createElement(Page, {
         messages,
-        name: 'Gravity - App Tables',
+        name: 'Gravity - Table Records',
         user: req.user,
         dashboard: true,
         public_key: req.session.public_key,
