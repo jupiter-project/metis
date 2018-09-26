@@ -94,128 +94,126 @@ class AccountComponent extends React.Component {
     return (
       <div className="container">
         <div className="page-title">My Profile</div>
-        <div className="row">
-          <div className="card card-register mx-auto my-4">
-            <div className="card-header bg-custom text-light h5">
-              Account information
-            </div>
-            {this.state.account_editing_mode === true ? (
-              <form className="card-body">
-                <div className="form-row">
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputFirstName">First Name</label>
+        <div className="card card-register mx-auto">
+          <div className="card-header bg-custom text-light h5">
+            Account information
+          </div>
+          {this.state.account_editing_mode === true ? (
+            <form className="card-body">
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputFirstName">First Name</label>
 
-                    <input
-                      value={this.state.firstname}
-                      onChange={this.handleChange.bind(this, 'firstname')}
-                      type="name"
-                      className="form-control"
-                      id="inputFirstName"
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputLastName">Last Name</label>
-                    <input
-                      value={this.state.lastname}
-                      onChange={this.handleChange.bind(this, 'lastname')}
-                      type="name"
-                      className="form-control"
-                      id="inputLastName"
-                    />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="inputEmailAddress">Email Address</label>
                   <input
-                    value={this.state.email}
-                    onChange={this.handleChange.bind(this, 'email')}
-                    type="email"
+                    value={this.state.firstname}
+                    onChange={this.handleChange.bind(this, 'firstname')}
+                    type="name"
                     className="form-control"
-                    id="inputEmailAddress"
+                    id="inputFirstName"
                   />
                 </div>
-                <div className="form-row mt-2">
-                  <div className="col">
-                    <button
-                      type="button"
-                      className="btn btn-success"
-                      onClick={this.updateAccountInfo.bind(this)}
-                      disabled={this.state.submitted}
-                    >
-                      <i className="glyphicon glyphicon-edit" />
-                      {''}
-                      {this.state.submitted ? 'Saving...' : 'Save'}
-                    </button>
-                  </div>
-                  <div className="col text-right">
-                    <button
-                      type="button"
-                      className="btn btn-danger ml-auto"
-                      onClick={this.switchMode.bind(this, 'account')}
-                    >
-                      <i className="glyphicon glyphicon-edit" /> Cancel
-                    </button>
-                  </div>
-                </div>
-              </form>
-            ) : (
-              <form className="card-body">
-                <div className="form-row">
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputFirstName">First Name</label>
-
-                    <input
-                      value={this.state.saved_firstname}
-                      type="name"
-                      className="form-control"
-                      id="inputFirstName"
-                      disabled
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputLastName">Last Name</label>
-                    <input
-                      value={this.state.saved_lastname}
-                      type="name"
-                      className="form-control"
-                      id="inputLastName"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="inputEmailAddress">Email Address</label>
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputLastName">Last Name</label>
                   <input
-                    value={this.state.saved_email}
-                    type="email"
+                    value={this.state.lastname}
+                    onChange={this.handleChange.bind(this, 'lastname')}
+                    type="name"
                     className="form-control"
-                    id="inputEmailAddress"
+                    id="inputLastName"
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="inputEmailAddress">Email Address</label>
+                <input
+                  value={this.state.email}
+                  onChange={this.handleChange.bind(this, 'email')}
+                  type="email"
+                  className="form-control"
+                  id="inputEmailAddress"
+                />
+              </div>
+              <div className="form-row mt-2">
+                <div className="col">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={this.updateAccountInfo.bind(this)}
+                    disabled={this.state.submitted}
+                  >
+                    <i className="glyphicon glyphicon-edit" />
+                    {''}
+                    {this.state.submitted ? 'Saving...' : 'Save'}
+                  </button>
+                </div>
+                <div className="col text-right">
+                  <button
+                    type="button"
+                    className="btn btn-danger ml-auto"
+                    onClick={this.switchMode.bind(this, 'account')}
+                  >
+                    <i className="glyphicon glyphicon-edit" /> Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+          ) : (
+            <form className="card-body">
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputFirstName">First Name</label>
+
+                  <input
+                    value={this.state.saved_firstname}
+                    type="name"
+                    className="form-control"
+                    id="inputFirstName"
                     disabled
                   />
                 </div>
-                <div className="form-row mt-2">
-                  <div className="col">
-                    <button
-                      type="button"
-                      className="btn btn-default"
-                      onClick={this.switchMode.bind(this, 'account')}
-                    >
-                      <i className="glyphicon glyphicon-edit" /> Edit
-                    </button>
-                  </div>
-                  <div className="col text-right">
-                    <button
-                      type="button"
-                      className="btn btn-default ml-auto"
-                      disabled
-                    >
-                      Cancel
-                    </button>
-                  </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputLastName">Last Name</label>
+                  <input
+                    value={this.state.saved_lastname}
+                    type="name"
+                    className="form-control"
+                    id="inputLastName"
+                    disabled
+                  />
                 </div>
-              </form>
-            )}
-          </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="inputEmailAddress">Email Address</label>
+                <input
+                  value={this.state.saved_email}
+                  type="email"
+                  className="form-control"
+                  id="inputEmailAddress"
+                  disabled
+                />
+              </div>
+              <div className="form-row mt-2">
+                <div className="col">
+                  <button
+                    type="button"
+                    className="btn btn-default"
+                    onClick={this.switchMode.bind(this, 'account')}
+                  >
+                    <i className="glyphicon glyphicon-edit" /> Edit
+                  </button>
+                </div>
+                <div className="col text-right">
+                  <button
+                    type="button"
+                    className="btn btn-default ml-auto"
+                    disabled
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     );
