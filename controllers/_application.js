@@ -30,7 +30,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const LoginPage = require('../views/login.jsx');
 
     page = ReactDOMServer.renderToString(
-      React.createElement(LoginPage, { messages, name: 'Gravity - Login to your account', dashboard: false }),
+      React.createElement(LoginPage, { messages, name: 'Gravity - Login', dashboard: false }),
     );
     res.send(page);
   });
@@ -64,7 +64,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     page = ReactDOMServer.renderToString(
       React.createElement(IndexPage, {
         messages,
-        name: 'Gravity - Homepage',
+        name: 'Gravity - Dashboard',
         user: req.user,
         dashboard: true,
       }),
@@ -93,7 +93,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       React.createElement(GravityPage, {
         messages,
         requirements,
-        name: 'Gravity - Basic Setup',
+        name: 'Gravity - Login',
         user: req.user,
         dashboard: false,
       }),
@@ -110,7 +110,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     page = ReactDOMServer.renderToString(
       React.createElement(SettingsPage, {
         messages,
-        name: 'Gravity - Your Settings',
+        name: 'Gravity - Settings',
         user: req.user,
         dashboard: true,
         validation: req.session.jup_key,

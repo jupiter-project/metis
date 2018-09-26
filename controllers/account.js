@@ -18,7 +18,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     page = ReactDOMServer.renderToString(
       React.createElement(AccountPage, {
         messages,
-        name: 'Gravity - Your Account',
+        name: 'Gravity - My Profile',
         user: req.user,
         dashboard: true,
         public_key: req.session.public_key,
@@ -160,7 +160,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const checkCode = ReactDOMServer.renderToString(
       React.createElement(VerificationPage, {
         messages,
-        name: 'Gravity - Two-Factor Authentication',
+        name: 'Gravity - 2FA',
         user: req.user,
         dashboard: true,
       }),
