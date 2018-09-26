@@ -110,7 +110,7 @@ class LoginForm extends React.Component {
             className="btn btn-custom"
             onClick={this.logIn.bind(this)}
           >
-            Submit
+            Login
           </button>
         </div>
       </form>
