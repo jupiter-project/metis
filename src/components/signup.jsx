@@ -5,7 +5,7 @@ import toastr from 'toastr';
 
 // place where you'd like in your app
 
-class SignupForm extends React.Component {
+export class SignupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -315,7 +315,9 @@ class SignupForm extends React.Component {
           <span>{this.state.generated_passphrase}</span>
         </div>
         <div className="form-group my-4">
-          <p>Carefully write down your 12-word passphrase on a piece of paper or alternatively, securely save it in an encrypted document. The order of the words is important and all are lowercase.</p>
+          <p>Carefully write down your 12-word passphrase on a piece of paper or
+            alternatively, securely save it in an encrypted document.
+            The order of the words is important and all are lowercase.</p>
           <p>Never disclose your passphrase!</p>
         </div>
         <div className="form-group">
@@ -494,7 +496,10 @@ const SignupExport = () => {
       <SignupForm messages={props.messages} />,
       document.getElementById('signup-form'),
     );
+
+    return 'rendered';
   }
+  return null;
 };
 
-module.exports = SignupExport();
+export default SignupExport();
