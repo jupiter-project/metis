@@ -603,32 +603,6 @@ class Gravity {
       });
 
       eventEmitter.on('table_retrieved', () => {
-        /* Object.keys(tableData).some((position) => {
-          const obj = tableData[position];
-          let completion = false;
-          if (obj.attachment.encryptedMessage.data && obj.recipientRS !== recordTable.address) {
-            if (scope.show_pending && scope.show_pending > 0) {
-              if (obj.confirmations <= scope.show_pending) {
-                pendingRecords.push(obj.transaction);
-                pendingNumber += 1;
-              } else {
-                records.push(obj.transaction);
-                completedNumber += 1;
-              }
-            } else if (scope.size === 'all') {
-              records.push(obj.transaction);
-              completedNumber += 1;
-            } else if (scope.size === 'last') {
-              records.push(obj.transaction);
-              recordsFound += 1;
-              completedNumber += 1;
-              completion = true;
-            }
-            recordsFound += 1;
-          }
-          return completion;
-        }); */
-
         for (let position = 0; position < Object.keys(tableData).length; position += 1) {
           const obj = tableData[position];
           let completion = false;
@@ -1000,6 +974,90 @@ class Gravity {
           console.log('There was an error in address creation');
           reject({ success: false, message: 'There was an error in getting account information' });
         });
+    });
+  }
+
+  async getUnconfirmedData(address, filter = {}) {
+    const self = this;
+    const unconfirmedData = [];
+
+    let response;
+    try {
+      response = await axios.get(`${self.jupiter_data.server}/nxt?requestType=getUnconfirmedTransactions&account=${address}`);
+    } catch (e) {
+      response = ({ error: true, errors: e });
+    }
+
+    if (response.error) {
+      return response;
+    }
+
+    const transactions = response.data.unconfirmedTransactions || [];
+
+    for (let x = 0; x < transactions.length; x += 1) {
+      const thisTransaction = transactions[x];
+
+      // We use filters to remove unnecessary information
+      if (
+        (thisTransaction.senderRS === address
+        || thisTransaction.recipientRS === address)
+        && (
+          thisTransaction.senderRS === filter.account
+          || thisTransaction.recipientRS === filter.account
+          || !filter.account
+        )
+      ) {
+        const dataObject = {
+          signature: thisTransaction.signature,
+          fee: thisTransaction.feeNQT,
+          sender: thisTransaction.senderRS,
+          recipient: thisTransaction.recipientRS,
+        };
+        let decryptedData;
+
+        try {
+          const passphrase = 'fly plain trick tease hundred harsh dress sort disguise match chocolate snap';
+          const accountForCall = thisTransaction.senderRS !== address
+            ? thisTransaction.senderRS : thisTransaction.recipientRS;
+          // eslint-disable-next-line no-await-in-loop
+          decryptedData = await self.decryptFromRecord(thisTransaction, accountForCall, passphrase);
+        } catch (e) {
+          decryptedData = e;
+        }
+        try {
+          dataObject.data = JSON.parse(self.decrypt(decryptedData.decryptedMessage))
+          || decryptedData;
+        } catch (e) {
+          console.log(e);
+          dataObject.data = decryptedData;
+        }
+        unconfirmedData.push(dataObject);
+      }
+    }
+
+    return unconfirmedData;
+  }
+
+  decryptFromRecord(transaction, address, passphrase) {
+    const self = this;
+    return new Promise((resolve, reject) => {
+      if (transaction && transaction.attachment && transaction.attachment.encryptedMessage) {
+        axios.get(`${self.jupiter_data.server}/nxt?requestType=decryptFrom&secretPhrase=${passphrase}&account=${address}&data=${transaction.attachment.encryptedMessage.data}&nonce=${transaction.attachment.encryptedMessage.nonce}`)
+          .then((response) => {
+            resolve(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+            reject({
+              transaction,
+              error: true,
+              message: 'Error in retrieving first layer of decryption',
+              fullError: error,
+            });
+          });
+      } else {
+        reject({ transaction, error: true, message: 'Incorrect transaction' });
+      }
     });
   }
 
