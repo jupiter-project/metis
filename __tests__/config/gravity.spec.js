@@ -32,9 +32,57 @@ let tableName = 'tests';
 let consoleCalls = [];
 let closeCalls = 0;
 let questionCalls = [];
-// let getCalls = [];
+let getCalls = [];
 let postCalls = [];
+let testData;
+
 console.log = jest.fn((message) => { consoleCalls.push(message); });
+
+
+const Data = {
+  unconfirmedTransactions: [
+    {
+      senderPublicKey: 'fe054990908204858dbf91041efd70416e94c3d1d9c13274535380f1f06dca22',
+      signature: 'a24833bbb2a5a62b5c82cd2e323873d3bda5249d40e554c6dd14bf320b835f09e0bfc86ff02b76e627c63d0d803d4e14c824d905b2d2905f66692e81484cadb8',
+      feeNQT: '500',
+      type: 1,
+      fullHash: '098f8b6f0a08be6bf65545d423418f1dccf9cb504291e302d78204f01635a59d',
+      version: 1,
+      phased: false,
+      ecBlockId: '10811968252326183932',
+      signatureHash: '13942a566f3212eddb6ded27dcf050a3a27c9ad57311ab06238fe2be9452e286',
+      attachment: {
+        encryptedMessage: {
+          data: {
+            id: '4566422463839064175',
+            test_record: {
+              hello: 'world',
+            },
+            date: 1538019412175,
+          },
+          nonce: 'c6a0c51dae6b9188c809da8d8eb4cb070c25338c9a94f653a08840f57f3e412e',
+          isText: true,
+          isCompressed: true,
+        },
+        'version.ArbitraryMessage': 0,
+        'version.EncryptedMessage': 1,
+        'version.PublicKeyAnnouncement': 1,
+        recipientPublicKey: '42fb2da74e9a93ed24adfa8559baadabee0b9113d5cc14ce6160bfc8af4c6d72',
+      },
+      senderRS: 'JUP-R4AX-7LA4-DXZC-ECUDH',
+      subtype: 0,
+      amountNQT: '0',
+      sender: '14388800889729812765',
+      recipientRS: 'JUP-V7PC-BKCP-TULB-DW9KW',
+      recipient: '13710360570402543274',
+      ecBlockHeight: 503172,
+      deadline: 60,
+      transaction: '7763651648547426057',
+      timestamp: 29356697,
+      height: 2147483647,
+    }],
+  requestProcessingTime: 0,
+};
 
 function splitIntoHash(listToSplit) {
   const finalHash = {};
@@ -65,6 +113,7 @@ describe('Gravity', () => {
       });
     });
   }
+
   describe('General Functions', () => {
     beforeEach(() => {
       axios.get = jest.fn(() => ({ data: { success: true } }));
@@ -231,6 +280,113 @@ describe('Gravity', () => {
         expect(response.address).toBe('THIS_IS_AN_ADDRESS');
         expect(response.publicKey).toBe('123456');
         expect(axios.get).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('decryptFromRecord', () => {
+      beforeEach(() => {
+        const encryptedRecord = gravity.encrypt(JSON.stringify({
+          id: '4566422463839064175',
+          test_record: {
+            hello: 'world',
+          },
+          date: 1538019412175,
+        }));
+        testData = {
+          data: {
+            decryptedMessage: encryptedRecord,
+            requestProcessingTime: 2,
+          },
+        };
+
+        axios.get = jest.fn((url) => {
+          getCalls.push(url);
+          return new Promise((resolve) => {
+            resolve(testData);
+          });
+        });
+      });
+
+      it('should return error if no transaction is provided of if does not have required params', async () => {
+        getCalls = [];
+        try {
+          response = await gravity.decryptFromRecord();
+        } catch (e) {
+          response = e;
+        }
+        expect(response.error).toBe(true);
+        expect(response.message).toBe('Incorrect transaction');
+
+        try {
+          response = await gravity.decryptFromRecord({ attachment: { test: true } });
+        } catch (e) {
+          response = e;
+        }
+
+        expect(response.error).toBe(true);
+        expect(response.message).toBe('Incorrect transaction');
+      });
+
+      it('should not make an axios call if an error is made due to incorrect param', async () => {
+        getCalls = [];
+
+        try {
+          response = await gravity.decryptFromRecord({ attachment: { test: true } });
+        } catch (e) {
+          response = e;
+        }
+
+        expect(axios.get).toHaveBeenCalledTimes(0);
+      });
+
+      it('should use axios to make a get call to Jupiter endpoint and return response data', async () => {
+        getCalls = [];
+        try {
+          response = await gravity.decryptFromRecord(Data.unconfirmedTransactions[0]);
+        } catch (e) {
+          response = e;
+        }
+        expect(response.decryptedMessage).not.toBe(undefined);
+        expect(response.requestProcessingTime).not.toBe(undefined);
+        expect(response.decryptedMessage).toBe(testData.data.decryptedMessage);
+        expect(axios.get).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('getUnconfirmedTransactions', () => {
+      it('should use axios to reach unconfirmed transactions endpoint', async () => {
+        getCalls = [];
+
+        const encryptedRecord = gravity.encrypt(JSON.stringify({
+          id: '4566422463839064175',
+          test_record: {
+            hello: 'world',
+          },
+          date: 1538019412175,
+        }));
+        testData = {
+          data: {
+            decryptedMessage: encryptedRecord,
+            requestProcessingTime: 2,
+          },
+        };
+
+        axios.get = jest.fn((url) => {
+          getCalls.push(url);
+
+          return new Promise((resolve) => {
+            resolve({ data: Data });
+          });
+        });
+
+        gravity.decryptFromRecord = jest.fn(() => testData.data);
+
+        response = await gravity.getUnconfirmedData('JUP-V7PC-BKCP-TULB-DW9KW');
+
+        expect(response.length).toBe(1);
+        expect(axios.get).toHaveBeenCalledTimes(1);
+        expect(gravity.decryptFromRecord).toHaveBeenCalledTimes(1);
+        expect(response[0].data.id).toBe('4566422463839064175');
       });
     });
   });
