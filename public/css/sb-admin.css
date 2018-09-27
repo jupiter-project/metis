@@ -27,16 +27,16 @@ body {
   height: 100%;
 }
 
-.btn-primary {
-  background-color: #26313d;
-  border: none;
+input[type="text"], input[type="password"], input[type="radio"], input[type="text"]:disabled, textarea {
   outline: none;
+  box-shadow: none !important;
+  border: 1px solid #ccc !important;
 }
 
-.btn-primary:hover, .btn-primary:active {
-  background-color: #12181e;
-  border: none;
+button, a, button.close, .btn-link {
   outline: none;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .bg-custom {
@@ -238,6 +238,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 }
 
 .sidebar {
+  display: none;
   width: 90px !important;
   background-color: #495057;
   min-height: calc(100vh - 56px);
@@ -290,6 +291,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 @media (min-width: 768px) {
   .sidebar {
+    display: flex;
     width: 225px !important;
   }
   .sidebar .nav-item .nav-link {
@@ -340,6 +342,31 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   .sidebar.toggled .nav-item.dropdown .dropdown-toggle::after {
     display: none;
   }
+}
+
+#mobile-menu {
+  z-index: 1000;
+  position: absolute;
+  width: 100%;
+  background: #495057;
+}
+
+#mobile-menu .nav-item .nav-link {
+  padding-left: 20px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#mobile-menu .nav-item .nav-link:active, #mobile-menu .nav-item .nav-link:focus, #mobile-menu .nav-item .nav-link:hover {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #868e96;
+}
+
+#mobile-menu a {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#mobile-menu a:active, #mobile-menu a:focus, #mobile-menu a:hover {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .sidebar.fixed-top {
@@ -496,4 +523,28 @@ body.sidebar-toggled footer.sticky-footer {
   body.sidebar-toggled footer.sticky-footer {
     width: calc(100% - 90px);
   }
+}
+
+.btn {
+  border: 0 none;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+  outline: 0 none;
+}
+
+.btn-custom {
+  background: #26313d;
+  color: #ffffff;
+}
+
+.btn-custom:hover, .btn-custom:focus, .btn-custom:active, .btn-custom.active, .open > .dropdown-toggle.btn-custom {
+  background: #303e4d;
+  color: #ffffff;
+}
+
+.btn-custom:active, .btn-custom.active {
+  background: #12181e;
+  box-shadow: none;
+  color: #ffffff;
 }

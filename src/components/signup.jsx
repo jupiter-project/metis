@@ -5,7 +5,7 @@ import toastr from 'toastr';
 
 // place where you'd like in your app
 
-class SignupForm extends React.Component {
+export class SignupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -210,14 +210,15 @@ class SignupForm extends React.Component {
     const newAccountSummary = (
       <form action="/signup" method="post" className="text-left">
         <div className="col-8 mx-auto alert alert-primary text-center">
-          <span>Passphrase confirmed for account</span>
+          <span>Passphrase confirmed. Your account ID is:</span>
           <br />
           {this.state.confirmation_message}
         </div>
         <div className="text-left">
           <div className="form-group">
-            <label className="mb-0">First name</label>
+            <label htmlFor="firstname">First Name</label>
             <input
+              type="text"
               value={this.state.firstname}
               name="firstname"
               className="form-control"
@@ -226,8 +227,9 @@ class SignupForm extends React.Component {
           </div>
 
           <div className="form-group">
-            <label className="mb-0">Last name</label>
+            <label htmlFor="lastname">Last Name</label>
             <input
+              type="text"
               value={this.state.lastname}
               name="lastname"
               className="form-control"
@@ -236,8 +238,9 @@ class SignupForm extends React.Component {
           </div>
 
           <div className="form-group">
-            <label className="mb-0">Email</label>
+            <label htmlFor="email">Email Address</label>
             <input
+              type="text"
               value={this.state.email}
               name="email"
               className="form-control"
@@ -250,38 +253,38 @@ class SignupForm extends React.Component {
               <input
                 type="hidden"
                 name="account"
-                value={this.state.account_object.account}
+                defaultValue={this.state.account_object.account}
               />
               <input
                 type="hidden"
                 name="accounthash"
-                value={this.state.account_object.account}
+                defaultValue={this.state.account_object.account}
               />
               <input
                 type="hidden"
                 name="twofa_enabled"
-                value={this.state.enable_two_fa}
+                defaultValue={this.state.enable_two_fa}
               />
               <input
                 type="hidden"
                 name="public_key"
-                value={this.state.public_key}
+                defaultValue={this.state.public_key}
               />
               <input
                 type="hidden"
                 name="key"
-                value={this.state.generated_passphrase}
+                defaultValue={this.state.generated_passphrase}
               />
               <input
                 type="hidden"
                 name="jup_account_id"
-                value={this.state.account_object.jup_account_id}
+                defaultValue={this.state.account_object.jup_account_id}
               />
             </div>
 
             <div className="form-group">
               <lable>
-                Enable Two-factor Authentication{' '}
+                Enable Two-Factor Authentication{' '}
                 {this.state.enable_two_fa ? (
                   <p className="m-0">Yes</p>
                 ) : (
@@ -291,11 +294,11 @@ class SignupForm extends React.Component {
             </div>
           </div>
 
-          <div>
+          <div className="text-center">
             {this.state.account !== ' ' && (
               <button
                 value="Complete registration"
-                className="btn btn-primary btn-block"
+                className="btn btn-custom"
               >
                 Complete Registration
               </button>
@@ -308,8 +311,14 @@ class SignupForm extends React.Component {
     const generatedAccount = (
       <div>
         <h6 className="text-center">Your Account Passphrase</h6>
-        <div className="col-8 mx-auto alert alert-primary text-center">
+        <div className="col-xs-12 col-sm-8 mx-auto alert alert-primary text-center">
           <span>{this.state.generated_passphrase}</span>
+        </div>
+        <div className="form-group my-4">
+          <p>Carefully write down your 12-word passphrase on a piece of paper or
+            alternatively, securely save it in an encrypted document.
+            The order of the words is important and all are lowercase.</p>
+          <p>Never disclose your passphrase!</p>
         </div>
         <div className="form-group">
           <label htmlFor="firstname">First Name</label>
@@ -372,28 +381,28 @@ class SignupForm extends React.Component {
           </div>
         </div>
         {this.state.jup_account_created === true ? (
-          <div className="form-group">
+          <div className="form-group text-center">
             <button
               disabled={
                 !this.state.firstname
                 || !this.state.lastname
                 || !this.state.email
               }
-              className="btn btn-primary btn-block"
+              className="btn btn-custom"
               onClick={this.confirmedPassphrase.bind(this)}
             >
               Submit
             </button>
           </div>
         ) : (
-          <div className="form-group">
+          <div className="form-group text-center">
             <button
               disabled={
                 !this.state.firstname
                 || !this.state.lastname
                 || !this.state.email
               }
-              className="btn btn-primary btn-block"
+              className="btn btn-custom"
               onClick={this.registerAccount.bind(this)}
             >
               Continue
@@ -405,28 +414,30 @@ class SignupForm extends React.Component {
     );
 
     const passphraseConfirmationPage = (
-      <div className="jupiter-form-confirmation">
+      <form className="jupiter-form-confirmation">
         <div className="form-group">
           <div className="text-center">{this.state.confirmation_message}</div>
         </div>
         <div className="form-group" id="jup-confirm">
-          Please enter your passphrase to confirm it.
+          <label htmlFor="confirmPassphrase">Please enter your passphrase to verify you wrote it down correctly.</label>
           <input
-            type="text"
+            type="password"
+            name="confirmPassphrase"
+            autoComplete="confirm-password"
             className="form-control"
             value={this.state.passphrase_confirmation}
             onChange={this.handleChange.bind(this, 'passphrase_confirm')}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group text-center">
           <button
-            className="btn btn-primary btn-block"
+            className="btn btn-custom"
             onClick={this.confirmPassphrase.bind(this)}
           >
-            Submit
+            Verify
           </button>
         </div>
-      </div>
+      </form>
     );
 
     const signupForm = (
@@ -436,10 +447,10 @@ class SignupForm extends React.Component {
         ) : (
           <div>
             <div className="form-group">
-              <strong>This app is based on blockchain technology.</strong> The
-              blockchain <strong>will generate</strong> an account for you with
-              a secure passphrase. This <strong>12-word</strong> passphrase
-              should be written down <strong>carefully</strong> and kept in a
+              This app is based on blockchain technology. The
+              blockchain will generate an account for you with
+              a secure passphrase. This 12-word passphrase
+              should be written down carefully and kept in a
               safe place. If you lose your passphrase, you will permanently lose
               access to your account, there is no way to recover it.
             </div>
@@ -451,12 +462,12 @@ class SignupForm extends React.Component {
             <div className="form-group">
               Click on the button below to start.
             </div>
-            <div className="form-group">
+            <div className="form-group text-center">
               <button
-                className="btn btn-primary btn-block"
+                className="btn btn-custom"
                 onClick={this.generatePassphrase.bind(this)}
               >
-                Create Passphrase
+                Generate Passphrase
               </button>
             </div>
           </div>
@@ -485,7 +496,10 @@ const SignupExport = () => {
       <SignupForm messages={props.messages} />,
       document.getElementById('signup-form'),
     );
+
+    return 'rendered';
   }
+  return null;
 };
 
-module.exports = SignupExport();
+export default SignupExport();

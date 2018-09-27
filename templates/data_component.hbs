@@ -298,7 +298,7 @@ class {{component_name}}Component extends React.Component {
 
           if (currentData !== JSON.stringify(responseData)) {
             self.resetRecords(responseData);
-            toastr.success('Updated records!');
+            toastr.success('Update submitted to the blockchain. It might take a few minutes for the changes to be shown below.');
           }
         }
       })

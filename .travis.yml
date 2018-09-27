@@ -1,12 +1,8 @@
 language: node_js
 node_js:
-  - 6
+  - "9"
 os: ubuntu
-branches:
-  only:
-  - master
-  - merging_branch
-  - travis_ci
 scripts:
   - npm install
+  - npm test
 fast_finish: true

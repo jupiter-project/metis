@@ -65,7 +65,7 @@ module.exports = (passport) => {
             req.session.twofa_pass = false;
             req.session.public_key = req.body.public_key;
             req.session.jup_key = gravity.encrypt(req.body.key);
-            return done(null, user, req.flash('signupMessage', 'Account created! Please wait a couple of minutes before loggin in while your account is saved in the blockchain'));
+            return done(null, user, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in'));
           })
           .catch((err) => {
             console.log(err);

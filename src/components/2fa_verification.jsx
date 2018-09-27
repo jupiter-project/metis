@@ -63,7 +63,7 @@ class TwoFAVerificationForm extends React.Component {
             <br />
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-custom"
               onClick={this.verifyCode.bind(this)}
             >
               Verify code

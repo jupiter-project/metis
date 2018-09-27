@@ -82,8 +82,8 @@ class LoginForm extends React.Component {
           value={this.state.jup_account_id}
         />
 
-        <div className="form-group">
-          <button type="submit" className="btn btn-primary btn-block">
+        <div className="form-group text-center">
+          <button type="submit" className="btn btn-custom">
             Continue
           </button>
         </div>
@@ -105,12 +105,14 @@ class LoginForm extends React.Component {
           />
         </div>
 
-        <button
-          className="btn btn-primary btn-block"
-          onClick={this.logIn.bind(this)}
-        >
-          Submit
-        </button>
+        <div className="text-center">
+          <button
+            className="btn btn-custom"
+            onClick={this.logIn.bind(this)}
+          >
+            Login
+          </button>
+        </div>
       </form>
     );
     return (

@@ -11,18 +11,19 @@ html {
 
 body {
   height: 100%;
+
 }
 
-.btn-primary {
-  background-color: $custom-primary;
-  border: none;
+input[type="text"], input[type="password"], input[type="radio"], input[type="text"]:disabled, textarea {
   outline: none;
-  &:hover,
-  &:active {
-    background-color: darken($custom-primary, 10);
-    border: none;
-    outline: none;
-  }
+  box-shadow:none !important;
+  border:1px solid #ccc !important;
+}
+
+button, a, button.close, .btn-link {
+  outline: none;
+  box-shadow:none !important;
+  border:none !important;
 }
 
 .bg-custom {
