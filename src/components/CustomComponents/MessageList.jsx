@@ -33,7 +33,7 @@ export default class MessageList extends React.Component {
                 <img src="/img/logo.png" height="40px" alt="logo" />
               </div>
               <div id="outgoing_message" className="p-2 rounded float-right" style={{ backgroundColor: "#ccc" }}>
-                <div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>
+                {/*<div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>*/}
                 <div className="person_message text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
               </div>
             </div>
@@ -57,7 +57,7 @@ export default class MessageList extends React.Component {
                 <img src="/img/logo.png" height="40px" alt="logo" />
               </div>
               <div id="outgoing_message" className="p-2 rounded float-right" style={{ backgroundColor: "#ccc" }}>
-                <div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>
+                {/*<div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>*/}
                 <div className="person_message text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
               </div>
             </div>
@@ -81,7 +81,7 @@ export default class MessageList extends React.Component {
                 <img src="/img/logo.png" height="40px" alt="logo" />
               </div>
               <div id="outgoing_message" className="p-2 rounded float-right" style={{ backgroundColor: "#ccc" }}>
-                <div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>
+                {/*<div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>*/}
                 <div className="person_message text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
               </div>
             </div>
