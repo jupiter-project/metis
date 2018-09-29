@@ -12,8 +12,8 @@ export default class MessageList extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid" style={{position: "relative", overflow: "hidden", height: "64vh", width:"100%", border: "0px solid #ccc"}}>
-        <div className="row message-list" style={{overflowY: "scroll", height: "64vh", width: "100%", position: "absolute"}}>
+      <div style={{position: "relative", overflow: "hidden", height: "calc(100% - 180px)", width:"100%", border: "0px solid #ccc"}}>
+        <div className="row message-list" style={{overflowY: "scroll", height: "100%", width: "100%", position: "absolute", left: "15px"}}>
           
           <div className="card-plain text-left message d-block float-left m-2 w-100">
             <div className="card-body p-2">

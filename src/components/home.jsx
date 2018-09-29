@@ -18,16 +18,11 @@ class HomeComponent extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div>
         {/* <div className="page-title">Welcome to Metis</div> */}
-
-        <div className="card">
-          <div className="card-body p-0">
-            <Title />
-            <MessageList />
-            <SendMessageForm />
-          </div>
-        </div>
+        <Title />
+        <MessageList />
+        <SendMessageForm />
       </div>
     );
   }
