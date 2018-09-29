@@ -59,29 +59,29 @@ button, a, button.close, .btn-link {
   overflow-x: hidden;
   width: 100%;
   padding-top: 1rem;
-  padding-bottom: 60px;
+  padding-bottom: 0;
 }
 
 body.fixed-nav #content-wrapper {
   margin-top: 56px;
   padding-left: 90px;
   padding-bottom: 0px;
-  padding-bottom: 60px;
+  padding-bottom: 0;
 }
 
 body.fixed-nav.sidebar-toggled #content-wrapper {
   padding-left: 0;
-  padding-bottom: 60px;
+  padding-bottom: 0;
 }
 
 @media (min-width: 768px) {
   body.fixed-nav #content-wrapper {
     padding-left: 225px;
-    padding-bottom: 60px;
+    padding-bottom: 0;
   }
   body.fixed-nav.sidebar-toggled #content-wrapper {
     padding-left: 90px;
-    padding-bottom: 60px;
+    padding-bottom: 0;
   }
 }
 
@@ -93,28 +93,28 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   overflow-x: hidden;
   width: 100%;
   padding-top: 1rem;
-  padding-bottom: 60px;
+  padding-bottom: 0;
 }
 
 body.fixed-nav #content-wrapper {
   margin-top: 56px;
   padding-left: 90px;
-  padding-bottom: 60px;
+  padding-bottom: 0;
 }
 
 body.fixed-nav.sidebar-toggled #content-wrapper {
   padding-left: 0;
-  padding-bottom: 60px;
+  padding-bottom: 0;
 }
 
 @media (min-width: 768px) {
   body.fixed-nav #content-wrapper {
     padding-left: 225px;
-    padding-bottom: 60px;
+    padding-bottom: 0;
   }
   body.fixed-nav.sidebar-toggled #content-wrapper {
     padding-left: 90px;
-    padding-bottom: 60px;
+    padding-bottom: 0;
   }
 }
 
@@ -144,6 +144,26 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .scroll-to-top i {
   font-weight: 800;
+}
+
+#incoming_message {
+  width: 50%;
+}
+
+@media (max-width: 600px) {
+  #incoming_message {
+    width: 80%;
+  }
+}
+
+#outgoing_message {
+  width: 50%;
+}
+
+@media (max-width: 600px) {
+  #outgoing_message {
+    width: 80%;
+  }
 }
 
 .smaller {
@@ -500,7 +520,7 @@ footer.sticky-footer {
   right: 0;
   bottom: 0;
   width: calc(100% - 90px);
-  height: 60px;
+  height: 0;
   background-color: #e9ecef;
 }
 
