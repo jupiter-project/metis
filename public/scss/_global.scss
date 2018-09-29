@@ -139,3 +139,19 @@ body.fixed-nav {
     font-weight: 800;
   }
 }
+
+#incoming_message {
+  width: 50%;
+
+  @media (max-width: 600px) {
+    width: 80%;
+  }
+}
+
+#outgoing_message {
+  width: 50%;
+
+  @media (max-width: 600px) {
+    width: 80%;
+  }
+}
