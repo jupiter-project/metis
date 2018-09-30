@@ -12,8 +12,7 @@ export default class ApplicationLayout extends React.Component {
   render() {
     const linksList = (
       <div>
-<li className="nav-item"><a className="nav-link" href="/transfers"><i className="fa fa-fw fa-file" />{' '}<span>Transfers</span></a></li>
-{false && 'Generated plop links go here'}
+        {false && 'Generated plop links go here'}
       </div>
     );
 
@@ -212,7 +211,7 @@ export default class ApplicationLayout extends React.Component {
 
         <div id="content-wrapper">
           {this.props.children}
-          {/*<div className="fixed-bottom">
+          {/* <div className="fixed-bottom">
             <footer className="sticky-footer">
               <div className="container-fluid my-auto">
                 <div className="copyright text-center my-auto">
@@ -230,7 +229,7 @@ export default class ApplicationLayout extends React.Component {
                 </div>
               </div>
             </footer>
-          </div>*/}
+          </div> */}
         </div>
       </div>
     );
@@ -297,7 +296,7 @@ export default class ApplicationLayout extends React.Component {
 
         <div id="content-wrapper">
           {this.props.children}
-          {/*<div className="fixed-bottom">
+          {/* <div className="fixed-bottom">
             <footer className="sticky-footer">
               <div className="container-fluid my-auto">
                 <div className="copyright text-center my-auto">
@@ -315,7 +314,7 @@ export default class ApplicationLayout extends React.Component {
                 </div>
               </div>
             </footer>
-          </div>*/}
+          </div> */}
         </div>
       </div>
     );

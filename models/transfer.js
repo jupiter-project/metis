@@ -15,6 +15,7 @@ class Transfer extends Model {
 
     // Mandatory method to be called after data
     this.record = this.setRecord();
+    this.appTable = true;
 
 
     this.validation_rules = [

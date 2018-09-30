@@ -7,7 +7,7 @@ class DataRow extends React.Component {
   constructor(props) {
     super(props);
     const transfer = this.props.parent.state.transfers[this.props.transfer];
-    const record = transfer.transfer_record;
+    const record = transfer.versions[0];
 
     this.state = {
       transferData: this.props.parent.state.transfers[this.props.transfer],
@@ -118,14 +118,14 @@ class DataRow extends React.Component {
         </tr>
     );
 
-    const transferInfo = this.props.parent.state.transfers[this.props.transfer];
+    const transferInfo = this.props.parent.state.transfers[this.props.transfer].versions[0];
 
     const readOnly = (
       <tr className="text-center" key={`row-${(transferInfo.id)}-data`}>
-          <td>{transferInfo.transfer_record.recipient}</td>
-          <td>{parseFloat(transferInfo.transfer_record.amount) / 100000000}</td>
-          <td>{parseFloat(transferInfo.transfer_record.balanceAtTransfer) / 100000000}</td>
-          <td>{transferInfo.transfer_record.notes}</td>
+          <td>{transferInfo.recipient}</td>
+          <td>{parseFloat(transferInfo.amount) / 100000000}</td>
+          <td>{parseFloat(transferInfo.balanceAtTransfer) / 100000000}</td>
+          <td>{transferInfo.notes}</td>
           <td>{this.state.date}</td>
           <td>{this.state.confirmed ? 'Yes' : 'No'}</td>
           <td>
@@ -176,11 +176,12 @@ class TransfersComponent extends React.Component {
       },
     };
 
-    axios.get(`/api/users/${this.props.user.id}/transfers`, config)
+    axios.get('/admin/api/transfers', config)
       .then((response) => {
-        if (response.data.success) {
+        console.log(response.data);
+        if (response.data.success && response.data.records) {
           page.setState({
-            transfers: response.data.transfers,
+            transfers: response.data.records,
           });
           page.monitorData();
         } else {
@@ -198,16 +199,15 @@ class TransfersComponent extends React.Component {
     const currentData = JSON.stringify(this.state.transfers);
     const config = {
       headers: {
-        user_api_key: this.props.user.record.api_key,
+        user_api_key: this.props.user ? this.props.user.record.api_key : null,
         user_public_key: this.props.public_key,
       },
     };
 
-    axios.get(`/api/users/${this.props.user.id}/transfers`, config)
+    axios.get('/admin/api/transfers', config)
       .then((response) => {
-        if (response.data.success) {
-          const responseData = response.data.transfers;
-
+        if (response.data.success && response.data.records) {
+          const responseData = response.data.records;
           if (currentData !== JSON.stringify(responseData)) {
             self.resetRecords(responseData);
             // toastr.success('Updates received');
@@ -226,7 +226,7 @@ class TransfersComponent extends React.Component {
       if (!(self.state.submitted || self.state.update_submitted)) {
         self.checkUpdates();
       }
-    }, 1000);
+    }, 5000);
   }
 
 
@@ -334,7 +334,11 @@ class TransfersComponent extends React.Component {
                             </div>
                             <div className="row p-3">
                                 <div className="col-lg-12 col-md-12 col-xs-12 text-center">
-                                    <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...' : 'Save'}</button>
+                                    <button type="button" className="btn btn-outline btn-default"
+                                    disabled={this.state.submitted}
+                                    onClick={this.createRecord.bind(this)}>
+                                    <i className="glyphicon glyphicon-edit"></i>
+                                    {this.state.submitted ? 'Saving...' : 'Save'}</button>
                                 </div>
                             </div>
                         </div>

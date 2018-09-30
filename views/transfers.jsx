@@ -1,5 +1,5 @@
 import React from 'react';
-import ApplicationLayout from './layout/application.jsx';
+import ApplicationLayout from './layout/admin.jsx';
 
 class TransfersPage extends React.Component {
   render() {

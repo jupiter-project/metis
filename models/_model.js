@@ -202,6 +202,29 @@ class Model {
     });
   }
 
+  validateRequest() {
+    const self = this;
+    return new Promise((resolve, reject) => {
+      if (self.model === 'user') {
+        resolve({ success: true, isUserRecord: true });
+      } else if (self.user && self.user.id) {
+        const User = require('./user.js');
+
+        gravity.findById(self.user.id, 'user')
+          .then((response) => {
+            const user = new User(response.record);
+            resolve({ user, success: true, isUserRecord: true });
+          })
+          .catch((err) => {
+            console.log(err);
+            reject({ success: false, errors: 'There was an error in authentication of request/user validation' });
+          });
+      } else {
+        reject({ success: false, errors: 'There was an error in authentication of request/user validation' });
+      }
+    });
+  }
+
   loadRecords(scope = {}) {
     const self = this;
     const eventEmitter = new events.EventEmitter();
@@ -373,6 +396,17 @@ class Model {
 
         if (self.model === 'user') {
           eventEmitter.emit('request_authenticated');
+        } else if (self.user.id === process.env.APP_ACCOUNT_ID && self.user.api_key !== undefined) {
+          const User = require('./user.js');
+
+          user = new User({
+            id: process.env.APP_ACCOUNT_ID,
+            account: process.env.APP_ACCOUNT_ADDRESS,
+            email: process.env.APP_EMAIL,
+            public_key: process.env.APP_PUBLIC_KEY,
+            api_key: process.env.APP_API_KEY || undefined,
+          });
+          eventEmitter.emit('authenticate_user_request');
         } else if (self.user && self.user.id) {
           const User = require('./user.js');
 
@@ -506,9 +540,11 @@ class Model {
           for (let x = 0; x < Object.keys(records).length; x += 1) {
             const thisRecord = records[x];
             let recordRecord;
+
             if (collection[thisRecord.id] === undefined) {
               recordRecord = JSON.parse(thisRecord[`${self.model}_record`]);
               recordRecord.date = thisRecord.date;
+              recordRecord.confirmed = thisRecord.confirmed;
 
               collection[thisRecord.id] = {
                 id: thisRecord.id,
@@ -517,6 +553,7 @@ class Model {
             } else {
               recordRecord = JSON.parse(thisRecord[`${self.model}_record`]);
               recordRecord.date = thisRecord.date;
+              recordRecord.confirmed = thisRecord.confirmed;
 
               thisRecord[`${self.model}_record`] = recordRecord;
               collection[thisRecord.id].versions.push(recordRecord);

@@ -578,6 +578,7 @@ class Gravity {
               .then((response) => {
                 try {
                   const decriptedPending = JSON.parse(response.data.decryptedMessage);
+                  decriptedPending.confirmed = true;
                   decryptedPendings.push(decriptedPending);
                 } catch (e) {
                   console.log(e);
@@ -610,6 +611,7 @@ class Gravity {
                   // This decrypts the message from the blockchain using native encryption
                   // as well as the encryption based on encryption variable
                   const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
+                  decrypted.confirmed = true;
                   decryptedRecords.push(decrypted);
                 } catch (e) {
                   console.log(e);
