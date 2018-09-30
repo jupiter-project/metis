@@ -223,28 +223,26 @@ export default class ApplicationLayout extends React.Component {
         </div>
 
         <div id="content-wrapper">
-          <div className="container-fluid">
-            {this.props.children}
-            {/*<div className="fixed-bottom">
-              <footer className="sticky-footer">
-                <div className="container-fluid my-auto">
-                  <div className="copyright text-center my-auto">
-                    {process.env.APPNAME ? (
-                      <div>
-                        <div>Copyright © 2018 YourBrand</div>
-                        <div className="mt-2 small">powered by Gravity</div>
-                      </div>
-                    ) : (
-                      <div>
-                        <div>Copyright © 2018 Sigwo Technologies</div>
-                        <div className="mt-2 small">powered by Gravity</div>
-                      </div>
-                    )}
-                  </div>
+          {this.props.children}
+          {/*<div className="fixed-bottom">
+            <footer className="sticky-footer">
+              <div className="container-fluid my-auto">
+                <div className="copyright text-center my-auto">
+                  {process.env.APPNAME ? (
+                    <div>
+                      <div>Copyright © 2018 YourBrand</div>
+                      <div className="mt-2 small">powered by Gravity</div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div>Copyright © 2018 Sigwo Technologies</div>
+                      <div className="mt-2 small">powered by Gravity</div>
+                    </div>
+                  )}
                 </div>
-              </footer>
-            </div>*/}
-          </div>
+              </div>
+            </footer>
+          </div>*/}
         </div>
       </div>
     );
@@ -310,28 +308,26 @@ export default class ApplicationLayout extends React.Component {
         </div>
 
         <div id="content-wrapper">
-          <div className="container-fluid">
-            {this.props.children}
-            {/*<div className="fixed-bottom">
-              <footer className="sticky-footer">
-                <div className="container-fluid my-auto">
-                  <div className="copyright text-center my-auto">
-                    {process.env.APPNAME ? (
-                      <div>
-                        <div>Copyright © 2018 YourBrand</div>
-                        <div className="mt-2 small">powered by Gravity</div>
-                      </div>
-                    ) : (
-                      <div>
-                        <div>Copyright © 2018 Sigwo Technologies</div>
-                        <div className="mt-2 small">powered by Gravity</div>
-                      </div>
-                    )}
-                  </div>
+          {this.props.children}
+          {/*<div className="fixed-bottom">
+            <footer className="sticky-footer">
+              <div className="container-fluid my-auto">
+                <div className="copyright text-center my-auto">
+                  {process.env.APPNAME ? (
+                    <div>
+                      <div>Copyright © 2018 YourBrand</div>
+                      <div className="mt-2 small">powered by Gravity</div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div>Copyright © 2018 Sigwo Technologies</div>
+                      <div className="mt-2 small">powered by Gravity</div>
+                    </div>
+                  )}
                 </div>
-              </footer>
-            </div>*/}
-          </div>
+              </div>
+            </footer>
+          </div>*/}
         </div>
       </div>
     );

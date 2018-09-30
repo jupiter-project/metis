@@ -12,8 +12,8 @@ export default class MessageList extends React.Component {
 
   render() {
     return (
-      <div className="container" style={{position: "relative", overflow: "hidden", height: "64vh", width:"100%", border: "0px solid #ccc"}}>
-        <div className="row message-list" style={{overflowY: "scroll", height: "64vh", width: "100%", position: "absolute"}}>
+      <div style={{position: "relative", overflow: "hidden", height: "calc(100vh - 180px)", width:"100%", border: "0px solid #ccc"}}>
+        <div className="row message-list" style={{overflowY: "scroll", height: "100%", width: "100%", position: "absolute", left: "15px"}}>
           
           <div className="card-plain text-left message d-block float-left m-2 w-100">
             <div className="card-body p-2">
@@ -33,7 +33,7 @@ export default class MessageList extends React.Component {
                 <img src="/img/logo.png" height="40px" alt="logo" />
               </div>
               <div id="outgoing_message" className="p-2 rounded float-right" style={{ backgroundColor: "#ccc" }}>
-                <div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>
+                {/*<div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>*/}
                 <div className="person_message text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
               </div>
             </div>
@@ -57,7 +57,7 @@ export default class MessageList extends React.Component {
                 <img src="/img/logo.png" height="40px" alt="logo" />
               </div>
               <div id="outgoing_message" className="p-2 rounded float-right" style={{ backgroundColor: "#ccc" }}>
-                <div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>
+                {/*<div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>*/}
                 <div className="person_message text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
               </div>
             </div>
@@ -81,7 +81,7 @@ export default class MessageList extends React.Component {
                 <img src="/img/logo.png" height="40px" alt="logo" />
               </div>
               <div id="outgoing_message" className="p-2 rounded float-right" style={{ backgroundColor: "#ccc" }}>
-                <div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>
+                {/*<div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>*/}
                 <div className="person_message text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
               </div>
             </div>
