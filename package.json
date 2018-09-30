@@ -18,7 +18,9 @@
     "dev": "nodemon server.js && webpack -w"
   },
   "jest": {
-    "setupFiles": ["<rootDir>/jestSetup.js"]
+    "setupFiles": [
+      "<rootDir>/jestSetup.js"
+    ]
   },
   "authors": [
     {
@@ -59,6 +61,7 @@
     "handlebars": "^4.0.11",
     "jquery": "^3.3.1",
     "jquery.easing": "^1.4.1",
+    "kue": "^0.11.6",
     "less-middleware": "^2.2.0",
     "method-override": "^2.3.9",
     "mongoose": "^4.11.9",
