@@ -12,7 +12,7 @@ export default class MessageList extends React.Component {
 
   render() {
     return (
-      <div style={{position: "relative", overflow: "hidden", height: "calc(100% - 180px)", width:"100%", border: "0px solid #ccc"}}>
+      <div style={{position: "relative", overflow: "hidden", height: "calc(100vh - 180px)", width:"100%", border: "0px solid #ccc"}}>
         <div className="row message-list" style={{overflowY: "scroll", height: "100%", width: "100%", position: "absolute", left: "15px"}}>
           
           <div className="card-plain text-left message d-block float-left m-2 w-100">
