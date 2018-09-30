@@ -13,7 +13,7 @@ export default class Title extends React.Component {
   render() {
     return (
       <div className="bg-dark">
-        <div className="text-white text-center">METIS</div>
+        <div className="text-white text-center">Channel Name</div>
       </div>
     );
   }

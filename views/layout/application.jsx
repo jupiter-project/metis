@@ -5,6 +5,7 @@ export default class ApplicationLayout extends React.Component {
     super(props);
     this.state = {
       user_exists: this.props.data.user != null || false,
+      user: this.props.data.user,
     };
   }
 
@@ -18,24 +19,7 @@ export default class ApplicationLayout extends React.Component {
     const loggedHeader = (
       <nav className="navbar navbar-expand navbar-custom static-top">
         <a className="navbar-brand" href="/">
-          {process.env.APPNAME ? (
-            <div>
-              <i className="fa fa-fw fa-globe" alt="yourBrand" />
-              {' '}
-              <span>YourBrand</span>
-            </div>
-          ) : (
-            <div>
-              <img
-                src="/img/logo.png"
-                //className="pb-1"
-                alt="sigwo"
-                height="32px"
-              />
-              {' '}
-              <span>Sigwo Technologies</span>
-            </div>
-          )}
+          <span>METIS</span>
         </a>
 
         <button
@@ -91,24 +75,7 @@ export default class ApplicationLayout extends React.Component {
       <nav className="navbar navbar-expand navbar-custom static-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="/gravity">
-            {process.env.APPNAME ? (
-              <div>
-                <i className="fa fa-fw fa-globe" alt="yourBrand" />
-                {' '}
-                <span>YourBrand</span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  src="/img/logo.png"
-                  //className="pb-1"
-                  alt="sigwo"
-                  height="32px"
-                />
-                {' '}
-                <span>Sigwo Technologies</span>
-              </div>
-            )}
+            <span>METIS</span>
           </a>
 
           <button
@@ -147,12 +114,10 @@ export default class ApplicationLayout extends React.Component {
         <ul className="sidebar navbar-nav">
           <div className="card card-account bg-secondary d-none d-md-block">
             <div className="card-body">
-              <h5>Account ID</h5>
-              <span className="small">
+              <span className="h5">
                 {this.state.user_exists
-                  ? this.props.data.user.record.account
-                  : 'JUP XXXX-XXXX-XXXX-XXXXX'}
-              </span>
+                  ? `${this.state.user.record.firstname} ${this.state.user.record.lastname}`
+                  : 'your name'}</span>
             </div>
           </div>
           <li className="nav-item">
@@ -176,11 +141,18 @@ export default class ApplicationLayout extends React.Component {
           <ul className="navbar-nav d-block d-lg-none text-left">
             <div className="card card-account bg-secondary">
               <div className="card-body">
-                <h5>Account ID</h5>
+                <h5>Account Details</h5>
                 <div className="small">
-                  {this.state.user_exists
-                    ? this.props.data.user.record.account
-                    : 'JUP XXXX-XXXX-XXXX-XXXXX'}
+                  <span>First Name: </span>
+                  <span>{this.state.user_exists
+                    ? this.state.user.record.firstname
+                    : 'first name'}</span>
+                </div>
+                <div className="small">
+                  <span>Last Name: </span>
+                  <span>{this.state.user_exists
+                    ? this.state.user.record.lastname
+                    : 'first name'}</span>
                 </div>
               </div>
             </div>

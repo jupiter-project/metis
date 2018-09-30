@@ -22,7 +22,7 @@ export default class MessageList extends React.Component {
               </div>
               <div id="incoming_message" className="ml-5 p-2 rounded" style={{ backgroundColor: "#ccc" }}>
                 <div className="person_name" style={{ fontWeight: "600" }}>Vaughn</div>
-                <div className="person_message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
+                <div className="person_message">this is just a mock conversation, no need to pay any attention here.</div>
               </div>
             </div>
           </div>
@@ -34,7 +34,7 @@ export default class MessageList extends React.Component {
               </div>
               <div id="outgoing_message" className="p-2 rounded float-right" style={{ backgroundColor: "#ccc" }}>
                 {/*<div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>*/}
-                <div className="person_message text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
+                <div className="person_message text-left">this is just a mock conversation, no need to pay any attention here.</div>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@ export default class MessageList extends React.Component {
               </div>
               <div id="incoming_message" className="ml-5 p-2 rounded" style={{ backgroundColor: "#ccc" }}>
                 <div className="person_name" style={{ fontWeight: "600" }}>Raf</div>
-                <div className="person_message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
+                <div className="person_message">this is just a mock conversation, no need to pay any attention here.</div>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@ export default class MessageList extends React.Component {
               </div>
               <div id="outgoing_message" className="p-2 rounded float-right" style={{ backgroundColor: "#ccc" }}>
                 {/*<div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>*/}
-                <div className="person_message text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
+                <div className="person_message text-left">this is just a mock conversation, no need to pay any attention here.</div>
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default class MessageList extends React.Component {
               </div>
               <div id="incoming_message" className="ml-5 p-2 rounded" style={{ backgroundColor: "#ccc" }}>
                 <div className="person_name" style={{ fontWeight: "600" }}>Raf</div>
-                <div className="person_message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
+                <div className="person_message">this is just a mock conversation, no need to pay any attention here.</div>
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@ export default class MessageList extends React.Component {
               </div>
               <div id="outgoing_message" className="p-2 rounded float-right" style={{ backgroundColor: "#ccc" }}>
                 {/*<div className="person_name" style={{ fontWeight: "600" }}>Kyle</div>*/}
-                <div className="person_message text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
+                <div className="person_message text-left">this is just a mock conversation, no need to pay any attention here.</div>
               </div>
             </div>
           </div>
@@ -94,7 +94,7 @@ export default class MessageList extends React.Component {
               </div>
               <div id="incoming_message" className="ml-5 p-2 rounded" style={{ backgroundColor: "#ccc" }}>
                 <div className="person_name" style={{ fontWeight: "600" }}>Raf</div>
-                <div className="person_message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu convallis magna, eu finibus ex. In hac habitasse platea dictumst. Phasellus sit amet tortor facilisis, lacinia ex eget, cursus est.</div>
+                <div className="person_message">this is just a mock conversation, no need to pay any attention here.</div>
               </div>
             </div>
           </div>
