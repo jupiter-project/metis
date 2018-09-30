@@ -5,6 +5,7 @@ export default class ApplicationLayout extends React.Component {
     super(props);
     this.state = {
       user_exists: this.props.data.user != null || false,
+      user: this.props.data.user,
     };
   }
 
@@ -18,24 +19,7 @@ export default class ApplicationLayout extends React.Component {
     const loggedHeader = (
       <nav className="navbar navbar-expand navbar-custom static-top">
         <a className="navbar-brand" href="/">
-          {process.env.APPNAME ? (
-            <div>
-              <i className="fa fa-fw fa-globe" alt="yourBrand" />
-              {' '}
-              <span>YourBrand</span>
-            </div>
-          ) : (
-            <div>
-              <img
-                src="/img/logo.png"
-                //className="pb-1"
-                alt="sigwo"
-                height="32px"
-              />
-              {' '}
-              <span>Sigwo Technologies</span>
-            </div>
-          )}
+          <span>METIS</span>
         </a>
 
         <button
@@ -71,6 +55,11 @@ export default class ApplicationLayout extends React.Component {
                 {' '}
                 <span>Settings</span>
               </a>
+              <a className="dropdown-item" href="/account">
+                <i className="fa fa-fw fa-edit" />
+                {' '}
+                <span>My Profile</span>
+              </a>
               <a
                 className="dropdown-item"
                 href="#"
@@ -91,24 +80,7 @@ export default class ApplicationLayout extends React.Component {
       <nav className="navbar navbar-expand navbar-custom static-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="/gravity">
-            {process.env.APPNAME ? (
-              <div>
-                <i className="fa fa-fw fa-globe" alt="yourBrand" />
-                {' '}
-                <span>YourBrand</span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  src="/img/logo.png"
-                  //className="pb-1"
-                  alt="sigwo"
-                  height="32px"
-                />
-                {' '}
-                <span>Sigwo Technologies</span>
-              </div>
-            )}
+            <span>METIS</span>
           </a>
 
           <button
@@ -146,27 +118,35 @@ export default class ApplicationLayout extends React.Component {
       <div id="wrapper">
         <ul className="sidebar navbar-nav">
           <div className="card card-account bg-secondary d-none d-md-block">
-            <div className="card-body">
-              <h5>Account ID</h5>
-              <span className="small">
+            <div className="card-body text-left">
+              <div className="bg-dark rounded-circle float-left mr-2">
+                <img src="/img/logo.png" height="28px" alt="logo" />
+              </div>
+              <span className="h5">
                 {this.state.user_exists
-                  ? this.props.data.user.record.account
-                  : 'JUP XXXX-XXXX-XXXX-XXXXX'}
-              </span>
+                  ? `${this.state.user.record.firstname} ${this.state.user.record.lastname}`
+                  : 'your name'}</span>
             </div>
           </div>
           <li className="nav-item">
             <a className="nav-link" href="/">
-              <i className="fa fa-fw fa-dashboard" />
+              <i className="fa fa-fw fa-circle" />
               {' '}
-              <span>Dashboard</span>
+              <span>Channel A</span>
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/account">
-              <i className="fa fa-fw fa-edit" />
+            <a className="nav-link" href="/">
+              <i className="fa fa-fw fa-circle" />
               {' '}
-              <span>My Profile</span>
+              <span>Channel B</span>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/">
+              <i className="fa fa-fw fa-circle" />
+              {' '}
+              <span>Channel C</span>
             </a>
           </li>
           {linksList}
@@ -176,11 +156,18 @@ export default class ApplicationLayout extends React.Component {
           <ul className="navbar-nav d-block d-lg-none text-left">
             <div className="card card-account bg-secondary">
               <div className="card-body">
-                <h5>Account ID</h5>
+                <h5>Account Details</h5>
                 <div className="small">
-                  {this.state.user_exists
-                    ? this.props.data.user.record.account
-                    : 'JUP XXXX-XXXX-XXXX-XXXXX'}
+                  <span>First Name: </span>
+                  <span>{this.state.user_exists
+                    ? this.state.user.record.firstname
+                    : 'first name'}</span>
+                </div>
+                <div className="small">
+                  <span>Last Name: </span>
+                  <span>{this.state.user_exists
+                    ? this.state.user.record.lastname
+                    : 'first name'}</span>
                 </div>
               </div>
             </div>

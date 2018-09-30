@@ -20,6 +20,7 @@ class HomeComponent extends React.Component {
     return (
       <div>
         {/* <div className="page-title">Welcome to Metis</div> */}
+        {console.log(this.state.user.record.firstname)}
         <Title />
         <MessageList />
         <SendMessageForm />
