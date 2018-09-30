@@ -118,7 +118,10 @@ export default class ApplicationLayout extends React.Component {
       <div id="wrapper">
         <ul className="sidebar navbar-nav">
           <div className="card card-account bg-secondary d-none d-md-block">
-            <div className="card-body">
+            <div className="card-body text-left">
+              <div className="bg-dark rounded-circle float-left mr-2">
+                <img src="/img/logo.png" height="28px" alt="logo" />
+              </div>
               <span className="h5">
                 {this.state.user_exists
                   ? `${this.state.user.record.firstname} ${this.state.user.record.lastname}`
@@ -127,9 +130,23 @@ export default class ApplicationLayout extends React.Component {
           </div>
           <li className="nav-item">
             <a className="nav-link" href="/">
-              <i className="fa fa-fw fa-comments" />
+              <i className="fa fa-fw fa-circle" />
               {' '}
-              <span>Messanger</span>
+              <span>Channel A</span>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/">
+              <i className="fa fa-fw fa-circle" />
+              {' '}
+              <span>Channel B</span>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/">
+              <i className="fa fa-fw fa-circle" />
+              {' '}
+              <span>Channel C</span>
             </a>
           </li>
           {linksList}
