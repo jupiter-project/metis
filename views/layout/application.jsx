@@ -55,6 +55,11 @@ export default class ApplicationLayout extends React.Component {
                 {' '}
                 <span>Settings</span>
               </a>
+              <a className="dropdown-item" href="/account">
+                <i className="fa fa-fw fa-edit" />
+                {' '}
+                <span>My Profile</span>
+              </a>
               <a
                 className="dropdown-item"
                 href="#"
@@ -122,16 +127,9 @@ export default class ApplicationLayout extends React.Component {
           </div>
           <li className="nav-item">
             <a className="nav-link" href="/">
-              <i className="fa fa-fw fa-dashboard" />
+              <i className="fa fa-fw fa-comments" />
               {' '}
-              <span>Dashboard</span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/account">
-              <i className="fa fa-fw fa-edit" />
-              {' '}
-              <span>My Profile</span>
+              <span>Messanger</span>
             </a>
           </li>
           {linksList}
