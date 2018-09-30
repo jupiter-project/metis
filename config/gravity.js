@@ -274,7 +274,7 @@ class Gravity {
     });
   }
 
-  getRecords(userAddress, recordsAddress, recordPassphrase, scope = { size: 'all', show_pending: null }) {
+  getRecords(userAddress, recordsAddress, recordPassphrase, scope = { size: 'all', show_pending: null, show_unconfirmed: false }) {
     const eventEmitter = new events.EventEmitter();
     const self = this;
 
@@ -314,8 +314,33 @@ class Gravity {
         resolve(responseData);
       });
 
-      eventEmitter.on('check_on_pending', () => {
-        if (Object.keys(pendingRecords).length > 0) {
+      eventEmitter.on('check_on_pending', async () => {
+        if (scope.show_unconfirmed) {
+          const filter = {};
+          if (!scope.shared_table) {
+            filter.account = recordsAddress;
+          }
+
+          try {
+            const unconfirmedObjects = await self.getUnconfirmedData(
+              userAddress,
+              recordPassphrase,
+              filter,
+            );
+
+            for (let x = 0; x < unconfirmedObjects.length; x += 1) {
+              const thisUnconfirmedRecord = unconfirmedObjects[x];
+
+              if (thisUnconfirmedRecord.data) {
+                decryptedRecords.push(thisUnconfirmedRecord.data);
+              }
+            }
+            eventEmitter.emit('set_responseData');
+          } catch (e) {
+            console.log(e);
+            eventEmitter.emit('set_responseData');
+          }
+        } else if (Object.keys(pendingRecords).length > 0) {
           let recordCounter = 0;
 
           pendingRecords.forEach((p) => {
@@ -359,6 +384,7 @@ class Gravity {
                   // This decrypts the message from the blockchain using native encryption
                   // as well as the encryption based on encryption variable
                   const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
+                  decrypted.confirmed = true;
                   decryptedRecords.push(decrypted);
                 } catch (e) {
                   // console.log(e);
@@ -977,7 +1003,7 @@ class Gravity {
     });
   }
 
-  async getUnconfirmedData(address, filter = {}) {
+  async getUnconfirmedData(address, passphrase, filter = {}) {
     const self = this;
     const unconfirmedData = [];
 
@@ -1016,21 +1042,19 @@ class Gravity {
         let decryptedData;
 
         try {
-          const passphrase = 'fly plain trick tease hundred harsh dress sort disguise match chocolate snap';
-          const accountForCall = thisTransaction.senderRS !== address
-            ? thisTransaction.senderRS : thisTransaction.recipientRS;
           // eslint-disable-next-line no-await-in-loop
-          decryptedData = await self.decryptFromRecord(thisTransaction, accountForCall, passphrase);
+          decryptedData = await self.decryptFromRecord(thisTransaction, address, passphrase);
         } catch (e) {
+          console.log(e);
           decryptedData = e;
         }
         try {
           dataObject.data = JSON.parse(self.decrypt(decryptedData.decryptedMessage))
           || decryptedData;
         } catch (e) {
-          console.log(e);
           dataObject.data = decryptedData;
         }
+        dataObject.data.confirmed = false;
         unconfirmedData.push(dataObject);
       }
     }

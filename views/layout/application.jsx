@@ -12,6 +12,7 @@ export default class ApplicationLayout extends React.Component {
   render() {
     const linksList = (
       <div>
+<li className="nav-item"><a className="nav-link" href="/transfers"><i className="fa fa-fw fa-file" />{' '}<span>Transfers</span></a></li>
 {false && 'Generated plop links go here'}
       </div>
     );

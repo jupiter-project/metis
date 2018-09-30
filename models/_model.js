@@ -202,7 +202,7 @@ class Model {
     });
   }
 
-  loadRecords() {
+  loadRecords(scope = {}) {
     const self = this;
     const eventEmitter = new events.EventEmitter();
     const finalList = [];
@@ -211,7 +211,7 @@ class Model {
 
     return new Promise((resolve, reject) => {
       eventEmitter.on('tableData_loaded', () => {
-        gravity.getRecords(user.record.account, tableData.address, tableData.passphrase)
+        gravity.getRecords(user.record.account, tableData.address, tableData.passphrase, scope)
           .then((res) => {
             const { records } = res;
             const recordsBreakdown = {};
@@ -227,6 +227,7 @@ class Model {
 
                 const data = JSON.parse(thisRecord[`${self.model}_record`]);
                 data.date = thisRecord.date;
+                data.confirmed = thisRecord.confirmed;
                 recordsBreakdown[thisRecord.id].versions.push(data);
               }
             }
