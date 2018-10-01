@@ -742,10 +742,13 @@ class Gravity {
       } else if (containedDatabase) {
         self.retrieveUserFromPassphrase(containedDatabase)
           .then((response) => {
-            if (response.noUserTables) {
+            if (response.noUserTables || response.databaseFound) {
               self.retrieveUserFromApp(account, passphrase)
                 .then((res) => {
-                  res.noUserTables = true;
+                  res.noUserTables = response.noUserTables;
+                  res.databaseFound = response.databaseFound;
+                  res.database = response.database;
+                  res.userNeedsSave = response.userNeedsSave;
                   res.tables = response.tables;
                   resolve(res);
                 })
@@ -791,7 +794,12 @@ class Gravity {
       eventEmitter.on('set_responseData', () => {
         if (decryptedRecords[0] === undefined
           || decryptedRecords[0].user_record === undefined) {
-          resolve({ error: true, message: 'Account not on file!' });
+          resolve({
+            database,
+            success: false,
+            databaseFound: true,
+            userNeedsSave: true,
+          });
         } else {
           responseData = { recordsFound, user: decryptedRecords[0].user_record };
           resolve(responseData);
@@ -815,7 +823,10 @@ class Gravity {
                 try {
                   // This decrypts the message from the blockchain using native encryption
                   // as well as the encryption based on encryption variable
-                  const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
+                  const decrypted = JSON.parse(
+                    self.decrypt(response.data.decryptedMessage,
+                      accessData.encryptedData),
+                  );
                   decryptedRecords.push(decrypted);
                 } catch (e) {
                   console.log(e);
@@ -864,7 +875,6 @@ class Gravity {
       self.loadAppData(accessData)
         .then((res) => {
           database = res.app.tables;
-          console.log(res.app);
           if (typeof database === 'object' && database.length >= 3) {
             console.log('These are the table data');
             Object.keys(database).forEach((x) => {

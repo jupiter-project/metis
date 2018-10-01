@@ -158,6 +158,10 @@ module.exports = (passport) => {
             } catch (e) {
               res = { error: true, fullError: e };
             }
+
+            if (res.error) {
+              return done(null, false, req.flash('loginMessage', 'There was an error'));
+            }
           }
 
           if (!channelsExists) {
@@ -166,6 +170,10 @@ module.exports = (passport) => {
               res = await gravity.attachTable(containedDatabase, 'channels');
             } catch (e) {
               res = { error: true, fullError: e };
+            }
+
+            if (res.error) {
+              return done(null, false, req.flash('loginMessage', 'There was an error'));
             }
           }
 
@@ -176,6 +184,10 @@ module.exports = (passport) => {
               res = await gravity.attachTable(containedDatabase, 'invites');
             } catch (e) {
               res = { error: true, fullError: e };
+            }
+
+            if (res.error) {
+              return done(null, false, req.flash('loginMessage', 'There was an error'));
             }
           }
         }
@@ -200,6 +212,7 @@ module.exports = (passport) => {
         return done(null, {
           accessKey: gravity.encrypt(req.body.jupkey),
           encryptionKey: gravity.encrypt(req.body.encryptionPassword),
+          database: response.database,
           id: user.data.id,
         });
       })

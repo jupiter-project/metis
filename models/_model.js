@@ -16,6 +16,7 @@ class Model {
     this.prunableOnCreate = data.prunableOnCreate;
     this.hasDatabase = data.hasDatabase;
     this.record = this.setRecord();
+    this.database = data.accessPass ? data.accessPass.database : {};
   }
 
   setRecord() {
