@@ -14,6 +14,7 @@ class LoginForm extends React.Component {
       account: '',
       accounthash: '',
       public_key: '',
+      encryptionPassword: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -30,6 +31,12 @@ class LoginForm extends React.Component {
   handleChange(event) {
     this.setState({
       jup_passphrase: event.target.value,
+    });
+  }
+
+  enterPassphrase(event) {
+    this.setState({
+      encryptionPassword: event.target.value,
     });
   }
 
@@ -76,6 +83,7 @@ class LoginForm extends React.Component {
         />
         <input type="hidden" name="public_key" value={this.state.public_key} />
         <input type="hidden" name="jupkey" value={this.state.jup_passphrase} />
+        <input type="hidden" name="encryptionPassword" value={this.state.encryptionPassword} />
         <input
           type="hidden"
           name="jup_account_id"
@@ -101,6 +109,19 @@ class LoginForm extends React.Component {
             required="required"
             value={this.state.jup_passphrase}
             onChange={this.handleChange.bind(this)}
+            autoComplete="password"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="inputPassword">Enter your encryptionPassword</label>
+          <input
+            type="password"
+            id="encryptionPassword"
+            className="form-control"
+            required="required"
+            value={this.state.encryptionPassword}
+            onChange={this.enterPassphrase.bind(this)}
             autoComplete="password"
           />
         </div>

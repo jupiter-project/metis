@@ -7,14 +7,14 @@ const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = (passport) => {
   // Used to serialize the user for the session
-  passport.serializeUser((user, done) => {
-    done(null, user.record.id);
+  passport.serializeUser((accessData, done) => {
+    done(null, accessData);
   });
 
   // Used to deserialize the user
-  passport.deserializeUser((id, done) => {
+  passport.deserializeUser((accessData, done) => {
     // console.log('Deserializer being called');
-    const user = new User({ id });
+    const user = new User({ id: accessData.id }, accessData);
 
     user.findById()
       .then(() => {
@@ -80,7 +80,11 @@ module.exports = (passport) => {
               console.log('SendMoney was not completed');
             }
 
-            return done(null, user, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in'));
+            return done(null, {
+              accessKey: req.session.jup_key,
+              encryptionKey: gravity.encrypt(params.encryption_password),
+              id: user.data.id,
+            }, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in'));
           })
           .catch((err) => {
             console.log(err);
@@ -113,10 +117,67 @@ module.exports = (passport) => {
     let user;
     let valid = true;
 
-    gravity.getUser(account, req.body.jupkey)
-      .then((response) => {
+    const containedDatabase = {
+      account,
+      accounthash,
+      encryptionPassword: req.body.encryptionPassword,
+      passphrase: req.body.jupkey,
+      publicKey: req.body.public_key,
+      accountId: req.body.jup_account_id,
+    };
+
+    gravity.getUser(account, req.body.jupkey, containedDatabase)
+      .then(async (response) => {
         if (response.error) {
           return done(null, false, req.flash('loginMessage', 'Account is not registered or has not been confirmed in the blockchain'));
+        }
+
+        if (response.noUserTables) {
+          let res;
+          let usersExists = false;
+          let channelsExists = false;
+          let invitesExists = false;
+
+
+          response.tables.forEach((table) => {
+            if (table.users) {
+              usersExists = true;
+            }
+            if (table.channels) {
+              channelsExists = true;
+            }
+            if (table.invites) {
+              invitesExists = true;
+            }
+          });
+
+          if (!usersExists) {
+            console.log('Users table does not exist');
+            try {
+              res = await gravity.attachTable(containedDatabase, 'users');
+            } catch (e) {
+              res = { error: true, fullError: e };
+            }
+          }
+
+          if (!channelsExists) {
+            console.log('Channels table does not exist');
+            try {
+              res = await gravity.attachTable(containedDatabase, 'channels');
+            } catch (e) {
+              res = { error: true, fullError: e };
+            }
+          }
+
+
+          if (!invitesExists) {
+            console.log('Invites table does not exist');
+            try {
+              res = await gravity.attachTable(containedDatabase, 'invites');
+            } catch (e) {
+              res = { error: true, fullError: e };
+            }
+          }
         }
         // console.log(response);
         const data = JSON.parse(response.user);
@@ -136,7 +197,11 @@ module.exports = (passport) => {
           req.session.twofa_pass = false;
           req.session.jup_key = gravity.encrypt(req.body.jupkey);
         }
-        return done(null, user);
+        return done(null, {
+          accessKey: gravity.encrypt(req.body.jupkey),
+          encryptionKey: gravity.encrypt(req.body.encryptionPassword),
+          id: user.data.id,
+        });
       })
       .catch((err) => {
         console.log('Unable to query your user list. Please make sure you have a users table in your database.');

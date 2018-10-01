@@ -3,16 +3,18 @@ import Model from './_model';
 import methods from '../config/_methods';
 
 class User extends Model {
-  constructor(data) {
+  constructor(data, accessPass) {
     // Sets model name and table name
     super({
       data,
+      accessPass,
       model: 'user',
       table: 'users',
       model_params: ['id', 'account', 'accounthash', 'email', 'firstname',
         'lastname', 'secret_key', 'twofa_enabled', 'twofa_completed', 'api_key', 'encryption_password',
       ],
       prunableOnCreate: true,
+      hasDatabase: true,
     });
     this.public_key = data.public_key;
 

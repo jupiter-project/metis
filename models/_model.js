@@ -14,6 +14,7 @@ class Model {
     this.data = data.data;
     this.validation_rules = [];
     this.prunableOnCreate = data.prunableOnCreate;
+    this.hasDatabase = data.hasDatabase;
     this.record = this.setRecord();
   }
 
@@ -539,9 +540,20 @@ class Model {
 
   findAll() {
     const self = this;
+    let containedData;
+    if (self.containedDatabase) {
+      containedData = {
+        address: self.data.account,
+        accessPass: self.accessPass,
+      };
+    }
+    const scope = {
+      size: 'all',
+      containedDatabase: self.hasDatabase ? containedData : null,
+    };
 
     return new Promise((resolve, reject) => {
-      gravity.getAllRecords(self.table)
+      gravity.getAllRecords(self.table, scope)
         .then((response) => {
           const { records } = response;
           const collection = {};

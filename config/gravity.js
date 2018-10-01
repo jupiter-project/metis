@@ -87,16 +87,16 @@ class Gravity {
     });
   }
 
-  encrypt(text) {
-    const cipher = crypto.createCipher(this.algorithm, this.password);
+  encrypt(text, password = this.password) {
+    const cipher = crypto.createCipher(this.algorithm, password);
     let crypted = cipher.update(text, 'utf8', 'hex');
     crypted += cipher.final('hex');
 
     return crypted;
   }
 
-  decrypt(text) {
-    const decipher = crypto.createDecipher(this.algorithm, this.password);
+  decrypt(text, password = this.password) {
+    const decipher = crypto.createDecipher(this.algorithm, password);
     let dec = decipher.update(text, 'hex', 'utf8');
     dec += decipher.final('utf8');
 
@@ -135,7 +135,8 @@ class Gravity {
     });
   }
 
-  loadAppData() {
+  loadAppData(containedDatabase = false) {
+    console.log(containedDatabase);
     const eventEmitter = new events.EventEmitter();
 
     const self = this;
@@ -147,13 +148,20 @@ class Gravity {
     // let decryption_algorithm;
     let records = [];
     let numberOfRecords;
-    if (process.env.APP_ACCOUNT) {
+    let password;
+    if (containedDatabase) {
+      server = process.env.JUPITERSERVER;
+      ({ account } = containedDatabase);
+      ({ passphrase } = containedDatabase);
+      password = containedDatabase.encryptionPassword;
+    } else if (process.env.APP_ACCOUNT) {
       server = process.env.JUPITERSERVER;
       passphrase = process.env.APP_ACCOUNT;
       account = process.env.APP_ACCOUNT_ADDRESS;
       // decryption_password = process.env.ENCRYPT_PASSWORD;
       // decryption_algorithm = process.env.ENCRYPT_ALGORITHM;
       appname = process.env.APPNAME;
+      ({ password } = self);
     } else {
       const gravity = require('../.gravity.js');
       server = gravity.JUPITERSERVER;
@@ -165,6 +173,7 @@ class Gravity {
       self.algorithm = gravity.ENCRYPT_ALGORITHM;
       self.password = gravity.ENCRYPT_PASSWORD;
       appname = gravity.APPNAME;
+      ({ password } = self);
     }
 
     return new Promise((resolve, reject) => {
@@ -261,7 +270,7 @@ class Gravity {
         }
       });
 
-      self.getRecords(account, account, passphrase)
+      self.getRecords(account, account, passphrase, { size: 'all', show_pending: null, show_unconfirmed: false }, password)
         .then((response) => {
           ({ records } = response);
           numberOfRecords = response.recordsFound;
@@ -274,10 +283,10 @@ class Gravity {
     });
   }
 
-  getRecords(userAddress, recordsAddress, recordPassphrase, scope = { size: 'all', show_pending: null, show_unconfirmed: false }) {
+  getRecords(userAddress, recordsAddress, recordPassphrase, scope = { size: 'all', show_pending: null, show_unconfirmed: false }, password = this.password) {
     const eventEmitter = new events.EventEmitter();
     const self = this;
-
+    console.log();
     return new Promise((resolve, reject) => {
       const records = [];
       const decryptedRecords = [];
@@ -383,7 +392,10 @@ class Gravity {
                 try {
                   // This decrypts the message from the blockchain using native encryption
                   // as well as the encryption based on encryption variable
-                  const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
+                  const decrypted = JSON.parse(
+                    self.decrypt(response.data.decryptedMessage,
+                      password),
+                  );
                   decrypted.confirmed = true;
                   decryptedRecords.push(decrypted);
                 } catch (e) {
@@ -689,7 +701,7 @@ class Gravity {
           });
       });
 
-      self.loadAppData()
+      self.loadAppData(scope.containedDatabase)
         .then((res) => {
           database = res.app.tables;
           Object.keys(database).forEach((x) => {
@@ -707,20 +719,10 @@ class Gravity {
   }
 
   // This method retrieves user info based on the account and the passphrase given
-  getUser(account, passphrase) {
-    const eventEmitter = new events.EventEmitter();
+  getUser(account, passphrase, containedDatabase = null) {
     const self = this;
 
     return new Promise((resolve, reject) => {
-      const records = [];
-      const decryptedRecords = [];
-      let responseData;
-      let database;
-      let recordTable;
-      let tableData;
-      let completedNumber = 0;
-      let recordsFound = 0;
-
       if (account === process.env.APP_ACCOUNT_ADDRESS) {
         const userObject = {
           account,
@@ -737,95 +739,253 @@ class Gravity {
           secret: process.env.APP_ACCOUNT,
         };
         resolve({ user: JSON.stringify(userObject) });
-      } else {
-        eventEmitter.on('set_responseData', () => {
-          if (decryptedRecords[0] === undefined
-            || decryptedRecords[0].user_record === undefined) {
-            resolve({ error: true, message: 'Account not on file!' });
-          } else {
-            responseData = { recordsFound, user: decryptedRecords[0].user_record };
-            resolve(responseData);
-          }
-        });
-
-        eventEmitter.on('check_on_pending', () => {
-          eventEmitter.emit('set_responseData');
-        });
-
-        eventEmitter.on('records_retrieved', () => {
-          if (Object.keys(records).length <= 0) {
-            eventEmitter.emit('check_on_pending');
-          } else {
-            let recordCounter = 0;
-            records.forEach((p) => {
-              const thisUrl = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${passphrase}`;
-
-              axios.get(thisUrl)
-                .then((response) => {
-                  try {
-                    // This decrypts the message from the blockchain using native encryption
-                    // as well as the encryption based on encryption variable
-                    const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
-                    decryptedRecords.push(decrypted);
-                  } catch (e) {
-                    console.log(e);
-                  }
-                  recordCounter += 1;
-
-                  if (recordCounter === completedNumber) {
-                    eventEmitter.emit('check_on_pending');
-                  }
+      } else if (containedDatabase) {
+        self.retrieveUserFromPassphrase(containedDatabase)
+          .then((response) => {
+            if (response.noUserTables) {
+              self.retrieveUserFromApp(account, passphrase)
+                .then((res) => {
+                  res.noUserTables = true;
+                  res.tables = response.tables;
+                  resolve(res);
                 })
                 .catch((error) => {
-                  console.log(error);
                   reject(error);
                 });
-            });
-          }
-        });
-
-        eventEmitter.on('table_retrieved', () => {
-          Object.keys(tableData).some((position) => {
-            const obj = tableData[position];
-            let completion = false;
-            if (obj.attachment.encryptedMessage.data && obj.recipientRS === account) {
-              records.push(obj.transaction);
-              recordsFound += 1;
-              completedNumber += 1;
-              completion = true;
+            } else {
+              resolve(response);
             }
-            return completion;
+          })
+          .catch((error) => {
+            console.log(error);
+            reject(error);
           });
-          eventEmitter.emit('records_retrieved');
-        });
+      } else {
+        self.retrieveUserFromApp(account, passphrase)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      }
+    });
+  }
 
-        eventEmitter.on('table_access_retrieved', () => {
-          axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${recordTable.address}&withMessage=true&type=1`)
-            .then((response) => {
-              tableData = response.data.transactions;
-              eventEmitter.emit('table_retrieved');
-            })
-            .catch((error) => {
-              console.log(error);
-              reject({ success: false, errors: error });
-            });
-        });
+  retrieveUserFromPassphrase(accessData) {
+    const eventEmitter = new events.EventEmitter();
+    const self = this;
+    const { passphrase } = accessData;
+    const { account } = accessData;
 
-        self.loadAppData()
-          .then((res) => {
-            database = res.app.tables;
+    return new Promise((resolve, reject) => {
+      const records = [];
+      const decryptedRecords = [];
+      let responseData;
+      let database;
+      let recordTable;
+      let tableData;
+      let completedNumber = 0;
+      let recordsFound = 0;
+
+      eventEmitter.on('set_responseData', () => {
+        if (decryptedRecords[0] === undefined
+          || decryptedRecords[0].user_record === undefined) {
+          resolve({ error: true, message: 'Account not on file!' });
+        } else {
+          responseData = { recordsFound, user: decryptedRecords[0].user_record };
+          resolve(responseData);
+        }
+      });
+
+      eventEmitter.on('check_on_pending', () => {
+        eventEmitter.emit('set_responseData');
+      });
+
+      eventEmitter.on('records_retrieved', () => {
+        if (Object.keys(records).length <= 0) {
+          eventEmitter.emit('check_on_pending');
+        } else {
+          let recordCounter = 0;
+          records.forEach((p) => {
+            const thisUrl = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${passphrase}`;
+
+            axios.get(thisUrl)
+              .then((response) => {
+                try {
+                  // This decrypts the message from the blockchain using native encryption
+                  // as well as the encryption based on encryption variable
+                  const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
+                  decryptedRecords.push(decrypted);
+                } catch (e) {
+                  console.log(e);
+                }
+                recordCounter += 1;
+
+                if (recordCounter === completedNumber) {
+                  eventEmitter.emit('check_on_pending');
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                reject(error);
+              });
+          });
+        }
+      });
+
+      eventEmitter.on('table_retrieved', () => {
+        Object.keys(tableData).some((position) => {
+          const obj = tableData[position];
+          let completion = false;
+          if (obj.attachment.encryptedMessage.data && obj.recipientRS === account) {
+            records.push(obj.transaction);
+            recordsFound += 1;
+            completedNumber += 1;
+            completion = true;
+          }
+          return completion;
+        });
+        eventEmitter.emit('records_retrieved');
+      });
+
+      eventEmitter.on('table_access_retrieved', () => {
+        axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${recordTable.address}&withMessage=true&type=1`)
+          .then((response) => {
+            tableData = response.data.transactions;
+            eventEmitter.emit('table_retrieved');
+          })
+          .catch((error) => {
+            console.log(error);
+            reject({ success: false, errors: error });
+          });
+      });
+
+      self.loadAppData(accessData)
+        .then((res) => {
+          database = res.app.tables;
+          console.log(res.app);
+          if (typeof database === 'object' && database.length >= 3) {
+            console.log('These are the table data');
             Object.keys(database).forEach((x) => {
               if (database[x].users) {
                 recordTable = database[x].users;
               }
             });
             eventEmitter.emit('table_access_retrieved');
-          })
-          .catch((err) => {
-            console.log(err);
-            reject('There was an error');
+          } else {
+            console.log('Returning no user rable');
+            resolve({ success: false, noUserTables: true, tables: database });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          reject('There was an error');
+        });
+    });
+  }
+
+  retrieveUserFromApp(account, passphrase) {
+    const eventEmitter = new events.EventEmitter();
+    const self = this;
+
+    return new Promise((resolve, reject) => {
+      const records = [];
+      const decryptedRecords = [];
+      let responseData;
+      let database;
+      let recordTable;
+      let tableData;
+      let completedNumber = 0;
+      let recordsFound = 0;
+
+      eventEmitter.on('set_responseData', () => {
+        if (decryptedRecords[0] === undefined
+          || decryptedRecords[0].user_record === undefined) {
+          resolve({ error: true, message: 'Account not on file!' });
+        } else {
+          responseData = { recordsFound, user: decryptedRecords[0].user_record };
+          resolve(responseData);
+        }
+      });
+
+      eventEmitter.on('check_on_pending', () => {
+        eventEmitter.emit('set_responseData');
+      });
+
+      eventEmitter.on('records_retrieved', () => {
+        if (Object.keys(records).length <= 0) {
+          eventEmitter.emit('check_on_pending');
+        } else {
+          let recordCounter = 0;
+          records.forEach((p) => {
+            const thisUrl = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${p}&secretPhrase=${passphrase}`;
+
+            axios.get(thisUrl)
+              .then((response) => {
+                try {
+                  // This decrypts the message from the blockchain using native encryption
+                  // as well as the encryption based on encryption variable
+                  const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
+                  decryptedRecords.push(decrypted);
+                } catch (e) {
+                  console.log(e);
+                }
+                recordCounter += 1;
+
+                if (recordCounter === completedNumber) {
+                  eventEmitter.emit('check_on_pending');
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                reject(error);
+              });
           });
-      }
+        }
+      });
+
+      eventEmitter.on('table_retrieved', () => {
+        Object.keys(tableData).some((position) => {
+          const obj = tableData[position];
+          let completion = false;
+          if (obj.attachment.encryptedMessage.data && obj.recipientRS === account) {
+            records.push(obj.transaction);
+            recordsFound += 1;
+            completedNumber += 1;
+            completion = true;
+          }
+          return completion;
+        });
+        eventEmitter.emit('records_retrieved');
+      });
+
+      eventEmitter.on('table_access_retrieved', () => {
+        axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${recordTable.address}&withMessage=true&type=1`)
+          .then((response) => {
+            tableData = response.data.transactions;
+            eventEmitter.emit('table_retrieved');
+          })
+          .catch((error) => {
+            console.log(error);
+            reject({ success: false, errors: error });
+          });
+      });
+
+      self.loadAppData()
+        .then((res) => {
+          database = res.app.tables;
+          Object.keys(database).forEach((x) => {
+            if (database[x].users) {
+              recordTable = database[x].users;
+            }
+          });
+          eventEmitter.emit('table_access_retrieved');
+        })
+        .catch((err) => {
+          console.log(err);
+          reject('There was an error');
+        });
     });
   }
 
@@ -1018,6 +1178,176 @@ class Gravity {
           console.log('There was an error in address creation');
           reject({ success: false, message: 'There was an error in getting account information' });
         });
+    });
+  }
+
+  async attachTable(database, tableName) {
+    const eventEmitter = new events.EventEmitter();
+    const self = this;
+    // let valid_table = true;
+    let tableList = [];
+    // let app;
+    let address;
+    let passphrase;
+    // let current_tables;
+    let record;
+    let tableListRecord;
+    // let table_created = true;
+
+    return new Promise((resolve, reject) => {
+      eventEmitter.on('insufficient_balance', () => {
+        reject("Please send JUP to your app's address and retry command");
+      });
+
+      eventEmitter.on('table_created', () => {
+        // This code will send Jupiter to the recently created table address so that it is
+        // able to record information
+        self.sendMoney(address)
+          .then((response) => {
+            console.log(`Table ${tableName} funded with JUP.`);
+            resolve({
+              success: true,
+              message: `Table ${tableName} pushed to the blockchain and funded.`,
+              data: response.data,
+              jupiter_response: response.data,
+              tables: tableList,
+              others: self.tables,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            reject({ success: false, message: 'Unable to send Jupiter to new table address' });
+          });
+      });
+
+      eventEmitter.on('address_retrieved', async () => {
+        const encryptedData = self.encrypt(JSON.stringify(record), database.encryptionPassword);
+
+        if (tableName === 'channels' && tableListRecord.tables.length < 2) {
+          tableListRecord.tables = ['users', 'channels'];
+        }
+
+        if (tableName === 'invites' && tableListRecord.tables.length < 3) {
+          tableListRecord.tables = ['users', 'channels', 'invites'];
+        }
+
+        const encryptedTableData = self.encrypt(
+          JSON.stringify(tableListRecord),
+          database.encryptionPassword,
+        );
+        const callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${database.passphrase}&recipient=${database.account}&messageToEncrypt=${encryptedData}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${database.publicKey}&compressMessageToEncrypt=true`;
+
+        let response;
+
+        try {
+          response = await axios.post(callUrl);
+        } catch (e) {
+          console.log(e);
+          response = { error: true, fullError: e };
+        }
+
+        if (response.data.broadcasted && !response.error) {
+          console.log(`Table ${tableName} pushed to the blockchain and linked to your account.`);
+          const tableListUpdateUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${database.passphrase}&recipient=${database.account}&messageToEncrypt=${encryptedTableData}&feeNQT=${(self.jupiter_data.feeNQT / 2)}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${database.publicKey}&compressMessageToEncrypt=true`;
+
+          try {
+            response = await axios.post(tableListUpdateUrl);
+          } catch (e) {
+            console.log(e);
+            response = { error: true, fullError: e };
+          }
+
+          if (response.data && response.data.broadcasted && response.data.broadcasted === true) {
+            eventEmitter.emit('table_created');
+          } else if (response.data && response.data.errorDescription != null) {
+            reject({
+              success: false,
+              message: response.data.errorDescription,
+              jupiter_response: response.data,
+            });
+          } else {
+            reject({
+              success: false,
+              message: 'There was an error',
+              fullError: response,
+            });
+          }
+        } else if (response.data.errorDescription != null) {
+          console.log('There was an Error');
+          console.log(response);
+          console.log(response.data);
+          console.log(`Error: ${response.data.errorDescription}`);
+          reject({
+            success: false,
+            message: response.data.errorDescription,
+            jupiter_response: response.data,
+          });
+        } else {
+          console.log('Unable to save data in the blockchain');
+          console.log(response.data);
+          reject({ success: false, message: 'Unable to save data in the blockchain', jupiter_response: response.data });
+        }
+      });
+
+      eventEmitter.on('tableName_obtained', () => {
+        if (self.tables.indexOf(tableName) >= 0 || tableList.indexOf(tableName) >= 0) {
+          reject(`Error: Unable to save table. ${tableName} is already in the database`);
+        } else {
+          passphrase = self.generate_passphrase();
+
+          self.createNewAddress(passphrase)
+            .then((response) => {
+              if (response.success === true && response.address && response.address.length > 0) {
+                ({ address } = response);
+                record = {
+                  [tableName]: {
+                    address,
+                    passphrase,
+                    public_key: response.public_key,
+                  },
+                };
+                tableList.push(tableName);
+                tableListRecord = {
+                  tables: tableList,
+                  date: Date.now(),
+                };
+
+                eventEmitter.emit('address_retrieved');
+              } else {
+                console.log(response);
+                reject('There was an error');
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              reject('Error creating Jupiter address for your table.');
+            });
+        }
+      });
+
+      eventEmitter.on('verified_balance', () => {
+        self.loadAppData(database)
+          .then((response) => {
+            if (response.tables === undefined
+              || response.tables == null
+              || response.tables.length === 0) {
+              tableList = [];
+            } else {
+              tableList = response.tables;
+            }
+
+            if (tableName === 'undefined' || tableName === undefined) {
+              reject('Table name cannot be undefined');
+            } else {
+              eventEmitter.emit('tableName_obtained');
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            reject('Error in creating table');
+          });
+      });
+      eventEmitter.emit('verified_balance');
     });
   }
 
