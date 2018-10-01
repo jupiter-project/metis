@@ -1,4 +1,5 @@
 import Model from './_model';
+import { gravity } from '../config/gravity';
 
 class Transfer extends Model {
   constructor(data = { id: null }) {
@@ -64,6 +65,30 @@ class Transfer extends Model {
 
   loadRecords() {
     return super.loadRecords({ size: 'all', show_unconfirmed: true });
+  }
+
+  async create() {
+    let response;
+    if (this.data.recipient && this.data.amount) {
+      let transferTransaction;
+
+      try {
+        transferTransaction = await gravity.sendMoney(this.data.recipient, this.data.amount);
+      } catch (e) {
+        console.log(e, this.data);
+        transferTransaction = e;
+      }
+
+      if (transferTransaction.success) {
+        response = await super.create();
+      } else {
+        response = transferTransaction;
+      }
+    } else {
+      response = { error: true, errors: 'Recipient and/or amount is missing' };
+    }
+
+    return response;
   }
 }
 

@@ -396,7 +396,11 @@ class Model {
 
         if (self.model === 'user') {
           eventEmitter.emit('request_authenticated');
-        } else if (self.user.id === process.env.APP_ACCOUNT_ID && self.user.api_key !== undefined) {
+        } else if (
+          (self.user.id === process.env.APP_ACCOUNT_ID
+          && self.user.api_key !== undefined)
+          || (self.appTable)
+        ) {
           const User = require('./user.js');
 
           user = new User({
@@ -545,6 +549,8 @@ class Model {
               recordRecord = JSON.parse(thisRecord[`${self.model}_record`]);
               recordRecord.date = thisRecord.date;
               recordRecord.confirmed = thisRecord.confirmed;
+              recordRecord.user = thisRecord.user;
+              recordRecord.user_public_key = thisRecord.public_key;
 
               collection[thisRecord.id] = {
                 id: thisRecord.id,
@@ -554,6 +560,8 @@ class Model {
               recordRecord = JSON.parse(thisRecord[`${self.model}_record`]);
               recordRecord.date = thisRecord.date;
               recordRecord.confirmed = thisRecord.confirmed;
+              recordRecord.user = thisRecord.user;
+              recordRecord.user_public_key = thisRecord.public_key;
 
               thisRecord[`${self.model}_record`] = recordRecord;
               collection[thisRecord.id].versions.push(recordRecord);

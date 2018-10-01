@@ -532,6 +532,7 @@ class Gravity {
 
     return new Promise((resolve, reject) => {
       const records = [];
+      const recordsDetails = {};
       const decryptedRecords = [];
       const decryptedPendings = [];
       const pendingRecords = [];
@@ -612,6 +613,14 @@ class Gravity {
                   // as well as the encryption based on encryption variable
                   const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
                   decrypted.confirmed = true;
+
+                  if (table !== 'users') {
+                    decrypted.user = recordsDetails[p] ? recordsDetails[p].user : null;
+                  }
+
+                  decrypted.public_key = recordsDetails[p]
+                    ? recordsDetails[p].recipientPublicKey : null;
+
                   decryptedRecords.push(decrypted);
                 } catch (e) {
                   console.log(e);
@@ -652,6 +661,13 @@ class Gravity {
               completedNumber += 1;
               completion = true;
             }
+
+            recordsDetails[obj.transaction] = {
+              recipientPublicKey: obj.attachment.recipientPublicKey,
+              user: obj.recipientRS === recordTable.address ? obj.senderRS : obj.recipientRS,
+              userId: obj.recipientRS === recordTable.address ? obj.sender : obj.recipient,
+
+            };
             recordsFound += 1;
           }
           if (completion) {
@@ -961,14 +977,14 @@ class Gravity {
       axios.post(`${server}/nxt?requestType=sendMoney&secretPhrase=${senderAddress}&recipient=${recipient}&amountNQT=${amount}&feeNQT=${feeNQT}&deadline=60`)
         .then((response) => {
           if (response.data.signatureHash != null) {
-            resolve(true);
+            resolve({ success: true, data: response.data });
           } else {
             console.log('Cannot send Jupiter to new account, Jupiter issuer has insufficient balance!');
-            reject(response.data);
+            reject({ error: true, data: response.data });
           }
         })
         .catch((error) => {
-          reject(error);
+          reject({ error: true, fullError: error });
         });
     });
   }
