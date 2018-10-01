@@ -1,3 +1,5 @@
+const kue = require('kue');
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
 }
@@ -12,6 +14,15 @@ require('babel-register')({
 const express = require('express');
 
 const app = express();
+
+// Loads job queue modules and variables
+
+const jobs = kue.createQueue({
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: '6379',
+  },
+});
 
 // Loads path
 const path = require('path');
@@ -86,7 +97,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // Sets get routes. Files are converted to react elements
 find.fileSync(/\.js$/, `${__dirname}/controllers`).forEach((file) => {
-  require(file)(app, passport, React, ReactDOMServer);
+  require(file)(app, passport, React, ReactDOMServer, jobs);
 });
 
 
@@ -96,7 +107,26 @@ app.get('/*', (req, res) => {
   res.redirect('/');
 });
 
+// const { UserWorker } = require('./workers/user.js');
+// const TransferWorker = require('./workers/transfer.js');
+
+
+// const userWorker = new UserWorker(jobs);
+// const transferWorker = new TransferWorker(jobs);
+
+/* jobs.process('createDatabase', (job, done) => {
+  userWorker.setupDatabase(job.data, job.id, done);
+}); */
+
+/* jobs.process('fundAccount', (job, done) => {
+  transferWorker.fundAccount(job.data, job.id, done);
+}); */
+
 // Tells server to listen to port 4000 when app is initialized
 app.listen(4000, () => {
   console.log('Gravity app running on port 4000');
+});
+
+kue.app.listen(4001, () => {
+  console.log('Job queue server running on port 4001');
 });

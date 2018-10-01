@@ -24,6 +24,8 @@ export class SignupForm extends React.Component {
       confirmation_message: '',
       account_object: '',
       public_key: '',
+      encryption_password: '',
+      encryption_password_confirmation: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.registerAccount = this.registerAccount.bind(this);
@@ -94,6 +96,7 @@ export class SignupForm extends React.Component {
 
     if (
       this.state.generated_passphrase !== this.state.passphrase_confirmation
+      || this.state.encryption_password !== this.state.encryption_password_confirmation
     ) {
       /* this.setState({
                 confirmation_message: 'The passphrase you entered is not correct!'
@@ -108,6 +111,7 @@ export class SignupForm extends React.Component {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
             twofa_enabled: this.state.twofa_enabled,
+            encryption_password: this.state.encryption_password,
           },
         })
         .then((response) => {
@@ -158,6 +162,10 @@ export class SignupForm extends React.Component {
       this.setState({
         passphrase_confirmation: event.target.value,
       });
+    } else if (iType === 'encryption_password' || iType === 'encryption_password_confirmation') {
+      this.setState({
+        [iType]: event.target.value,
+      });
     }
   }
 
@@ -174,6 +182,7 @@ export class SignupForm extends React.Component {
           twofa_enabled: this.state.enable_two_fa,
           firstname: this.state.firstname,
           lastname: this.state.lastname,
+          encryption_password: this.state.encryption_password,
         },
       })
       .then((response) => {
@@ -280,9 +289,14 @@ export class SignupForm extends React.Component {
                 name="jup_account_id"
                 defaultValue={this.state.account_object.jup_account_id}
               />
+              <input
+                type="hidden"
+                name="encryption_password"
+                defaultValue={this.state.encryption_password}
+              />
             </div>
 
-            <div className="form-group">
+            { /* <div className="form-group">
               <lable>
                 Enable Two-Factor Authentication{' '}
                 {this.state.enable_two_fa ? (
@@ -291,7 +305,7 @@ export class SignupForm extends React.Component {
                   <p className="m-0">No</p>
                 )}
               </lable>
-            </div>
+                </div> */ }
           </div>
 
           <div className="text-center">
@@ -350,7 +364,17 @@ export class SignupForm extends React.Component {
             className="form-control"
           />
         </div>
-        <div className="form-group text-center">
+        <div className="form-group">
+          <label htmlFor="email">Encryption Password</label>
+          <input
+            type="password"
+            value={this.state.encryption_password}
+            name="encryption_password"
+            onChange={this.handleChange.bind(this, 'encryption_password')}
+            className="form-control"
+          />
+        </div>
+        { /* <div className="form-group text-center">
           <h6>Would you like to enable Two-factor Authentication?</h6>
 
           <div className="custom-control custom-radio">
@@ -379,7 +403,7 @@ export class SignupForm extends React.Component {
               <p className="mb-0">No</p>
             </label>
           </div>
-        </div>
+    </div> */ }
         {this.state.jup_account_created === true ? (
           <div className="form-group text-center">
             <button
@@ -401,6 +425,7 @@ export class SignupForm extends React.Component {
                 !this.state.firstname
                 || !this.state.lastname
                 || !this.state.email
+                || !this.state.encryption_password
               }
               className="btn btn-custom"
               onClick={this.registerAccount.bind(this)}
@@ -419,7 +444,7 @@ export class SignupForm extends React.Component {
           <div className="text-center">{this.state.confirmation_message}</div>
         </div>
         <div className="form-group" id="jup-confirm">
-          <label htmlFor="confirmPassphrase">Please enter your passphrase to verify you wrote it down correctly.</label>
+          <label htmlFor="confirmPassphrase">Please enter your passphrase and encryption password to verify you wrote them down correctly.</label>
           <input
             type="password"
             name="confirmPassphrase"
@@ -427,6 +452,17 @@ export class SignupForm extends React.Component {
             className="form-control"
             value={this.state.passphrase_confirmation}
             onChange={this.handleChange.bind(this, 'passphrase_confirm')}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email">Encryption password confirmation</label>
+          <input
+            type="password"
+            value={this.state.encryption_password_confirmation}
+            name="encryption_password_confirmation"
+            className="form-control"
+            onChange={this.handleChange.bind(this, 'encryption_password_confirmation')}
           />
         </div>
         <div className="form-group text-center">

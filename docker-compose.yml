@@ -1,6 +1,6 @@
 version: '3'
 networks: 
-  backend:
+  dbnet:
     driver: bridge
 
 services:
@@ -8,23 +8,22 @@ services:
     image: redis:4.0
     hostname: ${REDIS_HOST}
     networks:
-      - backend
+      - dbnet
     ports:
       - "6379:6379"
     restart: always
 
   metis:
-    build: ./
+    build: .
     depends_on:
-      - metis
+      - redis
     networks:
-      - backend
+      - dbnet
     links:
       - redis:${REDIS_HOST}
     ports:
       - "4000:4000"
+      - "4001:4001"
     restart: always
     volumes:
       - ./:/apps/metis
-    env_file:
-      - .env

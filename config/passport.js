@@ -1,6 +1,4 @@
 import events from 'events';
-import Queue from 'bull';
-import axios from 'axios';
 import { gravity } from './gravity';
 import User from '../models/user';
 
@@ -40,7 +38,6 @@ module.exports = (passport) => {
     process.nextTick(() => {
       const eventEmitter = new events.EventEmitter();
       const params = req.body;
-      const feeNQT = 100;
       let user;
 
       eventEmitter.on('sent_jupiter_to_new_account', () => {
@@ -55,16 +52,34 @@ module.exports = (passport) => {
           twofa_enabled: (params.twofa_enabled === 'true'),
           twofa_completed: false,
           public_key: params.public_key,
+          encryption_password: params.encryption_password,
         };
+
+        console.log(data);
 
         // We verify the user data here
         user = new User(data);
 
         user.create()
-          .then(() => {
+          .then(async () => {
             req.session.twofa_pass = false;
             req.session.public_key = req.body.public_key;
             req.session.jup_key = gravity.encrypt(req.body.key);
+            let moneyTransfer;
+            try {
+              moneyTransfer = await gravity.sendMoney(
+                req.body.jup_account_id,
+                parseInt(0.05 * 100000000, 10),
+              );
+            } catch (e) {
+              console.log(e);
+              moneyTransfer = e;
+            }
+
+            if (!moneyTransfer.success) {
+              console.log('SendMoney was not completed');
+            }
+
             return done(null, user, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in'));
           })
           .catch((err) => {
@@ -80,59 +95,6 @@ module.exports = (passport) => {
             }
             return done(null, false, req.flash('signupMessage', errorMessage));
           });
-      });
-
-      eventEmitter.on('app_data_loaded', () => {
-        const aliasQueue = new Queue('Alias registration', 'redis://127.0.0.1:6379');
-        const encryptedKey = gravity.encrypt(req.body.key);
-
-        aliasQueue.process((job, queueDone) => {
-          const processEvent = new events.EventEmitter();
-
-          // console.log('Job started');
-          // console.log('Setting Alias for user');
-          processEvent.on('job_completed', () => {
-            axios.post(`${process.env.JUPITERSERVER}/nxt?requestType=setAlias&secretPhrase=${gravity.decrypt(job.data.jup_key)}&aliasName=${job.data.user.firstname + job.data.user.lastname}&feeNQT=${feeNQT}&deadline=60`)
-              .then((response) => {
-                // console.log(response.data);
-                if (response.data.broadcasted != null && response.data.errorDescription == null) {
-                  console.log('Alias set');
-                  console.log('Finished setting up alias for user');
-                  queueDone();
-                } else {
-                  console.log(response.data.errorDescription);
-                }
-              }).catch((error) => {
-                console.log(error);
-              });
-          });
-
-          setTimeout(() => {
-            // console.log(job.data);
-            axios.get(`${process.env.JUPITERSERVER}/nxt?requestType=getBalance&account=${job.data.jup_id}`)
-              .then((response) => {
-                if (parseInt(response.data.balanceNQT, 10) >= 400000000) {
-                  processEvent.emit('job_completed');
-                } else {
-                  console.log(response.data);
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }, 25000);
-        });
-
-        aliasQueue.add({
-          user: {
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-          },
-          jup_key: encryptedKey,
-          jup_id: req.body.jup_account_id,
-        });
-
-        eventEmitter.emit('record_in_jupiter');
       });
 
       eventEmitter.emit('sent_jupiter_to_new_account');
