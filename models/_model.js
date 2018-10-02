@@ -17,6 +17,7 @@ class Model {
     this.hasDatabase = data.hasDatabase;
     this.record = this.setRecord();
     this.database = data.accessPass ? data.accessPass.database : {};
+    this.belongsTo = data.belongsTo;
   }
 
   setRecord() {
@@ -82,7 +83,6 @@ class Model {
         gravity.getAccountInformation(table.passphrase)
           .then((response) => {
             const { publicKey } = response;
-            console.log(response);
             callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${table.passphrase}&recipient=${table.address}&messageToEncrypt=${'Generating Id for record'}&feeNQT=${100}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${publicKey}&compressMessageToEncrypt=true&encryptedMessageIsPrunable=true`;
             eventEmitter.emit('data_prepared');
           })
@@ -112,10 +112,10 @@ class Model {
     return ({ errors: errorFound, messages: totalErrors });
   }
 
-  loadTable() {
+  loadTable(accessLink = false) {
     const self = this;
     return new Promise((resolve, reject) => {
-      gravity.loadAppData()
+      gravity.loadAppData(accessLink)
         .then((response) => {
           const { tables } = response.app;
           for (let x = 0; x < Object.keys(tables).length; x += 1) {
@@ -228,7 +228,7 @@ class Model {
     });
   }
 
-  loadRecords(scope = {}) {
+  loadRecords(accessData = false) {
     const self = this;
     const eventEmitter = new events.EventEmitter();
     const finalList = [];
@@ -237,7 +237,17 @@ class Model {
 
     return new Promise((resolve, reject) => {
       eventEmitter.on('tableData_loaded', () => {
-        gravity.getRecords(user.record.account, tableData.address, tableData.passphrase, scope)
+        gravity.getRecords(
+          user.record.account,
+          tableData.address,
+          tableData.passphrase,
+          {
+            accessData,
+            size: 'all',
+            show_pending: null,
+            show_unconfirmed: true,
+          },
+        )
           .then((res) => {
             const { records } = res;
             const recordsBreakdown = {};
@@ -284,8 +294,8 @@ class Model {
       });
 
       eventEmitter.on('verified_request', () => {
-        if (self.user.api_key === user.record.api_key) {
-          self.loadTable()
+        if ((self.user && self.user.api_key === user.record.api_key) || accessData) {
+          self.loadTable(accessData)
             .then((res) => {
               tableData = res;
               eventEmitter.emit('tableData_loaded');
@@ -300,6 +310,14 @@ class Model {
       });
 
       if (self.model === 'user') {
+        eventEmitter.emit('verified_request');
+      } else if (accessData) {
+        user = {
+          record: {
+            account: accessData.account,
+          },
+        };
+
         eventEmitter.emit('verified_request');
       } else if (self.user && self.user.id) {
         const User = require('./user.js');
@@ -319,11 +337,13 @@ class Model {
     });
   }
 
-  create() {
+  create(accessLink = false) {
     const self = this;
     const eventEmitter = new events.EventEmitter();
     let recordTable;
     let user;
+
+    console.log('Access link in create model method');
 
     return new Promise((resolve, reject) => {
       if (self.verify().errors === true) {
@@ -384,7 +404,7 @@ class Model {
             });
         });
         eventEmitter.on('request_authenticated', () => {
-          self.loadTable()
+          self.loadTable(accessLink)
             .then((res) => {
               recordTable = res;
               eventEmitter.emit('table_loaded');
@@ -404,6 +424,8 @@ class Model {
 
         if (self.model === 'user') {
           eventEmitter.emit('request_authenticated');
+        } else if (accessLink) {
+          eventEmitter.emit('request_authenticated');
         } else if (
           (self.user.id === process.env.APP_ACCOUNT_ID
           && self.user.api_key !== undefined)
@@ -421,7 +443,6 @@ class Model {
           eventEmitter.emit('authenticate_user_request');
         } else if (self.user && self.user.id) {
           const User = require('./user.js');
-
           gravity.findById(self.user.id, 'user')
             .then((response) => {
               // console.log(user);

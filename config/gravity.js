@@ -136,7 +136,6 @@ class Gravity {
   }
 
   loadAppData(containedDatabase = false) {
-    console.log(containedDatabase);
     const eventEmitter = new events.EventEmitter();
 
     const self = this;
@@ -286,7 +285,7 @@ class Gravity {
   getRecords(userAddress, recordsAddress, recordPassphrase, scope = { size: 'all', show_pending: null, show_unconfirmed: false }, password = this.password) {
     const eventEmitter = new events.EventEmitter();
     const self = this;
-    console.log();
+
     return new Promise((resolve, reject) => {
       const records = [];
       const decryptedRecords = [];
@@ -335,6 +334,7 @@ class Gravity {
               userAddress,
               recordPassphrase,
               filter,
+              scope.accessData,
             );
 
             for (let x = 0; x < unconfirmedObjects.length; x += 1) {
@@ -1361,7 +1361,7 @@ class Gravity {
     });
   }
 
-  async getUnconfirmedData(address, passphrase, filter = {}) {
+  async getUnconfirmedData(address, passphrase, filter = {}, accessData) {
     const self = this;
     const unconfirmedData = [];
 
@@ -1375,6 +1375,9 @@ class Gravity {
     if (response.error) {
       return response;
     }
+
+    console.log('These are the unconfirmed transactions');
+    console.log(response.data);
 
     const transactions = response.data.unconfirmedTransactions || [];
 

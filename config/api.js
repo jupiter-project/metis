@@ -1,6 +1,7 @@
 import find from 'find';
 import { gravity } from './gravity';
 
+
 // This file handles the app's different pages and how they are routed by the system
 
 module.exports = (app) => {
@@ -58,7 +59,7 @@ module.exports = (app) => {
         },
       );
 
-      recordObject.loadRecords()
+      recordObject.loadRecords(JSON.parse(gravity.decrypt(headers.accessdata)))
         .then((response) => {
           const { records } = response;
 
@@ -101,11 +102,13 @@ module.exports = (app) => {
       const Record = require(file);
 
       const recordObject = new Record(data);
-
+      if (recordObject.belongsTo === 'user') {
+        if (params.user) {
+          recordObject.accessLink = params.user;
+        }
+      }
       recordObject.create()
         .then((response) => {
-          // console.log(response);
-          // console.log(response);
           res.send(response);
         })
         .catch((err) => {

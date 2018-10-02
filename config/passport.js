@@ -208,6 +208,7 @@ module.exports = (passport) => {
           req.session.public_key = req.body.public_key;
           req.session.twofa_pass = false;
           req.session.jup_key = gravity.encrypt(req.body.jupkey);
+          req.session.accessData = gravity.encrypt(JSON.stringify(containedDatabase));
         }
         return done(null, {
           accessKey: gravity.encrypt(req.body.jupkey),
