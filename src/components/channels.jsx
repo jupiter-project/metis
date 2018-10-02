@@ -20,6 +20,7 @@ class DataRow extends React.Component {
       confirmed: record.confirmed,
       date: (new Date(channel.date)).toLocaleString(),
       submitted: false,
+      invitationAccount: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -92,6 +93,33 @@ class DataRow extends React.Component {
     });
   }
 
+  inviteUser(event) {
+    event.preventDefault();
+    const page = this;
+    const invite = {
+      recipient: this.state.invitationAccount,
+      channel: this.state.channelData,
+    };
+
+    axios.post('/channels/invite', { data: invite })
+      .then((response) => {
+        console.log(response);
+        if (response.data.success) {
+          page.props.parent.setState({
+            update_submitted: false,
+          });
+
+          toastr.success('Invite sent!');
+        } else {
+          toastr.error('There was an error in sending your invite');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error('There was an error');
+      });
+  }
+
   render() {
     /* const form = (
         <tr className="text-center">
@@ -112,15 +140,73 @@ class DataRow extends React.Component {
 
     const channelInfo = this.props.parent.state.channels[this.props.channel];
 
+    const inviteComponent = (
+    <div
+      className="modal fade"
+      id="channelInvite"
+      tabIndex="-1"
+      role="dialog"
+      aria-labelledby=" "
+      aria-hidden="true"
+    >
+      <div className="modal-dialog" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id=" ">
+              Invite to this channel
+            </h5>
+            <button
+              className="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div className="modal-body">
+            Use this form to invite another user to this channel. Please write the
+            JUP account you wish to invite below and press on the Invite button. <br />
+            <input className="form-control" value={this.state.invitationAccount} onChange={this.handleChange.bind(this, 'invitationAccount')} />
+          </div>
+          <div className="modal-footer">
+            <button
+              className="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a className="btn btn-secondary" onClick={this.inviteUser.bind(this)}>
+              Invite
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>);
+
     const readOnly = (
       <tr className="text-center" key={`row-${(channelInfo.id)}-data`}>
           <td>{channelInfo.channel_record.name}</td>
           <td>{channelInfo.channel_record.account}</td>
           <td>{this.state.date}</td>
           <td>{this.state.confirmed ? 'Yes' : 'No'}</td>
+          <td>
+            <a
+                className="dropdown-item"
+                href="#"
+                data-toggle="modal"
+                data-target="#channelInvite"
+              >
+                <i className="fa fa-fw fa-sign-out" />
+                {' '}
+                <span>Invite</span>
+              </a>
+          </td>
           { /* <td>
               <button className="btn btn-success" onClick={this.editMode.bind(this)}>Edit</button>
           </td> */}
+          {inviteComponent}
       </tr>
     );
 
@@ -169,7 +255,6 @@ class ChannelsComponent extends React.Component {
     axios.get(`/api/users/${this.props.user.id}/channels`, config)
       .then((response) => {
         if (response.data.success) {
-          console.log(response.data);
           page.setState({
             channels: response.data.channels,
           });
@@ -219,7 +304,7 @@ class ChannelsComponent extends React.Component {
       if (!(self.state.submitted || self.state.update_submitted)) {
         self.checkUpdates();
       }
-    }, 5000);
+    }, 3000);
   }
 
 
@@ -325,13 +410,13 @@ class ChannelsComponent extends React.Component {
                         <th>account</th>
                         <th>Created On</th>
                         <th>Confirmed</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {recordList}
                 </tbody>
             </table>
-
         </div>
     );
   }

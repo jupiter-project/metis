@@ -75,7 +75,6 @@ class Transfer extends Model {
       try {
         transferTransaction = await gravity.sendMoney(this.data.recipient, this.data.amount);
       } catch (e) {
-        console.log(e, this.data);
         transferTransaction = e;
       }
 

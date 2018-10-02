@@ -219,14 +219,6 @@ class Gravity {
           // that the app should be using. We go through the tablesRetrieved and get the
           // latest records of each table that the app is supposed to be using.
           const tableData = [];
-          /* Object.keys(currentList).forEach((i) => {
-            const thisKey = currentList[i];
-            // We need to sort the the list we are about to call
-            self.sortBySubkey(tablesRetrieved[thisKey], thisKey, 'date');
-            // Once we do this, we can obtain the last record and push to the tableData variable
-            // NOTE: We'll expand validation of tables in future releases
-            tableData.push(tablesRetrieved[thisKey][0]);
-          }); */
 
           for (let i = 0; i < Object.keys(currentList).length; i += 1) {
             const thisKey = currentList[i];
@@ -282,7 +274,104 @@ class Gravity {
     });
   }
 
-  getRecords(userAddress, recordsAddress, recordPassphrase, scope = { size: 'all', show_pending: null, show_unconfirmed: false }, password = this.password) {
+  getMessages(address, passphrase) {
+    console.log('These are the messages');
+    console.log(address, passphrase);
+    const eventEmitter = new events.EventEmitter();
+    const self = this;
+
+    return new Promise((resolve, reject) => {
+      const records = [];
+      const decryptedRecords = [];
+      const decryptedPendings = [];
+      // const pendingRecords = [];
+      let recordsFound = 0;
+      let responseData;
+      let database = [];
+      let completedNumber = 0;
+      // let pendingNumber = 0;
+      // let show_pending = scope.show_pending;
+
+      eventEmitter.on('set_responseData', () => {
+        responseData = {
+          recordsFound,
+          pending: decryptedPendings,
+          records: decryptedRecords,
+          last_record: decryptedRecords[0],
+        };
+
+        resolve(responseData);
+      });
+
+      eventEmitter.on('check_on_pending', async () => {
+        eventEmitter.emit('set_responseData');
+      });
+
+      eventEmitter.on('records_retrieved', () => {
+        if (records.length <= 0) {
+          eventEmitter.emit('check_on_pending');
+        } else {
+          let recordCounter = 0;
+          Object.keys(records).forEach((p) => {
+            const transactionId = records[p];
+            const thisUrl = `${self.jupiter_data.server}/nxt?requestType=readMessage&transaction=${transactionId}&secretPhrase=${passphrase}`;
+            axios.get(thisUrl)
+              .then((response) => {
+                try {
+                  // This decrypts the message from the blockchain using native encryption
+                  // as well as the encryption based on encryption variable
+                  if (response.data.decryptedMessage.includes('dataType')) {
+                    decryptedRecords.push(JSON.parse(response.data.decryptedMessage));
+                  }
+                } catch (e) {
+                  console.log(e);
+                  // Error here tend to be trying to decrypt a regular message from Jupiter
+                  // rather than a gravity encrypted message
+                }
+                recordCounter += 1;
+                if (recordCounter === completedNumber) {
+                  eventEmitter.emit('check_on_pending');
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                reject(error);
+              });
+          });
+        }
+      });
+
+      eventEmitter.on('database_retrieved', () => {
+        for (let obj = 0; obj < Object.keys(database).length; obj += 1) {
+          if (database[obj].attachment.encryptedMessage
+            && database[obj].attachment.encryptedMessage.data != null
+            && database[obj].recipientRS === address) {
+            records.push(database[obj].transaction);
+            completedNumber += 1;
+            recordsFound += 1;
+          }
+        }
+        eventEmitter.emit('records_retrieved');
+      });
+
+      axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${address}&withMessage=true&type=1`)
+        .then((response) => {
+          database = response.data.transactions;
+          eventEmitter.emit('database_retrieved');
+        })
+        .catch((error) => {
+          console.log(error);
+          resolve({ success: false, errors: error });
+        });
+    });
+  }
+
+  getRecords(userAddress, recordsAddress, recordPassphrase, scope = {
+    size: 'all',
+    show_pending: null,
+    show_unconfirmed: false,
+    recipientOnly: false,
+  }, password = this.password) {
     const eventEmitter = new events.EventEmitter();
     const self = this;
 
@@ -1159,6 +1248,41 @@ class Gravity {
     });
   }
 
+  async sendMessage(
+    data,
+    passphrase,
+    recipient,
+    recipientPublicKey,
+    config = { appEncryption: false, specialEncryption: false },
+  ) {
+    let dataToBeSent;
+    let callUrl;
+    let response;
+
+    if (config.appEncryption) {
+      dataToBeSent = this.encrypt(data);
+    } else {
+      dataToBeSent = data;
+    }
+
+    if (recipientPublicKey) {
+      callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&recipientPublicKey=${recipientPublicKey}&compressMessageToEncrypt=true`;
+    } else {
+      callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&messageIsPrunable=true&compressMessageToEncrypt=true`;
+    }
+
+    try {
+      response = await axios.post(callUrl);
+
+      if (response.data.broadcasted && response.data.broadcasted === true) {
+        return ({ success: true, message: 'Message sent' });
+      }
+      return ({ error: true, fullError: response.data });
+    } catch (e) {
+      return ({ error: true, fullError: e });
+    }
+  }
+
   createNewAddress(passphrase) {
     const self = this;
     return new Promise((resolve, reject) => {
@@ -1361,7 +1485,7 @@ class Gravity {
     });
   }
 
-  async getUnconfirmedData(address, passphrase, filter = {}, accessData) {
+  async getUnconfirmedData(address, passphrase, filter = {}) {
     const self = this;
     const unconfirmedData = [];
 
@@ -1375,9 +1499,6 @@ class Gravity {
     if (response.error) {
       return response;
     }
-
-    console.log('These are the unconfirmed transactions');
-    console.log(response.data);
 
     const transactions = response.data.unconfirmedTransactions || [];
 

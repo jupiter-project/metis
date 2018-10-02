@@ -364,7 +364,7 @@ export default class ApplicationLayout extends React.Component {
           <div
             className="modal fade"
             id="logoutModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby=" "
             aria-hidden="true"

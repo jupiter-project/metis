@@ -131,6 +131,7 @@ module.exports = (passport) => {
         if (response.error) {
           return done(null, false, req.flash('loginMessage', 'Account is not registered or has not been confirmed in the blockchain'));
         }
+        console.log(response);
 
         if (response.noUserTables) {
           let res;
