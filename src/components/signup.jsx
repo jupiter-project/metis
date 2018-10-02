@@ -313,6 +313,7 @@ export class SignupForm extends React.Component {
               <button
                 value="Complete registration"
                 className="btn btn-custom"
+                disabled={!this.state.account_object}
               >
                 Complete Registration
               </button>

@@ -118,6 +118,7 @@ class Model {
       gravity.loadAppData(accessLink)
         .then((response) => {
           const { tables } = response.app;
+          console.log(tables);
           for (let x = 0; x < Object.keys(tables).length; x += 1) {
             if (tables[x][self.table] !== undefined) {
               const recordTable = tables[x][self.table];

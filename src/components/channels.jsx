@@ -203,7 +203,6 @@ class ChannelsComponent extends React.Component {
 
           if (currentData !== JSON.stringify(responseData)) {
             self.resetRecords(responseData);
-            toastr.success('Update submitted to the blockchain. It might take a few minutes for the changes to be shown below.');
           }
         }
       })
@@ -263,7 +262,6 @@ class ChannelsComponent extends React.Component {
             password: '',
             submitted: false,
           });
-          toastr.success('Channel record submitted to the blockchain. It might take a few minutes for record to be shown below.');
         } else {
           // console.log(response.data);
           // toastr.error(response.data.message);
