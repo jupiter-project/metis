@@ -38,8 +38,7 @@ class Invite extends Model {
     } catch (e) {
       response = { error: true, fullError: e };
     }
-    console.log('this is the messae response');
-    console.log(response);
+
     return response;
   }
 

@@ -361,6 +361,8 @@ class Model {
           const encryptedRecord = gravity.encrypt(JSON.stringify(fullRecord));
           let callUrl;
 
+          console.log(JSON.stringify(fullRecord));
+
           if (self.model === 'user') {
             if (self.prunableOnCreate) {
               console.log('Record is prunable');

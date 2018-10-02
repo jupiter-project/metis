@@ -1,6 +1,8 @@
 import controller from '../config/controller';
 import { gravity } from '../config/gravity';
 import Invite from '../models/invite';
+import Channel from '../models/channel';
+
 
 module.exports = (app, passport, React, ReactDOMServer) => {
   app.get('/channels', controller.isLoggedIn, (req, res) => {
@@ -72,6 +74,22 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       response = await invite.send();
     } catch (e) {
       response = e;
+    }
+
+    res.send(response);
+  });
+
+  app.post('/channels/import', controller.isLoggedIn, async (req, res) => {
+    const { data } = req.body;
+    const channel = new Channel(data.channel_record);
+    channel.user = JSON.parse(gravity.decrypt(req.session.accessData));
+    console.log(channel);
+    console.log(data);
+    let response;
+    try {
+      response = await channel.import(JSON.parse(gravity.decrypt(req.session.accessData)));
+    } catch (e) {
+      response = { error: true, fullError: e };
     }
 
     res.send(response);

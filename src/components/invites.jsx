@@ -9,6 +9,7 @@ class DataRow extends React.Component {
     const invite = this.props.parent.state.invites[this.props.invite];
     const record = invite.channel;
     this.state = {
+      fullData: invite,
       inviteData: this.props.parent.state.invites[this.props.invite].channel,
       account: record.account,
       name: record.name,
@@ -36,11 +37,35 @@ class DataRow extends React.Component {
 
   acceptInvite(event) {
     event.preventDefault();
+    const page = this;
+    const data = {
+      channel_record: this.state.channel_record,
+    };
 
-    }
+    data.channel_record.invited = true;
+    data.channel_record.sender = this.state.fullData.sender;
+
+    axios.post('/channels/import', { data })
+      .then((response) => {
+        if (response.data.success) {
+          page.props.parent.setState({
+            update_submitted: false,
+          });
+
+          toastr.success('Invite accepted!');
+        } else {
+          toastr.error('There was an error in sending your invite');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error('There was an error');
+      });
+  }
 
   render() {
     const inviteInfo = this.props.parent.state.invites[this.props.invite].channel;
+    const fullData = this.props.parent.state.invites[this.props.invite];
 
     const inviteComponent = (
     <div
@@ -88,7 +113,7 @@ class DataRow extends React.Component {
     const readOnly = (
       <tr className="text-center" key={`row-${(inviteInfo.id)}-data`}>
           <td>{inviteInfo.channel_record.name}</td>
-          <td>{inviteInfo.channel_record.account}</td>
+          <td>{fullData.sender}</td>
           <td>{this.state.date}</td>
           <td>
             <a
