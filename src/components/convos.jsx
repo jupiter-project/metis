@@ -18,7 +18,7 @@ class DataRow extends React.Component {
       ? 'You' : data.name;
 
     const readOnly = (
-        <div className="card">
+        <div className="card-plain bg-info">
         <h4>{name}</h4>
         <p>{data.message}</p>
     </div>
@@ -243,32 +243,34 @@ class ConvosComponent extends React.Component {
     );
 
     return (
-        <div className="container-fluid card">
+        <div>
+          <div className="bg-dark text-white" style={{ position: 'relative', overflow: 'hidden', height: 'calc(100vh - 180px)', width: '100%', border: '0px solid #ccc' }}>
+            <div className="bg-info" style={{ overflowY: 'scroll', height: '100%', width: '100%', position: 'absolute' }}>messages</div>
+            {/*
             <h1 className="page-title">{Channel.name}</h1>
             <h2 className="page-title">{Channel.account}</h2>
             {recordList}
-            <div className="">
+            <div className="bg-warning">
+              <div className="">
                 <div className="">
-                    <div className="card col-md-8 col-lg-8 p-0 mx-auto my-4">
-                        <div className="card-header">
-                            Send Message
-                        </div>
-                        <div className="card-body form-group">
-                            <div className="row p-2">
-                                <div className="col-lg-12 col-md-12">
-                                    <label>Message</label>
-                                    <input placeholder="" value={this.state.message} className="form-control" onChange={this.handleChange.bind(this, 'message')} /><br />
-                                </div>
-                            </div>
-                            <div className="row p-3">
-                                <div className="col-lg-12 col-md-12 col-xs-12 text-center">
-                                    <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...' : 'Send'}</button>
-                                </div>
-                            </div>
-                        </div>
+                  <div className="">
+                    <div className="">
+                      <div className="">
+                        <input placeholder="" value={this.state.message} className="form-control" onChange={this.handleChange.bind(this, 'message')} /><br />
+                      </div>
                     </div>
+                    <div className="">
+                      <div className="">
+                        <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...' : 'Send'}</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
+            */}
+          </div>
+          <div className="bg-warning">input</div>
         </div>
     );
   }
