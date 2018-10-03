@@ -10,6 +10,7 @@ class Model {
     this.record = {};
     this.model = data.model;
     this.table = data.table;
+    this.dataLink = `${data.model}_record`;
     this.model_params = data.model_params;
     this.data = data.data;
     this.validation_rules = [];

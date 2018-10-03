@@ -55,11 +55,11 @@ class Gravity {
   }
 
 
-  loadTables(returnType = 'app') {
+  loadTables(returnType = 'app', accessData) {
     const self = this;
     let current;
     return new Promise((resolve, reject) => {
-      self.loadAppData()
+      self.loadAppData(accessData)
         .then((response) => {
           const { tables } = response.app;
 
@@ -133,6 +133,89 @@ class Gravity {
 
       return (result);
     });
+  }
+
+
+  validateTransaction(transaction, filter) {
+    if (!filter || typeof filter !== 'object') {
+      return true;
+    }
+
+    if (filter.signature && transaction.signature !== filter.signature) {
+      return false;
+    }
+
+    if (filter.signatureHash && transaction.signatureHash !== filter.signatureHash) {
+      return false;
+    }
+
+    if (filter.type && transaction.type !== filter.type) {
+      return false;
+    }
+
+    if (filter.hasAttachment && !transaction.attachment) {
+      return false;
+    }
+
+    if (filter.senderRS && transaction.senderRS !== filter.senderRS) {
+      return false;
+    }
+
+    if (filter.recipientRS && transaction.recipientRS !== filter.recipientRS) {
+      return false;
+    }
+
+    if (filter.sender && transaction.sender !== filter.sender) {
+      return false;
+    }
+
+    if (filter.recipient && transaction.recipient !== filter.recipient) {
+      return false;
+    }
+
+    if (filter.block && transaction.block !== filter.block) {
+      return false;
+    }
+
+    if (filter.blockTimestamp && transaction.blockTimestamp !== filter.blockTimestamp) {
+      return false;
+    }
+
+    if (filter.timestamp && transaction.timestamp !== filter.timestamp) {
+      return false;
+    }
+
+    if (filter.timestampHigherThan && transaction.timestamp < filter.timestampHigherThan) {
+      return false;
+    }
+
+    if (filter.timestampLowerThan && transaction.timestamp > filter.timestampLowerThan) {
+      return false;
+    }
+
+    if (filter.heightHigherThan && transaction.height < filter.heightHigherThan) {
+      return false;
+    }
+
+    if (filter.heightLowerThan && transaction.height > filter.heightLowerThan) {
+      return false;
+    }
+
+    if (filter.confirmationsHigherThan
+      && transaction.confirmations < filter.confirmationsHigherThan) {
+      return false;
+    }
+
+    if (filter.confirmationsLowerThan
+      && transaction.confirmations > filter.confirmationsLowerThan) {
+      return false;
+    }
+
+    if (filter.transaction && transaction.transaction !== filter.transaction) {
+      return false;
+    }
+
+    return true;
   }
 
   async decryptMessage(transactionId, passphrase) {
@@ -287,8 +370,6 @@ class Gravity {
   }
 
   getMessages(address, passphrase) {
-    console.log('These are the messages');
-    console.log(address, passphrase);
     const eventEmitter = new events.EventEmitter();
     const self = this;
 
@@ -817,6 +898,117 @@ class Gravity {
           reject('There was an error');
         });
     });
+  }
+
+  async getTransactions(filter) {
+    let address;
+    let validTransactions = [];
+
+    if (typeof filter === 'object') {
+      address = filter.account;
+    } else {
+      address = filter;
+    }
+
+    let rawTransactions;
+    try {
+      rawTransactions = (await axios.get(`${this.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${address}&withMessage=true&type=1`)).data;
+    } catch (e) {
+      rawTransactions = { error: true, fullError: e };
+      validTransactions = rawTransactions;
+    }
+
+    if (!rawTransactions.error) {
+      const self = this;
+      for (let x = 0; x < rawTransactions.transactions.length; x += 1) {
+        const thisTransaction = rawTransactions.transactions[x];
+        if (self.validateTransaction(thisTransaction, filter)) {
+          validTransactions.push(thisTransaction);
+        }
+      }
+    }
+    return validTransactions;
+  }
+
+
+  async getDataTransactions(filter) {
+    // Filter must always contain an account
+    // but it can be just the address if that is all devs are looking
+    const self = this;
+    const dataTransactions = [];
+    let query;
+
+    if (typeof filter === 'string') {
+      query = { account: filter, hasAttachment: true };
+    } else if (typeof filter === 'object') {
+      query = filter;
+      query.hasAttachment = true;
+    } else {
+      return { error: true, message: 'Invalid account or filter data' };
+    }
+
+    const transactions = await this.getTransactions(query);
+
+    if (!transactions.error) {
+      for (let x = 0; x < transactions.length; x += 1) {
+        const thisTransaction = transactions[x];
+        const dataObject = {
+          signature: thisTransaction.signature,
+          fee: thisTransaction.feeNQT,
+          sender: thisTransaction.senderRS,
+          recipient: thisTransaction.recipientRS,
+          fullRecord: thisTransaction,
+        };
+        let decryptedData;
+        const encryptionPassword = filter.encryptionPassword || self.password;
+        const encryptionPassphrase = filter.encryptionPassphrase || process.env.APP_ACCOUNT;
+        let unEncryptedData;
+
+        if (!filter.blockchainEncryptionDisabled) {
+          try {
+            // eslint-disable-next-line no-await-in-loop
+            decryptedData = await self.decryptMessage(
+              thisTransaction.transaction,
+              encryptionPassphrase,
+            );
+          } catch (e) {
+            console.log(e);
+            console.log('Error: Gravity file, line 976, failed to decrypt message');
+          }
+        }
+
+        if (decryptedData) {
+          try {
+            unEncryptedData = self.decrypt(
+              decryptedData.decryptedMessage,
+              encryptionPassword,
+            );
+          } catch (e) {
+            console.log(e);
+            console.log('Error: Gravity file, line 989, failed to decrypt decryptedMessage');
+          }
+        } else {
+          try {
+            unEncryptedData = self.decrypt(
+              thisTransaction.attachment.message,
+              encryptionPassword,
+            );
+          } catch (e) {
+            console.log(e);
+            console.log('Error: Gravity file, line 999, failed to decrypt thisTransaction.attachment.message');
+          }
+        }
+        if (filter.dataLink) {
+          dataObject.data = JSON.parse(JSON.parse(unEncryptedData)[filter.dataLink]);
+        } else {
+          dataObject.data = JSON.parse(unEncryptedData);
+        }
+        dataTransactions.push(dataObject);
+      }
+
+      return dataTransactions;
+    }
+    return transactions;
   }
 
   // This method retrieves user info based on the account and the passphrase given
