@@ -5,6 +5,10 @@
 }
 
 html {
+  overflow: -moz-scrollbars-none;
+}
+
+html {
   position: relative;
   min-height: 100%;
 }

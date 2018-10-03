@@ -18,7 +18,7 @@ class DataRow extends React.Component {
       ? 'You' : data.name;
 
     const readOnly = (
-        <div className="card-plain bg-info">
+        <div className="card-plain bg-warning">
         <h4>{name}</h4>
         <p>{data.message}</p>
     </div>
@@ -244,8 +244,8 @@ class ConvosComponent extends React.Component {
 
     return (
         <div>
-          <div className="bg-dark text-white" style={{ position: 'relative', overflow: 'hidden', height: 'calc(100vh - 180px)', width: '100%', border: '0px solid #ccc' }}>
-            <div className="bg-info" style={{ overflowY: 'scroll', height: '100%', width: '100%', position: 'absolute' }}>messages</div>
+          <div style={{ position: 'relative', overflow: 'hidden', height: 'calc(100vh - 190px)', width: '100%', border: '0px solid #ccc' }}>
+            <div className="bg-info" style={{ overflowY: 'scroll', height: '100%', width: '100%', position: 'absolute' }}>{recordList}{recordList}{recordList}</div>
             {/*
             <h1 className="page-title">{Channel.name}</h1>
             <h2 className="page-title">{Channel.account}</h2>
@@ -270,7 +270,16 @@ class ConvosComponent extends React.Component {
             </div>
             */}
           </div>
-          <div className="bg-warning">input</div>
+          <div>
+            {/*<input placeholder="" value={this.state.message} className="form-control" onChange={this.handleChange.bind(this, 'message')} />
+            <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...' : 'Send'}</button>*/}
+            <form className="" style={{ display: 'flex', boxSizing: 'border-box', height: '60px', margin: '10px' }}>
+              {/*<div className="form-group mb-2">*/}
+                <input style={{ width: '100%', padding: '15px 10px', border: 'none', margin: '0' }} type="text" className="" placeholder="Enter your message here..." required="required" />
+              {/*</div>*/}
+              <button type="submit" className="btn btn-primary">SEND</button>
+            </form>
+          </div>
         </div>
     );
   }
