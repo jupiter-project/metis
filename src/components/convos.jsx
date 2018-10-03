@@ -18,9 +18,18 @@ class DataRow extends React.Component {
       ? 'You' : data.name;
 
     const readOnly = (
-        <div className="card-plain bg-warning">
-        <h4>{name}</h4>
-        <p>{data.message}</p>
+        <div className="card-plain text-left message d-block float-left my-2 w-100 bg-warning">
+        <div className="card-body p-2">
+          <div className="bg-dark rounded-circle float-left mr-2">
+            <img src="/img/logo.png" height="40px" alt="logo" />
+          </div>
+          <div id="incoming_message" className="ml-5 p-2 rounded" style={{ backgroundColor: 'rgb(204, 204, 204)' }}>
+            <div style={{ fontWeight: '600' }}>{name}</div>
+            <div>{data.message}</div>
+          </div>
+        </div>
+        {/*<h4>{name}</h4>
+        <p>{data.message}</p>*/}
     </div>
     );
 
