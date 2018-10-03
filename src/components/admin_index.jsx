@@ -46,7 +46,7 @@ class TableComponent extends React.Component {
     super(props);
     this.state = {
       table: this.props.table,
-      name: Object.keys(this.props.table),
+      name: Object.keys(this.props.table)[0],
       balance: 0,
       low_balance: true,
       show_passphrase: false,
@@ -70,32 +70,34 @@ class TableComponent extends React.Component {
     const data = table[state.name];
     const { user } = this.props.parent.props;
 
-    getBalance(
-      data.passphrase,
-      data.address,
-      user.record.api_key,
-      data.public_key,
-    )
-      .then((response) => {
-        if (response.success) {
-          self.setState({
-            balance: response.balances ? response.balances.balance : 0,
-            low_balance: !response.balances.minimumTableBalance,
-          });
-        } else {
-          console.log(response);
-          toastr.error('There was an error loading app address balance');
-        }
-      })
-      .catch((error) => {
-        toastr.error(error.message);
-      });
+    if (data) {
+      getBalance(
+        data.passphrase,
+        data.address,
+        user.record.api_key,
+        data.public_key,
+      )
+        .then((response) => {
+          if (response.success) {
+            self.setState({
+              balance: response.balances ? response.balances.balance : 0,
+              low_balance: !response.balances.minimumTableBalance,
+            });
+          } else {
+            console.log(response);
+            toastr.error('There was an error loading app address balance');
+          }
+        })
+        .catch((error) => {
+          toastr.error(error.message);
+        });
+    }
   }
 
   render() {
     const { state } = this;
     const { table } = state;
-    const data = table[state.name];
+    const data = table[state.name] || {};
     return (
       <div className="table-responsive">
         <table className="table mb-0" style={{ border: '1px solid lightgray' }}>

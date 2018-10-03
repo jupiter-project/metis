@@ -1,6 +1,4 @@
 import events from 'events';
-import Queue from 'bull';
-import axios from 'axios';
 import { gravity } from './gravity';
 import User from '../models/user';
 
@@ -9,14 +7,14 @@ const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = (passport) => {
   // Used to serialize the user for the session
-  passport.serializeUser((user, done) => {
-    done(null, user.record.id);
+  passport.serializeUser((accessData, done) => {
+    done(null, accessData);
   });
 
   // Used to deserialize the user
-  passport.deserializeUser((id, done) => {
+  passport.deserializeUser((accessData, done) => {
     // console.log('Deserializer being called');
-    const user = new User({ id });
+    const user = new User({ id: accessData.id }, accessData);
 
     user.findById()
       .then(() => {
@@ -40,7 +38,6 @@ module.exports = (passport) => {
     process.nextTick(() => {
       const eventEmitter = new events.EventEmitter();
       const params = req.body;
-      const feeNQT = 100;
       let user;
 
       eventEmitter.on('sent_jupiter_to_new_account', () => {
@@ -55,17 +52,39 @@ module.exports = (passport) => {
           twofa_enabled: (params.twofa_enabled === 'true'),
           twofa_completed: false,
           public_key: params.public_key,
+          encryption_password: params.encryption_password,
         };
+
+        console.log(data);
 
         // We verify the user data here
         user = new User(data);
 
         user.create()
-          .then(() => {
+          .then(async () => {
             req.session.twofa_pass = false;
             req.session.public_key = req.body.public_key;
             req.session.jup_key = gravity.encrypt(req.body.key);
-            return done(null, user, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in'));
+            let moneyTransfer;
+            try {
+              moneyTransfer = await gravity.sendMoney(
+                req.body.jup_account_id,
+                parseInt(0.05 * 100000000, 10),
+              );
+            } catch (e) {
+              console.log(e);
+              moneyTransfer = e;
+            }
+
+            if (!moneyTransfer.success) {
+              console.log('SendMoney was not completed');
+            }
+
+            return done(null, {
+              accessKey: req.session.jup_key,
+              encryptionKey: gravity.encrypt(params.encryption_password),
+              id: user.data.id,
+            }, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in'));
           })
           .catch((err) => {
             console.log(err);
@@ -80,59 +99,6 @@ module.exports = (passport) => {
             }
             return done(null, false, req.flash('signupMessage', errorMessage));
           });
-      });
-
-      eventEmitter.on('app_data_loaded', () => {
-        const aliasQueue = new Queue('Alias registration', 'redis://127.0.0.1:6379');
-        const encryptedKey = gravity.encrypt(req.body.key);
-
-        aliasQueue.process((job, queueDone) => {
-          const processEvent = new events.EventEmitter();
-
-          // console.log('Job started');
-          // console.log('Setting Alias for user');
-          processEvent.on('job_completed', () => {
-            axios.post(`${process.env.JUPITERSERVER}/nxt?requestType=setAlias&secretPhrase=${gravity.decrypt(job.data.jup_key)}&aliasName=${job.data.user.firstname + job.data.user.lastname}&feeNQT=${feeNQT}&deadline=60`)
-              .then((response) => {
-                // console.log(response.data);
-                if (response.data.broadcasted != null && response.data.errorDescription == null) {
-                  console.log('Alias set');
-                  console.log('Finished setting up alias for user');
-                  queueDone();
-                } else {
-                  console.log(response.data.errorDescription);
-                }
-              }).catch((error) => {
-                console.log(error);
-              });
-          });
-
-          setTimeout(() => {
-            // console.log(job.data);
-            axios.get(`${process.env.JUPITERSERVER}/nxt?requestType=getBalance&account=${job.data.jup_id}`)
-              .then((response) => {
-                if (parseInt(response.data.balanceNQT, 10) >= 400000000) {
-                  processEvent.emit('job_completed');
-                } else {
-                  console.log(response.data);
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }, 25000);
-        });
-
-        aliasQueue.add({
-          user: {
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-          },
-          jup_key: encryptedKey,
-          jup_id: req.body.jup_account_id,
-        });
-
-        eventEmitter.emit('record_in_jupiter');
       });
 
       eventEmitter.emit('sent_jupiter_to_new_account');
@@ -151,10 +117,80 @@ module.exports = (passport) => {
     let user;
     let valid = true;
 
-    gravity.getUser(account, req.body.jupkey)
-      .then((response) => {
+    const containedDatabase = {
+      account,
+      accounthash,
+      encryptionPassword: req.body.encryptionPassword,
+      passphrase: req.body.jupkey,
+      publicKey: req.body.public_key,
+      accountId: req.body.jup_account_id,
+    };
+
+    gravity.getUser(account, req.body.jupkey, containedDatabase)
+      .then(async (response) => {
         if (response.error) {
           return done(null, false, req.flash('loginMessage', 'Account is not registered or has not been confirmed in the blockchain'));
+        }
+        console.log(response);
+
+        if (response.noUserTables) {
+          let res;
+          let usersExists = false;
+          let channelsExists = false;
+          let invitesExists = false;
+
+
+          response.tables.forEach((table) => {
+            if (table.users) {
+              usersExists = true;
+            }
+            if (table.channels) {
+              channelsExists = true;
+            }
+            if (table.invites) {
+              invitesExists = true;
+            }
+          });
+
+          if (!usersExists) {
+            console.log('Users table does not exist');
+            try {
+              res = await gravity.attachTable(containedDatabase, 'users');
+            } catch (e) {
+              res = { error: true, fullError: e };
+            }
+
+            if (res.error) {
+              return done(null, false, req.flash('loginMessage', 'There was an error'));
+            }
+          }
+
+          if (!channelsExists) {
+            console.log('Channels table does not exist');
+            try {
+              res = await gravity.attachTable(containedDatabase, 'channels');
+            } catch (e) {
+              res = { error: true, fullError: e };
+            }
+
+            if (res.error) {
+              return done(null, false, req.flash('loginMessage', 'There was an error'));
+            }
+          }
+
+
+          if (!invitesExists) {
+            console.log('Invites table does not exist');
+            try {
+              res = await gravity.attachTable(containedDatabase, 'invites');
+            } catch (e) {
+              res = { error: true, fullError: e };
+            }
+
+            if (res.error) {
+              return done(null, false, req.flash('loginMessage', 'There was an error'));
+            }
+          }
         }
         // console.log(response);
         const data = JSON.parse(response.user);
@@ -173,8 +209,14 @@ module.exports = (passport) => {
           req.session.public_key = req.body.public_key;
           req.session.twofa_pass = false;
           req.session.jup_key = gravity.encrypt(req.body.jupkey);
+          req.session.accessData = gravity.encrypt(JSON.stringify(containedDatabase));
         }
-        return done(null, user);
+        return done(null, {
+          accessKey: gravity.encrypt(req.body.jupkey),
+          encryptionKey: gravity.encrypt(req.body.encryptionPassword),
+          database: response.database,
+          id: user.data.id,
+        });
       })
       .catch((err) => {
         console.log('Unable to query your user list. Please make sure you have a users table in your database.');

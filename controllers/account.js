@@ -18,7 +18,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     page = ReactDOMServer.renderToString(
       React.createElement(AccountPage, {
         messages,
-        name: 'Gravity - My Profile',
+        name: 'Metis - My Profile',
         user: req.user,
         dashboard: true,
         public_key: req.session.public_key,
@@ -100,8 +100,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const data = req.user.record;
     data.public_key = req.session.public_key;
     const user = new User(data);
-    console.log(req.body);
-    console.log(user.record);
+
     if (user.record.api_key === req.body.api_key) {
       user.record.api_key = user.generateKey();
       // console.log(user.record.api_key);
@@ -138,7 +137,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       page = ReactDOMServer.renderToString(
         React.createElement(SetupPage, {
           messages,
-          name: 'Gravity - 2FA Setup',
+          name: 'Metis - 2FA Setup',
           user: req.user,
           dashboard: true,
         }),
@@ -160,7 +159,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const checkCode = ReactDOMServer.renderToString(
       React.createElement(VerificationPage, {
         messages,
-        name: 'Gravity - 2FA',
+        name: 'Metis - 2FA',
         user: req.user,
         dashboard: true,
       }),

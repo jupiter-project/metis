@@ -12,6 +12,8 @@ export default class ApplicationLayout extends React.Component {
   render() {
     const linksList = (
       <div>
+        <li className="nav-item"><a className="nav-link" href="/channels"><i className="fa fa-fw fa-file" />{' '}<span>Your Channels</span></a></li>
+        <li className="nav-item"><a className="nav-link" href="/invites"><i className="fa fa-fw fa-file" />{' '}<span>Your Invites</span></a></li>
 {false && 'Generated plop links go here'}
       </div>
     );
@@ -211,7 +213,7 @@ export default class ApplicationLayout extends React.Component {
 
         <div id="content-wrapper">
           {this.props.children}
-          {/*<div className="fixed-bottom">
+          {/* <div className="fixed-bottom">
             <footer className="sticky-footer">
               <div className="container-fluid my-auto">
                 <div className="copyright text-center my-auto">
@@ -229,7 +231,7 @@ export default class ApplicationLayout extends React.Component {
                 </div>
               </div>
             </footer>
-          </div>*/}
+          </div> */}
         </div>
       </div>
     );
@@ -296,7 +298,7 @@ export default class ApplicationLayout extends React.Component {
 
         <div id="content-wrapper">
           {this.props.children}
-          {/*<div className="fixed-bottom">
+          {/* <div className="fixed-bottom">
             <footer className="sticky-footer">
               <div className="container-fluid my-auto">
                 <div className="copyright text-center my-auto">
@@ -314,7 +316,7 @@ export default class ApplicationLayout extends React.Component {
                 </div>
               </div>
             </footer>
-          </div>*/}
+          </div> */}
         </div>
       </div>
     );
@@ -368,7 +370,7 @@ export default class ApplicationLayout extends React.Component {
           <div
             className="modal fade"
             id="logoutModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby=" "
             aria-hidden="true"

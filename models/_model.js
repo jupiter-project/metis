@@ -13,7 +13,11 @@ class Model {
     this.model_params = data.model_params;
     this.data = data.data;
     this.validation_rules = [];
+    this.prunableOnCreate = data.prunableOnCreate;
+    this.hasDatabase = data.hasDatabase;
     this.record = this.setRecord();
+    this.database = data.accessPass ? data.accessPass.database : {};
+    this.belongsTo = data.belongsTo;
   }
 
   setRecord() {
@@ -79,7 +83,6 @@ class Model {
         gravity.getAccountInformation(table.passphrase)
           .then((response) => {
             const { publicKey } = response;
-            console.log(response);
             callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${table.passphrase}&recipient=${table.address}&messageToEncrypt=${'Generating Id for record'}&feeNQT=${100}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${publicKey}&compressMessageToEncrypt=true&encryptedMessageIsPrunable=true`;
             eventEmitter.emit('data_prepared');
           })
@@ -109,12 +112,13 @@ class Model {
     return ({ errors: errorFound, messages: totalErrors });
   }
 
-  loadTable() {
+  loadTable(accessLink = false) {
     const self = this;
     return new Promise((resolve, reject) => {
-      gravity.loadAppData()
+      gravity.loadAppData(accessLink)
         .then((response) => {
           const { tables } = response.app;
+
           for (let x = 0; x < Object.keys(tables).length; x += 1) {
             if (tables[x][self.table] !== undefined) {
               const recordTable = tables[x][self.table];
@@ -202,7 +206,30 @@ class Model {
     });
   }
 
-  loadRecords() {
+  validateRequest() {
+    const self = this;
+    return new Promise((resolve, reject) => {
+      if (self.model === 'user') {
+        resolve({ success: true, isUserRecord: true });
+      } else if (self.user && self.user.id) {
+        const User = require('./user.js');
+
+        gravity.findById(self.user.id, 'user')
+          .then((response) => {
+            const user = new User(response.record);
+            resolve({ user, success: true, isUserRecord: true });
+          })
+          .catch((err) => {
+            console.log(err);
+            reject({ success: false, errors: 'There was an error in authentication of request/user validation' });
+          });
+      } else {
+        reject({ success: false, errors: 'There was an error in authentication of request/user validation' });
+      }
+    });
+  }
+
+  loadRecords(accessData = false) {
     const self = this;
     const eventEmitter = new events.EventEmitter();
     const finalList = [];
@@ -211,7 +238,17 @@ class Model {
 
     return new Promise((resolve, reject) => {
       eventEmitter.on('tableData_loaded', () => {
-        gravity.getRecords(user.record.account, tableData.address, tableData.passphrase)
+        gravity.getRecords(
+          user.record.account,
+          tableData.address,
+          tableData.passphrase,
+          {
+            accessData,
+            size: 'all',
+            show_pending: null,
+            show_unconfirmed: true,
+          },
+        )
           .then((res) => {
             const { records } = res;
             const recordsBreakdown = {};
@@ -227,6 +264,7 @@ class Model {
 
                 const data = JSON.parse(thisRecord[`${self.model}_record`]);
                 data.date = thisRecord.date;
+                data.confirmed = thisRecord.confirmed;
                 recordsBreakdown[thisRecord.id].versions.push(data);
               }
             }
@@ -257,8 +295,8 @@ class Model {
       });
 
       eventEmitter.on('verified_request', () => {
-        if (self.user.api_key === user.record.api_key) {
-          self.loadTable()
+        if ((self.user && self.user.api_key === user.record.api_key) || accessData) {
+          self.loadTable(accessData)
             .then((res) => {
               tableData = res;
               eventEmitter.emit('tableData_loaded');
@@ -273,6 +311,14 @@ class Model {
       });
 
       if (self.model === 'user') {
+        eventEmitter.emit('verified_request');
+      } else if (accessData) {
+        user = {
+          record: {
+            account: accessData.account,
+          },
+        };
+
         eventEmitter.emit('verified_request');
       } else if (self.user && self.user.id) {
         const User = require('./user.js');
@@ -292,11 +338,13 @@ class Model {
     });
   }
 
-  create() {
+  create(accessLink = false) {
     const self = this;
     const eventEmitter = new events.EventEmitter();
     let recordTable;
     let user;
+
+    console.log('Access link in create model method');
 
     return new Promise((resolve, reject) => {
       if (self.verify().errors === true) {
@@ -313,8 +361,15 @@ class Model {
           const encryptedRecord = gravity.encrypt(JSON.stringify(fullRecord));
           let callUrl;
 
+          console.log(JSON.stringify(fullRecord));
+
           if (self.model === 'user') {
-            callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.data.public_key}&compressMessageToEncrypt=true`;
+            if (self.prunableOnCreate) {
+              console.log('Record is prunable');
+              callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.data.public_key}&encryptedMessageIsPrunable=true&compressMessageToEncrypt=true`;
+            } else {
+              callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.data.public_key}&compressMessageToEncrypt=true`;
+            }
           } else if (self.user) {
             // console.log('Non user call url');
             callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.user.address}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.user.public_key}&compressMessageToEncrypt=true`;
@@ -352,7 +407,7 @@ class Model {
             });
         });
         eventEmitter.on('request_authenticated', () => {
-          self.loadTable()
+          self.loadTable(accessLink)
             .then((res) => {
               recordTable = res;
               eventEmitter.emit('table_loaded');
@@ -372,9 +427,25 @@ class Model {
 
         if (self.model === 'user') {
           eventEmitter.emit('request_authenticated');
-        } else if (self.user && self.user.id) {
+        } else if (accessLink) {
+          eventEmitter.emit('request_authenticated');
+        } else if (
+          (self.user.id === process.env.APP_ACCOUNT_ID
+          && self.user.api_key !== undefined)
+          || (self.appTable)
+        ) {
           const User = require('./user.js');
 
+          user = new User({
+            id: process.env.APP_ACCOUNT_ID,
+            account: process.env.APP_ACCOUNT_ADDRESS,
+            email: process.env.APP_EMAIL,
+            public_key: process.env.APP_PUBLIC_KEY,
+            api_key: process.env.APP_API_KEY || undefined,
+          });
+          eventEmitter.emit('authenticate_user_request');
+        } else if (self.user && self.user.id) {
+          const User = require('./user.js');
           gravity.findById(self.user.id, 'user')
             .then((response) => {
               // console.log(user);
@@ -494,9 +565,20 @@ class Model {
 
   findAll() {
     const self = this;
+    let containedData;
+    if (self.containedDatabase) {
+      containedData = {
+        address: self.data.account,
+        accessPass: self.accessPass,
+      };
+    }
+    const scope = {
+      size: 'all',
+      containedDatabase: self.hasDatabase ? containedData : null,
+    };
 
     return new Promise((resolve, reject) => {
-      gravity.getAllRecords(self.table)
+      gravity.getAllRecords(self.table, scope)
         .then((response) => {
           const { records } = response;
           const collection = {};
@@ -505,9 +587,13 @@ class Model {
           for (let x = 0; x < Object.keys(records).length; x += 1) {
             const thisRecord = records[x];
             let recordRecord;
+
             if (collection[thisRecord.id] === undefined) {
               recordRecord = JSON.parse(thisRecord[`${self.model}_record`]);
               recordRecord.date = thisRecord.date;
+              recordRecord.confirmed = thisRecord.confirmed;
+              recordRecord.user = thisRecord.user;
+              recordRecord.user_public_key = thisRecord.public_key;
 
               collection[thisRecord.id] = {
                 id: thisRecord.id,
@@ -516,6 +602,9 @@ class Model {
             } else {
               recordRecord = JSON.parse(thisRecord[`${self.model}_record`]);
               recordRecord.date = thisRecord.date;
+              recordRecord.confirmed = thisRecord.confirmed;
+              recordRecord.user = thisRecord.user;
+              recordRecord.user_public_key = thisRecord.public_key;
 
               thisRecord[`${self.model}_record`] = recordRecord;
               collection[thisRecord.id].versions.push(recordRecord);
