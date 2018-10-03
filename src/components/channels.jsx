@@ -187,7 +187,7 @@ class DataRow extends React.Component {
 
     const readOnly = (
       <tr className="text-center" key={`row-${(channelInfo.id)}-data`}>
-          <td>{channelInfo.channel_record.name}</td>
+          <td><a href={`/channels/${this.state.channelData.id}`}>{channelInfo.channel_record.name}</a></td>
           <td>{channelInfo.channel_record.account}</td>
           <td>{this.state.date}</td>
           <td>{this.state.confirmed ? 'Yes' : 'No'}</td>
@@ -384,7 +384,7 @@ class ChannelsComponent extends React.Component {
                 <div className="">
                     <div className="card col-md-8 col-lg-8 p-0 mx-auto my-4">
                         <div className="card-header">
-                            Record Channel
+                            Create new channel
                         </div>
                         <div className="card-body form-group">
                             <div className="row p-2">

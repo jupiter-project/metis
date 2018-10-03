@@ -124,7 +124,8 @@ app.get('/*', (req, res) => {
 
 // Tells server to listen to port 4000 when app is initialized
 app.listen(4000, () => {
-  console.log('Gravity app running on port 4000');
+  console.log('Metis app running on port 4000');
+  console.log(`Jupiter Node running on ${process.env.JUPITERSERVER}`);
 });
 
 kue.app.listen(4001, () => {

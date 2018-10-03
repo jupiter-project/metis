@@ -16,7 +16,7 @@ class GravityPage extends React.Component {
                   <table
                     className="table table-bordered"
                     width="100%"
-                    cellspacing="0"
+                    cellSpacing="0"
                   >
                     <tbody>
                       <tr>

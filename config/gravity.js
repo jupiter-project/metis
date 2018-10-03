@@ -135,6 +135,18 @@ class Gravity {
     });
   }
 
+  async decryptMessage(transactionId, passphrase) {
+    let response;
+    try {
+      const call = await axios.get(`${this.jupiter_data.server}/nxt?requestType=readMessage&transaction=${transactionId}&secretPhrase=${passphrase}`);
+      response = call.data;
+    } catch (e) {
+      response = { error: true, fullError: e };
+    }
+
+    return response;
+  }
+
   loadAppData(containedDatabase = false) {
     const eventEmitter = new events.EventEmitter();
 
@@ -973,7 +985,7 @@ class Gravity {
             });
             eventEmitter.emit('table_access_retrieved');
           } else {
-            console.log('Returning no user rable');
+            console.log('Returning no user table');
             resolve({ success: false, noUserTables: true, tables: database });
           }
         })
@@ -1305,7 +1317,12 @@ class Gravity {
       axios.get(`${self.jupiter_data.server}/nxt?requestType=getAccountId&secretPhrase=${passphrase}`)
         .then((response) => {
           const address = response.data.accountRS;
-          resolve({ address, publicKey: response.data.publicKey, success: true });
+          resolve({
+            address,
+            accountId: response.data.account,
+            publicKey: response.data.publicKey,
+            success: true,
+          });
         })
         .catch((error) => {
           console.log(error);

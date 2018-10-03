@@ -13,7 +13,7 @@ class Channel extends Model {
       table: 'channels',
       belongsTo: 'user',
       model_params: [
-        'id', 'passphrase', 'account', 'password', 'name', 'publicKey', 'sender',
+        'id', 'passphrase', 'account', 'password', 'name', 'publicKey', 'sender', 'accountId',
       ],
     });
     this.public_key = data.public_key;
@@ -51,8 +51,6 @@ class Channel extends Model {
     const eventEmitter = new events.EventEmitter();
     let recordTable;
 
-    console.log('Access link in create model method');
-
     return new Promise((resolve, reject) => {
       if (self.verify().errors === true) {
         reject({ false: false, verification_error: true, errors: self.verify().messages });
@@ -67,15 +65,10 @@ class Channel extends Model {
           };
           const encryptedRecord = gravity.encrypt(JSON.stringify(fullRecord));
 
-          console.log(JSON.stringify(fullRecord));
-          console.log(self.user);
           const callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.user.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.user.publicKey}&compressMessageToEncrypt=true`;
 
-          // console.log(callUrl)
-          // console.log(self);
           axios.post(callUrl)
             .then((response) => {
-              // console.log(response)
               if (response.data.broadcasted && response.data.broadcasted === true) {
                 resolve({ success: true, message: 'Record created' });
               } else if (response.data.errorDescription != null) {
@@ -107,6 +100,49 @@ class Channel extends Model {
         }
       }
     });
+  }
+
+  async loadMessages() {
+    const self = this;
+    const response = await axios.get(`${process.env.JUPITERSERVER}/nxt?requestType=getBlockchainTransactions&account=${this.record.account}`);
+    const dataList = response.data.transactions;
+    const messages = [];
+
+    for (let x = 0; x < dataList.length; x += 1) {
+      const thisTransaction = dataList[x];
+      if (thisTransaction.attachment
+        && thisTransaction.attachment.encryptedMessage
+        && thisTransaction.recipientRS === self.record.account) {
+        const dataObject = {
+          signature: thisTransaction.signature,
+          fee: thisTransaction.feeNQT,
+          sender: thisTransaction.senderRS,
+          recipient: thisTransaction.recipientRS,
+        };
+        let decryptedData;
+
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          decryptedData = await gravity.decryptMessage(
+            thisTransaction.transaction,
+            this.record.passphrase,
+          );
+        } catch (e) {
+          console.log(e);
+        }
+        let unEncryptedData;
+        if (decryptedData) {
+          unEncryptedData = gravity.decrypt(
+            decryptedData.decryptedMessage,
+            self.record.password,
+          );
+          dataObject.data = JSON.parse(JSON.parse(unEncryptedData).message_record);
+          messages.push(dataObject);
+        }
+      }
+    }
+
+    return { messages, success: true };
   }
 
   async create() {
