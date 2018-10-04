@@ -46,7 +46,6 @@ class Message extends Model {
       // console.log(self);
       axios.post(callUrl)
         .then((response) => {
-          console.log(response.data);
           if (response.data.broadcasted && response.data.broadcasted === true) {
             resolve({ success: true, message: 'Message sent!' });
           } else if (response.data.errorDescription != null) {

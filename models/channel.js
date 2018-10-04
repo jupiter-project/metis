@@ -103,46 +103,21 @@ class Channel extends Model {
   }
 
   async loadMessages() {
-    const self = this;
-    const response = await axios.get(`${process.env.JUPITERSERVER}/nxt?requestType=getBlockchainTransactions&account=${this.record.account}`);
-    const dataList = response.data.transactions;
-    const messages = [];
+    const query = {
+      account: this.record.account,
+      recipientRS: this.record.account,
+      dataLink: 'message_record',
+      encryptionPassword: this.record.password,
+      encryptionPassphrase: this.record.passphrase,
+      includeUnconfirmed: true,
+      multiChannel: true,
+    };
+    const response = await gravity.getDataTransactions(query);
 
-    for (let x = 0; x < dataList.length; x += 1) {
-      const thisTransaction = dataList[x];
-      if (thisTransaction.attachment
-        && thisTransaction.attachment.encryptedMessage
-        && thisTransaction.recipientRS === self.record.account) {
-        const dataObject = {
-          signature: thisTransaction.signature,
-          fee: thisTransaction.feeNQT,
-          sender: thisTransaction.senderRS,
-          recipient: thisTransaction.recipientRS,
-        };
-        let decryptedData;
-
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          decryptedData = await gravity.decryptMessage(
-            thisTransaction.transaction,
-            this.record.passphrase,
-          );
-        } catch (e) {
-          console.log(e);
-        }
-        let unEncryptedData;
-        if (decryptedData) {
-          unEncryptedData = gravity.decrypt(
-            decryptedData.decryptedMessage,
-            self.record.password,
-          );
-          dataObject.data = JSON.parse(JSON.parse(unEncryptedData).message_record);
-          messages.push(dataObject);
-        }
-      }
+    if (!response.error) {
+      return { success: true, messages: response };
     }
-
-    return { messages, success: true };
+    return response;
   }
 
   async create() {
