@@ -1,11 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-// custom component imports
-import Title from './CustomComponents/Title.jsx';
-import MessageList from './CustomComponents/MessageList.jsx';
-import SendMessageForm from './CustomComponents/SendMessageForm.jsx';
-
 class HomeComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -19,11 +14,7 @@ class HomeComponent extends React.Component {
   render() {
     return (
       <div>
-        {/* <div className="page-title">Welcome to Metis</div> */}
-        {console.log(this.state.user.record.firstname)}
-        <Title />
-        <MessageList />
-        <SendMessageForm />
+        <div className="page-title">Welcome to Metis</div>
       </div>
     );
   }

@@ -19,6 +19,10 @@
 }
 
 html {
+  overflow: -moz-scrollbars-none;
+}
+
+html {
   position: relative;
   min-height: 100%;
 }
@@ -46,9 +50,9 @@ button, a, button.close, .btn-link {
 .page-title {
   text-align: center;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-weight: 400;
-  font-size: 28px;
+  font-size: 22px;
 }
 
 #wrapper {
@@ -145,26 +149,21 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   font-weight: 800;
 }
 
-#incoming_message {
+/* #incoming_message {
   width: 50%;
-}
 
-@media (max-width: 600px) {
-  #incoming_message {
+  @media (max-width: 600px) {
     width: 80%;
   }
 }
 
 #outgoing_message {
   width: 50%;
-}
 
-@media (max-width: 600px) {
-  #outgoing_message {
+  @media (max-width: 600px) {
     width: 80%;
   }
-}
-
+} */
 .smaller {
   font-size: 0.7rem;
 }

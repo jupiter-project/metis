@@ -130,27 +130,6 @@ export default class ApplicationLayout extends React.Component {
                   : 'your name'}</span>
             </div>
           </div>
-          <li className="nav-item">
-            <a className="nav-link" href="/">
-              <i className="fa fa-fw fa-circle" />
-              {' '}
-              <span>Channel A</span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/">
-              <i className="fa fa-fw fa-circle" />
-              {' '}
-              <span>Channel B</span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/">
-              <i className="fa fa-fw fa-circle" />
-              {' '}
-              <span>Channel C</span>
-            </a>
-          </li>
           {linksList}
         </ul>
 
@@ -158,19 +137,10 @@ export default class ApplicationLayout extends React.Component {
           <ul className="navbar-nav d-block d-lg-none text-left">
             <div className="card card-account bg-secondary">
               <div className="card-body">
-                <h5>Account Details</h5>
-                <div className="small">
-                  <span>First Name: </span>
-                  <span>{this.state.user_exists
-                    ? this.state.user.record.firstname
-                    : 'first name'}</span>
-                </div>
-                <div className="small">
-                  <span>Last Name: </span>
-                  <span>{this.state.user_exists
-                    ? this.state.user.record.lastname
-                    : 'first name'}</span>
-                </div>
+                <span className="h5">
+                {this.state.user_exists
+                  ? `${this.state.user.record.firstname} ${this.state.user.record.lastname}`
+                  : 'your name'}</span>
               </div>
             </div>
             <ul className="nav flex-column">
