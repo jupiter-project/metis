@@ -17,13 +17,13 @@ class DataRow extends React.Component {
     const name = data.name === `${this.props.user.record.firstname} ${this.props.user.record.lastname}`
       ? 'You' : data.name;
 
-    const readOnly = (
-        <div className="card-plain text-left message d-block float-left my-2 w-100 bg-warning">
+    const readOnlyLeft = (
+        <div className="card-plain text-left message d-block float-left my-2 w-100 this-is-bg-warning">
         <div className="card-body p-2">
           <div className="bg-dark rounded-circle float-left mr-2">
             <img src="/img/logo.png" height="40px" alt="logo" />
           </div>
-          <div id="incoming_message" className="ml-5 p-2 rounded" style={{ backgroundColor: 'rgb(204, 204, 204)' }}>
+          <div id="incoming_message" className="ml-5 rounded">
             <div style={{ fontWeight: '600' }}>{name}</div>
             <div>{data.message}</div>
           </div>
@@ -33,8 +33,24 @@ class DataRow extends React.Component {
     </div>
     );
 
+    const readOnlyRight = (
+        <div className="card-plain text-right message d-block float-right my-2 w-100 this-is-bg-warning">
+        <div className="card-body p-2">
+          <div className="bg-dark rounded-circle float-right ml-2">
+            <img src="/img/logo.png" height="40px" alt="logo" />
+          </div>
+          <div id="incoming_message" className="mr-5 p-2 rounded">
+            {/*<div style={{ fontWeight: '600' }}>{name}</div>*/}
+            <div>{data.message}</div>
+          </div>
+        </div>
+        {/*<h4>{name}</h4>
+        <p>{data.message}</p>*/}
+    </div>
+    );
+
     return (
-      readOnly
+      name === 'You' ? readOnlyRight : readOnlyLeft
     );
   }
 }
@@ -251,45 +267,50 @@ class ConvosComponent extends React.Component {
         />)
     );
 
-    return (
-        <div>
-          <div style={{ position: 'relative', overflow: 'hidden', height: 'calc(100vh - 190px)', width: '100%', border: '0px solid #ccc' }}>
-            <div className="bg-info" style={{ overflowY: 'scroll', height: '100%', width: '100%', position: 'absolute' }}>{recordList}{recordList}{recordList}</div>
-            {/*
-            <h1 className="page-title">{Channel.name}</h1>
-            <h2 className="page-title">{Channel.account}</h2>
-            {recordList}
-            <div className="bg-warning">
+    const messageContainer = (
+      <div>
+        <div className="page-title">{this.state.messages[0] ? Channel.name : <div className="text-center"><div className="fa fa-spinner fa-pulse" style={{ fontSize: '33px' }} /></div>}</div>
+        <div style={{ position: 'relative', overflow: 'hidden', height: 'calc(100vh - 190px)', width: '100%', border: '0px solid #ccc' }}>
+          <div className="this-is-bg-info" style={{ overflowY: 'scroll', height: '100%', width: '100%', position: 'absolute' }}>{this.state.messages[0] ? recordList : ''}</div>
+          {/*
+          <h1 className="page-title">{Channel.name}</h1>
+          <h2 className="page-title">{Channel.account}</h2>
+          {recordList}
+          <div className="bg-warning">
+            <div className="">
               <div className="">
                 <div className="">
                   <div className="">
                     <div className="">
-                      <div className="">
-                        <input placeholder="" value={this.state.message} className="form-control" onChange={this.handleChange.bind(this, 'message')} /><br />
-                      </div>
+                      <input placeholder="" value={this.state.message} className="form-control" onChange={this.handleChange.bind(this, 'message')} /><br />
                     </div>
+                  </div>
+                  <div className="">
                     <div className="">
-                      <div className="">
-                        <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...' : 'Send'}</button>
-                      </div>
+                      <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...' : 'Send'}</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            */}
           </div>
-          <div>
-            {/*<input placeholder="" value={this.state.message} className="form-control" onChange={this.handleChange.bind(this, 'message')} />
-            <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...' : 'Send'}</button>*/}
-            <form className="" style={{ display: 'flex', boxSizing: 'border-box', height: '60px', margin: '10px' }}>
-              {/*<div className="form-group mb-2">*/}
-                <input style={{ width: '100%', padding: '15px 10px', border: 'none', margin: '0' }} type="text" className="" placeholder="Enter your message here..." required="required" />
-              {/*</div>*/}
-              <button type="submit" className="btn btn-primary">SEND</button>
-            </form>
-          </div>
+          */}
         </div>
+        <div>
+          <form className="" style={{ display: 'flex', boxSizing: 'border-box', height: '60px', margin: '10px' }}>
+            <input style={{ width: '100%', padding: '15px 10px', border: 'none', margin: '0' }} type="text" className="" placeholder="Enter your message here..." required="required" />
+            <button type="submit" className="btn btn-primary">SEND</button>
+          </form>
+        </div>
+      </div>
+    );
+
+    const loadingContainer = (
+      <div className="text-center mt-5 pt-5"><div className="fa fa-spinner fa-pulse" style={{ fontSize: '60px' }} /></div>
+    );
+
+    return (
+      this.state.messages[0] ? messageContainer : loadingContainer
     );
   }
 }
