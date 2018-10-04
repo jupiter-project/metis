@@ -17,6 +17,9 @@ class DataRow extends React.Component {
     const name = data.name === `${this.props.user.record.firstname} ${this.props.user.record.lastname}`
       ? 'You' : data.name;
 
+    const date = (new Date(record.date)).toLocaleString();
+
+
     const readOnlyLeft = (
         <div className="card-plain text-left message d-block float-left my-2 w-100 this-is-bg-warning">
         <div className="card-body p-2">
@@ -26,10 +29,11 @@ class DataRow extends React.Component {
           <div id="incoming_message" className="ml-5 rounded">
             <div style={{ fontWeight: '600' }}>{name}</div>
             <div>{data.message}</div>
+            <div>{date}</div>
           </div>
         </div>
-        {/*<h4>{name}</h4>
-        <p>{data.message}</p>*/}
+        {/* <h4>{name}</h4>
+        <p>{data.message}</p> */}
     </div>
     );
 
@@ -40,12 +44,13 @@ class DataRow extends React.Component {
             <img src="/img/logo.png" height="40px" alt="logo" />
           </div>
           <div id="incoming_message" className="mr-5 p-2 rounded">
-            {/*<div style={{ fontWeight: '600' }}>{name}</div>*/}
+            <div style={{ fontWeight: '600' }}><strong>You</strong></div>
             <div>{data.message}</div>
+            <div>{date}</div>
           </div>
         </div>
-        {/*<h4>{name}</h4>
-        <p>{data.message}</p>*/}
+        {/* <h4>{name}</h4>
+        <p>{data.message}</p> */}
     </div>
     );
 
@@ -68,6 +73,10 @@ class ConvosComponent extends React.Component {
       update_submitted: false,
       tableData: {},
       querying: false,
+      waitingForData: false,
+      monitoring: false,
+      queryScope: 'all',
+      transactionIds: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.createRecord = this.createRecord.bind(this);
@@ -80,6 +89,39 @@ class ConvosComponent extends React.Component {
   resetRecords(newData) {
     this.setState({
       messages: newData,
+      waitingForData: false,
+    });
+  }
+
+  setTransactionsIds(messages) {
+    const transactionIds = [];
+    for (let x = 0; x < messages.length; x += 1) {
+      const thisMessage = messages[x];
+      if (thisMessage && thisMessage.fullRecord) {
+        transactionIds.push(thisMessage.fullRecord.transaction);
+      }
+    }
+
+    this.setState({
+      transactionIds,
+    });
+  }
+
+  handleNewData(messages) {
+    const ids = this.state.transactionIds;
+    const currentMessages = this.state.messages;
+    for (let x = 0; x < messages.length; x += 1) {
+      const thisMessage = messages[x];
+
+      if (!ids.includes(thisMessage.fullRecord.transaction)) {
+        currentMessages.push(thisMessage);
+        ids.push(thisMessage.fullRecord.transaction);
+      }
+    }
+
+    this.setState({
+      transactionIds: ids,
+      messages: currentMessages,
     });
   }
 
@@ -95,7 +137,6 @@ class ConvosComponent extends React.Component {
 
     axios.get(`/api/users/${this.props.user.id}/channels`, config)
       .then((response) => {
-        console.log(response.data);
         if (response.data.success) {
           page.setState({
             channels: response.data.channels,
@@ -108,9 +149,7 @@ class ConvosComponent extends React.Component {
               this.setState({
                 tableData: thisChannel.channel_record,
               }, () => {
-                console.log('this is the state');
-                console.log(page.state.tableData);
-                page.loadData();
+                page.loadData('all');
               });
             }
           }
@@ -127,8 +166,10 @@ class ConvosComponent extends React.Component {
   loadData() {
     const page = this;
     this.setState({
-      querying: true,
+      waitingForData: true,
     });
+
+    const currentData = JSON.stringify(this.state.messages);
 
     const config = {
       headers: {
@@ -142,17 +183,43 @@ class ConvosComponent extends React.Component {
       },
     };
 
-    axios.get('/data/messages', config)
+    axios.get(`/data/messages/${this.state.queryScope}`, config)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.success) {
+          if (page.state.queryScope === 'all') {
+            const responseData = JSON.stringify(response.data.messages);
+
+            if (currentData !== responseData
+              && response.data.messages) {
+              page.setTransactionsIds(response.data.messages);
+              page.setState({
+                messages: response.data.messages,
+                queryScope: 'unconfirmed',
+              });
+            }
+          } else if (page.state.queryScope === 'unconfirmed') {
+            const newMessages = response.data.messages;
+            if (newMessages.length > 0) {
+              page.handleNewData(response.data.messages);
+            }
+          }
           page.setState({
-            messages: response.data.messages,
-            querying: false,
+            waitingForData: false,
+          }, () => {
+            if (!page.state.monitoring) {
+              page.setState({
+                monitoring: true,
+              }, () => {
+                page.monitorData();
+              });
+            }
           });
-          page.monitorData();
         } else {
-          toastr.error('No record history');
+          page.setState({
+            waitingForData: false,
+          });
+          // toastr.error('No record history');
         }
       })
       .catch((error) => {
@@ -162,35 +229,9 @@ class ConvosComponent extends React.Component {
   }
 
   checkUpdates() {
-    const self = this;
-    const currentData = JSON.stringify(this.state.messages);
-    const config = {
-      headers: {
-        user_api_key: this.props.user.record.api_key,
-        user_public_key: this.props.public_key,
-        accessdata: this.props.accessData,
-        channelaccess: this.state.tableData.passphrase,
-        channeladdress: this.state.tableData.account,
-        channelkey: this.state.tableData.password,
-        channelpublic: this.state.tableData.publicKey,
-      },
-    };
-
-    axios.get('/data/messages', config)
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.success) {
-          const responseData = JSON.stringify(response.data.messages);
-
-          if (currentData !== responseData) {
-            self.resetRecords(responseData);
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        toastr.error("Could not connect to server. Unable to check and update page's records.");
-      });
+    if (!this.state.waitingForData) {
+      this.loadData();
+    }
   }
 
   monitorData() {
@@ -200,9 +241,8 @@ class ConvosComponent extends React.Component {
       if (!(self.state.submitted || self.state.update_submitted)) {
         self.checkUpdates();
       }
-    }, 3000);
+    }, 1500);
   }
-
 
   handleChange(aField, event) {
     if (aField === 'message') {
@@ -270,8 +310,19 @@ class ConvosComponent extends React.Component {
     const messageContainer = (
       <div>
         <div className="page-title">{this.state.messages[0] ? Channel.name : <div className="text-center"><div className="fa fa-spinner fa-pulse" style={{ fontSize: '33px' }} /></div>}</div>
-        <div style={{ position: 'relative', overflow: 'hidden', height: 'calc(100vh - 190px)', width: '100%', border: '0px solid #ccc' }}>
-          <div className="this-is-bg-info" style={{ overflowY: 'scroll', height: '100%', width: '100%', position: 'absolute' }}>{this.state.messages[0] ? recordList : ''}</div>
+        <div style={{
+          position: 'relative',
+          overflow: 'hidden',
+          height: 'calc(100vh - 190px)',
+          width: '100%',
+          border: '0px solid #ccc',
+        }}>
+          <div className="this-is-bg-info" style={{
+            overflowY: 'scroll',
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+          }}>{this.state.messages[0] ? recordList : ''}</div>
           {/*
           <h1 className="page-title">{Channel.name}</h1>
           <h2 className="page-title">{Channel.account}</h2>
@@ -282,12 +333,18 @@ class ConvosComponent extends React.Component {
                 <div className="">
                   <div className="">
                     <div className="">
-                      <input placeholder="" value={this.state.message} className="form-control" onChange={this.handleChange.bind(this, 'message')} /><br />
+                      <input placeholder="" value={this.state.message}
+                      className="form-control" onChange={this.handleChange.bind(this, 'message')} />
+                      <br />
                     </div>
                   </div>
                   <div className="">
                     <div className="">
-                      <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...' : 'Send'}</button>
+                      <button type="button" className="btn btn-outline btn-default"
+                      disabled={this.state.submitted}
+                      onClick={this.createRecord.bind(this)}>
+                      <i className="glyphicon glyphicon-edit"></i>
+                      {this.state.submitted ? 'Saving...' : 'Send'}</button>
                     </div>
                   </div>
                 </div>
@@ -297,9 +354,29 @@ class ConvosComponent extends React.Component {
           */}
         </div>
         <div>
-          <form className="" style={{ display: 'flex', boxSizing: 'border-box', height: '60px', margin: '10px' }}>
-            <input style={{ width: '100%', padding: '15px 10px', border: 'none', margin: '0' }} type="text" className="" placeholder="Enter your message here..." required="required" />
-            <button type="submit" className="btn btn-primary">SEND</button>
+          <form className="" style={
+            {
+              display: 'flex',
+              boxSizing: 'border-box',
+              height: '60px',
+              margin: '10px',
+            }}>
+            <input style={{
+              width: '100%',
+              padding: '15px 10px',
+              border: 'none',
+              margin: '0',
+            }} type="text"
+            className=""
+            placeholder="Enter your message here..."
+            value={this.state.message}
+            onChange={this.handleChange.bind(this, 'message')}
+            required="required" />
+            <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={this.state.submitted} onClick={this.createRecord.bind(this)}
+            >SEND</button>
           </form>
         </div>
       </div>

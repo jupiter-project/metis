@@ -102,7 +102,7 @@ class Channel extends Model {
     });
   }
 
-  async loadMessages() {
+  async loadMessages(queryMode) {
     const query = {
       account: this.record.account,
       recipientRS: this.record.account,
@@ -111,7 +111,12 @@ class Channel extends Model {
       encryptionPassphrase: this.record.passphrase,
       includeUnconfirmed: true,
       multiChannel: true,
+      order: 'desc',
     };
+    if (queryMode === 'unconfirmed') {
+      query.noConfirmed = true;
+    }
+    // console.log(query);
     const response = await gravity.getDataTransactions(query);
 
     if (!response.error) {

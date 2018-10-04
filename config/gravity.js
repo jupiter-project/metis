@@ -103,11 +103,21 @@ class Gravity {
     return dec;
   }
 
-  sortByDate(array) {
+  sortByDate(array, order = 'asc') {
     return array.sort((a, b) => {
       const x = a.date;
       const y = b.date;
-      const result = (x !== undefined && x > y) ? -1 : ((x === undefined || x < y) ? 1 : 0);
+      let ruleOne;
+      let ruleTwo;
+
+      if (order === 'asc' || order !== 'desc') {
+        ruleOne = (x !== undefined && x > y);
+        ruleTwo = (x === undefined || x < y);
+      } else {
+        ruleOne = (x < y);
+        ruleTwo = (x > y);
+      }
+      const result = ruleOne ? -1 : (ruleTwo ? 1 : 0);
 
       return (result);
     });
@@ -1776,9 +1786,12 @@ class Gravity {
 
     if (filter.dataLink) {
       dataObject.data = JSON.parse(JSON.parse(unEncryptedData)[filter.dataLink]);
+      dataObject.data.date = JSON.parse(unEncryptedData).date;
     } else {
       dataObject.data = JSON.parse(unEncryptedData);
     }
+    dataObject.date = dataObject.data.date || thisTransaction.fullRecord.date;
+    // console.log(dataObject);
 
     return dataObject;
   }
@@ -1803,11 +1816,27 @@ class Gravity {
     if (!transactions.error) {
       for (let x = 0; x < transactions.length; x += 1) {
         const thisTransaction = transactions[x];
-        // eslint-disable-next-line no-await-in-loop
-        const dataObject = await this.decryptSingleTransaction(thisTransaction, filter);
-        if (!dataObject.error) {
-          dataTransactions.push(dataObject);
+        let proceed = true;
+
+        if (filter.noConfirmed && thisTransaction.confirmed) {
+          proceed = false;
         }
+
+        if (filter.noUnconfirmed && !thisTransaction.confirmed) {
+          proceed = false;
+        }
+
+        if (proceed) {
+          // eslint-disable-next-line no-await-in-loop
+          const dataObject = await this.decryptSingleTransaction(thisTransaction, filter);
+          if (!dataObject.error) {
+            dataTransactions.push(dataObject);
+          }
+        }
+      }
+      if (dataTransactions.length > 1) {
+        const order = filter.order || 'asc';
+        this.sortByDate(dataTransactions, order);
       }
 
       return dataTransactions;

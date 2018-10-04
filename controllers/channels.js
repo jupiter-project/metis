@@ -116,7 +116,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.send(page);
   });
 
-  app.get('/data/messages', controller.isLoggedIn, async (req, res) => {
+  app.get('/data/messages/:scope', controller.isLoggedIn, async (req, res) => {
     let response;
     const tableData = {
       passphrase: req.headers.channelaccess,
@@ -127,7 +127,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     channel.user = JSON.parse(gravity.decrypt(req.session.accessData));
 
     try {
-      const data = await channel.loadMessages();
+      const data = await channel.loadMessages(req.params.scope);
       response = data;
     } catch (e) {
       console.log(e);

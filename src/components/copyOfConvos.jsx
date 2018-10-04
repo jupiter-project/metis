@@ -195,7 +195,7 @@ class ConvosComponent extends React.Component {
       sender: this.props.user.record.account,
     };
 
-    axios.post('/data/messages', {
+    axios.post('/data/messages/all', {
       data: record,
       user: this.props.accessData,
       tableData: this.state.tableData,
