@@ -109,6 +109,8 @@ class Channel extends Model {
       dataLink: 'message_record',
       encryptionPassword: this.record.password,
       encryptionPassphrase: this.record.passphrase,
+      includeUnconfirmed: true,
+      multiChannel: true,
     };
     const response = await gravity.getDataTransactions(query);
 

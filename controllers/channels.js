@@ -130,6 +130,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       const data = await channel.loadMessages();
       response = data;
     } catch (e) {
+      console.log(e);
       response = { success: false, fullError: e };
     }
 
