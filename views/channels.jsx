@@ -5,8 +5,6 @@ class ChannelsPage extends React.Component {
   render() {
     return (
         <ApplicationLayout data={this.props}>
-            <div className="page-title">My Channels</div>
-
             <div id="ChannelsComponent">
 
             </div>

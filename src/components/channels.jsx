@@ -382,19 +382,21 @@ class ChannelsComponent extends React.Component {
     return (
         <div className="container-fluid card-plain">
             
-            <div className="card card-register mx-auto mb-5">
+            <div className="card card-register mx-auto my-5">
               <div className="card-header bg-custom text-light h5">
                 Add New Channel
               </div>
               <div className="card-body">
                 <div className="form-group">
-                  <input placeholder="Enter channel name here..." value={this.state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
+                  <input placeholder="Enter new channel name here..." value={this.state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
                 </div>
                 <div className="text-center">
                   <button type="button" className="btn btn-custom" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
                 </div>
               </div>
             </div>
+
+            <div className="page-title">My Channels</div>
 
             <div className="table-responsive">
               <table className="table table-striped table-bordered table-hover">
