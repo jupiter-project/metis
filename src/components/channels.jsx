@@ -229,6 +229,7 @@ class ChannelsComponent extends React.Component {
       channels: [],
       submitted: false,
       update_submitted: false,
+      loading: true,
     };
     this.handleChange = this.handleChange.bind(this);
     this.createRecord = this.createRecord.bind(this);
@@ -242,6 +243,7 @@ class ChannelsComponent extends React.Component {
   resetRecords(newData) {
     this.setState({
       channels: newData,
+      loading: false,
     });
   }
 
@@ -260,6 +262,7 @@ class ChannelsComponent extends React.Component {
         if (response.data.success) {
           page.setState({
             channels: response.data.channels,
+            loading: false,
           });
           page.monitorData();
         } else {
@@ -349,6 +352,7 @@ class ChannelsComponent extends React.Component {
             name: '',
             password: '',
             submitted: false,
+            loading: false,
           });
         } else {
           // console.log(response.data);
@@ -379,43 +383,48 @@ class ChannelsComponent extends React.Component {
           />)
     );
 
-    return (
-        <div className="container-fluid card-plain">
-            
-            <div className="card card-register mx-auto my-5">
-              <div className="card-header bg-custom text-light h5">
-                Add New Channel
-              </div>
-              <div className="card-body">
-                <div className="form-group">
-                  <input placeholder="Enter new channel name here..." value={this.state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
-                </div>
-                <div className="text-center">
-                  <button type="button" className="btn btn-custom" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
-                </div>
-              </div>
-            </div>
-
-            <div className="page-title">My Channels</div>
-
-            <div className="table-responsive">
-              <table className="table table-striped table-bordered table-hover">
-                <thead>
-                  <tr className="text-center">
-                    <th>Name</th>
-                    <th>Account</th>
-                    <th>Created On</th>
-                    <th>Confirmed</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recordList}
-                </tbody>
-              </table>
-            </div>
-        </div>
+    const loadingContainer = (
+      <div className="text-center mt-5 pt-5"><div className="fa fa-spinner fa-pulse" style={{ fontSize: '60px' }} /></div>
     );
+
+    const content = (
+      <div className="container-fluid card-plain">    
+        <div className="card card-register mx-auto my-5">
+          <div className="card-header bg-custom text-light h5">
+            Add New Channel
+          </div>
+          <div className="card-body">
+            <div className="form-group">
+              <input placeholder="Enter new channel name here..." value={this.state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
+            </div>
+            <div className="text-center">
+              <button type="button" className="btn btn-custom" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="page-title">My Channels</div>
+
+        <div className="table-responsive">
+          <table className="table table-striped table-bordered table-hover">
+            <thead>
+              <tr className="text-center">
+                <th>Name</th>
+                <th>Account</th>
+                <th>Created On</th>
+                <th>Confirmed</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recordList}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+
+    return this.state.loading ? loadingContainer : content;
   }
 }
 
