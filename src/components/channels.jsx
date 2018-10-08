@@ -165,9 +165,12 @@ class DataRow extends React.Component {
             </button>
           </div>
           <div className="modal-body">
-            Use this form to invite another user to this channel. Please write the
-            JUP account you wish to invite below and press on the Invite button. <br />
-            <input className="form-control" value={this.state.invitationAccount} onChange={this.handleChange.bind(this, 'invitationAccount')} />
+            {/*Use this form to invite another user to this channel. Please write the
+            JUP account you wish to invite below and press on the Invite button.*/}
+            <p>To invite another user to this channel, simply input the JUP Address below and click "Invite".</p>
+            <div className="form-group">
+              <input className="form-control" value={this.state.invitationAccount} onChange={this.handleChange.bind(this, 'invitationAccount')} />
+            </div>
           </div>
           <div className="modal-footer">
             <button
@@ -177,9 +180,9 @@ class DataRow extends React.Component {
             >
               Cancel
             </button>
-            <a className="btn btn-secondary" onClick={this.inviteUser.bind(this)}>
+            <button className="btn btn-custom" onClick={this.inviteUser.bind(this)}>
               Invite
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -187,18 +190,18 @@ class DataRow extends React.Component {
 
     const readOnly = (
       <tr className="text-center" key={`row-${(channelInfo.id)}-data`}>
-          <td><a href={`/channels/${this.state.channelData.id}`}>{channelInfo.channel_record.name}</a></td>
+          <td><a className="btn btn-link" href={`/channels/${this.state.channelData.id}`}>{channelInfo.channel_record.name}</a></td>
           <td>{channelInfo.channel_record.account}</td>
           <td>{this.state.date}</td>
-          <td>{this.state.confirmed ? 'Yes' : 'No'}</td>
+          <td>{this.state.confirmed ? <i className="fa fa-fw fa-check" /> : <i className="fa fa-fw fa-times" />}</td>
           <td>
             <a
-                className="dropdown-item"
+                className="btn btn-custom"
                 href="#"
                 data-toggle="modal"
                 data-target="#channelInvite"
               >
-                <i className="fa fa-fw fa-sign-out" />
+                <i className="fa fa-fw fa-user-plus" />
                 {' '}
                 <span>Invite</span>
               </a>
@@ -377,47 +380,40 @@ class ChannelsComponent extends React.Component {
     );
 
     return (
-        <div className="container-fluid card">
-            <h1 className="page-title"></h1>
-
-            <div className="">
-                <div className="">
-                    <div className="card col-md-8 col-lg-8 p-0 mx-auto my-4">
-                        <div className="card-header">
-                            Create new channel
-                        </div>
-                        <div className="card-body form-group">
-                            <div className="row p-2">
-                                <div className="col-lg-12 col-md-12">
-                                    <label>name</label>
-                                    <input placeholder="" value={this.state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} /><br />
-                                </div>
-                            </div>
-                            <div className="row p-3">
-                                <div className="col-lg-12 col-md-12 col-xs-12 text-center">
-                                    <button type="button" className="btn btn-outline btn-default" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Saving...' : 'Save'}</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <div className="container-fluid card-plain">    
+        <div className="card card-register mx-auto my-5">
+          <div className="card-header bg-custom text-light h5">
+            Add New Channel
+          </div>
+          <div className="card-body">
+            <div className="form-group">
+              <input placeholder="Enter new channel name here..." value={this.state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
             </div>
-
-            <table className="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>name</th>
-                        <th>account</th>
-                        <th>Created On</th>
-                        <th>Confirmed</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {recordList}
-                </tbody>
-            </table>
+            <div className="text-center">
+              <button type="button" className="btn btn-custom" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
+            </div>
+          </div>
         </div>
+
+        <div className="page-title">My Channels</div>
+
+        <div className="table-responsive">
+          <table className="table table-striped table-bordered table-hover">
+            <thead>
+              <tr className="text-center">
+                <th>Name</th>
+                <th>Account</th>
+                <th>Created On</th>
+                <th>Confirmed</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recordList}
+            </tbody>
+          </table>
+        </div>
+      </div>
     );
   }
 }

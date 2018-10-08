@@ -14,6 +14,10 @@ body {
 
 }
 
+th {
+  min-width: 120px;
+}
+
 input[type="text"], input[type="password"], input[type="radio"], input[type="text"]:disabled, textarea {
   outline: none;
   box-shadow:none !important;
