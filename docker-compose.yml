@@ -27,3 +27,4 @@ services:
     restart: always
     volumes:
       - ./:/apps/metis
+      - /apps/metis/node_modules
