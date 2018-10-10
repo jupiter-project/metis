@@ -1685,7 +1685,12 @@ class Gravity {
 
     if (!filter.noConfirmed) {
       try {
-        rawTransactions = (await axios.get(`${this.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${address}&withMessage=true&type=1`)).data;
+        const numberOfRecords = filter.numberOfRecords || 5;
+        const firstIndex = filter.firstIndex || 0;
+        const lastIndex = parseInt(firstIndex, 10) + parseInt(numberOfRecords, 10);
+        const urlCall = `${this.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${address}&withMessage=true&type=1&firstIndex=${firstIndex}&lastIndex=${lastIndex}`;
+        // console.log(urlCall);
+        rawTransactions = (await axios.get(urlCall)).data;
       } catch (e) {
         console.log('Error in gravity.js, line 1671, could not retrieve unconfirmed transactions');
         return { error: true, fullError: e };

@@ -77,6 +77,7 @@ class ConvosComponent extends React.Component {
       monitoring: false,
       queryScope: 'all',
       transactionIds: [],
+      firstIndex: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.createRecord = this.createRecord.bind(this);
@@ -163,6 +164,61 @@ class ConvosComponent extends React.Component {
       });
   }
 
+  getOlderMessages() {
+    const page = this;
+    const currentIndex = parseInt(this.state.firstIndex, 10);
+    const currentMessages = parseInt(this.state.messages.length, 10);
+    const newIndex = currentIndex + currentMessages;
+
+    this.setState({
+      waitingForOldData: true,
+    });
+
+    this.setState({
+      firstIndex: newIndex,
+    }, async () => {
+      const response = await page.getData('all');
+
+      if (response.success && response.messages) {
+        const currentData = this.state.messages;
+        const newData = response.messages;
+
+        const mergedData = newData.concat(currentData);
+        this.setState({
+          messages: mergedData,
+          waitingForOldData: false,
+        }, () => {
+          page.setTransactionsIds(response.messages);
+        });
+      } else {
+        toastr.error('Error loading older messages');
+      }
+    });
+  }
+
+  async getData(queryScope) {
+    const config = {
+      headers: {
+        user_api_key: this.props.user.record.api_key,
+        user_public_key: this.props.public_key,
+        accessdata: this.props.accessData,
+        channelaccess: this.state.tableData.passphrase,
+        channeladdress: this.state.tableData.account,
+        channelkey: this.state.tableData.password,
+        channelpublic: this.state.tableData.publicKey,
+      },
+    };
+    let indexNumber;
+    if (queryScope === 'unconfirmed') {
+      indexNumber = 0;
+    } else {
+      indexNumber = this.state.firstIndex;
+    }
+    const response = await axios.get(`/data/messages/${queryScope}/${indexNumber}`, config);
+
+    return response.data;
+  }
+
   loadData() {
     const page = this;
     this.setState({
@@ -182,8 +238,8 @@ class ConvosComponent extends React.Component {
         channelpublic: this.state.tableData.publicKey,
       },
     };
-
-    axios.get(`/data/messages/${this.state.queryScope}`, config)
+    const index = this.state.queryScope === 'unconfirmed' ? 0 : this.state.firstIndex;
+    axios.get(`/data/messages/${this.state.queryScope}/${index}`, config)
       .then((response) => {
         // console.log(response.data);
         if (response.data.success) {
@@ -322,7 +378,13 @@ class ConvosComponent extends React.Component {
             height: '100%',
             width: '100%',
             position: 'absolute',
-          }}>{this.state.messages[0] ? recordList : ''}</div>
+          }}>
+            <button className="btn btn-info" disabled={this.state.waitingForOldData} onClick={this.getOlderMessages.bind(this)}>
+              { this.state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
+            </button>
+            {this.state.messages[0] ? recordList : ''}
+            <br /><br />
+          </div>
           {/*
           <h1 className="page-title">{Channel.name}</h1>
           <h2 className="page-title">{Channel.account}</h2>

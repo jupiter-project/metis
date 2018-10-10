@@ -1,9 +1,9 @@
 const kue = require('kue');
+const fs = require('fs');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
 }
-
 
 require('babel-register')({
   presets: ['react'],
@@ -19,13 +19,13 @@ const app = express();
 
 const jobs = kue.createQueue({
   redis: {
-    host: process.env.REDIS_HOST,
-    port: '6379',
+    host: process.env.REDIS_HOST || 'localhost',
+    port: process.env.REDIS_PORT || '6379',
   },
 });
 
 // Loads path
-const path = require('path');
+// const path = require('path');
 
 // Loads Body parser
 const bodyParser = require('body-parser');
@@ -33,9 +33,6 @@ const bodyParser = require('body-parser');
 // Loads react libraries
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
-
-// Loads less middleware
-const lessMiddleware = require('less-middleware');
 
 // Loads request library
 // const request = require('request')
@@ -51,6 +48,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 
 // File and folder finding module
 const find = require('find');
@@ -74,12 +72,6 @@ app.use((req, res, next) => {
 // is not called everytime we make an api call to them
 require('./config/api.js')(app);
 
-// Sets less middleware
-app.use(lessMiddleware('/less', {
-  dest: '/css',
-  pathRoot: path.join(__dirname, 'public'),
-}));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -90,7 +82,20 @@ require('./config/passport')(passport); //  pass passport for configuration
 
 // required for passport
 const sessionSecret = process.env.SESSION_SECRET !== undefined ? process.env.SESSION_SECRET : 'undefined';
-app.use(session({ secret: sessionSecret }));
+const sslOptions = { };
+if (process.env.CERTFILE) sslOptions.cert = fs.readFileSync(`${__dirname}/${process.env.CERTFILE}`);
+if (process.env.KEYFILE) sslOptions.key = fs.readFileSync(`${__dirname}/${process.env.KEYFILE}`);
+
+app.use(session({
+  secret: sessionSecret,
+  saveUninitialized: true,
+  resave: false,
+  store: new RedisStore({
+    host: process.env.REDIS_HOST || 'localhost',
+    port: process.env.REDIS_PORT || '6379',
+  }),
+  cookie: { secure: (sslOptions.length) },
+}));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
