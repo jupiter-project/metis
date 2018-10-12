@@ -102,8 +102,12 @@ class Channel extends Model {
     });
   }
 
-  async loadMessages(queryMode) {
+  async loadMessages(queryMode, nextIndex = 0, limit = 5) {
+    const numberOfRecords = limit || 5;
+    const lastIndex = parseInt(nextIndex, 10) + parseInt(numberOfRecords, 10);
     const query = {
+      lastIndex,
+      numberOfRecords,
       account: this.record.account,
       recipientRS: this.record.account,
       dataLink: 'message_record',
@@ -112,6 +116,7 @@ class Channel extends Model {
       includeUnconfirmed: true,
       multiChannel: true,
       order: 'desc',
+      firstIndex: nextIndex,
     };
     if (queryMode === 'unconfirmed') {
       query.noConfirmed = true;

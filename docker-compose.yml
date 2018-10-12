@@ -25,6 +25,7 @@ services:
       - "4000:4000"
       - "4001:4001"
     restart: always
+    command: npm run dev
     volumes:
       - ./:/apps/metis
       - /apps/metis/node_modules
