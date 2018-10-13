@@ -83,7 +83,7 @@ module.exports = {
     } else if (req.isAuthenticated()) {
       return next();
     } else {
-      res.redirect('/gravity');
+      res.redirect('/login');
     }
     return null;
   },
