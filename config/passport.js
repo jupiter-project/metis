@@ -1,11 +1,12 @@
 import events from 'events';
 import { gravity } from './gravity';
 import User from '../models/user';
+import RegistrationWorker from '../workers/registration';
 
 // Loads up passport code
 const LocalStrategy = require('passport-local').Strategy;
 
-module.exports = (passport) => {
+module.exports = (passport, jobs, io) => {
   // Used to serialize the user for the session
   passport.serializeUser((accessData, done) => {
     done(null, accessData);
@@ -13,7 +14,6 @@ module.exports = (passport) => {
 
   // Used to deserialize the user
   passport.deserializeUser((accessData, done) => {
-    // console.log('Deserializer being called');
     const user = new User({ id: accessData.id }, accessData);
 
     user.findById()
@@ -55,7 +55,7 @@ module.exports = (passport) => {
           encryption_password: params.encryption_password,
         };
 
-        console.log(data);
+        // console.log(data);
 
         // We verify the user data here
         user = new User(data);
@@ -126,76 +126,27 @@ module.exports = (passport) => {
       accountId: req.body.jup_account_id,
     };
 
+    containedDatabase.originalTime = Date.now();
+    const worker = new RegistrationWorker(jobs, io);
+    const workerData = {
+      accountData: gravity.encrypt(JSON.stringify(containedDatabase)),
+      originalTime: Date.now(),
+    };
+
     gravity.getUser(account, req.body.jupkey, containedDatabase)
       .then(async (response) => {
         if (response.error) {
           return done(null, false, req.flash('loginMessage', 'Account is not registered or has not been confirmed in the blockchain'));
         }
-        console.log(response);
 
-        if (response.noUserTables) {
-          let res;
-          let usersExists = false;
-          let channelsExists = false;
-          let invitesExists = false;
-
-
-          response.tables.forEach((table) => {
-            if (table.users) {
-              usersExists = true;
-            }
-            if (table.channels) {
-              channelsExists = true;
-            }
-            if (table.invites) {
-              invitesExists = true;
-            }
-          });
-
-          if (!usersExists) {
-            console.log('Users table does not exist');
-            try {
-              res = await gravity.attachTable(containedDatabase, 'users');
-            } catch (e) {
-              res = { error: true, fullError: e };
-            }
-
-            if (res.error) {
-              return done(null, false, req.flash('loginMessage', 'There was an error'));
-            }
-          }
-
-          if (!channelsExists) {
-            console.log('Channels table does not exist');
-            try {
-              res = await gravity.attachTable(containedDatabase, 'channels');
-            } catch (e) {
-              res = { error: true, fullError: e };
-            }
-
-            if (res.error) {
-              return done(null, false, req.flash('loginMessage', 'There was an error'));
-            }
-          }
-
-
-          if (!invitesExists) {
-            console.log('Invites table does not exist');
-            try {
-              res = await gravity.attachTable(containedDatabase, 'invites');
-            } catch (e) {
-              res = { error: true, fullError: e };
-            }
-
-            if (res.error) {
-              return done(null, false, req.flash('loginMessage', 'There was an error'));
-            }
-          }
+        if (response.noUserTables || response.userNeedsSave) {
+          worker.addToQueue('completeRegistration', workerData);
         }
-        // console.log(response);
+
         const data = JSON.parse(response.user);
         data.public_key = req.body.public_key;
         user = new User(data);
+
         if (user.record.id === undefined) {
           valid = false;
           return done(null, false, req.flash('loginMessage', 'Account is not registered'));

@@ -1,5 +1,7 @@
 import controller from '../config/controller';
 
+const connection = process.env.SOCKET_SERVER;
+
 module.exports = (app, passport, React, ReactDOMServer) => {
   app.get('/admin/transfers', controller.isAppAdmin, (req, res) => {
     const messages = req.session.flash;
@@ -9,6 +11,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     const page = ReactDOMServer.renderToString(
       React.createElement(PageFile, {
+        connection,
         messages,
         name: 'Metis - Transfers',
         user: req.user,

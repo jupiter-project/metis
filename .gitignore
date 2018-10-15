@@ -9,8 +9,6 @@
 
 /public/js/bundle.js
 
-# Ignore package-lock.json because it gets us in trouble
-package-lock.json
 *.swp
 
 #Ignore public bundle

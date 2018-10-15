@@ -914,7 +914,6 @@ class Gravity {
   // This method retrieves user info based on the account and the passphrase given
   getUser(account, passphrase, containedDatabase = null) {
     const self = this;
-
     return new Promise((resolve, reject) => {
       if (account === process.env.APP_ACCOUNT_ADDRESS) {
         const userObject = {
@@ -935,7 +934,11 @@ class Gravity {
       } else if (containedDatabase) {
         self.retrieveUserFromPassphrase(containedDatabase)
           .then((response) => {
-            if (response.noUserTables || response.databaseFound) {
+            console.log('data from passphrase');
+            console.log(response);
+            if (response.databaseFound) {
+              resolve(response);
+            } else {
               self.retrieveUserFromApp(account, passphrase)
                 .then((res) => {
                   res.noUserTables = response.noUserTables;
@@ -946,13 +949,13 @@ class Gravity {
                   resolve(res);
                 })
                 .catch((error) => {
+                  console.log('This is the first stage');
                   reject(error);
                 });
-            } else {
-              resolve(response);
             }
           })
           .catch((error) => {
+            console.log('This is the second stage');
             console.log(error);
             reject(error);
           });
@@ -962,6 +965,7 @@ class Gravity {
             resolve(response);
           })
           .catch((error) => {
+            console.log('This is the third stage');
             reject(error);
           });
       }
@@ -972,12 +976,11 @@ class Gravity {
     const eventEmitter = new events.EventEmitter();
     const self = this;
     const { passphrase } = accessData;
-    const { account } = accessData;
+    // const { account } = accessData;
 
     return new Promise((resolve, reject) => {
       const records = [];
       const decryptedRecords = [];
-      let responseData;
       let database;
       let recordTable;
       let tableData;
@@ -990,12 +993,18 @@ class Gravity {
           resolve({
             database,
             success: false,
-            databaseFound: true,
+            databaseFound: false,
             userNeedsSave: true,
           });
         } else {
-          responseData = { recordsFound, user: decryptedRecords[0].user_record };
-          resolve(responseData);
+          resolve({
+            recordsFound,
+            database,
+            tables: undefined,
+            user: decryptedRecords[0].user_record,
+            databaseFound: true,
+            userNeedsSave: false,
+          });
         }
       });
 
@@ -1018,7 +1027,7 @@ class Gravity {
                   // as well as the encryption based on encryption variable
                   const decrypted = JSON.parse(
                     self.decrypt(response.data.decryptedMessage,
-                      accessData.encryptedData),
+                      accessData.encryptionPassword),
                   );
                   decryptedRecords.push(decrypted);
                 } catch (e) {
@@ -1042,7 +1051,8 @@ class Gravity {
         Object.keys(tableData).some((position) => {
           const obj = tableData[position];
           let completion = false;
-          if (obj.attachment.encryptedMessage.data && obj.recipientRS === account) {
+
+          if (obj.attachment.encryptedMessage.data && obj.recipientRS === recordTable.address) {
             records.push(obj.transaction);
             recordsFound += 1;
             completedNumber += 1;
@@ -1068,8 +1078,9 @@ class Gravity {
       self.loadAppData(accessData)
         .then((res) => {
           database = res.app.tables;
+
           if (typeof database === 'object' && database.length >= 3) {
-            console.log('These are the table data');
+            // console.log('These are the table data');
             Object.keys(database).forEach((x) => {
               if (database[x].users) {
                 recordTable = database[x].users;
@@ -1077,7 +1088,7 @@ class Gravity {
             });
             eventEmitter.emit('table_access_retrieved');
           } else {
-            console.log('Returning no user table');
+            // console.log('Returning no user table');
             resolve({ success: false, noUserTables: true, tables: database });
           }
         })

@@ -467,6 +467,58 @@ class Model {
     });
   }
 
+  async save(userData, tableData) {
+    const self = this;
+    const stringifiedRecord = JSON.stringify(self.record);
+
+    const fullRecord = {
+      id: self.record.id,
+      [`${self.model}_record`]: stringifiedRecord,
+      date: Date.now(),
+    };
+    const encryptedRecord = gravity.encrypt(
+      JSON.stringify(fullRecord), userData.encryptionPassword,
+    );
+
+    let recipientPublicKey = tableData.publicKey;
+
+    if (!recipientPublicKey) {
+      let publicKeyRetrieval;
+      try {
+        publicKeyRetrieval = await gravity.getAccountInformation(tableData.passphrase);
+      } catch (e) {
+        publicKeyRetrieval = { error: true, fullError: e };
+      }
+      if (publicKeyRetrieval.error) {
+        return publicKeyRetrieval;
+      }
+
+      recipientPublicKey = publicKeyRetrieval.publicKey;
+    }
+
+    const callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${userData.passphrase}&recipient=${tableData.address}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${recipientPublicKey}&compressMessageToEncrypt=true`;
+
+    let response;
+
+    try {
+      response = await axios.post(callUrl);
+    } catch (e) {
+      response = { error: true, errors: e };
+    }
+
+    if (response.error) {
+      return response;
+    }
+
+    if (response.data.broadcasted && response.data.broadcasted === true) {
+      return ({ success: true, message: 'Record saved!' });
+    }
+    if (response.data.errorDescription != null) {
+      return ({ success: false, errors: response.data.errorDescription });
+    }
+    return ({ success: false, errors: 'Unable to save data in blockchain' });
+  }
+
   update() {
     const self = this;
     const eventEmitter = new events.EventEmitter();

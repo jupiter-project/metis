@@ -4,6 +4,8 @@ import Invite from '../models/invite';
 import Channel from '../models/channel';
 import Message from '../models/message';
 
+const connection = process.env.SOCKET_SERVER;
+
 module.exports = (app, passport, React, ReactDOMServer) => {
   app.get('/channels', controller.isLoggedIn, (req, res) => {
     const messages = req.session.flash;
@@ -13,6 +15,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     const page = ReactDOMServer.renderToString(
       React.createElement(PageFile, {
+        connection,
         messages,
         name: 'Metis - Your Channels',
         user: req.user,
@@ -34,6 +37,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     const page = ReactDOMServer.renderToString(
       React.createElement(PageFile, {
+        connection,
         messages,
         name: 'Metis - Your Invites',
         user: req.user,
@@ -48,8 +52,6 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   });
 
   app.get('/channels/invites', controller.isLoggedIn, async (req, res) => {
-    console.log('We are getting the invites now');
-
     const invite = new Invite();
     const userData = JSON.parse(gravity.decrypt(req.session.accessData));
     invite.user = userData;
@@ -102,6 +104,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     const page = ReactDOMServer.renderToString(
       React.createElement(PageFile, {
+        connection,
         messages,
         name: `Metis - Convo#${req.params.id}`,
         user: req.user,
