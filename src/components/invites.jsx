@@ -80,7 +80,7 @@ class DataRow extends React.Component {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id=" ">
-              Invite to this invite
+              Accept your invite
             </h5>
             <button
               className="close"
@@ -102,9 +102,9 @@ class DataRow extends React.Component {
             >
               Cancel
             </button>
-            <a className="btn btn-secondary" onClick={this.acceptInvite.bind(this)}>
+            <button className="btn btn-custom" onClick={this.acceptInvite.bind(this)}>
               Accept
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -117,12 +117,12 @@ class DataRow extends React.Component {
           <td>{this.state.date}</td>
           <td>
             <a
-                className="dropdown-item"
+                className="btn btn-custom"
                 href="#"
                 data-toggle="modal"
                 data-target="#inviteInvite"
               >
-                <i className="fa fa-fw fa-sign-out" />
+                <i className="fa fa-fw fa-check-square" />
                 {' '}
                 <span>Accept</span>
               </a>
@@ -198,21 +198,23 @@ class InvitesComponent extends React.Component {
     );
 
     return (
-        <div className="container-fluid card">
-            <h1 className="page-title"></h1>
+        <div className="container-fluid card-plain">
+          <h1 className="page-title">Your Invites</h1>
+          <div className="table-responsive">
             <table className="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>Channel Name</th>
-                        <th>Sender</th>
-                        <th>Created On</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {recordList}
-                </tbody>
+              <thead>
+                <tr className="text-center">
+                  <th>Channel</th>
+                  <th>Sender</th>
+                  <th>Created</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recordList}
+              </tbody>
             </table>
+          </div>
         </div>
     );
   }
