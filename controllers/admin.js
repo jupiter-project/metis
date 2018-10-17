@@ -4,6 +4,7 @@ const controller = require('../config/controller.js');
 const { gravity } = require('../config/gravity.js');
 
 module.exports = (app, passport, React, ReactDOMServer) => {
+  const connection = process.env.SOCKET_SERVER;
   let page;
   // ===========================================================
   // This constains constants needed to connect with Jupiter
@@ -18,6 +19,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     page = ReactDOMServer.renderToString(
       React.createElement(Page, {
+        connection,
         messages,
         name: 'Metis - App Summary',
         user: req.user,
@@ -36,6 +38,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     page = ReactDOMServer.renderToString(
       React.createElement(Page, {
+        connection,
         messages,
         name: 'Metis - Table Records',
         user: req.user,

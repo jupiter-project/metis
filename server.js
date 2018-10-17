@@ -78,13 +78,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Sets public directory
 app.use(express.static(`${__dirname}/public`));
 
-require('./config/passport')(passport); //  pass passport for configuration
-
 // required for passport
 const sessionSecret = process.env.SESSION_SECRET !== undefined ? process.env.SESSION_SECRET : 'undefined';
-const sslOptions = { };
-if (process.env.CERTFILE) sslOptions.cert = fs.readFileSync(`${__dirname}/${process.env.CERTFILE}`);
-if (process.env.KEYFILE) sslOptions.key = fs.readFileSync(`${__dirname}/${process.env.KEYFILE}`);
+const sslOptions = {};
+if (process.env.CERTFILE) {
+  sslOptions.cert = fs.readFileSync(`${__dirname}/${process.env.CERTFILE}`);
+}
+if (process.env.KEYFILE) {
+  sslOptions.key = fs.readFileSync(`${__dirname}/${process.env.KEYFILE}`);
+}
 
 app.use(session({
   secret: sessionSecret,
@@ -100,6 +102,15 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+const server = Object.keys(sslOptions).length >= 2
+  ? require('https').createServer(sslOptions, app)
+  : require('http').createServer(app);
+// Enables websocket
+const io = require('socket.io').listen(server);
+
+
+require('./config/passport')(passport, jobs, io); //  pass passport for configuration
+
 // Sets get routes. Files are converted to react elements
 find.fileSync(/\.js$/, `${__dirname}/controllers`).forEach((file) => {
   require(file)(app, passport, React, ReactDOMServer, jobs);
@@ -112,23 +123,29 @@ app.get('/*', (req, res) => {
   res.redirect('/');
 });
 
-// const { UserWorker } = require('./workers/user.js');
+const RegistrationWorker = require('./workers/registration.js');
 // const TransferWorker = require('./workers/transfer.js');
 
 
-// const userWorker = new UserWorker(jobs);
+const registrationWorker = new RegistrationWorker(jobs, io);
+registrationWorker.reloadActiveWorkers('completeRegistration')
+  .catch((error) => { if (error.error) console.log(error.message); });
 // const transferWorker = new TransferWorker(jobs);
 
-/* jobs.process('createDatabase', (job, done) => {
-  userWorker.setupDatabase(job.data, job.id, done);
-}); */
+jobs.process('completeRegistration', (job, done) => {
+  registrationWorker.checkRegistration(job.data, job.id, done);
+});
 
 /* jobs.process('fundAccount', (job, done) => {
   transferWorker.fundAccount(job.data, job.id, done);
 }); */
 
+io.sockets.on('connection', (socket) => {
+  socket.emit('connected');
+});
+
 // Tells server to listen to port 4000 when app is initialized
-app.listen(4000, () => {
+server.listen(4000, () => {
   console.log('Metis app running on port 4000');
   console.log(`Jupiter Node running on ${process.env.JUPITERSERVER}`);
 });

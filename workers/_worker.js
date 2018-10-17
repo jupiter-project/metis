@@ -6,8 +6,9 @@ const config = {
 };
 
 export default class Worker {
-  constructor(jobs) {
+  constructor(jobs, io) {
     this.jobs = jobs;
+    this.socket = io;
   }
 
 
@@ -47,14 +48,11 @@ export default class Worker {
     return new Promise((resolve, reject) => {
       self.loadWorkers('active', queueName)
         .then((workers) => {
-          console.log('Workers at reload');
           allWorkers = workers;
-          console.log(allWorkers);
           const workersSize = allWorkers.length;
           let workersReviewed = 0;
 
           eventEmitter.on('allworkersReviewed', () => {
-            console.log('All active workers reviewed');
             resolve({ completed: true, message: 'Active workers reviewed' });
           });
 
@@ -65,12 +63,14 @@ export default class Worker {
               }
             });
 
-            if (currentTime - thisWorker.data.time > duration) {
+            if (currentTime - thisWorker.data.originalTime > duration) {
               console.log(`Worker#${thisWorker.id} expired!`);
               self.deleteWorker(thisWorker.id)
                 .then(() => {
                   console.log(`Worker#${thisWorker.id} deleted.`);
-                  self.addTransferToQueue(thisWorker.data.id);
+                  const newWorkerData = thisWorker.data;
+                  newWorkerData.originalTime = Date.now();
+                  self.addToQueue(queueName, newWorkerData);
                   console.log(`New worker issued to replace Worker#${thisWorker.id}`);
                   workersReviewed += 1;
                   eventEmitter.emit(`worker#${thisWorker.id}_reviewed`);

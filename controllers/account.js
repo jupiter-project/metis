@@ -5,6 +5,7 @@ import User from '../models/user';
 
 module.exports = (app, passport, React, ReactDOMServer) => {
   let page;
+  const connection = process.env.SOCKET_SERVER;
 
   // ===========================================================
   // This constains constants needed to connect with Jupiter
@@ -17,6 +18,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     page = ReactDOMServer.renderToString(
       React.createElement(AccountPage, {
+        connection,
         messages,
         name: 'Metis - My Profile',
         user: req.user,

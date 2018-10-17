@@ -16,6 +16,8 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   // Loads Gravity module
   let page;
 
+  const connection = process.env.SOCKET_SERVER;
+
   app.get('/test', (req, res) => {
     res.send({ success: true });
   });
@@ -63,6 +65,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     page = ReactDOMServer.renderToString(
       React.createElement(IndexPage, {
+        connection,
         messages,
         name: 'Metis - Dashboard',
         user: req.user,
@@ -109,6 +112,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     page = ReactDOMServer.renderToString(
       React.createElement(SettingsPage, {
+        connection,
         messages,
         name: 'Metis - Settings',
         user: req.user,
