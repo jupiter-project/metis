@@ -363,9 +363,9 @@ class ConvosComponent extends React.Component {
         />)
     );
 
-    const messageContainer = (
+    return (
       <div>
-        <div className="page-title">{this.state.messages[0] ? Channel.name : <div className="text-center"><div className="fa fa-spinner fa-pulse" style={{ fontSize: '33px' }} /></div>}</div>
+        <div className="page-title">{Channel.name}</div>
         <div style={{
           position: 'relative',
           overflow: 'hidden',
@@ -382,7 +382,7 @@ class ConvosComponent extends React.Component {
             <button className="btn btn-info" disabled={this.state.waitingForOldData} onClick={this.getOlderMessages.bind(this)}>
               { this.state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
             </button>
-            {this.state.messages[0] ? recordList : ''}
+            {recordList}
             <br /><br />
           </div>
           {/*
@@ -442,14 +442,6 @@ class ConvosComponent extends React.Component {
           </form>
         </div>
       </div>
-    );
-
-    const loadingContainer = (
-      <div className="text-center mt-5 pt-5"><div className="fa fa-spinner fa-pulse" style={{ fontSize: '60px' }} /></div>
-    );
-
-    return (
-      this.state.messages[0] ? messageContainer : loadingContainer
     );
   }
 }
