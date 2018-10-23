@@ -16,6 +16,7 @@ export class SignupForm extends React.Component {
       firstname: '',
       lastname: '',
       email: '',
+      alias: '',
       enable_two_fa: false,
       generated_passphrase: '',
       passphrase_confirmation: '',
@@ -108,6 +109,7 @@ export class SignupForm extends React.Component {
           account_data: {
             passphrase: this.state.generated_passphrase,
             email: this.state.email,
+            alias: this.state.alias,
             firstname: this.state.firstname,
             lastname: this.state.lastname,
             twofa_enabled: this.state.twofa_enabled,
@@ -158,6 +160,10 @@ export class SignupForm extends React.Component {
       this.setState({
         email: event.target.value,
       });
+    } else if (iType === 'alias') {
+      this.setState({
+        alias: event.target.value,
+      });
     } else if (iType === 'passphrase_confirm') {
       this.setState({
         passphrase_confirmation: event.target.value,
@@ -179,6 +185,7 @@ export class SignupForm extends React.Component {
         account_data: {
           passphrase: this.state.generated_passphrase,
           email: this.state.email,
+          alias: this.state.alias,
           twofa_enabled: this.state.enable_two_fa,
           firstname: this.state.firstname,
           lastname: this.state.lastname,
@@ -252,6 +259,17 @@ export class SignupForm extends React.Component {
               type="text"
               value={this.state.email}
               name="email"
+              className="form-control"
+              readOnly
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="alias">Alias</label>
+            <input
+              type="text"
+              value={this.state.alias}
+              name="alias"
               className="form-control"
               readOnly
             />
@@ -366,7 +384,17 @@ export class SignupForm extends React.Component {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Encryption Password</label>
+          <label htmlFor="alias">Alias</label>
+          <input
+            type="text"
+            name="alias"
+            value={this.state.alias}
+            onChange={this.handleChange.bind(this, 'alias')}
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="encryption_password">Encryption Password</label>
           <input
             type="password"
             value={this.state.encryption_password}
@@ -412,6 +440,8 @@ export class SignupForm extends React.Component {
                 !this.state.firstname
                 || !this.state.lastname
                 || !this.state.email
+                || !this.state.alias
+                || !this.state.encryption_password
               }
               className="btn btn-custom"
               onClick={this.confirmedPassphrase.bind(this)}
