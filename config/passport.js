@@ -17,7 +17,9 @@ module.exports = (passport, jobs, io) => {
     const user = new User({ id: accessData.id }, accessData);
 
     user.findById()
-      .then(() => {
+      .then((response) => {
+        console.log('Deserializer response');
+        console.log(response);
         const thisUser = user;
         done(null, thisUser);
       })

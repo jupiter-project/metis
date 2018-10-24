@@ -997,6 +997,7 @@ class Gravity {
         };
         resolve({ user: JSON.stringify(userObject) });
       } else if (containedDatabase) {
+        console.log('Retrieving database from the user');
         self.retrieveUserFromPassphrase(containedDatabase)
           .then((response) => {
             if (response.databaseFound && !response.userNeedsSave) {
@@ -1015,6 +1016,8 @@ class Gravity {
               };
               resolve(returnData);
             } else {
+              console.log(response);
+              console.log('Retrieved database from the app now');
               self.retrieveUserFromApp(account, passphrase)
                 .then((res) => {
                   res.noUserTables = response.noUserTables;

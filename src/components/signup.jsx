@@ -274,17 +274,6 @@ export class SignupForm extends React.Component {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="alias">Alias</label>
-            <input
-              type="text"
-              value={this.state.alias}
-              name="alias"
-              className="form-control"
-              readOnly
-            />
-          </div>
-
           <div className="">
             <div>
               <input
