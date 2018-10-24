@@ -13,8 +13,8 @@ class HomeComponent extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="page-title">Welcome to your Gravity App</div>
+      <div>
+        <div className="page-title">Welcome to Metis</div>
       </div>
     );
   }

@@ -1,0 +1,31 @@
+version: '3'
+networks: 
+  dbnet:
+    driver: bridge
+
+services:
+  redis:
+    image: redis:4.0
+    hostname: ${REDIS_HOST}
+    networks:
+      - dbnet
+    ports:
+      - "6379:6379"
+    restart: always
+
+  metis:
+    build: .
+    depends_on:
+      - redis
+    networks:
+      - dbnet
+    links:
+      - redis:${REDIS_HOST}
+    ports:
+      - "4000:4000"
+      - "4001:4001"
+    restart: always
+    command: npm run dev
+    volumes:
+      - ./:/apps/metis
+      - /apps/metis/node_modules

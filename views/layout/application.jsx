@@ -5,12 +5,15 @@ export default class ApplicationLayout extends React.Component {
     super(props);
     this.state = {
       user_exists: this.props.data.user != null || false,
+      user: this.props.data.user,
     };
   }
 
   render() {
     const linksList = (
       <div>
+        <li className="nav-item"><a className="nav-link" href="/channels"><i className="fa fa-fw fa-file" />{' '}<span>Your Channels</span></a></li>
+        <li className="nav-item"><a className="nav-link" href="/invites"><i className="fa fa-fw fa-file" />{' '}<span>Your Invites</span></a></li>
 {false && 'Generated plop links go here'}
       </div>
     );
@@ -18,24 +21,7 @@ export default class ApplicationLayout extends React.Component {
     const loggedHeader = (
       <nav className="navbar navbar-expand navbar-custom static-top">
         <a className="navbar-brand" href="/">
-          {process.env.APPNAME ? (
-            <div>
-              <i className="fa fa-fw fa-globe" alt="yourBrand" />
-              {' '}
-              <span>YourBrand</span>
-            </div>
-          ) : (
-            <div>
-              <img
-                src="/img/logo.png"
-                //className="pb-1"
-                alt="sigwo"
-                height="32px"
-              />
-              {' '}
-              <span>Sigwo Technologies</span>
-            </div>
-          )}
+          <span>METIS</span>
         </a>
 
         <button
@@ -71,6 +57,11 @@ export default class ApplicationLayout extends React.Component {
                 {' '}
                 <span>Settings</span>
               </a>
+              <a className="dropdown-item" href="/account">
+                <i className="fa fa-fw fa-edit" />
+                {' '}
+                <span>My Profile</span>
+              </a>
               <a
                 className="dropdown-item"
                 href="#"
@@ -91,24 +82,7 @@ export default class ApplicationLayout extends React.Component {
       <nav className="navbar navbar-expand navbar-custom static-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="/gravity">
-            {process.env.APPNAME ? (
-              <div>
-                <i className="fa fa-fw fa-globe" alt="yourBrand" />
-                {' '}
-                <span>YourBrand</span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  src="/img/logo.png"
-                  //className="pb-1"
-                  alt="sigwo"
-                  height="32px"
-                />
-                {' '}
-                <span>Sigwo Technologies</span>
-              </div>
-            )}
+            <span>METIS</span>
           </a>
 
           <button
@@ -146,29 +120,16 @@ export default class ApplicationLayout extends React.Component {
       <div id="wrapper">
         <ul className="sidebar navbar-nav">
           <div className="card card-account bg-secondary d-none d-md-block">
-            <div className="card-body">
-              <h5>Account ID</h5>
-              <span className="small">
+            <div className="card-body text-left">
+              <div className="bg-dark rounded-circle float-left mr-2">
+                <img src="/img/logo.png" height="28px" alt="logo" />
+              </div>
+              <span className="h5">
                 {this.state.user_exists
-                  ? this.props.data.user.record.account
-                  : 'JUP XXXX-XXXX-XXXX-XXXXX'}
-              </span>
+                  ? `${this.state.user.record.firstname} ${this.state.user.record.lastname}`
+                  : 'your name'}</span>
             </div>
           </div>
-          <li className="nav-item">
-            <a className="nav-link" href="/">
-              <i className="fa fa-fw fa-dashboard" />
-              {' '}
-              <span>Dashboard</span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/account">
-              <i className="fa fa-fw fa-edit" />
-              {' '}
-              <span>My Profile</span>
-            </a>
-          </li>
           {linksList}
         </ul>
 
@@ -176,12 +137,10 @@ export default class ApplicationLayout extends React.Component {
           <ul className="navbar-nav d-block d-lg-none text-left">
             <div className="card card-account bg-secondary">
               <div className="card-body">
-                <h5>Account ID</h5>
-                <div className="small">
-                  {this.state.user_exists
-                    ? this.props.data.user.record.account
-                    : 'JUP XXXX-XXXX-XXXX-XXXXX'}
-                </div>
+                <span className="h5">
+                {this.state.user_exists
+                  ? `${this.state.user.record.firstname} ${this.state.user.record.lastname}`
+                  : 'your name'}</span>
               </div>
             </div>
             <ul className="nav flex-column">
@@ -223,28 +182,26 @@ export default class ApplicationLayout extends React.Component {
         </div>
 
         <div id="content-wrapper">
-          <div className="container-fluid">
-            {this.props.children}
-            {/*<div className="fixed-bottom">
-              <footer className="sticky-footer">
-                <div className="container-fluid my-auto">
-                  <div className="copyright text-center my-auto">
-                    {process.env.APPNAME ? (
-                      <div>
-                        <div>Copyright © 2018 YourBrand</div>
-                        <div className="mt-2 small">powered by Gravity</div>
-                      </div>
-                    ) : (
-                      <div>
-                        <div>Copyright © 2018 Sigwo Technologies</div>
-                        <div className="mt-2 small">powered by Gravity</div>
-                      </div>
-                    )}
-                  </div>
+          {this.props.children}
+          {/* <div className="fixed-bottom">
+            <footer className="sticky-footer">
+              <div className="container-fluid my-auto">
+                <div className="copyright text-center my-auto">
+                  {process.env.APPNAME ? (
+                    <div>
+                      <div>Copyright © 2018 YourBrand</div>
+                      <div className="mt-2 small">powered by Gravity</div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div>Copyright © 2018 Sigwo Technologies</div>
+                      <div className="mt-2 small">powered by Gravity</div>
+                    </div>
+                  )}
                 </div>
-              </footer>
-            </div>*/}
-          </div>
+              </div>
+            </footer>
+          </div> */}
         </div>
       </div>
     );
@@ -310,28 +267,26 @@ export default class ApplicationLayout extends React.Component {
         </div>
 
         <div id="content-wrapper">
-          <div className="container-fluid">
-            {this.props.children}
-            {/*<div className="fixed-bottom">
-              <footer className="sticky-footer">
-                <div className="container-fluid my-auto">
-                  <div className="copyright text-center my-auto">
-                    {process.env.APPNAME ? (
-                      <div>
-                        <div>Copyright © 2018 YourBrand</div>
-                        <div className="mt-2 small">powered by Gravity</div>
-                      </div>
-                    ) : (
-                      <div>
-                        <div>Copyright © 2018 Sigwo Technologies</div>
-                        <div className="mt-2 small">powered by Gravity</div>
-                      </div>
-                    )}
-                  </div>
+          {this.props.children}
+          {/* <div className="fixed-bottom">
+            <footer className="sticky-footer">
+              <div className="container-fluid my-auto">
+                <div className="copyright text-center my-auto">
+                  {process.env.APPNAME ? (
+                    <div>
+                      <div>Copyright © 2018 YourBrand</div>
+                      <div className="mt-2 small">powered by Gravity</div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div>Copyright © 2018 Sigwo Technologies</div>
+                      <div className="mt-2 small">powered by Gravity</div>
+                    </div>
+                  )}
                 </div>
-              </footer>
-            </div>*/}
-          </div>
+              </div>
+            </footer>
+          </div> */}
         </div>
       </div>
     );
@@ -385,7 +340,7 @@ export default class ApplicationLayout extends React.Component {
           <div
             className="modal fade"
             id="logoutModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby=" "
             aria-hidden="true"

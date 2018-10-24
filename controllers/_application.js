@@ -16,6 +16,8 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   // Loads Gravity module
   let page;
 
+  const connection = process.env.SOCKET_SERVER;
+
   app.get('/test', (req, res) => {
     res.send({ success: true });
   });
@@ -30,7 +32,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const LoginPage = require('../views/login.jsx');
 
     page = ReactDOMServer.renderToString(
-      React.createElement(LoginPage, { messages, name: 'Gravity - Login', dashboard: false }),
+      React.createElement(LoginPage, { messages, name: 'Metis - Login', dashboard: false }),
     );
     res.send(page);
   });
@@ -46,7 +48,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const SignupPage = require('../views/signup.jsx');
 
     page = ReactDOMServer.renderToString(
-      React.createElement(SignupPage, { messages, name: 'Gravity - Sign up', dashboard: false }),
+      React.createElement(SignupPage, { messages, name: 'Metis - Sign up', dashboard: false }),
     );
     res.send(page);
   });
@@ -63,8 +65,9 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     page = ReactDOMServer.renderToString(
       React.createElement(IndexPage, {
+        connection,
         messages,
-        name: 'Gravity - Dashboard',
+        name: 'Metis - Dashboard',
         user: req.user,
         dashboard: true,
       }),
@@ -93,7 +96,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       React.createElement(GravityPage, {
         messages,
         requirements,
-        name: 'Gravity - Login',
+        name: 'Metis - Login',
         user: req.user,
         dashboard: false,
       }),
@@ -109,8 +112,9 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     page = ReactDOMServer.renderToString(
       React.createElement(SettingsPage, {
+        connection,
         messages,
-        name: 'Gravity - Settings',
+        name: 'Metis - Settings',
         user: req.user,
         dashboard: true,
         validation: req.session.jup_key,

@@ -14,6 +14,10 @@ body {
 
 }
 
+th {
+  min-width: 120px;
+}
+
 input[type="text"], input[type="password"], input[type="radio"], input[type="text"]:disabled, textarea {
   outline: none;
   box-shadow:none !important;
@@ -33,9 +37,9 @@ button, a, button.close, .btn-link {
 .page-title {
   text-align: center;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-weight: 400;
-  font-size: 28px;
+  font-size: 22px;
 }
 
 #wrapper {
@@ -43,7 +47,7 @@ button, a, button.close, .btn-link {
   #content-wrapper {
     overflow-x: hidden;
     width: 100%;
-    padding-top: 1rem;
+    //padding-top: 1rem;
     padding-bottom: $sticky-footer-height;
   }
 }
@@ -139,3 +143,19 @@ body.fixed-nav {
     font-weight: 800;
   }
 }
+
+/* #incoming_message {
+  width: 50%;
+
+  @media (max-width: 600px) {
+    width: 80%;
+  }
+}
+
+#outgoing_message {
+  width: 50%;
+
+  @media (max-width: 600px) {
+    width: 80%;
+  }
+} */

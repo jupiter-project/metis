@@ -129,7 +129,7 @@ class SettingsOptions extends React.Component {
             </div>
           </div>
         </div>
-        <div className="col-xs-12 col-sm-10 mx-auto">
+        {/* <div className="col-xs-12 col-sm-10 mx-auto">
           <div className="card card-register mx-auto">
             <div className="card-header bg-custom text-light h5">
               API Key
@@ -156,7 +156,7 @@ class SettingsOptions extends React.Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

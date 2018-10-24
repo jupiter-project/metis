@@ -22,7 +22,7 @@ export default class ApplicationLayout extends React.Component {
             <div>
               <img
                 src="/img/logo.png"
-                //className="pb-1"
+                // className="pb-1"
                 alt="sigwo"
                 height="32px"
               />
@@ -95,7 +95,7 @@ export default class ApplicationLayout extends React.Component {
               <div>
                 <img
                   src="/img/logo.png"
-                  //className="pb-1"
+                  // className="pb-1"
                   alt="sigwo"
                   height="32px"
                 />
@@ -161,6 +161,13 @@ export default class ApplicationLayout extends React.Component {
               <i className="fa fa-fw fa-edit" />
               {' '}
               <span>Tables</span>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/admin/transfers">
+              <i className="fa fa-fw fa-edit" />
+              {' '}
+              <span>Transfers</span>
             </a>
           </li>
         </ul>
@@ -285,7 +292,7 @@ export default class ApplicationLayout extends React.Component {
         <div id="content-wrapper">
           <div className="container-fluid">
             {this.props.children}
-            {/*<div className="fixed-bottom">
+            {/* <div className="fixed-bottom">
               <footer className="sticky-footer">
                 <div className="container-fluid my-auto">
                   <div className="copyright text-center my-auto">
@@ -303,7 +310,7 @@ export default class ApplicationLayout extends React.Component {
                   </div>
                 </div>
               </footer>
-            </div>*/}
+            </div> */}
           </div>
         </div>
       </div>
@@ -357,7 +364,7 @@ export default class ApplicationLayout extends React.Component {
           <div
             className="modal fade"
             id="logoutModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby=" "
             aria-hidden="true"
