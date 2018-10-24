@@ -5,8 +5,6 @@ class InvitesPage extends React.Component {
   render() {
     return (
         <ApplicationLayout data={this.props}>
-            <h1 className="text-center">Your Invites</h1>
-
             <div id="invitesComponent">
 
             </div>
