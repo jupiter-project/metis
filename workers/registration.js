@@ -10,6 +10,7 @@ class RegistrationWorker extends Worker {
     const timeNow = Date.now();
     const timeLimit = 60 * 1000 * 30; // 30 minutes limit
     let registrationCompleted = false;
+    let res;
 
     if ((timeNow - data.originalTime) > timeLimit) {
       done();
@@ -22,6 +23,11 @@ class RegistrationWorker extends Worker {
       accessData,
     );
 
+    const database = response.database || response.tables;
+    console.log(response);
+    console.log('Confirmed tables =>', database.length);
+    console.log(data);
+    console.log('---------');
     if (response.error) {
       done();
       this.addToQueue('completeRegistration', data);
@@ -30,84 +36,90 @@ class RegistrationWorker extends Worker {
       return { error: true, message: 'Error retrieving user information' };
     }
 
-    if (response.noUserTables) {
-      let res;
-      let usersExists = false;
-      let channelsExists = false;
-      let invitesExists = false;
+    if (data.userDataBacked
+      && data.usersExists
+      && data.channelsExists
+      && data.invitesExists
+      && data.channelsConfirmed) {
+      done();
+      console.log('Registration completed');
+      this.socket.emit(`fullyRegistered#${accessData.account}`);
+      return { success: true, message: 'Worker completed' };
+    }
 
+    if (gravity.hasTable(database, 'channels') && !data.channelsConfirmed) {
+      data.channelsConfirmed = true;
+      console.log('Channel table is enabled');
+      this.socket.emit(`channelsCreated#${accessData.account}`);
+    }
 
-      response.tables.forEach((table) => {
-        if (table.users) {
-          usersExists = true;
-        }
-        if (table.channels) {
-          channelsExists = true;
-        }
-        if (table.invites) {
-          invitesExists = true;
-        }
-      });
+    if (!gravity.hasTable(database, 'channels') && !data.channelsExists) {
+      console.log('Channels table does not exist');
+      try {
+        res = await gravity.attachTable(accessData, 'channels');
+        res = { success: true };
+        data.channelsExists = true;
+        data.channelsConfirmed = false;
+      } catch (e) {
+        res = { error: true, fullError: e };
+      }
 
-      if (!usersExists && !data.usersExists) {
-        console.log('Users table does not exist');
-        try {
-          res = await gravity.attachTable(accessData, 'users');
-          res = { success: true };
+      if (res.error) {
+        console.log(res.error);
+      }
+      done();
+      this.addToQueue('completeRegistration', data);
+      return res;
+    }
+
+    if (!gravity.hasTable(database, 'users') && !data.usersExists) {
+      console.log('users table does not exist');
+      try {
+        console.log('Creating user table');
+        res = await gravity.attachTable(accessData, 'users');
+        res = { success: true };
+        data.usersExists = true;
+        data.usersConfirmed = false;
+      } catch (e) {
+        res = { error: true, fullError: e };
+      }
+      console.log(res);
+
+      if (res.error) {
+        console.log(res.error);
+        if (res.fullError === 'Error: Unable to save table. users is already in the database') {
           data.usersExists = true;
-        } catch (e) {
-          res = { error: true, fullError: e };
-        }
-
-        if (res.error) {
-          done();
-          console.log(res.error);
-          this.addToQueue('completeRegistration', data);
-          return { error: true, message: 'There was an error', fullError: res };
+          data.usersConfirmed = false;
         }
       }
+      done();
+      this.addToQueue('completeRegistration', data);
+      return res;
+    }
 
-      if (!channelsExists && !data.channelsExists) {
-        console.log('Channels table does not exist');
-        try {
-          res = await gravity.attachTable(accessData, 'channels');
-          res = { success: true };
-          data.channelsExists = true;
-        } catch (e) {
-          res = { error: true, fullError: e };
-        }
-
-        if (res.error) {
-          done();
-          console.log(res.error);
-          this.addToQueue('completeRegistration', data);
-          return { error: true, message: 'There was an error', fullError: res };
-        }
+    if (!gravity.hasTable(database, 'invites') && !data.invitesExists) {
+      console.log('invites table does not exist');
+      try {
+        res = await gravity.attachTable(accessData, 'invites');
+        res = { success: true };
+        data.invitesExists = true;
+        data.invitesConfirmed = false;
+      } catch (e) {
+        res = { error: true, fullError: e };
       }
 
-      if (!invitesExists && !data.invitesExists) {
-        console.log('Invites table does not exist');
-        try {
-          res = await gravity.attachTable(accessData, 'invites');
-          res = { success: true };
-          data.invitesExists = true;
-        } catch (e) {
-          res = { error: true, fullError: e };
-        }
-
-        if (res.error) {
-          done();
-          console.log(res.error);
-          this.addToQueue('completeRegistration', data);
-          return { error: true, message: 'There was an error', fullError: res };
-        }
+      if (res.error) {
+        console.log(res.error);
       }
+      done();
+      this.addToQueue('completeRegistration', data);
+      return res;
     }
 
     if (response.userNeedsSave && !data.userDataBacked) {
       console.log('User needs user information to be saved');
       const userData = response.user;
-      const userTableData = this.findUserTableData(response.database);
+      const userTableData = this.findUserTableData(database);
       if (userTableData.address) {
         const user = new User(JSON.parse(userData));
         let userSaveResponse;
@@ -146,6 +158,7 @@ class RegistrationWorker extends Worker {
       // console.log('Seems to work now');
       this.socket.emit(`fullyRegistered#${accessData.account}`);
     }
+
     done();
     if (!registrationCompleted) {
       // console.log('No fully registered');

@@ -159,7 +159,8 @@ class Model {
 
           gravity.sortByDate(recordList);
 
-          createdAt = recordList[recordList.length - 1].date;
+          createdAt = recordList[recordList.length - 1]
+            ? recordList[recordList.length - 1].date : null;
 
           resolve({
             id: self.id,

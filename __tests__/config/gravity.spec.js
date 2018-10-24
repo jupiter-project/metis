@@ -257,6 +257,35 @@ describe('Gravity', () => {
       });
     }); */
 
+    describe('hasTable', () => {
+      it('it should indicate if database has specific table name', () => {
+        const database = [
+          {
+            users: {},
+            confirmed: true,
+          }, {
+            apples: {},
+            confirmed: true,
+          }, {
+            channels: {},
+            confirmed: true,
+          },
+        ];
+        response = gravity.hasTable(database, 'apples');
+        expect(response).toBe(true);
+
+        response = gravity.hasTable(database, 'users');
+        expect(response).toBe(true);
+
+        response = gravity.hasTable(database, 'invites');
+        expect(response).toBe(false);
+
+        response = gravity.hasTable(database, 'channels');
+        expect(response).toBe(true);
+      });
+    });
+
+
     describe('createNewAddress', () => {
       it('should should return address and public key from axios response', async () => {
         axios.get.mockResolvedValueOnce({ data: { success: true, accountRS: 'THIS_IS_AN_ADDRESS', publicKey: '123456' } });
