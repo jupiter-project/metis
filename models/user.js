@@ -10,7 +10,7 @@ class User extends Model {
       accessPass,
       model: 'user',
       table: 'users',
-      model_params: ['id', 'account', 'accounthash', 'email', 'firstname',
+      model_params: ['id', 'account', 'accounthash', 'email', 'firstname', 'alias',
         'lastname', 'secret_key', 'twofa_enabled', 'twofa_completed', 'api_key', 'encryption_password',
       ],
       prunableOnCreate: true,
@@ -45,6 +45,14 @@ class User extends Model {
         rules: {
           required: true,
           dataType: 'Email',
+        },
+      },
+      {
+        validate: this.record.alias,
+        attribute_name: 'alias',
+        rules: {
+          required: true,
+          dataType: 'String',
         },
       },
       {
@@ -145,6 +153,7 @@ class User extends Model {
           id: process.env.APP_ACCOUNT_ID,
           account: process.env.APP_ACCOUNT_ADDRESS,
           email: process.env.APP_EMAIL,
+          alias: 'Admin',
           firstname: 'Admin',
           lastname: '',
           secret_key: null,

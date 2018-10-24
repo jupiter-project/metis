@@ -33,6 +33,12 @@ class AppNotifications extends React.Component {
         toastr.success('Registration details have been completed!');
       });
     }
+
+    if (this.props.user) {
+      this.socket.on(`channelsCreated#${this.props.user.record.account}`, () => {
+        toastr.success('Channels are now enabled! You may create new channels or accept channel invitations');
+      });
+    }
   }
 
   render() {

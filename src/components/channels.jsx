@@ -165,9 +165,12 @@ class DataRow extends React.Component {
             </button>
           </div>
           <div className="modal-body">
-            {/*Use this form to invite another user to this channel. Please write the
-            JUP account you wish to invite below and press on the Invite button.*/}
-            <p>To invite another user to this channel, simply input the JUP Address below and click "Invite".</p>
+            {/* Use this form to invite another user to this channel. Please write the
+            JUP account you wish to invite below and press on the Invite button. */}
+            <p>
+              To invite another user to this channel,
+              simply input the JUP Address below and click "Invite".
+            </p>
             <div className="form-group">
               <input className="form-control" value={this.state.invitationAccount} onChange={this.handleChange.bind(this, 'invitationAccount')} />
             </div>
@@ -258,12 +261,15 @@ class ChannelsComponent extends React.Component {
     axios.get(`/api/users/${this.props.user.id}/channels`, config)
       .then((response) => {
         if (response.data.success) {
+          console.log('Response channel');
+          console.log(response.data);
           page.setState({
             channels: response.data.channels,
+            channelTableExist: true,
           });
           page.monitorData();
         } else {
-          toastr.error('No record history');
+          toastr.error('No record table in database.');
         }
       })
       .catch((error) => {
@@ -379,22 +385,26 @@ class ChannelsComponent extends React.Component {
           />)
     );
 
-    return (
-      <div className="container-fluid card-plain">    
-        <div className="card card-register mx-auto my-5">
-          <div className="card-header bg-custom text-light h5">
-            Add New Channel
+    const newChannelForm = (
+      <div className="card card-register mx-auto my-5">
+        <div className="card-header bg-custom text-light h5">
+          Add New Channel
+        </div>
+        <div className="card-body">
+          <div className="form-group">
+            <input placeholder="Enter new channel name here..." value={this.state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
           </div>
-          <div className="card-body">
-            <div className="form-group">
-              <input placeholder="Enter new channel name here..." value={this.state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
-            </div>
-            <div className="text-center">
-              <button type="button" className="btn btn-custom" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
-            </div>
+          <div className="text-center">
+            <button type="button" className="btn btn-custom" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
           </div>
         </div>
+      </div>);
 
+    return (
+      <div className="container-fluid card-plain">
+        { this.state.channels.length > 0 || this.state.channelTableExist
+          ? newChannelForm
+          : <div className=" text-center alert alert-warning">Cannot create channels yet, confirming account details in the blockchain</div>}
         <div className="page-title">My Channels</div>
 
         <div className="table-responsive">

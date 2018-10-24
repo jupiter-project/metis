@@ -30,6 +30,19 @@ class Gravity {
     this.tables = [];
   }
 
+  hasTable(database, tableName) {
+    let hasKey = false;
+    for (let x = 0; x < database.length; x += 1) {
+      const tableKeys = Object.keys(database[x]);
+      if (tableKeys.includes(tableName)) {
+        hasKey = true;
+        break;
+      }
+    }
+
+    return hasKey;
+  }
+
   showTables(returnType = 'app') {
     const self = this;
     return new Promise((resolve, reject) => {
@@ -328,13 +341,14 @@ class Gravity {
 
           for (let i = 0; i < Object.keys(currentList).length; i += 1) {
             const thisKey = currentList[i];
+            if (tablesRetrieved[thisKey]) {
+              // We need to sort the the list we are about to call
+              self.sortBySubkey(tablesRetrieved[thisKey], thisKey, 'date');
 
-            // We need to sort the the list we are about to call
-            self.sortBySubkey(tablesRetrieved[thisKey], thisKey, 'date');
-
-            // Once we do this, we can obtain the last record and push to the tableData variable
-            // NOTE: We'll expand validation of tables in future releases
-            tableData.push(tablesRetrieved[thisKey][0]);
+              // Once we do this, we can obtain the last record and push to the tableData variable
+              // NOTE: We'll expand validation of tables in future releases
+              tableData.push(tablesRetrieved[thisKey][0]);
+            }
           }
 
           self.appSchema.tables = tableData;
@@ -932,13 +946,16 @@ class Gravity {
         };
         resolve({ user: JSON.stringify(userObject) });
       } else if (containedDatabase) {
+        console.log('Retrieving database from the user');
         self.retrieveUserFromPassphrase(containedDatabase)
           .then((response) => {
-            console.log('data from passphrase');
-            console.log(response);
             if (response.databaseFound) {
+              console.log('Retrieved from user');
+              console.log(response);
               resolve(response);
             } else {
+              console.log(response);
+              console.log('Retrieved database from the app now');
               self.retrieveUserFromApp(account, passphrase)
                 .then((res) => {
                   res.noUserTables = response.noUserTables;

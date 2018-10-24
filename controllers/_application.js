@@ -177,6 +177,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         const jupiterAccount = {
           account: response.data.accountRS,
           public_key: response.data.publicKey,
+          alias: response.data.alias,
           accounthash: gravity.encrypt(response.data.accountRS),
           jup_account_id: response.data.account,
           email: formData.email,
