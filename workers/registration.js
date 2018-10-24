@@ -47,30 +47,6 @@ class RegistrationWorker extends Worker {
       return { success: true, message: 'Worker completed' };
     }
 
-    if (gravity.hasTable(database, 'channels') && !data.channelsConfirmed) {
-      data.channelsConfirmed = true;
-      console.log('Channel table is enabled');
-      this.socket.emit(`channelsCreated#${accessData.account}`);
-    }
-
-    if (!gravity.hasTable(database, 'channels') && !data.channelsExists) {
-      console.log('Channels table does not exist');
-      try {
-        res = await gravity.attachTable(accessData, 'channels');
-        res = { success: true };
-        data.channelsExists = true;
-        data.channelsConfirmed = false;
-      } catch (e) {
-        res = { error: true, fullError: e };
-      }
-
-      if (res.error) {
-        console.log(res.error);
-      }
-      done();
-      this.addToQueue('completeRegistration', data);
-      return res;
-    }
 
     if (!gravity.hasTable(database, 'users') && !data.usersExists) {
       console.log('users table does not exist');
@@ -91,6 +67,31 @@ class RegistrationWorker extends Worker {
           data.usersExists = true;
           data.usersConfirmed = false;
         }
+      }
+      done();
+      this.addToQueue('completeRegistration', data);
+      return res;
+    }
+
+    if (gravity.hasTable(database, 'channels') && !data.channelsConfirmed) {
+      data.channelsConfirmed = true;
+      console.log('Channel table is enabled');
+      this.socket.emit(`channelsCreated#${accessData.account}`);
+    }
+
+    if (!gravity.hasTable(database, 'channels') && !data.channelsExists) {
+      console.log('Channels table does not exist');
+      try {
+        res = await gravity.attachTable(accessData, 'channels');
+        res = { success: true };
+        data.channelsExists = true;
+        data.channelsConfirmed = false;
+      } catch (e) {
+        res = { error: true, fullError: e };
+      }
+
+      if (res.error) {
+        console.log(res.error);
       }
       done();
       this.addToQueue('completeRegistration', data);
