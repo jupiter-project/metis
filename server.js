@@ -150,6 +150,6 @@ server.listen(4000, () => {
   console.log(`Jupiter Node running on ${process.env.JUPITERSERVER}`);
 });
 
-/* kue.app.listen(4001, () => {
+kue.app.listen(4001, () => {
   console.log('Job queue server running on port 4001');
-}); */
+});
