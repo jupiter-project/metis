@@ -9,8 +9,6 @@ services:
     hostname: ${REDIS_HOST}
     networks:
       - dbnet
-    ports:
-      - "6379:6379"
     restart: always
 
   metis:
