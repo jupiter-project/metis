@@ -102,7 +102,7 @@ class DataRow extends React.Component {
             >
               Cancel
             </button>
-            <button className="btn btn-custom" onClick={this.acceptInvite.bind(this)}>
+            <button className="btn btn-custom" onClick={this.acceptInvite.bind(this)} data-dismiss="modal">
               Accept
             </button>
           </div>
