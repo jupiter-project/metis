@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose --silent",
+    "gulp": "gulp",
     "dev": "concurrently \"node server.js \" \"webpack --watch\" ",
     "start": "webpack && node server.js NODE_ENV=production",
     "gravity:db": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.loadTables('console');\"",
