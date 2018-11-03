@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest --verbose --silent",
     "gulp": "gulp",
-    "dev": "concurrently \"node server.js \" \"webpack --watch\" ",
+    "dev": "concurrently \"gulp\" \"node server.js \" \"webpack --watch\" ",
     "start": "webpack && node server.js NODE_ENV=production",
     "gravity:db": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.loadTables('console');\"",
     "gravity:db:create": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.createAppDatabase();\"",
