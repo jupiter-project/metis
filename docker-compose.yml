@@ -25,4 +25,3 @@ services:
     command: npm run dev
     volumes:
       - ./:/apps/metis
-      - /apps/metis/node_modules
