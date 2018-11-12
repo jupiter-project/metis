@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const cleanCSS = require('gulp-clean-css');
-const rename = require("gulp-rename");
+const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
 
 // Copy third party libraries from /node_modules into /vendor
