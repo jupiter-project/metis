@@ -33,17 +33,10 @@ gulp.task('css:compile', () => {
 // Minify CSS
 gulp.task('css:minify', ['css:compile'], () => {
   return gulp.src([
-<<<<<<< HEAD
       './public/css/*.css',
       '!./public/css/*.min.css'
     ])
     .pipe(cleanCSS())
-=======
-    'public/css/*.css',
-    '!public/css/*.min.css',
-  ])
-    .pipe(cleanCSS({compatibility: 'ie8'}))
->>>>>>> dc76ada... updated gulp-clean-css dep and added ie8 compatibility to the pipeline inside of gulpfile.
     .pipe(rename({
       suffix: '.min'
     }))

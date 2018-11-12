@@ -110,7 +110,10 @@
     "jest": "^23.6.0",
     "json-loader": "^0.5.7",
     "node-sass": "^4.10.0",
+<<<<<<< HEAD
     "nodemon": "^1.18.6",
+=======
+>>>>>>> 8dd8bf5... I removed old/lingering files and reference to old files within the code. I updated the package file with a new locally scoped gulp script to ensure gulp doesn't need to be installed globally. I updated gulp and gulp related packages and updated the gulpfile task/configuration to ensure this is working as expected. I updated the docker-compose.yml file to remove the data volume pointing to node_modules. I updated the dockerfile to ensure both the package.json and package-lock.json files are beeing added to the image/container. I ran the new local gulp command to ensure all files are updated and removed all lingering files that are not needed anymore.
     "plop": "^1.9.0",
     "regenerator-runtime": "^0.12.1",
     "webpack": "^3.3.0",
