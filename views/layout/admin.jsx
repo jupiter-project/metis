@@ -404,9 +404,7 @@ export default class ApplicationLayout extends React.Component {
             </div>
           </div>
 
-          <script src="/vendor/jquery/jquery.min.js" />
           <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js" />
-          <script src="/js/sb-admin.min.js" />
 
           <script
             src="/js/bundle.js"
