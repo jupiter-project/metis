@@ -334,6 +334,7 @@ export class SignupForm extends React.Component {
             {this.state.account !== ' ' && (
               this.state.account_object ? 
               <button
+                id="confirmButton"
                 value="Complete registration"
                 className="btn btn-custom"
                 onClick={this.handleClick.bind(this)}
