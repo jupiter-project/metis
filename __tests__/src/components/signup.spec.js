@@ -2,7 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import toastr from 'toastr';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { SignupForm } from '../../../src/components/signup.jsx';
 
 let wrapper;
@@ -16,6 +16,7 @@ describe('Signup', () => {
   describe('<SignupForm />', () => {
     beforeEach(() => {
       wrapper = shallow(<SignupForm />).instance();
+      //wrapperMount = mount(<SignupForm />);
       urlsList = [];
       toastr.success = jest.fn(() => true);
       toastr.error = jest.fn(() => true);
@@ -29,15 +30,17 @@ describe('Signup', () => {
       expect(state.enable_two_fa).toBe(false);
       expect(state.passphrase_confirmation_page).toBe(false);
       expect(state.passphrase_confirmed).toBe(false);
+      expect(state.submitted).toBe(false);
     });
 
-    it('should have confirmedPassphrase, generatePassphrase, confirmPassphrase, handleChange, registerAccount, update2FA and render methods', () => {
+    it('should have confirmedPassphrase, generatePassphrase, confirmPassphrase, handleChange, registerAccount, update2FA, handleClick and render methods', () => {
       expect(wrapper.confirmedPassphrase).not.toBe(undefined);
       expect(wrapper.generatePassphrase).not.toBe(undefined);
       expect(wrapper.confirmPassphrase).not.toBe(undefined);
       expect(wrapper.handleChange).not.toBe(undefined);
       expect(wrapper.registerAccount).not.toBe(undefined);
       expect(wrapper.update2FA).not.toBe(undefined);
+      expect(wrapper.handleClick).not.toBe(undefined);
       expect(wrapper.render).not.toBe(undefined);
     });
 
@@ -86,6 +89,17 @@ describe('Signup', () => {
         await wrapper.generatePassphrase(mockEvent);
         expect(toastr.success).toHaveBeenCalledTimes(0);
         expect(toastr.error).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('handleClick', () => {
+      it('should call this.setState and change the submitted state from false to true', async () => {
+        //const { state } = wrapper;
+        //expect(wrapperMount.find('#submitButton')).toBeCalledWith('');
+        //wrapper.find('button').simulate('click');
+        //await wrapper.handleClick();
+
+        //expect(state.submitted).toBe(true);
+        //expect(mockCallBack.mock.calls.length).toBeCalledWith('');
       });
     });
   });
