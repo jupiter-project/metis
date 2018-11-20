@@ -29,6 +29,7 @@ export class SignupForm extends React.Component {
       encryption_password_confirmation: '',
       submitted: false,
     };
+    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.registerAccount = this.registerAccount.bind(this);
     this.update2FA = this.update2FA.bind(this);
