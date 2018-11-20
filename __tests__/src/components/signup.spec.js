@@ -2,7 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import toastr from 'toastr';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { SignupForm } from '../../../src/components/signup.jsx';
 
 let wrapper;
@@ -16,7 +16,6 @@ describe('Signup', () => {
   describe('<SignupForm />', () => {
     beforeEach(() => {
       wrapper = shallow(<SignupForm />).instance();
-      //wrapperMount = mount(<SignupForm />);
       urlsList = [];
       toastr.success = jest.fn(() => true);
       toastr.error = jest.fn(() => true);
@@ -91,15 +90,12 @@ describe('Signup', () => {
         expect(toastr.error).toHaveBeenCalledTimes(1);
       });
     });
-    describe('handleClick', () => {
-      it('should call this.setState and change the submitted state from false to true', async () => {
-        //const { state } = wrapper;
-        //expect(wrapperMount.find('#submitButton')).toBeCalledWith('');
-        //wrapper.find('button').simulate('click');
-        //await wrapper.handleClick();
 
-        //expect(state.submitted).toBe(true);
-        //expect(mockCallBack.mock.calls.length).toBeCalledWith('');
+    describe('handleClick', () => {
+      it('should call change the state: submitted from false to true', async () => {
+        expect(wrapper.state.submitted).toBe(false);
+        await wrapper.handleClick();
+        expect(wrapper.state.submitted).toBe(true);        
       });
     });
   });
