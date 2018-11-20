@@ -29,6 +29,7 @@ export class SignupForm extends React.Component {
       encryption_password_confirmation: '',
       submitted: false,
     };
+    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.registerAccount = this.registerAccount.bind(this);
     this.update2FA = this.update2FA.bind(this);
@@ -337,7 +338,7 @@ export class SignupForm extends React.Component {
                 id="confirmButton"
                 value="Complete registration"
                 className="btn btn-custom"
-                onClick={this.handleClick.bind(this)}
+                onClick={this.handleClick}
                 disabled={this.state.submitted}
               >
                 {this.state.submitted ? <div><i className="fa fa-spinner fa-pulse"></i> loading...</div> : 'Complete Registration'}
