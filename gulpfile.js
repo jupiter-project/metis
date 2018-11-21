@@ -15,12 +15,6 @@ gulp.task('vendor', () => {
     ])
     .pipe(gulp.dest('./public/vendor/bootstrap'))
 
-  // Font Awesome
-  gulp.src([
-      './node_modules/@fortawesome/**/*',
-    ])
-    .pipe(gulp.dest('./public/vendor'))
-
 });
 
 // Compile SCSS
