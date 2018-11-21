@@ -310,10 +310,6 @@ export default class ApplicationLayout extends React.Component {
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
           <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" />
           <link
-            href="/vendor/font-awesome/css/font-awesome.min.css"
-            rel="stylesheet"
-          />
-          <link
             href="/vendor/fontawesome-free/css/all.min.css"
             rel="stylesheet"
           />
