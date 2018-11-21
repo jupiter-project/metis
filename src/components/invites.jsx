@@ -122,7 +122,7 @@ class DataRow extends React.Component {
                 data-toggle="modal"
                 data-target="#inviteInvite"
               >
-                <i className="fa fa-fw fa-check-square" />
+                <i className="fas fa-fw fa-check-square" />
                 {' '}
                 <span>Accept</span>
               </a>
