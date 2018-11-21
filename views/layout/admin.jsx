@@ -338,6 +338,10 @@ export default class ApplicationLayout extends React.Component {
             rel="stylesheet"
           />
           <link
+            href="/vendor/fontawesome-free/css/all.min.css"
+            rel="stylesheet"
+          />
+          <link
             href="/vendor/bootstrap/css/bootstrap.min.css"
             rel="stylesheet"
           />
