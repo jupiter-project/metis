@@ -110,7 +110,7 @@ class TableComponent extends React.Component {
                 aria-controls={`collapse-${this.state.name}`}
                 className="w-25"
               >
-                  {this.state.open ? <i className="fa fa-fw fa-minus small" /> : <i className="fa fa-fw fa-plus small" />} <strong>{this.state.name}</strong>
+                  {this.state.open ? <i className="fas fa-fw fa-minus small" /> : <i className="fas fa-fw fa-plus small" />} <strong>{this.state.name}</strong>
               </td>
 
               <td className="w-50">

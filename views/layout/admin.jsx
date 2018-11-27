@@ -14,7 +14,7 @@ export default class ApplicationLayout extends React.Component {
         <a className="navbar-brand" href="/">
           {process.env.APPNAME ? (
             <div>
-              <i className="fa fa-fw fa-globe" alt="yourBrand" />
+              <i className="fas fa-fw fa-globe" alt="yourBrand" />
               {' '}
               <span>YourBrand</span>
             </div>
@@ -38,7 +38,7 @@ export default class ApplicationLayout extends React.Component {
           data-toggle="collapse"
           data-target="#mobile-menu"
         >
-          <i className="fa fa-fw fa-bars" />
+          <i className="fas fa-fw fa-bars" />
         </button>
 
         <ul className="navbar-nav ml-auto d-none d-md-block">
@@ -52,7 +52,7 @@ export default class ApplicationLayout extends React.Component {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <i className="fa fa-fw fa-user" />
+              <i className="fas fa-fw fa-user" />
               {' '}
               <span>My Account</span>
             </a>
@@ -61,7 +61,7 @@ export default class ApplicationLayout extends React.Component {
               aria-labelledby="alertsDropdown"
             >
               <a className="dropdown-item" href="/settings">
-                <i className="fa fa-fw fa-cog" />
+                <i className="fas fa-fw fa-cog" />
                 {' '}
                 <span>Settings</span>
               </a>
@@ -71,7 +71,7 @@ export default class ApplicationLayout extends React.Component {
                 data-toggle="modal"
                 data-target="#logoutModal"
               >
-                <i className="fa fa-fw fa-sign-out" />
+                <i className="fas fa-fw fa-sign-out-alt" />
                 {' '}
                 <span>Log out</span>
               </a>
@@ -87,7 +87,7 @@ export default class ApplicationLayout extends React.Component {
           <a className="navbar-brand" href="/gravity">
             {process.env.APPNAME ? (
               <div>
-                <i className="fa fa-fw fa-globe" alt="yourBrand" />
+                <i className="fas fa-fw fa-globe" alt="yourBrand" />
                 {' '}
                 <span>YourBrand</span>
               </div>
@@ -111,21 +111,21 @@ export default class ApplicationLayout extends React.Component {
             data-toggle="collapse"
             data-target="#mobile-menu"
           >
-            <i className="fa fa-fw fa-bars" />
+            <i className="fas fa-fw fa-bars" />
           </button>
 
           <div className="d-none d-lg-block ml-auto">
             <ul className="navbar-nav">
               <li className="nav-item">
                 <a className="nav-link" href="/signup">
-                  <i className="fa fa-fw fa-user-plus" />
+                  <i className="fas fa-fw fa-user-plus" />
                   {' '}
                   <span>Sign up</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/login">
-                  <i className="fa fa-fw fa-sign-in" />
+                  <i className="fas fa-fw fa-sign-in" />
                   {' '}
                   <span>Login</span>
                 </a>
@@ -151,21 +151,21 @@ export default class ApplicationLayout extends React.Component {
           </div>
           <li className="nav-item">
             <a className="nav-link" href="/">
-              <i className="fa fa-fw fa-dashboard" />
+              <i className="fas fa-fw fa-tachometer-alt" />
               {' '}
               <span>App Summary</span>
             </a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/admin/tables">
-              <i className="fa fa-fw fa-edit" />
+              <i className="fas fa-fw fa-edit" />
               {' '}
               <span>Tables</span>
             </a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/admin/transfers">
-              <i className="fa fa-fw fa-edit" />
+              <i className="fas fa-fw fa-edit" />
               {' '}
               <span>Transfers</span>
             </a>
@@ -187,21 +187,21 @@ export default class ApplicationLayout extends React.Component {
             <ul className="nav flex-column">
               <li className="nav-item">
                 <a className="nav-link" href="/">
-                  <i className="fa fa-fw fa-dashboard" />
+                  <i className="fas fa-fw fa-tachometer-alt" />
                   {' '}
                   <span>App Summary</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/admin/tables">
-                  <i className="fa fa-fw fa-edit" />
+                  <i className="fas fa-fw fa-edit" />
                   {' '}
                   <span>Tables</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/settings">
-                  <i className="fa fa-fw fa-cog" />
+                  <i className="fas fa-fw fa-cog" />
                   {' '}
                   <span>Settings</span>
                 </a>
@@ -213,7 +213,7 @@ export default class ApplicationLayout extends React.Component {
                   data-toggle="modal"
                   data-target="#logoutModal"
                 >
-                  <i className="fa fa-fw fa-sign-out" />
+                  <i className="fas fa-fw fa-sign-out-alt" />
                   <span>Log out</span>
                 </a>
               </li>
@@ -234,7 +234,7 @@ export default class ApplicationLayout extends React.Component {
         <ul className="sidebar navbar-nav d-none d-lg-block">
           <li className="nav-item">
             <a className="nav-link" href="https://docs.sigwo.com">
-              <i className="fa fa-fw fa-file" />
+              <i className="fas fa-fw fa-file" />
               {' '}
               <span>Documentation</span>
             </a>
@@ -244,7 +244,7 @@ export default class ApplicationLayout extends React.Component {
               className="nav-link"
               href="https://github.com/SigwoTechnologies/jupiter-gravity"
             >
-              <i className="fa fa-fw fa-github" />
+              <i className="fas fa-fw fa-github" />
               {' '}
               <span>GitHub</span>
             </a>
@@ -256,7 +256,7 @@ export default class ApplicationLayout extends React.Component {
             <ul className="nav flex-column">
               <li className="nav-item">
                 <a className="nav-link" href="https://docs.sigwo.com">
-                  <i className="fa fa-fw fa-file" />
+                  <i className="fas fa-fw fa-file" />
                   {' '}
                   <span>Documentation</span>
                 </a>
@@ -266,21 +266,21 @@ export default class ApplicationLayout extends React.Component {
                   className="nav-link"
                   href="https://github.com/SigwoTechnologies/jupiter-gravity"
                 >
-                  <i className="fa fa-fw fa-github" />
+                  <i className="fas fa-fw fa-github" />
                   {' '}
                   <span>GitHub</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/signup">
-                  <i className="fa fa-fw fa-user-plus" />
+                  <i className="fas fa-fw fa-user-plus" />
                   {' '}
                   <span>Sign up</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/login">
-                  <i className="fa fa-fw fa-sign-in" />
+                  <i className="fas fa-fw fa-sign-in" />
                   {' '}
                   <span>Login</span>
                 </a>
@@ -334,7 +334,7 @@ export default class ApplicationLayout extends React.Component {
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
           <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" />
           <link
-            href="/vendor/font-awesome/css/font-awesome.min.css"
+            href="/vendor/fontawesome-free/css/all.min.css"
             rel="stylesheet"
           />
           <link

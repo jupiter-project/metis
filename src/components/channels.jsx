@@ -196,7 +196,7 @@ class DataRow extends React.Component {
           <td><a className="btn btn-link" href={`/channels/${this.state.channelData.id}`}>{channelInfo.channel_record.name}</a></td>
           <td>{channelInfo.channel_record.account}</td>
           <td>{this.state.date}</td>
-          <td>{this.state.confirmed ? <i className="fa fa-fw fa-check" /> : <i className="fa fa-fw fa-times" />}</td>
+          <td>{this.state.confirmed ? <i className="fas fa-fw fa-check" /> : <i className="fas fa-fw fa-times" />}</td>
           <td>
             <a
                 className="btn btn-custom"
@@ -204,7 +204,7 @@ class DataRow extends React.Component {
                 data-toggle="modal"
                 data-target="#channelInvite"
               >
-                <i className="fa fa-fw fa-user-plus" />
+                <i className="fas fa-fw fa-user-plus" />
                 {' '}
                 <span>Invite</span>
               </a>
