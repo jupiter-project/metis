@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt-nodejs';
 import Model from './_model';
 import methods from '../config/_methods';
+import { gravity } from '../config/gravity';
+
 
 class User extends Model {
   constructor(data, accessPass) {
@@ -15,7 +17,8 @@ class User extends Model {
       ],
       prunableOnCreate: true,
       hasDatabase: true,
-    });
+    },
+    accessPass);
     this.public_key = data.public_key;
 
     // Mandatory method to be called after data
@@ -147,7 +150,7 @@ class User extends Model {
 
   findById() {
     const self = this;
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       if (self.record && self.record.id === process.env.APP_ACCOUNT_ID) {
         self.record = {
           id: process.env.APP_ACCOUNT_ID,
@@ -165,16 +168,32 @@ class User extends Model {
           secret: process.env.APP_ACCOUNT,
         };
         resolve(true);
+      } else if (
+        self.accessData
+        && self.accessData.userRecordFound
+        && (self.accessData.noUserTables || self.accessData.userNeedsBackup)
+      ) {
+        try {
+          // console.log(self.accessData);
+          const accessKey = gravity.decrypt(self.accessData.accessKey);
+          // const encryptionKey = gravity.decrypt(self.accessData.encryptionKey);
+          const account = gravity.decrypt(self.accessData.account);
+          const accountData = JSON.parse(gravity.decrypt(self.accessData.accountData));
+          const record = await gravity.getUser(account, accessKey, accountData);
+          self.record = JSON.parse(record.user);
+          resolve(true);
+        } catch (e) {
+          console.log(e);
+        }
       } else {
-        self.last()
-          .then((res) => {
-            const { record } = res;
-            self.record = record;
-            resolve(true);
-          })
-          .catch((error) => {
-            reject(error);
-          });
+        try {
+          const res = await self.last();
+          const { record } = res;
+          self.record = record;
+          resolve(true);
+        } catch (error) {
+          reject(error);
+        }
       }
     });
   }

@@ -61,7 +61,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     } catch (e) {
       response = e;
     }
-    console.log(response);
+    // console.log(response);
     res.send(response);
   });
 

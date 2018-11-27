@@ -24,9 +24,14 @@ class RegistrationWorker extends Worker {
     );
 
     const database = response.database || response.tables;
+    const { tableList } = response;
+    const tableBreakdown = gravity.tableBreakdown(database);
+    console.log(tableList);
+    console.log(tableBreakdown);
+    console.log(database);
     console.log(response);
-    console.log('Confirmed tables =>', database.length);
-    console.log(data);
+
+    // console.log(data);
     console.log('---------');
     if (response.error) {
       done();
@@ -52,7 +57,7 @@ class RegistrationWorker extends Worker {
       console.log('users table does not exist');
       try {
         console.log('Creating user table');
-        res = await gravity.attachTable(accessData, 'users');
+        res = await gravity.attachTable(accessData, 'users', tableBreakdown);
         res = { success: true };
         data.usersExists = true;
         data.usersConfirmed = false;
@@ -82,7 +87,7 @@ class RegistrationWorker extends Worker {
     if (!gravity.hasTable(database, 'channels') && !data.channelsExists) {
       console.log('Channels table does not exist');
       try {
-        res = await gravity.attachTable(accessData, 'channels');
+        res = await gravity.attachTable(accessData, 'channels', tableBreakdown);
         res = { success: true };
         data.channelsExists = true;
         data.channelsConfirmed = false;
@@ -101,7 +106,7 @@ class RegistrationWorker extends Worker {
     if (!gravity.hasTable(database, 'invites') && !data.invitesExists) {
       console.log('invites table does not exist');
       try {
-        res = await gravity.attachTable(accessData, 'invites');
+        res = await gravity.attachTable(accessData, 'invites', tableBreakdown);
         res = { success: true };
         data.invitesExists = true;
         data.invitesConfirmed = false;
