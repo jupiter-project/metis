@@ -78,6 +78,7 @@ class ConvosComponent extends React.Component {
       queryScope: 'all',
       transactionIds: [],
       firstIndex: 0,
+      loading: true,
     };
     this.handleChange = this.handleChange.bind(this);
     this.createRecord = this.createRecord.bind(this);
@@ -141,6 +142,7 @@ class ConvosComponent extends React.Component {
         if (response.data.success) {
           page.setState({
             channels: response.data.channels,
+            loading: false,
           });
           // page.monitorData();
           for (let x = 0; x < response.data.channels.length; x += 1) {
@@ -252,6 +254,7 @@ class ConvosComponent extends React.Component {
               page.setState({
                 messages: response.data.messages,
                 queryScope: 'unconfirmed',
+                loading: false,
               });
             }
           } else if (page.state.queryScope === 'unconfirmed') {
@@ -363,85 +366,89 @@ class ConvosComponent extends React.Component {
         />)
     );
 
-    return (
-      <div>
-        <div className="page-title">{Channel.name}</div>
-        <div style={{
-          position: 'relative',
-          overflow: 'hidden',
-          height: 'calc(100vh - 190px)',
+    let loading = <div style={{textAlign: 'center', marginTop: '25vh', fontSize: '55px'}}><i className="fa fa-spinner fa-pulse"></i></div>;
+
+    let content = <div>
+      <div className="page-title">{Channel.name}</div>
+      <div style={{
+        position: 'relative',
+        overflow: 'hidden',
+        height: 'calc(100vh - 190px)',
+        width: '100%',
+        border: '0px solid #ccc',
+      }}>
+        <div className="this-is-bg-info" style={{
+          overflowY: 'scroll',
+          height: '100%',
           width: '100%',
-          border: '0px solid #ccc',
+          position: 'absolute',
         }}>
-          <div className="this-is-bg-info" style={{
-            overflowY: 'scroll',
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-          }}>
-            <button className="btn btn-info" disabled={this.state.waitingForOldData} onClick={this.getOlderMessages.bind(this)}>
-              { this.state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
-            </button>
-            {recordList}
-            <br /><br />
-          </div>
-          {/*
-          <h1 className="page-title">{Channel.name}</h1>
-          <h2 className="page-title">{Channel.account}</h2>
+          <button className="btn btn-info" disabled={this.state.waitingForOldData} onClick={this.getOlderMessages.bind(this)}>
+            { this.state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
+          </button>
           {recordList}
-          <div className="bg-warning">
+          <br /><br />
+        </div>
+        {/*
+        <h1 className="page-title">{Channel.name}</h1>
+        <h2 className="page-title">{Channel.account}</h2>
+        {recordList}
+        <div className="bg-warning">
+          <div className="">
             <div className="">
               <div className="">
                 <div className="">
                   <div className="">
-                    <div className="">
-                      <input placeholder="" value={this.state.message}
-                      className="form-control" onChange={this.handleChange.bind(this, 'message')} />
-                      <br />
-                    </div>
+                    <input placeholder="" value={this.state.message}
+                    className="form-control" onChange={this.handleChange.bind(this, 'message')} />
+                    <br />
                   </div>
+                </div>
+                <div className="">
                   <div className="">
-                    <div className="">
-                      <button type="button" className="btn btn-outline btn-default"
-                      disabled={this.state.submitted}
-                      onClick={this.createRecord.bind(this)}>
-                      <i className="glyphicon glyphicon-edit"></i>
-                      {this.state.submitted ? 'Saving...' : 'Send'}</button>
-                    </div>
+                    <button type="button" className="btn btn-outline btn-default"
+                    disabled={this.state.submitted}
+                    onClick={this.createRecord.bind(this)}>
+                    <i className="glyphicon glyphicon-edit"></i>
+                    {this.state.submitted ? 'Saving...' : 'Send'}</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          */}
         </div>
-        <div>
-          <form className="" style={
-            {
-              display: 'flex',
-              boxSizing: 'border-box',
-              height: '60px',
-              margin: '10px',
-            }}>
-            <input style={{
-              width: '100%',
-              padding: '15px 10px',
-              border: 'none',
-              margin: '0',
-            }} type="text"
-            className=""
-            placeholder="Enter your message here..."
-            value={this.state.message}
-            onChange={this.handleChange.bind(this, 'message')}
-            required="required" />
-            <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={this.state.submitted} onClick={this.createRecord.bind(this)}
-            >SEND</button>
-          </form>
-        </div>
+        */}
       </div>
+      <div>
+        <form className="" style={
+          {
+            display: 'flex',
+            boxSizing: 'border-box',
+            height: '60px',
+            margin: '10px',
+          }}>
+          <input style={{
+            width: '100%',
+            padding: '15px 10px',
+            border: 'none',
+            margin: '0',
+          }} type="text"
+          className=""
+          placeholder="Enter your message here..."
+          value={this.state.message}
+          onChange={this.handleChange.bind(this, 'message')}
+          required="required" />
+          <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={this.state.submitted} onClick={this.createRecord.bind(this)}
+          >SEND</button>
+        </form>
+      </div>
+    </div>
+
+    return (
+      this.state.loading ? loading : content
     );
   }
 }

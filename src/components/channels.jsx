@@ -103,7 +103,7 @@ class DataRow extends React.Component {
 
     axios.post('/channels/invite', { data: invite })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         if (response.data.success) {
           page.props.parent.setState({
             update_submitted: false,
@@ -232,6 +232,7 @@ class ChannelsComponent extends React.Component {
       channels: [],
       submitted: false,
       update_submitted: false,
+      loading: true,
     };
     this.handleChange = this.handleChange.bind(this);
     this.createRecord = this.createRecord.bind(this);
@@ -241,7 +242,7 @@ class ChannelsComponent extends React.Component {
   componentDidMount() {
     this.loadData();
   }
-
+  
   resetRecords(newData) {
     this.setState({
       channels: newData,
@@ -261,11 +262,12 @@ class ChannelsComponent extends React.Component {
     axios.get(`/api/users/${this.props.user.id}/channels`, config)
       .then((response) => {
         if (response.data.success) {
-          console.log('Response channel');
-          console.log(response.data);
+          //console.log('Response channel');
+          //console.log(response.data);
           page.setState({
             channels: response.data.channels,
             channelTableExist: true,
+            loading: false,
           });
           page.monitorData();
         } else {
@@ -292,7 +294,7 @@ class ChannelsComponent extends React.Component {
     axios.get(`/api/users/${this.props.user.id}/channels`, config)
       .then((response) => {
         if (response.data.success) {
-          console.log(response.data);
+          //console.log(response.data);
           const responseData = response.data.channels;
 
           if (currentData !== JSON.stringify(responseData)) {
@@ -400,30 +402,34 @@ class ChannelsComponent extends React.Component {
         </div>
       </div>);
 
-    return (
-      <div className="container-fluid card-plain">
-        { this.state.channels.length > 0 || this.state.channelTableExist
-          ? newChannelForm
-          : <div className=" text-center alert alert-warning">Cannot create channels yet, confirming account details in the blockchain</div>}
-        <div className="page-title">My Channels</div>
+      let loading = <div style={{textAlign: 'center', marginTop: '25vh', fontSize: '55px'}}><i className="fa fa-spinner fa-pulse"></i></div>;
 
-        <div className="table-responsive">
-          <table className="table table-striped table-bordered table-hover">
-            <thead>
-              <tr className="text-center">
-                <th>Name</th>
-                <th>Account</th>
-                <th>Created On</th>
-                <th>Confirmed</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recordList}
-            </tbody>
-          </table>
-        </div>
+      let content = <div className="container-fluid card-plain">
+      { this.state.channels.length > 0 || this.state.channelTableExist
+        ? newChannelForm
+        : <div className=" text-center alert alert-warning">Cannot create channels yet, confirming account details in the blockchain</div>}
+      <div className="page-title">My Channels</div>
+
+      <div className="table-responsive">
+        <table className="table table-striped table-bordered table-hover">
+          <thead>
+            <tr className="text-center">
+              <th>Name</th>
+              <th>Account</th>
+              <th>Created On</th>
+              <th>Confirmed</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recordList}
+          </tbody>
+        </table>
       </div>
+    </div>;
+
+    return (
+      this.state.loading ? loading : content
     );
   }
 }
