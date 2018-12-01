@@ -105,7 +105,7 @@ export default class ApplicationLayout extends React.Component {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/login">
-                  <i className="fas fa-fw fa-sign-in" />
+                  <i className="fas fa-fw fa-sign-in-alt" />
                   {' '}
                   <span>Login</span>
                 </a>
@@ -221,7 +221,7 @@ export default class ApplicationLayout extends React.Component {
               className="nav-link"
               href="https://github.com/SigwoTechnologies/jupiter-gravity"
             >
-              <i className="fas fa-fw fa-github" />
+              <i className="fab fa-fw fa-github" />
               {' '}
               <span>GitHub</span>
             </a>
@@ -243,7 +243,7 @@ export default class ApplicationLayout extends React.Component {
                   className="nav-link"
                   href="https://github.com/SigwoTechnologies/jupiter-gravity"
                 >
-                  <i className="fas fa-fw fa-github" />
+                  <i className="fab fa-fw fa-github" />
                   {' '}
                   <span>GitHub</span>
                 </a>
@@ -257,7 +257,7 @@ export default class ApplicationLayout extends React.Component {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/login">
-                  <i className="fas fa-fw fa-sign-in" />
+                  <i className="fas fa-fw fa-sign-in-alt" />
                   {' '}
                   <span>Login</span>
                 </a>
