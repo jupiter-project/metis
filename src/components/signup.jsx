@@ -544,12 +544,20 @@ export class SignupForm extends React.Component {
     );
 
     return (
-      <div>
-        {this.state.passphrase_confirmation_page === true
-          ? this.state.passphrase_confirmed === true
-            ? newAccountSummary
-            : passphraseConfirmationPage
-          : signupForm}
+      <div id="login-container">
+        <div className="card card-register mx-auto mt-5">
+          <div className="card-header bg-custom text-light h5">
+            Account Registration
+          </div>
+          <div className="card-body">
+          {this.state.passphrase_confirmation_page === true
+            ? this.state.passphrase_confirmed === true
+              ? newAccountSummary
+              : passphraseConfirmationPage
+            : signupForm}
+          </div>
+        </div>
+        <div className="text-center mt-3 d-block d-lg-none">Or, log in to your account <a href="/login">here.</a></div>
       </div>
     );
   }

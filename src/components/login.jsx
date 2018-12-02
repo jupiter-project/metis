@@ -138,13 +138,16 @@ class LoginForm extends React.Component {
     );
 
     return (
-      <div className="card card-register mx-auto mt-5">
-        <div className="card-header bg-custom text-light h5">
-          Login
+      <div>
+        <div className="card card-register mx-auto mt-5">
+          <div className="card-header bg-custom text-light h5">
+            Login
+          </div>
+          <div className="card-body">
+            {this.state.confirmation_page === true ? confirmationPage : loginForm}
+          </div>
         </div>
-        <div className="card-body">
-          {this.state.confirmation_page === true ? confirmationPage : loginForm}
-        </div>
+        <div className="text-center mt-3 d-block d-lg-none">Or, sign up for an account <a href="/signup">here.</a></div>
       </div>
     );
   }
