@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
-class LoginForm extends React.Component {
+export class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -165,4 +165,4 @@ const LoginExport = () => {
   }
 };
 
-module.exports = LoginExport();
+export default LoginExport();

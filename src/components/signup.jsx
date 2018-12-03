@@ -572,10 +572,7 @@ const SignupExport = () => {
       <SignupForm messages={props.messages} />,
       document.getElementById('signup-form'),
     );
-
-    return 'rendered';
   }
-  return null;
 };
 
 export default SignupExport();
