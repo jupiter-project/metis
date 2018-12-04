@@ -29,7 +29,6 @@ describe('Signup', () => {
       expect(state.enable_two_fa).toBe(false);
       expect(state.passphrase_confirmation_page).toBe(false);
       expect(state.passphrase_confirmed).toBe(false);
-      expect(state.submitted).toBe(false);
     });
 
     it('should have confirmedPassphrase, generatePassphrase, confirmPassphrase, handleChange, registerAccount, update2FA, handleClick and render methods', () => {
@@ -88,14 +87,6 @@ describe('Signup', () => {
         await wrapper.generatePassphrase(mockEvent);
         expect(toastr.success).toHaveBeenCalledTimes(0);
         expect(toastr.error).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('handleClick', () => {
-      it('should call change the state: submitted from false to true', async () => {
-        expect(wrapper.state.submitted).toBe(false);
-        await wrapper.handleClick();
-        expect(wrapper.state.submitted).toBe(true);        
       });
     });
   });
