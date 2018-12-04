@@ -103,14 +103,14 @@ class TableComponent extends React.Component {
         <table className="table mb-0" style={{ border: '1px solid lightgray' }}>
           <tbody>
             <tr>
-              <td 
+              <td
                 onClick={() => this.setState({ open: !this.state.open })}
                 data-toggle="collapse"
                 data-target={`#collapse-${this.state.name}`}
                 aria-controls={`collapse-${this.state.name}`}
                 className="w-25"
               >
-                  {this.state.open ? <i className="fas fa-fw fa-minus small" /> : <i className="fas fa-fw fa-plus small" />} <strong>{this.state.name}</strong>
+                  {this.state.open ? <i className="fas fa-minus fa-xs" /> : <i className="fas fa-plus fa-xs" />} <strong>{this.state.name}</strong>
               </td>
 
               <td className="w-50">
@@ -316,7 +316,7 @@ class AdminComponent extends React.Component {
     return (
       <div className="">
         <div className="page-title">App Summary</div>
-        {/*<div className="container">
+        {/* <div className="container">
           <div className="card card-plain">
             <div className="row">
               <div className="col-xs-12 col-md-6">
@@ -350,7 +350,7 @@ class AdminComponent extends React.Component {
               </div>
             </div>
           </div>
-        </div>*/}
+        </div> */}
         <div className="text-center">
           <div className="mb-3">
             <h6>App Address:</h6>
@@ -375,7 +375,7 @@ class AdminComponent extends React.Component {
             </p>
           </div>
         </div>
-        
+
         <div className="row">
           <div className="col-xs-12 col-md-8 mx-auto">
             <div className="card">
