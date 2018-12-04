@@ -31,14 +31,13 @@ describe('Signup', () => {
       expect(state.passphrase_confirmed).toBe(false);
     });
 
-    it('should have confirmedPassphrase, generatePassphrase, confirmPassphrase, handleChange, registerAccount, update2FA, handleClick and render methods', () => {
+    it('should have confirmedPassphrase, generatePassphrase, confirmPassphrase, handleChange, registerAccount, update2FA and render methods', () => {
       expect(wrapper.confirmedPassphrase).not.toBe(undefined);
       expect(wrapper.generatePassphrase).not.toBe(undefined);
       expect(wrapper.confirmPassphrase).not.toBe(undefined);
       expect(wrapper.handleChange).not.toBe(undefined);
       expect(wrapper.registerAccount).not.toBe(undefined);
       expect(wrapper.update2FA).not.toBe(undefined);
-      expect(wrapper.handleClick).not.toBe(undefined);
       expect(wrapper.render).not.toBe(undefined);
     });
 
