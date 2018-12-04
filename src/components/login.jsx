@@ -15,7 +15,6 @@ export class LoginForm extends React.Component {
       accounthash: '',
       public_key: '',
       encryptionPassword: '',
-      submitted: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -69,10 +68,6 @@ export class LoginForm extends React.Component {
       });
   }
 
-  handleClick() {
-    this.setState({ submitted: true });
-  }
-
   render() {
     const confirmationPage = (
       <form action="/login" method="post" className="">
@@ -96,8 +91,8 @@ export class LoginForm extends React.Component {
         />
 
         <div className="form-group text-center">
-          <button type="submit" className="btn btn-custom" onClick={this.handleClick.bind(this)} disabled={this.state.submitted}>
-            {this.state.submitted ? <div><i className="fa fa-spinner fa-pulse"></i> loading...</div> : 'Continue'}
+          <button type="submit" className="btn btn-custom">
+            Continue
           </button>
         </div>
       </form>

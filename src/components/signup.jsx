@@ -27,9 +27,7 @@ export class SignupForm extends React.Component {
       public_key: '',
       encryption_password: '',
       encryption_password_confirmation: '',
-      submitted: false,
     };
-    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.registerAccount = this.registerAccount.bind(this);
     this.update2FA = this.update2FA.bind(this);
@@ -224,10 +222,6 @@ export class SignupForm extends React.Component {
     }
   }
 
-  handleClick() {
-    this.setState({ submitted: true });
-  }
-
   render() {
     const newAccountSummary = (
       <form action="/signup" method="post" className="text-left">
@@ -339,7 +333,7 @@ export class SignupForm extends React.Component {
                 value="Complete registration"
                 className="btn btn-custom"
               >
-                {this.state.submitted ? <div><i className="fa fa-spinner fa-pulse"></i> loading...</div> : 'Complete Registration'}
+                Complete Registration
               </button>
                 : null
             )}
