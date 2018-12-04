@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-class HomeComponent extends React.Component {
+export class HomeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,4 +31,4 @@ const HomeExport = () => {
   }
 };
 
-module.exports = HomeExport();
+export default HomeExport();
