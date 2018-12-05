@@ -56,6 +56,22 @@ class Gravity {
     return tableList;
   }
 
+  getTableData(table, database) {
+    let tableData;
+
+    for (let x = 0; x < database.length; x += 1) {
+      const tableKeys = Object.keys(database[x]);
+      if (tableKeys.length > 0) {
+        if (tableKeys[0] === table && !tableData) {
+          tableData = database[x];
+          break;
+        }
+      }
+    }
+
+    return tableData[table];
+  }
+
   showTables(returnType = 'app') {
     const self = this;
     return new Promise((resolve, reject) => {
@@ -983,18 +999,15 @@ class Gravity {
       } else if (containedDatabase) {
         self.retrieveUserFromPassphrase(containedDatabase)
           .then((response) => {
-            // console.log(response);
             if (response.databaseFound && !response.userNeedsSave) {
-              console.log('Retrieved from user');
               resolve(response);
             } else if (response.userRecord) {
               const currentDatabase = self.tableBreakdown(response.tables);
-              console.log('Retrieved from user but no user table yet');
               const returnData = {
                 recordsFound: 1,
                 user: response.userRecord,
                 noUserTables: !currentDatabase.includes('users'),
-                userNeedsBackup: true,
+                userNeedsSave: true,
                 userRecordFound: true,
                 databaseFound: true,
                 tables: response.tables,
@@ -1002,7 +1015,6 @@ class Gravity {
               };
               resolve(returnData);
             } else {
-              console.log('Retrieved database from the app now');
               self.retrieveUserFromApp(account, passphrase)
                 .then((res) => {
                   res.noUserTables = response.noUserTables;
@@ -1098,6 +1110,7 @@ class Gravity {
                     self.decrypt(response.data.decryptedMessage,
                       accessData.encryptionPassword),
                   );
+                  console.log(decrypted);
                   decryptedRecords.push(decrypted);
                 } catch (e) {
                   console.log(e);
@@ -1120,8 +1133,11 @@ class Gravity {
         Object.keys(tableData).some((position) => {
           const obj = tableData[position];
           let completion = false;
-
-          if (obj.attachment.encryptedMessage.data && obj.recipientRS === recordTable.address) {
+          if (obj.attachment.encryptedMessage.data
+            && (obj.recipientRS === recordTable.address
+              || obj.senderRS === recordTable.address
+            )
+          ) {
             records.push(obj.transaction);
             recordsFound += 1;
             completedNumber += 1;

@@ -24,15 +24,9 @@ class RegistrationWorker extends Worker {
     );
 
     const database = response.database || response.tables;
-    const { tableList } = response;
+    // const { tableList } = response;
     const tableBreakdown = gravity.tableBreakdown(database);
-    console.log(tableList);
-    console.log(tableBreakdown);
-    console.log(database);
-    console.log(response);
 
-    // console.log(data);
-    console.log('---------');
     if (response.error) {
       done();
       this.addToQueue('completeRegistration', data);
@@ -47,7 +41,6 @@ class RegistrationWorker extends Worker {
       && data.invitesExists
       && data.channelsConfirmed) {
       done();
-      console.log('Registration completed');
       this.socket.emit(`fullyRegistered#${accessData.account}`);
       return { success: true, message: 'Worker completed' };
     }
@@ -64,8 +57,6 @@ class RegistrationWorker extends Worker {
       } catch (e) {
         res = { error: true, fullError: e };
       }
-      console.log(res);
-
       if (res.error) {
         console.log(res.error);
         if (res.fullError === 'Error: Unable to save table. users is already in the database') {
@@ -80,7 +71,6 @@ class RegistrationWorker extends Worker {
 
     if (gravity.hasTable(database, 'channels') && !data.channelsConfirmed) {
       data.channelsConfirmed = true;
-      console.log('Channel table is enabled');
       this.socket.emit(`channelsCreated#${accessData.account}`);
     }
 
@@ -104,7 +94,6 @@ class RegistrationWorker extends Worker {
     }
 
     if (!gravity.hasTable(database, 'invites') && !data.invitesExists) {
-      console.log('invites table does not exist');
       try {
         res = await gravity.attachTable(accessData, 'invites', tableBreakdown);
         res = { success: true };
@@ -152,7 +141,6 @@ class RegistrationWorker extends Worker {
     if (data.waitingForFullConfirmation) {
       if (response.databaseFound && !response.noUserTables) {
         registrationCompleted = true;
-        console.log('Seems to work now');
         this.socket.emit(`fullyRegistered#${accessData.account}`);
       }
     }
@@ -161,7 +149,6 @@ class RegistrationWorker extends Worker {
       && response.databaseFound
       && !response.noUserTables) {
       registrationCompleted = true;
-      // console.log('Seems to work now');
       this.socket.emit(`fullyRegistered#${accessData.account}`);
     }
 

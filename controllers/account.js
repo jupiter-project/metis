@@ -50,12 +50,17 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     // This sets the content-type of response
     res.setHeader('Content-Type', 'application/json');
     const params = req.body.account;
-    const data = req.user.record;
+    /* const data = req.user.record;
     data.firstname = params.firstname;
     data.lastname = params.lastname;
     data.email = params.email;
-    data.public_key = req.session.public_key;
-    const user = new User(data);
+    data.public_key = req.session.public_key; */
+
+    const user = new User(req.user.record, req.session.passport.user);
+    user.record.firstname = params.firstname;
+    user.record.lastname = params.lastname;
+    user.record.email = params.email;
+    user.record.public_key = req.session.public_key;
 
     user.update()
       .then(() => {
