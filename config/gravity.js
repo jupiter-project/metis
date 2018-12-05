@@ -327,7 +327,7 @@ class Gravity {
                 userRecord = records[x].user_record;
               }
 
-              if (records[x].user) {
+              if (records[x].users) {
                 hasUserTable = true;
               }
             }
@@ -981,19 +981,19 @@ class Gravity {
         };
         resolve({ user: JSON.stringify(userObject) });
       } else if (containedDatabase) {
-        console.log('Retrieving database from the user');
         self.retrieveUserFromPassphrase(containedDatabase)
           .then((response) => {
-            if (response.databaseFound) {
+            // console.log(response);
+            if (response.databaseFound && !response.userNeedsSave) {
               console.log('Retrieved from user');
               resolve(response);
             } else if (response.userRecord) {
+              const currentDatabase = self.tableBreakdown(response.tables);
               console.log('Retrieved from user but no user table yet');
-              console.log(response);
               const returnData = {
                 recordsFound: 1,
                 user: response.userRecord,
-                noUserTables: !response.tableList.includes('users'),
+                noUserTables: !currentDatabase.includes('users'),
                 userNeedsBackup: true,
                 userRecordFound: true,
                 databaseFound: true,
@@ -1052,15 +1052,17 @@ class Gravity {
       let tableData;
       let completedNumber = 0;
       let recordsFound = 0;
+      let userRecord;
+
       eventEmitter.on('set_responseData', () => {
-        console.log('All decrypted records');
-        console.log(decryptedRecords);
         if (decryptedRecords[0] === undefined
           || decryptedRecords[0].user_record === undefined) {
           resolve({
-            database,
-            success: false,
-            databaseFound: false,
+            userRecord,
+            tableList,
+            noUserTables: false,
+            tables: database,
+            databaseFound: true,
             userNeedsSave: true,
           });
         } else {
@@ -1146,8 +1148,8 @@ class Gravity {
         .then((res) => {
           database = res.app.tables;
           tableList = res.tables;
+          ({ userRecord } = res);
           if (res.hasUserTable) {
-            // console.log('These are the table data');
             Object.keys(database).forEach((x) => {
               if (database[x].users) {
                 recordTable = database[x].users;
