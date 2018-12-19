@@ -52,6 +52,16 @@ export default class ApplicationLayout extends React.Component {
               className="dropdown-menu dropdown-menu-right"
               aria-labelledby="alertsDropdown"
             >
+              <a className="dropdown-item" href="/channels">
+                <i className="fas fa-fw fa-comments" />
+                {' '}
+                <span>Channels</span>
+              </a>
+              <a className="dropdown-item" href="/invites">
+                <i className="fas fa-fw fa-user-plus" />
+                {' '}
+                <span>Invites</span>
+              </a>
               <a className="dropdown-item" href="/settings">
                 <i className="fas fa-fw fa-cog" />
                 {' '}
@@ -85,14 +95,14 @@ export default class ApplicationLayout extends React.Component {
             <span>METIS</span>
           </a>
 
-          <button
+          {/* <button
             className="btn btn-link btn-sm text-white d-block d-lg-none ml-auto"
             href="/#"
             data-toggle="collapse"
             data-target="#mobile-menu"
           >
             <i className="fas fa-fw fa-bars" />
-          </button>
+          </button> */}
 
           <div className="d-none d-lg-block ml-auto">
             <ul className="navbar-nav">
@@ -118,97 +128,68 @@ export default class ApplicationLayout extends React.Component {
 
     const loggedWrapper = (
       <div id="wrapper">
-        <ul className="sidebar navbar-nav">
-          <div className="card card-account bg-secondary d-none d-md-block">
-            <div className="card-body text-left">
-              <div className="bg-dark rounded-circle float-left mr-2">
-                <img src="/img/logo.png" height="28px" alt="logo" />
-              </div>
-              <span className="h5">
-                {this.state.user_exists
-                  ? `${this.state.user.record.firstname} ${this.state.user.record.lastname}`
-                  : 'your name'}</span>
-            </div>
-          </div>
-          {linksList}
-        </ul>
-
-        <div className="collapse navbar-collapse" id="mobile-menu">
-          <ul className="navbar-nav d-block d-lg-none text-left">
-            <div className="card card-account bg-secondary">
-              <div className="card-body">
-                <span className="h5">
-                {this.state.user_exists
-                  ? `${this.state.user.record.firstname} ${this.state.user.record.lastname}`
-                  : 'your name'}</span>
-              </div>
-            </div>
-            <ul className="nav flex-column">
-              <li className="nav-item">
-                <a className="nav-link" href="/">
-                  <i className="fas fa-fw fa-tachometer-alt" />
-                  {' '}
-                  <span>Dashboard</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/account">
-                  <i className="fas fa-fw fa-edit" />
-                  {' '}
-                  <span>My Profile</span>
-                </a>
-              </li>
-              {linksList}
-              <li className="nav-item">
-                <a className="nav-link" href="/settings">
-                  <i className="fas fa-fw fa-cog" />
-                  {' '}
-                  <span>Settings</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  href="/#"
-                  data-toggle="modal"
-                  data-target="#logoutModal"
-                >
-                  <i className="fas fa-fw fa-sign-out-alt" />
-                  <span>Log out</span>
-                </a>
-              </li>
-            </ul>
-          </ul>
-        </div>
-
         <div id="content-wrapper">
-          {this.props.children}
-          {/* <div className="fixed-bottom">
-            <footer className="sticky-footer">
-              <div className="container-fluid my-auto">
-                <div className="copyright text-center my-auto">
-                  {process.env.APPNAME ? (
-                    <div>
-                      <div>Copyright © 2018 YourBrand</div>
-                      <div className="mt-2 small">powered by Gravity</div>
-                    </div>
-                  ) : (
-                    <div>
-                      <div>Copyright © 2018 Sigwo Technologies</div>
-                      <div className="mt-2 small">powered by Gravity</div>
-                    </div>
-                  )}
+          <div className="collapse navbar-collapse" id="mobile-menu">
+            <ul className="navbar-nav d-block d-lg-none text-left">
+              <div className="card card-account bg-secondary">
+                <div className="card-body">
+                  <span className="h5">
+                  {this.state.user_exists
+                    ? `${this.state.user.record.firstname} ${this.state.user.record.lastname}`
+                    : 'your name'}</span>
                 </div>
               </div>
-            </footer>
-          </div> */}
+              <ul className="nav flex-column">
+                <li className="nav-item">
+                  <a className="nav-link" href="/channels">
+                    <i className="fas fa-fw fa-comments" />
+                    {' '}
+                    <span>Channels</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/invites">
+                    <i className="fas fa-fw fa-user-plus" />
+                    {' '}
+                    <span>Invites</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/settings">
+                    <i className="fas fa-fw fa-cog" />
+                    {' '}
+                    <span>Settings</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/account">
+                    <i className="fas fa-fw fa-edit" />
+                    {' '}
+                    <span>My Profile</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
+                    href="/#"
+                    data-toggle="modal"
+                    data-target="#logoutModal"
+                  >
+                    <i className="fas fa-fw fa-sign-out-alt" />
+                    <span>Log out</span>
+                  </a>
+                </li>
+              </ul>
+            </ul>
+          </div>
+          {this.props.children}
         </div>
       </div>
     );
 
     const unloggedWrapper = (
       <div id="wrapper">
-        <ul className="sidebar navbar-nav d-none d-lg-block">
+        {/* <ul className="sidebar navbar-nav d-none d-lg-block">
           <li className="nav-item">
             <a className="nav-link" href="https://docs.sigwo.com">
               <i className="fas fa-fw fa-file" />
@@ -226,9 +207,9 @@ export default class ApplicationLayout extends React.Component {
               <span>GitHub</span>
             </a>
           </li>
-        </ul>
+        </ul> */}
 
-        <div className="collapse navbar-collapse" id="mobile-menu">
+        {/* <div className="collapse navbar-collapse" id="mobile-menu">
           <ul className="navbar-nav d-block d-lg-none text-left">
             <ul className="nav flex-column">
               <li className="nav-item">
@@ -264,29 +245,10 @@ export default class ApplicationLayout extends React.Component {
               </li>
             </ul>
           </ul>
-        </div>
+        </div> */}
 
         <div id="content-wrapper">
           {this.props.children}
-          {/* <div className="fixed-bottom">
-            <footer className="sticky-footer">
-              <div className="container-fluid my-auto">
-                <div className="copyright text-center my-auto">
-                  {process.env.APPNAME ? (
-                    <div>
-                      <div>Copyright © 2018 YourBrand</div>
-                      <div className="mt-2 small">powered by Gravity</div>
-                    </div>
-                  ) : (
-                    <div>
-                      <div>Copyright © 2018 Sigwo Technologies</div>
-                      <div className="mt-2 small">powered by Gravity</div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </footer>
-          </div> */}
         </div>
       </div>
     );

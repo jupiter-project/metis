@@ -147,7 +147,7 @@ export class LoginForm extends React.Component {
             {this.state.confirmation_page === true ? confirmationPage : loginForm}
           </div>
         </div>
-        <div className="text-center mt-3 d-block d-lg-none">Or, sign up for an account <a href="/signup">here.</a></div>
+        <div className="d-block d-lg-none text-center mt-3">Sign up for an account <a href="/signup">here</a>.</div>
       </div>
     );
   }
