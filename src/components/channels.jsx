@@ -198,7 +198,7 @@ class ChannelsComponent extends React.Component {
             ? newChannelForm
             : <div className="card card-register mx-auto my-5">
               <div className="card-body">
-                <div className="text-center alert alert-warning m-0">Cannot create channels yet, confirming account details in the blockchain</div>
+                <div className="text-center alert alert-warning m-0">Unable to create channels yet, confirming account details in the blockchain</div>
               </div>
             </div>
           }
