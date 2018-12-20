@@ -4,14 +4,6 @@ import axios from 'axios';
 import toastr from 'toastr';
 import MenuContainer from './CustomComponents/MenuContainer.jsx';
 
-class InviteUser extends React.Component {
-  render() {
-    return (
-      <span>Invite</span>
-    );
-  }
-}
-
 class ChannelsComponent extends React.Component {
   constructor(props) {
     super(props);
