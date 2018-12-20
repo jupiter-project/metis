@@ -43,6 +43,35 @@ class Gravity {
     return hasKey;
   }
 
+  tableBreakdown(database) {
+    const tableList = [];
+
+    for (let x = 0; x < database.length; x += 1) {
+      const tableKeys = Object.keys(database[x]);
+      if (tableKeys.length > 0) {
+        tableList.push(tableKeys[0]);
+      }
+    }
+
+    return tableList;
+  }
+
+  getTableData(table, database) {
+    let tableData;
+
+    for (let x = 0; x < database.length; x += 1) {
+      const tableKeys = Object.keys(database[x]);
+      if (tableKeys.length > 0) {
+        if (tableKeys[0] === table && !tableData) {
+          tableData = database[x];
+          break;
+        }
+      }
+    }
+
+    return tableData[table];
+  }
+
   showTables(returnType = 'app') {
     const self = this;
     return new Promise((resolve, reject) => {
@@ -267,6 +296,9 @@ class Gravity {
     let records = [];
     let numberOfRecords;
     let password;
+    let userRecord;
+    let hasUserTable = false;
+
     if (containedDatabase) {
       server = process.env.JUPITERSERVER;
       ({ account } = containedDatabase);
@@ -304,6 +336,17 @@ class Gravity {
           const tablesRetrieved = {};
 
           for (let x = 0; x < Object.keys(records).length; x += 1) {
+            if (containedDatabase) {
+              // console.log('These are the records given in load app data through user');
+              // console.log(records[x]);
+              if (records[x] && records[x].user_record && !userRecord) {
+                userRecord = records[x].user_record;
+              }
+
+              if (records[x].users) {
+                hasUserTable = true;
+              }
+            }
             if (records[x].tables && records[x].date && records[x].date) {
               tableList.push(records[x]);
             } else {
@@ -360,6 +403,8 @@ class Gravity {
             app: self.appSchema,
             message: 'Existing record found',
             tables: currentList,
+            hasUserTable,
+            userRecord,
           };
 
           if (process.env.ENV === undefined || process.env.ENV === 'Development') {
@@ -373,6 +418,8 @@ class Gravity {
             success: true,
             app:
             self.appSchema,
+            hasUserTable,
+            userRecord,
             message: 'No app record',
           };
           // if (process.env.ENV == undefined || process.env.ENV == 'Development')
@@ -384,6 +431,10 @@ class Gravity {
       self.getRecords(account, account, passphrase, { size: 'all', show_pending: null, show_unconfirmed: false }, password)
         .then((response) => {
           ({ records } = response);
+          if (containedDatabase) {
+            // console.log('These are the records given in load app data through user');
+            // console.log(records);
+          }
           numberOfRecords = response.recordsFound;
           eventEmitter.emit('loaded_records');
         })
@@ -946,16 +997,24 @@ class Gravity {
         };
         resolve({ user: JSON.stringify(userObject) });
       } else if (containedDatabase) {
-        console.log('Retrieving database from the user');
         self.retrieveUserFromPassphrase(containedDatabase)
           .then((response) => {
-            if (response.databaseFound) {
-              console.log('Retrieved from user');
-              console.log(response);
+            if (response.databaseFound && !response.userNeedsSave) {
               resolve(response);
+            } else if (response.userRecord) {
+              const currentDatabase = self.tableBreakdown(response.tables);
+              const returnData = {
+                recordsFound: 1,
+                user: response.userRecord,
+                noUserTables: !currentDatabase.includes('users'),
+                userNeedsSave: true,
+                userRecordFound: true,
+                databaseFound: true,
+                tables: response.tables,
+                tableList: response.tableList,
+              };
+              resolve(returnData);
             } else {
-              console.log(response);
-              console.log('Retrieved database from the app now');
               self.retrieveUserFromApp(account, passphrase)
                 .then((res) => {
                   res.noUserTables = response.noUserTables;
@@ -963,6 +1022,7 @@ class Gravity {
                   res.database = response.database;
                   res.userNeedsSave = response.userNeedsSave;
                   res.tables = response.tables;
+                  console.log(res);
                   resolve(res);
                 })
                 .catch((error) => {
@@ -993,6 +1053,7 @@ class Gravity {
     const eventEmitter = new events.EventEmitter();
     const self = this;
     const { passphrase } = accessData;
+    let tableList;
     // const { account } = accessData;
 
     return new Promise((resolve, reject) => {
@@ -1003,14 +1064,17 @@ class Gravity {
       let tableData;
       let completedNumber = 0;
       let recordsFound = 0;
+      let userRecord;
 
       eventEmitter.on('set_responseData', () => {
         if (decryptedRecords[0] === undefined
           || decryptedRecords[0].user_record === undefined) {
           resolve({
-            database,
-            success: false,
-            databaseFound: false,
+            userRecord,
+            tableList,
+            noUserTables: false,
+            tables: database,
+            databaseFound: true,
             userNeedsSave: true,
           });
         } else {
@@ -1046,6 +1110,7 @@ class Gravity {
                     self.decrypt(response.data.decryptedMessage,
                       accessData.encryptionPassword),
                   );
+                  console.log(decrypted);
                   decryptedRecords.push(decrypted);
                 } catch (e) {
                   console.log(e);
@@ -1068,8 +1133,11 @@ class Gravity {
         Object.keys(tableData).some((position) => {
           const obj = tableData[position];
           let completion = false;
-
-          if (obj.attachment.encryptedMessage.data && obj.recipientRS === recordTable.address) {
+          if (obj.attachment.encryptedMessage.data
+            && (obj.recipientRS === recordTable.address
+              || obj.senderRS === recordTable.address
+            )
+          ) {
             records.push(obj.transaction);
             recordsFound += 1;
             completedNumber += 1;
@@ -1095,9 +1163,9 @@ class Gravity {
       self.loadAppData(accessData)
         .then((res) => {
           database = res.app.tables;
-
-          if (typeof database === 'object' && database.length >= 3) {
-            // console.log('These are the table data');
+          tableList = res.tables;
+          ({ userRecord } = res);
+          if (res.hasUserTable) {
             Object.keys(database).forEach((x) => {
               if (database[x].users) {
                 recordTable = database[x].users;
@@ -1105,8 +1173,13 @@ class Gravity {
             });
             eventEmitter.emit('table_access_retrieved');
           } else {
-            // console.log('Returning no user table');
-            resolve({ success: false, noUserTables: true, tables: database });
+            resolve({
+              tableList,
+              success: false,
+              noUserTables: true,
+              tables: database,
+              userRecord: res.userRecord,
+            });
           }
         })
         .catch((err) => {
@@ -1452,7 +1525,7 @@ class Gravity {
     });
   }
 
-  async attachTable(database, tableName) {
+  async attachTable(database, tableName, currentTables = null) {
     const eventEmitter = new events.EventEmitter();
     const self = this;
     // let valid_table = true;
@@ -1561,7 +1634,22 @@ class Gravity {
       });
 
       eventEmitter.on('tableName_obtained', () => {
-        if (self.tables.indexOf(tableName) >= 0 || tableList.indexOf(tableName) >= 0) {
+        console.log('These are the tables');
+        console.log(self.tables);
+        console.log(tableList);
+        console.log(currentTables);
+        // let databaseCurrentTableMatch = true;
+        let tableInCurrentTableList = true;
+        if (currentTables) {
+          if (!(tableList.includes(tableName) && currentTables.includes(tableName))) {
+            tableInCurrentTableList = currentTables.includes(tableName);
+          }
+        }
+
+        if ((
+          self.tables.indexOf(tableName) >= 0 || tableList.indexOf(tableName) >= 0)
+          && tableInCurrentTableList
+        ) {
           reject(`Error: Unable to save table. ${tableName} is already in the database`);
         } else {
           passphrase = self.generate_passphrase();

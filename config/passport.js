@@ -17,9 +17,7 @@ module.exports = (passport, jobs, io) => {
     const user = new User({ id: accessData.id }, accessData);
 
     user.findById()
-      .then((response) => {
-        console.log('Deserializer response');
-        console.log(response);
+      .then(() => {
         const thisUser = user;
         done(null, thisUser);
       })
@@ -141,11 +139,13 @@ module.exports = (passport, jobs, io) => {
         if (response.error) {
           return done(null, false, req.flash('loginMessage', 'Account is not registered or has not been confirmed in the blockchain'));
         }
-
+        console.log('This is the getUser response');
+        console.log(response);
+        console.log('---------------');
         if (response.noUserTables || response.userNeedsSave) {
           worker.addToQueue('completeRegistration', workerData);
         }
-
+        // console.log(response);
         const data = JSON.parse(response.user);
         data.public_key = req.body.public_key;
         user = new User(data);
@@ -166,9 +166,14 @@ module.exports = (passport, jobs, io) => {
           req.session.accessData = gravity.encrypt(JSON.stringify(containedDatabase));
         }
         return done(null, {
+          userRecordFound: response.userRecordFound,
+          noUserTables: response.noUserTables,
+          userNeedsBackup: response.userNeedsBackup,
           accessKey: gravity.encrypt(req.body.jupkey),
           encryptionKey: gravity.encrypt(req.body.encryptionPassword),
+          account: gravity.encrypt(account),
           database: response.database,
+          accountData: gravity.encrypt(JSON.stringify(containedDatabase)),
           id: user.data.id,
         });
       })

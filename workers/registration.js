@@ -24,10 +24,9 @@ class RegistrationWorker extends Worker {
     );
 
     const database = response.database || response.tables;
-    console.log(response);
-    console.log('Confirmed tables =>', database.length);
-    console.log(data);
-    console.log('---------');
+    // const { tableList } = response;
+    const tableBreakdown = gravity.tableBreakdown(database);
+
     if (response.error) {
       done();
       this.addToQueue('completeRegistration', data);
@@ -42,7 +41,6 @@ class RegistrationWorker extends Worker {
       && data.invitesExists
       && data.channelsConfirmed) {
       done();
-      console.log('Registration completed');
       this.socket.emit(`fullyRegistered#${accessData.account}`);
       return { success: true, message: 'Worker completed' };
     }
@@ -52,15 +50,13 @@ class RegistrationWorker extends Worker {
       console.log('users table does not exist');
       try {
         console.log('Creating user table');
-        res = await gravity.attachTable(accessData, 'users');
+        res = await gravity.attachTable(accessData, 'users', tableBreakdown);
         res = { success: true };
         data.usersExists = true;
         data.usersConfirmed = false;
       } catch (e) {
         res = { error: true, fullError: e };
       }
-      console.log(res);
-
       if (res.error) {
         console.log(res.error);
         if (res.fullError === 'Error: Unable to save table. users is already in the database') {
@@ -75,14 +71,13 @@ class RegistrationWorker extends Worker {
 
     if (gravity.hasTable(database, 'channels') && !data.channelsConfirmed) {
       data.channelsConfirmed = true;
-      console.log('Channel table is enabled');
       this.socket.emit(`channelsCreated#${accessData.account}`);
     }
 
     if (!gravity.hasTable(database, 'channels') && !data.channelsExists) {
       console.log('Channels table does not exist');
       try {
-        res = await gravity.attachTable(accessData, 'channels');
+        res = await gravity.attachTable(accessData, 'channels', tableBreakdown);
         res = { success: true };
         data.channelsExists = true;
         data.channelsConfirmed = false;
@@ -99,9 +94,8 @@ class RegistrationWorker extends Worker {
     }
 
     if (!gravity.hasTable(database, 'invites') && !data.invitesExists) {
-      console.log('invites table does not exist');
       try {
-        res = await gravity.attachTable(accessData, 'invites');
+        res = await gravity.attachTable(accessData, 'invites', tableBreakdown);
         res = { success: true };
         data.invitesExists = true;
         data.invitesConfirmed = false;
@@ -147,7 +141,6 @@ class RegistrationWorker extends Worker {
     if (data.waitingForFullConfirmation) {
       if (response.databaseFound && !response.noUserTables) {
         registrationCompleted = true;
-        console.log('Seems to work now');
         this.socket.emit(`fullyRegistered#${accessData.account}`);
       }
     }
@@ -156,7 +149,6 @@ class RegistrationWorker extends Worker {
       && response.databaseFound
       && !response.noUserTables) {
       registrationCompleted = true;
-      // console.log('Seems to work now');
       this.socket.emit(`fullyRegistered#${accessData.account}`);
     }
 

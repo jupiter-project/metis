@@ -62,7 +62,6 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     // Loads file with Home page file
     const IndexPage = require('../views/index.jsx');
-
     page = ReactDOMServer.renderToString(
       React.createElement(IndexPage, {
         connection,

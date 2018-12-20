@@ -1,6 +1,9 @@
 import bcrypt from 'bcrypt-nodejs';
+import axios from 'axios';
 import Model from './_model';
 import methods from '../config/_methods';
+import { gravity } from '../config/gravity';
+
 
 class User extends Model {
   constructor(data, accessPass) {
@@ -15,7 +18,8 @@ class User extends Model {
       ],
       prunableOnCreate: true,
       hasDatabase: true,
-    });
+    },
+    accessPass);
     this.public_key = data.public_key;
 
     // Mandatory method to be called after data
@@ -147,7 +151,7 @@ class User extends Model {
 
   findById() {
     const self = this;
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       if (self.record && self.record.id === process.env.APP_ACCOUNT_ID) {
         self.record = {
           id: process.env.APP_ACCOUNT_ID,
@@ -165,15 +169,82 @@ class User extends Model {
           secret: process.env.APP_ACCOUNT,
         };
         resolve(true);
+      } else if (
+        self.accessData
+      ) {
+        try {
+          // console.log(self.accessData);
+          const accessKey = gravity.decrypt(self.accessData.accessKey);
+          // const encryptionKey = gravity.decrypt(self.accessData.encryptionKey);
+          const account = gravity.decrypt(self.accessData.account);
+          const accountData = JSON.parse(gravity.decrypt(self.accessData.accountData));
+          const record = await gravity.getUser(account, accessKey, accountData);
+          self.record = JSON.parse(record.user);
+          resolve(true);
+        } catch (e) {
+          console.log(e);
+        }
       } else {
-        self.last()
-          .then((res) => {
-            const { record } = res;
-            self.record = record;
-            resolve(true);
+        try {
+          const res = await self.last();
+          const { record } = res;
+          self.record = record;
+          resolve(true);
+        } catch (error) {
+          reject(error);
+        }
+      }
+    });
+  }
+
+  update() {
+    const self = this;
+
+    return new Promise(async (resolve, reject) => {
+      if (self.verify().errors === true) {
+        reject({ false: false, verification_error: true, errors: self.verify().messages });
+      } else {
+        const accessKey = gravity.decrypt(self.accessData.accessKey);
+        // const encryptionKey = gravity.decrypt(self.accessData.encryptionKey);
+        const account = gravity.decrypt(self.accessData.account);
+        const accountData = JSON.parse(gravity.decrypt(self.accessData.accountData));
+        const record = await gravity.getUser(account, accessKey, accountData);
+        const recordTable = gravity.getTableData('users', record.database);
+
+
+        const stringifiedRecord = JSON.stringify(self.record);
+        const fullRecord = {
+          id: self.record.id,
+          [`${self.model}_record`]: stringifiedRecord,
+          date: Date.now(),
+        };
+
+        const encryptedRecord = gravity.encrypt(
+          JSON.stringify(fullRecord),
+          self.record.encryption_password,
+        );
+        let callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}`;
+
+        if (self.record.public_key) {
+          callUrl += `&recipientPublicKey=${self.record.public_key}&compressMessageToEncrypt=true`;
+        } else {
+          callUrl += '&compressMessageToEncrypt=true';
+        }
+
+        axios.post(callUrl)
+          .then((response) => {
+            // console.log(response);
+            if (response.data.broadcasted && response.data.broadcasted === true) {
+              resolve({ success: true, message: 'Record created', record: self.record });
+            } else if (response.data.errorDescription != null) {
+              reject({ success: false, errors: response.data.errorDescription });
+            } else {
+              reject({ success: false, errors: 'Unable to save data in blockchain' });
+            }
           })
           .catch((error) => {
-            reject(error);
+            console.log(error);
+            reject({ success: false, errors: error.response });
           });
       }
     });

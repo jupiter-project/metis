@@ -4,7 +4,7 @@ import { gravity } from '../config/gravity';
 import validate from './_validations';
 
 class Model {
-  constructor(data) {
+  constructor(data, accessData = null) {
     // Default values of model
     this.id = null;
     this.record = {};
@@ -19,6 +19,7 @@ class Model {
     this.record = this.setRecord();
     this.database = data.accessPass ? data.accessPass.database : {};
     this.belongsTo = data.belongsTo;
+    this.accessData = accessData;
   }
 
   setRecord() {

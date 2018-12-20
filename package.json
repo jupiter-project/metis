@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest --verbose --silent",
     "gulp": "gulp",
-    "dev": "concurrently \"node server.js \" \"webpack --watch\" ",
+    "dev": "concurrently \"nodemon server.js \" \"webpack --watch\" ",
     "start": "webpack && node server.js NODE_ENV=production",
     "gravity:db": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.loadTables('console');\"",
     "gravity:db:create": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.createAppDatabase();\"",
@@ -110,6 +110,7 @@
     "jest": "^23.6.0",
     "json-loader": "^0.5.7",
     "node-sass": "^4.10.0",
+    "nodemon": "^1.18.6",
     "plop": "^1.9.0",
     "regenerator-runtime": "^0.12.1",
     "webpack": "^3.3.0",

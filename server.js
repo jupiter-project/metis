@@ -128,8 +128,8 @@ const RegistrationWorker = require('./workers/registration.js');
 
 
 const registrationWorker = new RegistrationWorker(jobs, io);
-registrationWorker.reloadActiveWorkers('completeRegistration')
-  .catch((error) => { if (error.error) console.log(error.message); });
+// registrationWorker.reloadActiveWorkers('completeRegistration')
+//   .catch((error) => { if (error.error) console.log(error.message); });
 // const transferWorker = new TransferWorker(jobs);
 
 jobs.process('completeRegistration', (job, done) => {
