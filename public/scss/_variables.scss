@@ -31,9 +31,11 @@ $navbar-base-height: 56px;
 // Change below variable to change the width of the sidenav
 $sidebar-base-width: 225px;
 // Change below variable to change the width of the sidenav when collapsed
-$sidebar-collapsed-width: 90px;
+$sidebar-collapsed-width: 290px;
 // Change below variable to change the height of the sticky footer
 $sticky-footer-height: 0;
+
+$border-radius: 0.3rem;
 
 .card-header {
   text-align: center;

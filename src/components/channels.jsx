@@ -2,6 +2,15 @@ import React from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
+import MenuContainer from './CustomComponents/MenuContainer.jsx';
+
+class InviteUser extends React.Component {
+  render() {
+    return (
+      <span>Invite</span>
+    );
+  }
+}
 
 class ChannelsComponent extends React.Component {
   constructor(props) {
@@ -153,12 +162,20 @@ class ChannelsComponent extends React.Component {
       });
   }
 
+  openNav = () => {
+    document.getElementById('channels-mySidenav').style.width = '100%';
+    document.getElementById('channels-main').style.marginLeft = '100%';
+  }
+
+  closeNav = () => {
+    document.getElementById('channels-mySidenav').style.width = '0';
+    document.getElementById('channels-main').style.marginLeft = '0';
+  }
+
 
   render() {
     const recordList = (
-      <ul className="channels-list list-unstyled">
-        {this.state.channels.map((channel, index) => <li className="channels-list-item text-light nav-item" key={index}><a className="nav-link" href={`/channels/${channel.id}`}><span className="d-inline-block text-truncate" style={{ maxWidth: '180px' }}>{channel.channel_record.name}</span></a></li>)}
-      </ul>
+      this.state.channels.map((channel, index) => <li className="channels-list-item text-light nav-item" key={index}><a className="nav-link" href={`/channels/${channel.id}`}><span className="d-inline-block text-truncate" style={{ maxWidth: '180px' }}>{channel.channel_record.name}</span></a></li>)
     );
 
     const newChannelForm = (
@@ -178,30 +195,51 @@ class ChannelsComponent extends React.Component {
 
     const loading = <div style={{
       textAlign: 'center',
-      marginTop: '25vh',
+      paddingTop: '25vh',
       fontSize: '55px',
       overflow: 'hidden',
     }}><i className="fa fa-spinner fa-pulse"></i></div>;
 
     const content = <div>
-      <div className="h3 text-light m-2">Channels List</div>
-      {recordList}
+      <div className="page-title">My Channels</div>
+        <div className="row">
+          <div className="mx-auto">
+            <button type="button" className="btn btn-custom channels-modal" data-toggle="modal" data-target="#channelsModal">
+              View my channels
+            </button>
+          </div>
+        </div>
+        { this.state.channels.length > 0 || this.state.channelTableExist
+          ? newChannelForm
+          : <div className="card card-register mx-auto my-5">
+            <div className="card-body">
+              <div className="text-center alert alert-warning m-0">Unable to create channels yet, confirming account details in the blockchain</div>
+            </div>
+          </div>
+        }
     </div>;
 
     return (
       <div>
-        <ul className="sidebar navbar-nav float-left">
-          {this.state.loading ? loading : content}
-        </ul>
-        <div className="page-title">My Channels</div>
-          { this.state.channels.length > 0 || this.state.channelTableExist
-            ? newChannelForm
-            : <div className="card card-register mx-auto my-5">
-              <div className="card-body">
-                <div className="text-center alert alert-warning m-0">Unable to create channels yet, confirming account details in the blockchain</div>
+        <MenuContainer channels={this.state.channels} />
+        {this.state.loading ? loading : content}
+        <div className="modal fade" id="channelsModal" tabindex="-1" role="dialog" aria-labelledby="channelsModalLabel" aria-hidden="true">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content border-none">
+              <div className="modal-header bg-custom text-light">
+                <h5 className="modal-title" id="channelsModalLabel">Channels</h5>
+                <button type="button" className="close text-light" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+              <ul className="mobile-channels-list list-unstyled mb-0">
+                {this.state.channels ? this.state.channels.map((channel, index) => <li className="channels-item" key={index}><a className="channels-link d-block text-truncate" href={`/channels/${channel.id}`}>{channel.channel_record.name}<span className="float-right"><a className="text-light mr-1">invite</a></span></a></li>) : null}
+              </ul>
               </div>
             </div>
-          }
+          </div>
+        </div>
       </div>
     );
   }

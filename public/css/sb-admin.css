@@ -71,7 +71,7 @@ button, a, button.close, .btn-link {
 
 body.fixed-nav #content-wrapper {
   margin-top: 56px;
-  padding-left: 90px;
+  padding-left: 290px;
   padding-bottom: 0px;
   padding-bottom: 0;
 }
@@ -87,7 +87,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
     padding-bottom: 0;
   }
   body.fixed-nav.sidebar-toggled #content-wrapper {
-    padding-left: 90px;
+    padding-left: 290px;
     padding-bottom: 0;
   }
 }
@@ -107,7 +107,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 body.fixed-nav #content-wrapper {
   margin-top: 56px;
-  padding-left: 90px;
+  padding-left: 290px;
   padding-bottom: 0;
 }
 
@@ -122,7 +122,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
     padding-bottom: 0;
   }
   body.fixed-nav.sidebar-toggled #content-wrapper {
-    padding-left: 90px;
+    padding-left: 290px;
     padding-bottom: 0;
   }
 }
@@ -262,8 +262,11 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 }
 
 .sidebar {
-  display: none;
-  width: 90px !important;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  width: 290px !important;
   background-color: #495057;
   min-height: calc(100vh - 56px);
 }
@@ -275,7 +278,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 .sidebar .nav-item .nav-link {
   text-align: center;
   padding: 0.75rem 1rem;
-  width: 90px;
+  width: 290px;
 }
 
 .sidebar .nav-item .nav-link span {
@@ -287,7 +290,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   position: absolute !important;
   -webkit-transform: none !important;
   transform: none !important;
-  left: calc(90px + 0.5rem) !important;
+  left: calc(290px + 0.5rem) !important;
   margin: 0;
 }
 
@@ -316,6 +319,8 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 @media (min-width: 768px) {
   .sidebar {
+    position: relative;
+    z-index: 0;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -342,7 +347,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   }
   .sidebar.toggled {
     overflow: visible;
-    width: 90px !important;
+    width: 290px !important;
   }
   .sidebar.toggled .nav-item:last-child {
     margin-bottom: 1rem;
@@ -350,7 +355,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   .sidebar.toggled .nav-item .nav-link {
     text-align: center;
     padding: 0.75rem 1rem;
-    width: 90px;
+    width: 290px;
   }
   .sidebar.toggled .nav-item .nav-link span {
     font-size: 0.65rem;
@@ -360,7 +365,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
     position: absolute !important;
     -webkit-transform: none !important;
     transform: none !important;
-    left: calc(90px + 0.5rem) !important;
+    left: calc(290px + 0.5rem) !important;
     margin: 0;
   }
   .sidebar.toggled .nav-item .dropdown-menu.dropup {
@@ -395,6 +400,44 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 #mobile-menu a:active, #mobile-menu a:focus, #mobile-menu a:hover {
   color: rgba(255, 255, 255, 0.6);
+}
+
+.channels-modal {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .channels-modal {
+    display: none;
+  }
+}
+
+.channels-list {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .channels-list {
+    display: block;
+  }
+}
+
+.mobile-channels-list {
+  border-radius: 0.3rem;
+  background-color: #495057;
+}
+
+.mobile-channels-list .channels-item .channels-link {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  text-decoration: none;
+  padding: 14px 9px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.mobile-channels-list .channels-item .channels-link:active, .mobile-channels-list .channels-item .channels-link:focus, .mobile-channels-list .channels-item .channels-link:hover {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .sidebar.fixed-top {
@@ -530,7 +573,7 @@ footer.sticky-footer {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: calc(100% - 90px);
+  width: calc(100% - 290px);
   height: 0;
   background-color: #e9ecef;
 }
@@ -552,7 +595,7 @@ body.sidebar-toggled footer.sticky-footer {
 
 @media (min-width: 768px) {
   body.sidebar-toggled footer.sticky-footer {
-    width: calc(100% - 90px);
+    width: calc(100% - 290px);
   }
 }
 

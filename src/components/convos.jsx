@@ -366,7 +366,7 @@ class ConvosComponent extends React.Component {
         />)
     );
 
-    let loading = <div style={{textAlign: 'center', marginTop: '25vh', fontSize: '55px'}}><i className="fa fa-spinner fa-pulse"></i></div>;
+    let loading = <div style={{ textAlign: 'center', marginTop: '25vh', fontSize: '55px', overflow: 'hidden' }}><i className="fa fa-spinner fa-pulse"></i></div>;
 
     let content = <div>
       <div className="page-title">{Channel.name}</div>

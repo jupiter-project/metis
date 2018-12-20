@@ -291,7 +291,7 @@ export default class ApplicationLayout extends React.Component {
 
           <link href="/css/sb-admin.css" rel="stylesheet" />
         </head>
-        <body>
+        <body className="p-0">
           <span id="toastrMessages" />
           <div
             id={this.props.data.dashboard === true ? 'logged-in' : 'logged-out'}
