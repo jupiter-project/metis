@@ -12,79 +12,59 @@ class SettingsOptions extends React.Component {
       currency: '',
       api_key: this.props.user.record.api_key,
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.switchMode = this.switchMode.bind(this);
-    this.updateApiKey = this.updateApiKey.bind(this);
+
+    this.update2FA = this.update2FA.bind(this);
     this.enableTwoFactor = this.enableTwoFactor.bind(this);
-  }
-
-  handleChange(aField, event) {
-    if (aField === 'email') {
-      this.setState({ email: event.target.value });
-    } else if (aField === 'firstname') {
-      this.setState({ firstname: event.target.value });
-    } else if (aField === 'lastname') {
-      this.setState({ lastname: event.target.value });
-    } else if (aField === 'currency') {
-      this.setState({ currency: event.target.value });
-    } else if (aField === 'address') {
-      this.setState({ payment_address: event.target.value });
-    } else if (aField === 'charity') {
-      this.setState({ charity_address: event.target.value });
-    } else if (aField === 'donation') {
-      this.setState({ donation: event.target.value });
-    }
-  }
-
-  switchMode(modeType, event) {
-    event.preventDefault();
-    if (modeType === 'account') {
-      this.setState({ account_editing_mode: !this.state.account_editing_mode });
-    }
-  }
-
-  updateApiKey(event) {
-    event.preventDefault();
-    console.log('Updating api key');
-    const page = this;
-    if (
-      window.confirm(
-        'Creating a new API Key will delete your previous one. Any external apps or services using your previous key will need to be updated. Are you sure you wish to continue?',
-      )
-    ) {
-      axios
-        .post('/update_api_key', {
-          id: this.props.user.id,
-          api_key: this.props.user.record.api_key,
-        })
-        .then((response) => {
-          if (response.data.success === true) {
-            page.setState({
-              api_key: response.data.api_key,
-            });
-            toastr.success('API Key updated!');
-          } else {
-            toastr.error('There was an error with updating your API Key');
-            console.log(response.data.error);
-          }
-        })
-        .catch((error) => {
-          toastr.error('There was an error with updating your API Key');
-          console.log(error);
-        });
-    }
   }
 
   enableTwoFactor(event) {
     event.preventDefault();
 
     if (
-      window.confirm('Are you sure you want to enable two factor authentication?') === true
+      window.confirm('Are you sure you want to update your two factor authentication settings?')
     ) {
-      console.log('Start 2fa process');
-    } else {
-      console.log('2fa setup cancelled');
+      this.update2FA();
     }
+  }
+
+  update2FA() {
+    const page = this;
+    const { state } = this;
+
+    this.setState({
+      submitted: true,
+    });
+
+    const twofaEnabled = !state.twofa_enabled;
+
+    axios.put('/account', {
+      account: {
+        twofa_enabled: twofaEnabled,
+      },
+    })
+      .then((response) => {
+        if (response.data.success === true) {
+          page.setState({
+            twofa_enabled: twofaEnabled,
+          });
+          toastr.success('Account update pushed to the blockchain for approval.');
+        } else {
+          if (
+            response.data.validations != null
+            && response.data.validations.messages != null
+          ) {
+            response.data.validations.messages.map((message) => {
+              toastr.error(message);
+              return null;
+            });
+          }
+          toastr.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error('There was an error');
+      });
   }
 
   render() {
@@ -129,34 +109,6 @@ class SettingsOptions extends React.Component {
             </div>
           </div>
         </div>
-        {/* <div className="col-xs-12 col-sm-10 mx-auto">
-          <div className="card card-register mx-auto">
-            <div className="card-header bg-custom text-light h5">
-              API Key
-            </div>
-            <div className="card-body">
-              <p>
-                Use the API key below if you’re using an external application
-                or bot to record info into the blockchain through your
-                account.
-              </p>
-              <div className="text-center">
-                <p className="alert alert-info auth-hash">
-                  {this.state.api_key}
-                </p>
-              </div>
-              <div className="text-center">
-                <button
-                  className="btn btn-success"
-                  type="submit"
-                  onClick={this.updateApiKey.bind(this)}
-                >
-                  Create new API Key
-                </button>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     );
   }

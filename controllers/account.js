@@ -183,7 +183,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     data.twofa_enabled = true;
     data.public_key = req.session.public_key;
 
-    const user = new User(data);
+    const user = new User(data, req.session.passport.user);
 
     req.session.secret = data.secret_key;
     user.update()
@@ -234,7 +234,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       data.public_key = req.session.public_key;
       data.twofa_enabled = true;
       data.twofa_completed = true;
-      const user = new User(data);
+      const user = new User(data, req.session.passport.user);
 
       user.update()
         .then(() => {
@@ -260,7 +260,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const twofaEnabled = params.enable_2fa === 'true';
     data.twofa_enabled = twofaEnabled;
     data.public_key = req.session.public_key;
-    const user = new User(data);
+    const user = new User(data, req.session.passport.user);
 
     if (twofaEnabled) {
       req.flash('loginMessage', 'Begining 2FA');
