@@ -154,16 +154,9 @@ class ChannelsComponent extends React.Component {
       });
   }
 
-  openNav = () => {
-    document.getElementById('channels-mySidenav').style.width = '100%';
-    document.getElementById('channels-main').style.marginLeft = '100%';
+  handleInvite = () => {
+    console.log('Invite user');
   }
-
-  closeNav = () => {
-    document.getElementById('channels-mySidenav').style.width = '0';
-    document.getElementById('channels-main').style.marginLeft = '0';
-  }
-
 
   render() {
     const recordList = (
@@ -215,7 +208,7 @@ class ChannelsComponent extends React.Component {
       <div>
         <MenuContainer channels={this.state.channels} />
         {this.state.loading ? loading : content}
-        <div className="modal fade" id="channelsModal" tabindex="-1" role="dialog" aria-labelledby="channelsModalLabel" aria-hidden="true">
+        <div className="modal fade" id="channelsModal" tabIndex="-1" role="dialog" aria-labelledby="channelsModalLabel" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content border-none">
               <div className="modal-header bg-custom text-light">
@@ -226,7 +219,12 @@ class ChannelsComponent extends React.Component {
               </div>
               <div className="modal-body">
               <ul className="mobile-channels-list list-unstyled mb-0">
-                {this.state.channels ? this.state.channels.map((channel, index) => <li className="channels-item" key={index}><a className="channels-link d-block text-truncate" href={`/channels/${channel.id}`}>{channel.channel_record.name}<span className="float-right"><a className="text-light mr-1">invite</a></span></a></li>) : null}
+                {this.state.channels ? this.state.channels.map((channel, index) => <li className="channels-item" key={index}>
+                  <span><a className="channels-link d-block-inline text-truncate" href={`/channels/${channel.id}`}>{channel.channel_record.name}
+                  </a></span>
+                  <span className="float-right"><a className="text-light mr-1" onClick={this.handleInvite}>invite</a>
+                    </span>
+                </li>) : null}
               </ul>
               </div>
             </div>

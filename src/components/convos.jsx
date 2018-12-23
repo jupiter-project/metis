@@ -21,7 +21,7 @@ class DataRow extends React.Component {
 
 
     const readOnlyLeft = (
-        <div className="card-plain text-left message d-block float-left my-2 w-100 this-is-bg-warning">
+        <div className="card-plain text-left message d-block float-left my-2 w-100">
         <div className="card-body p-2">
           <div className="bg-dark rounded-circle float-left mr-2">
             <img src="/img/logo.png" height="40px" alt="logo" />
@@ -38,7 +38,7 @@ class DataRow extends React.Component {
     );
 
     const readOnlyRight = (
-        <div className="card-plain text-right message d-block float-right my-2 w-100 this-is-bg-warning">
+        <div className="card-plain text-right message d-block float-right my-2 w-100">
         <div className="card-body p-2">
           <div className="bg-dark rounded-circle float-right ml-2">
             <img src="/img/logo.png" height="40px" alt="logo" />
@@ -377,11 +377,12 @@ class ConvosComponent extends React.Component {
         width: '100%',
         border: '0px solid #ccc',
       }}>
-        <div className="this-is-bg-info" style={{
+        <div style={{
           overflowY: 'scroll',
           height: '100%',
           width: '100%',
           position: 'absolute',
+          padding: '20px',
         }}>
           <button className="btn btn-info" disabled={this.state.waitingForOldData} onClick={this.getOlderMessages.bind(this)}>
             { this.state.waitingForOldData ? 'Loading messages' : 'Load older messages'}

@@ -127,7 +127,7 @@
         display: block;
         width: 100%;
         text-align: left;
-        padding: 1rem;
+        // padding: 1rem;
         width: $sidebar-base-width;
         span {
           font-size: 1rem;
@@ -161,7 +161,7 @@
   //padding: 20px 0 20px 0;
   .nav-item {
     .nav-link {
-      padding-left: 20px;
+      padding-left: 10px;
       color: fade-out($white, 0.2);
       &:active,
       &:focus,
@@ -210,6 +210,7 @@
   background-color: $gray-700;
   
   .channels-item {
+    padding: 14px 9px;
     .channels-link {
       margin-left: auto;
       margin-right: auto;
@@ -227,9 +228,49 @@
   }
 }
 
-// .channels-list.show {
-//   display: block;
-// }
+.invite-link {
+  color: fade-out($white, 0.2);
+  &:active,
+  &:focus,
+  &:hover {
+    text-decoration: none;
+    color: $white;
+    //background-color: transparent;
+  }
+}
+
+.new-channels-link {
+  padding: 14px 72px 14px 9px;
+  color: fade-out($white, 0.2);
+  background-color: fade-out($gray-600, 0.2);
+  &:active,
+  &:focus,
+  &:hover {
+    text-decoration: none;
+    color: $white;
+    background-color: $gray-600;
+  }
+}
+
+.new-invite-link {
+  margin-left: 5px;
+  padding: 14px 9px;
+  background-color: fade-out($gray-600, 0.5);
+  &:active,
+  &:focus,
+  &:hover {
+    color: fade-out($white, 0.4);
+    background-color: $gray-600;
+  }
+  a {
+    color: fade-out($white, 0.2);
+    &:active,
+    &:focus,
+    &:hover {
+      color: fade-out($white, 0.4);
+    }
+  }
+}
 
 // Fixed Nav Option
 // Add .fixed-top class to top .navbar-nav and to .sidebar - add .fixed-nav to body

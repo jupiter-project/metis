@@ -277,7 +277,6 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .sidebar .nav-item .nav-link {
   text-align: center;
-  padding: 0.75rem 1rem;
   width: 290px;
 }
 
@@ -330,7 +329,6 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
     display: block;
     width: 100%;
     text-align: left;
-    padding: 1rem;
     width: 225px;
   }
   .sidebar .nav-item .nav-link span {
@@ -354,7 +352,6 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   }
   .sidebar.toggled .nav-item .nav-link {
     text-align: center;
-    padding: 0.75rem 1rem;
     width: 290px;
   }
   .sidebar.toggled .nav-item .nav-link span {
@@ -385,7 +382,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 }
 
 #mobile-menu .nav-item .nav-link {
-  padding-left: 20px;
+  padding-left: 10px;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -427,6 +424,10 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   background-color: #495057;
 }
 
+.mobile-channels-list .channels-item {
+  padding: 14px 9px;
+}
+
 .mobile-channels-list .channels-item .channels-link {
   margin-left: auto;
   margin-right: auto;
@@ -438,6 +439,46 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .mobile-channels-list .channels-item .channels-link:active, .mobile-channels-list .channels-item .channels-link:focus, .mobile-channels-list .channels-item .channels-link:hover {
   color: rgba(255, 255, 255, 0.8);
+}
+
+.invite-link {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.invite-link:active, .invite-link:focus, .invite-link:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+.new-channels-link {
+  padding: 14px 72px 14px 9px;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(134, 142, 150, 0.8);
+}
+
+.new-channels-link:active, .new-channels-link:focus, .new-channels-link:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: #868e96;
+}
+
+.new-invite-link {
+  margin-left: 5px;
+  padding: 14px 9px;
+  background-color: rgba(134, 142, 150, 0.5);
+}
+
+.new-invite-link:active, .new-invite-link:focus, .new-invite-link:hover {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: #868e96;
+}
+
+.new-invite-link a {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.new-invite-link a:active, .new-invite-link a:focus, .new-invite-link a:hover {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .sidebar.fixed-top {
