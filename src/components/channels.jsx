@@ -164,7 +164,7 @@ class ChannelsComponent extends React.Component {
     );
 
     const newChannelForm = (
-      <div className="card card-register mx-auto my-5">
+      <div className="card card-register mx-auto my-5" style={{ position: 'inherit' }}>
         <div className="card-header bg-custom text-light h5">
           Add New Channel
         </div>

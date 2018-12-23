@@ -68,13 +68,13 @@ class ChannelRow extends React.Component {
     const inviteComponent = (
       <div
         className="modal fade"
-        id="channelInvite"
+        id={`channelInvite${channelInfo.id}`}
         role="dialog"
-        aria-labelledby=" "
+        aria-labelledby={`channelInvite${channelInfo.id}`}
         aria-hidden="true"
       >
         <div className="modal-dialog" role="document">
-          <div className="modal-content" tabIndex="-1" style={{ zIndex: '1500' }}>
+          <div className="modal-content" style={{ position: 'fixed', zIndex: 2000, color: 'black' }}>
             <div className="modal-header">
               <h5 className="modal-title" id=" ">
                 Invite to this channel
@@ -152,7 +152,7 @@ class ChannelRow extends React.Component {
             <a
                 href="#"
                 data-toggle="modal"
-                data-target="#channelInvite"
+                data-target={`#channelInvite${channelInfo.id}`}
               >
                 <i className="fas fa-user-plus fa-sm"></i>
                 {' '}
@@ -170,7 +170,7 @@ export default class MenuContainer extends React.Component {
     const { props } = this;
     const self = this;
     return (
-      <ul className="sidebar navbar-nav float-left channels-list">
+      <ul className="sidebar navbar-nav float-left channels-list" style={{ position: 'inherit' }}>
         <div className="h4 text-light p-2">Channels List</div>
         {props.channels ? props.channels.map((channel, index) => (
           <ChannelRow
