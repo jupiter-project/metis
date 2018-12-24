@@ -34,7 +34,7 @@ export default class ApplicationLayout extends React.Component {
         </button>
 
         <ul className="navbar-nav ml-auto d-none d-md-block">
-          <li className="nav-item dropdown no-arrow">
+          <li className="nav-item dropdown">
             <a
               className="nav-link dropdown-toggle"
               href="#"
@@ -44,9 +44,7 @@ export default class ApplicationLayout extends React.Component {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <i className="fas fa-fw fa-user" />
-              {' '}
-              <span>My Account</span>
+            My Account
             </a>
             <div
               className="dropdown-menu dropdown-menu-right"

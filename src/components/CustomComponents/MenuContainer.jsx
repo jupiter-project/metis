@@ -145,11 +145,12 @@ class ChannelRow extends React.Component {
     return (
       <li className="channels-item text-light nav-item" key={props.channel}>
         <div className="new-channels">
-          <a href={`/channels/${channelInfo.id}`} className="new-channels-link">
+          <a href={`/channels/${channelInfo.id}`} className="new-channels-link d-block text-truncate float-left">
             {channelInfo.channel_record.name}
           </a>
           <span onClick={this.handleInvite} className="new-invite-link">
-            <a
+            <a 
+                className="float-right"
                 href="#"
                 data-toggle="modal"
                 data-target={`#channelInvite${channelInfo.id}`}

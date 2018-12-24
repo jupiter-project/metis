@@ -14,7 +14,13 @@ export class HomeComponent extends React.Component {
   render() {
     return (
       <div>
-        <div className="page-title">Welcome to Metis</div>
+        <div className="card card-register mx-auto mt-5">
+          <div className="card-body">
+            <h3 className="text-center">Welcome</h3>
+            <p>To get started you can create your first <a href="/channels">channel</a>, or provide the following invitation code and check your <a href="/invites">invites</a> to accept access.</p>
+            <div className="text-center alert alert-warning mb-0">{this.props.user ? this.props.user.record.account : 'Invitation Code'}</div>
+          </div>
+        </div>
       </div>
     );
   }

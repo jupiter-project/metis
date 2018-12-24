@@ -426,6 +426,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .mobile-channels-list .channels-item {
   padding: 14px 9px;
+  background: transparent;
 }
 
 .mobile-channels-list .channels-item .channels-link {
@@ -451,20 +452,16 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 }
 
 .new-channels-link {
-  padding: 14px 72px 14px 9px;
   color: rgba(255, 255, 255, 0.8);
-  background-color: rgba(134, 142, 150, 0.8);
 }
 
 .new-channels-link:active, .new-channels-link:focus, .new-channels-link:hover {
   text-decoration: none;
   color: #fff;
-  background-color: #868e96;
 }
 
 .new-invite-link {
   margin-left: 5px;
-  padding: 14px 9px;
   background-color: rgba(134, 142, 150, 0.5);
 }
 
@@ -479,6 +476,14 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .new-invite-link a:active, .new-invite-link a:focus, .new-invite-link a:hover {
   color: rgba(255, 255, 255, 0.6);
+}
+
+.new-channels {
+  background-color: rgba(134, 142, 150, 0.4);
+}
+
+.new-channels:hover {
+  background-color: rgba(134, 142, 150, 0.8);
 }
 
 .sidebar.fixed-top {

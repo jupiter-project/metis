@@ -164,7 +164,7 @@ class ChannelsComponent extends React.Component {
     );
 
     const newChannelForm = (
-      <div className="card card-register mx-auto my-5" style={{ position: 'inherit' }}>
+      <div className="card card-register mx-auto my-5">
         <div className="card-header bg-custom text-light h5">
           Add New Channel
         </div>
@@ -220,7 +220,7 @@ class ChannelsComponent extends React.Component {
               <div className="modal-body">
               <ul className="mobile-channels-list list-unstyled mb-0">
                 {this.state.channels ? this.state.channels.map((channel, index) => <li className="channels-item" key={index}>
-                  <span><a className="channels-link d-block-inline text-truncate" href={`/channels/${channel.id}`}>{channel.channel_record.name}
+                  <span className="d-block-inline text-truncate" style={{ maxWidth: '140px'}}><a className="channels-link" href={`/channels/${channel.id}`}>{channel.channel_record.name}
                   </a></span>
                   <span className="float-right"><a className="text-light mr-1" onClick={this.handleInvite}>invite</a>
                     </span>

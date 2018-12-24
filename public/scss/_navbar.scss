@@ -211,6 +211,7 @@
   
   .channels-item {
     padding: 14px 9px;
+    background: transparent;
     .channels-link {
       margin-left: auto;
       margin-right: auto;
@@ -240,21 +241,20 @@
 }
 
 .new-channels-link {
-  padding: 14px 72px 14px 9px;
+  // padding: 14px 72px 14px 9px;
   color: fade-out($white, 0.2);
-  background-color: fade-out($gray-600, 0.2);
   &:active,
   &:focus,
   &:hover {
     text-decoration: none;
     color: $white;
-    background-color: $gray-600;
+    // background-color: $gray-600;
   }
 }
 
 .new-invite-link {
   margin-left: 5px;
-  padding: 14px 9px;
+  // padding: 14px 9px;
   background-color: fade-out($gray-600, 0.5);
   &:active,
   &:focus,
@@ -269,6 +269,13 @@
     &:hover {
       color: fade-out($white, 0.4);
     }
+  }
+}
+
+.new-channels {
+  background-color: fade-out($gray-600, 0.6);
+  &:hover {
+    background-color: fade-out($gray-600, 0.2);
   }
 }
 
