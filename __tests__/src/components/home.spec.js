@@ -22,7 +22,7 @@ describe('Home', () => {
       expect(state.user).toBe(undefined);
     });
 
-    it('should have a props of user and set the state of user to true', () => {
+    /* it('should have a props of user and set the state of user to true', () => {
       // mount the HomeComponent with a props of user equal to true
       mountWrapper = mount(<HomeComponent user={true} />);
 
@@ -32,6 +32,6 @@ describe('Home', () => {
       // make sure the HomeComponent user state is true
       expect(mountWrapper.state('user')).toBe(true);
       // expect(mountWrapper.state(mockEvent)).toBeCalledWith(true);
-    });
+    }); */
   });
 });
