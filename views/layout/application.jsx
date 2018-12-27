@@ -108,14 +108,14 @@ export default class ApplicationLayout extends React.Component {
                 <a className="nav-link" href="/signup">
                   <i className="fas fa-fw fa-user-plus" />
                   {' '}
-                  <span>Sign up</span>
+                  <span>Sign Up</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/login">
                   <i className="fas fa-fw fa-sign-in-alt" />
                   {' '}
-                  <span>Login</span>
+                  <span>Log In</span>
                 </a>
               </li>
             </ul>

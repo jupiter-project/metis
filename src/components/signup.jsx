@@ -226,7 +226,7 @@ export class SignupForm extends React.Component {
     const newAccountSummary = (
       <form action="/signup" method="post" className="text-left">
         <div className="col-8 mx-auto alert alert-primary text-center">
-          <span>Passphrase confirmed. Your account ID is:</span>
+          <span>Passphrase and encryption password confirmed. Your account ID is:</span>
           <br />
           {this.state.confirmation_message}
         </div>
@@ -349,10 +349,11 @@ export class SignupForm extends React.Component {
           <span>{this.state.generated_passphrase}</span>
         </div>
         <div className="form-group my-4">
-          <p>Carefully write down your 12-word passphrase on a piece of paper or
+          <p>Carefully write down your 12-word passphrase as well as
+            your encryption password (see below) on a piece of paper or
             alternatively, securely save it in an encrypted document.
             The order of the words is important and all are lowercase.</p>
-          <p>Never disclose your passphrase!</p>
+          <p>Never disclose your passphrase or encryption password!</p>
         </div>
         <div className="form-group">
           <label htmlFor="firstname">First Name</label>
@@ -475,8 +476,11 @@ export class SignupForm extends React.Component {
         <div className="form-group">
           <div className="text-center">{this.state.confirmation_message}</div>
         </div>
+        <div className="form-group">
+          <p>Please enter your passphrase and encryption password to verify you wrote them down correctly.</p>
+        </div>
         <div className="form-group" id="jup-confirm">
-          <label htmlFor="confirmPassphrase">Please enter your passphrase and encryption password to verify you wrote them down correctly.</label>
+          <label htmlFor="confirmPassphrase">Passphrase</label>
           <input
             type="password"
             name="confirmPassphrase"
@@ -488,7 +492,7 @@ export class SignupForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="email">Encryption password confirmation</label>
+          <label htmlFor="email">Encryption Password</label>
           <input
             type="password"
             value={this.state.encryption_password_confirmation}

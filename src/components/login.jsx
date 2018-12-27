@@ -101,7 +101,7 @@ export class LoginForm extends React.Component {
     const loginForm = (
       <form>
         <div className="form-group">
-          <label htmlFor="inputPassword">Enter your Passphrase</label>
+          <label htmlFor="inputPassword">Passphrase</label>
           <input
             type="password"
             id="inputPassword"
@@ -114,7 +114,7 @@ export class LoginForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="inputPassword">Enter your encryptionPassword</label>
+          <label htmlFor="inputPassword">Encryption Password</label>
           <input
             type="password"
             id="encryptionPassword"
@@ -131,7 +131,7 @@ export class LoginForm extends React.Component {
             className="btn btn-custom"
             onClick={this.logIn.bind(this)}
           >
-            Login
+            Log In
           </button>
         </div>
       </form>
@@ -147,7 +147,7 @@ export class LoginForm extends React.Component {
         </div> : null}
         <div className="card card-register mx-auto mt-5">
           <div className="card-header bg-custom text-light h5">
-            Login
+            Log In
           </div>
           <div className="card-body">
             {this.state.confirmation_page === true ? confirmationPage : loginForm}

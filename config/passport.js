@@ -87,7 +87,7 @@ module.exports = (passport, jobs, io) => {
               accessKey: req.session.jup_key,
               encryptionKey: gravity.encrypt(params.encryption_password),
               id: user.data.id,
-            }, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in'));
+            }, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in.'));
           })
           .catch((err) => {
             console.log(err);
@@ -139,7 +139,7 @@ module.exports = (passport, jobs, io) => {
     gravity.getUser(account, req.body.jupkey, containedDatabase)
       .then(async (response) => {
         if (response.error) {
-          return done(null, false, req.flash('loginMessage', 'Account is not registered or has not been confirmed in the blockchain'));
+          return done(null, false, req.flash('loginMessage', 'Account is not registered or has not been confirmed in the blockchain.'));
         }
         console.log('This is the getUser response');
         console.log(response);

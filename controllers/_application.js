@@ -32,7 +32,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const LoginPage = require('../views/login.jsx');
 
     page = ReactDOMServer.renderToString(
-      React.createElement(LoginPage, { messages, name: 'Metis - Login', dashboard: false }),
+      React.createElement(LoginPage, { messages, name: 'Metis - Log In', dashboard: false }),
     );
     res.send(page);
   });
@@ -48,7 +48,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const SignupPage = require('../views/signup.jsx');
 
     page = ReactDOMServer.renderToString(
-      React.createElement(SignupPage, { messages, name: 'Metis - Sign up', dashboard: false }),
+      React.createElement(SignupPage, { messages, name: 'Metis - Sign Up', dashboard: false }),
     );
     res.send(page);
   });
@@ -66,7 +66,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       React.createElement(IndexPage, {
         connection,
         messages,
-        name: 'Metis - Dashboard',
+        name: 'Metis - Welcome',
         user: req.user,
         dashboard: true,
       }),
@@ -95,7 +95,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       React.createElement(GravityPage, {
         messages,
         requirements,
-        name: 'Metis - Login',
+        name: 'Metis - Log In',
         user: req.user,
         dashboard: false,
       }),
