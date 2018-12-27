@@ -15,6 +15,7 @@ class ChannelsComponent extends React.Component {
       submitted: false,
       update_submitted: false,
       loading: true,
+      inviteUser: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.createRecord = this.createRecord.bind(this);
@@ -155,7 +156,15 @@ class ChannelsComponent extends React.Component {
   }
 
   handleInvite = () => {
-    console.log('Invite user');
+    this.setState({inviteUser: true});
+  }
+
+  handleInviteClose = () => {
+    this.setState({inviteUser: false});
+  }
+
+  handleInviteSave = () => {
+    console.log('invite saved');
   }
 
   render() {
@@ -173,7 +182,7 @@ class ChannelsComponent extends React.Component {
             <input placeholder="Enter new channel name here..." value={this.state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
           </div>
           <div className="text-center">
-            <button type="button" className="btn btn-custom" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
+            <button className="btn btn-custom" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
           </div>
         </div>
       </div>);
@@ -218,14 +227,30 @@ class ChannelsComponent extends React.Component {
                 </button>
               </div>
               <div className="modal-body">
-              <ul className="mobile-channels-list list-unstyled mb-0">
+              {this.state.inviteUser ? (
+                  <div>
+                    <p>
+                      To invite another user to this channel,
+                      simply input the JUP Address below and click "Invite".
+                    </p>
+                    <div className="form-group">
+                      <input className="form-control" />
+                    </div>
+                    <div className="text-right">
+                      <button className="btn btn-custom mr-2" onClick={this.handleInviteSave}>save</button>
+                      <button className="btn btn-custom" onClick={this.handleInviteClose}>close</button>
+                    </div>
+                  </div>
+                ) : (
+                  <ul className="mobile-channels-list list-unstyled mb-0">
                 {this.state.channels ? this.state.channels.map((channel, index) => <li className="channels-item" key={index}>
                   <span className="d-block-inline text-truncate" style={{ maxWidth: '140px'}}><a className="channels-link" href={`/channels/${channel.id}`}>{channel.channel_record.name}
                   </a></span>
                   <span className="float-right"><a className="text-light mr-1" onClick={this.handleInvite}>invite</a>
                     </span>
                 </li>) : null}
-              </ul>
+                </ul>
+                )}
               </div>
             </div>
           </div>
