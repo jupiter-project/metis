@@ -510,6 +510,48 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   background-color: rgba(134, 142, 150, 0.8);
 }
 
+.add-user-modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background: transparent;
+  overflow: auto;
+}
+
+.add-user-modal-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+  border-top-left-radius: .3rem;
+  border-top-right-radius: .3rem;
+}
+
+.add-user-modal-content {
+  background: #fefefe;
+  margin: auto;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+}
+
+.add-user-modal-body {
+  padding: 1rem;
+}
+
+.add-user-modal-inputbox {
+  padding: 14px 18px;
+}
+
 .sidebar.fixed-top {
   top: 56px;
   height: calc(100vh - 56px);

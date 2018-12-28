@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 import MenuContainer from './CustomComponents/MenuContainer.jsx';
+import MobileMenuContainer from './CustomComponents/MobileMenuContainer.jsx';
 
 class ChannelsComponent extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class ChannelsComponent extends React.Component {
       update_submitted: false,
       loading: true,
       inviteUser: false,
+      invitationAccount: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.createRecord = this.createRecord.bind(this);
@@ -108,6 +110,8 @@ class ChannelsComponent extends React.Component {
       this.setState({ name: event.target.value });
     } else if (aField === 'password') {
       this.setState({ password: event.target.value });
+    } else if (aField === 'invitationAccount') {
+      this.setState({ invitationAccount: event.target.value});
     }
   }
 
@@ -155,6 +159,45 @@ class ChannelsComponent extends React.Component {
       });
   }
 
+  inviteUser(event, channel) {
+    event.preventDefault();
+    const { state } = this;
+    const page = this;
+    const invite = {
+      recipient: state.invitationAccount,
+      channel: channel,
+    };
+
+    axios.post('/channels/invite', { data: invite })
+      .then((response) => {
+        // console.log(response);
+        if (response.data.success) {
+          page.setState({
+            update_submitted: false,
+          });
+
+          toastr.success('Invite sent!');
+        } else {
+          toastr.error('There was an error in sending your invite.')
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error('There was an error');
+      });
+  }
+
+  inviteButton = (channel) => {
+    const channelData = channel;
+    this.setState({ channelData });
+
+    (
+      <a className="text-light mr-1">
+        invite {channel.id}
+      </a>
+    )
+  }
+
   handleInvite = () => {
     this.setState({inviteUser: true});
   }
@@ -165,12 +208,18 @@ class ChannelsComponent extends React.Component {
 
   handleInviteSave = () => {
     console.log('invite saved');
+    // channelData should grab the current channel selected.
+    // const channelData = this.state.channels[channel]
+    // this.setState({ channelData });
+    console.log(channelData);
   }
 
   render() {
-    const recordList = (
-      this.state.channels.map((channel, index) => <li className="channels-list-item text-light nav-item" key={index}><a className="nav-link" href={`/channels/${channel.id}`}><span className="d-inline-block text-truncate" style={{ maxWidth: '180px' }}>{channel.channel_record.name}</span></a></li>)
-    );
+    const { state } = this;
+
+    // const recordList = (
+    //   state.channels.map((channel, index) => <li className="channels-list-item text-light nav-item" key={index}><a className="nav-link" href={`/channels/${channel.id}`}><span className="d-inline-block text-truncate" style={{ maxWidth: '180px' }}>{channel.channel_record.name}</span></a></li>)
+    // );
 
     const newChannelForm = (
       <div className="card card-register mx-auto my-5">
@@ -179,10 +228,10 @@ class ChannelsComponent extends React.Component {
         </div>
         <div className="card-body">
           <div className="form-group">
-            <input placeholder="Enter new channel name here..." value={this.state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
+            <input placeholder="Enter new channel name here..." value={state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
           </div>
           <div className="text-center">
-            <button className="btn btn-custom" disabled={this.state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {this.state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
+            <button className="btn btn-custom" disabled={state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
           </div>
         </div>
       </div>);
@@ -203,7 +252,7 @@ class ChannelsComponent extends React.Component {
             </button>
           </div>
         </div>
-        { this.state.channels.length > 0 || this.state.channelTableExist
+        { state.channels.length > 0 || this.state.channelTableExist
           ? newChannelForm
           : <div className="card card-register mx-auto my-5">
             <div className="card-body">
@@ -215,9 +264,10 @@ class ChannelsComponent extends React.Component {
 
     return (
       <div>
-        <MenuContainer channels={this.state.channels} />
-        {this.state.loading ? loading : content}
-        <div className="modal fade" id="channelsModal" tabIndex="-1" role="dialog" aria-labelledby="channelsModalLabel" aria-hidden="true">
+        <MenuContainer channels={state.channels} />
+        {state.loading ? loading : content}
+        <MobileMenuContainer channels={state.channels} />
+        {/* <div className="modal fade" id="channelsModal" tabIndex="-1" role="dialog" aria-labelledby="channelsModalLabel" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content border-none">
               <div className="modal-header bg-custom text-light">
@@ -227,14 +277,18 @@ class ChannelsComponent extends React.Component {
                 </button>
               </div>
               <div className="modal-body">
-              {this.state.inviteUser ? (
+              {state.inviteUser ? (
                   <div>
                     <p>
                       To invite another user to this channel,
                       simply input the JUP Address below and click "Invite".
                     </p>
                     <div className="form-group">
-                      <input className="form-control" />
+                      <input
+                        className="form-control"
+                        value={state.invitationAccount}
+                        onChange={this.handleChange.bind(this, 'invitationAccount')}
+                      />
                     </div>
                     <div className="text-right">
                       <button className="btn btn-custom mr-2" onClick={this.handleInviteSave}>save</button>
@@ -243,10 +297,10 @@ class ChannelsComponent extends React.Component {
                   </div>
                 ) : (
                   <ul className="mobile-channels-list list-unstyled mb-0">
-                {this.state.channels ? this.state.channels.map((channel, index) => <li className="channels-item" key={index}>
+                {state.channels ? state.channels.map((channel, index) => <li className="channels-item" key={index}>
                   <span className="d-block-inline text-truncate" style={{ maxWidth: '140px'}}><a className="channels-link" href={`/channels/${channel.id}`}>{channel.channel_record.name}
                   </a></span>
-                  <span className="float-right"><a className="text-light mr-1" onClick={this.handleInvite}>invite</a>
+                  <span className="float-right"><a className="text-light mr-1" onClick={this.inviteUser}>invite</a>
                     </span>
                 </li>) : null}
                 </ul>
@@ -254,7 +308,7 @@ class ChannelsComponent extends React.Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }
