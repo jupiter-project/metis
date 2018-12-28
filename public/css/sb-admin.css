@@ -478,11 +478,35 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.new-channels {
+.new-channels .new-channels-link {
+  width: 80%;
+  float: left;
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+  color: rgba(255, 255, 255, 0.6);
   background-color: rgba(134, 142, 150, 0.4);
+  padding: 6px 10px 6px 10px;
+  margin-bottom: 10px;
+  margin-left: 6px;
 }
 
-.new-channels:hover {
+.new-channels .new-channels-link:hover {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(134, 142, 150, 0.8);
+}
+
+.new-channels .new-channels-invite {
+  width: 10%;
+  float: left;
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(134, 142, 150, 0.4);
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  padding: 12px 22px 12px 10px;
+}
+
+.new-channels .new-channels-invite:hover {
+  color: rgba(255, 255, 255, 0.8);
   background-color: rgba(134, 142, 150, 0.8);
 }
 

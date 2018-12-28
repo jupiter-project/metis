@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import toastr from 'toastr';
 
-
 class ChannelRow extends React.Component {
   constructor(props) {
     super(props);
@@ -58,6 +57,11 @@ class ChannelRow extends React.Component {
         console.log(error);
         toastr.error('There was an error');
       });
+  }
+
+  handleChannelRoute = (channelInfo) => {
+    const url = channelInfo.id;
+    window.location.assign(`/channels/${url}`);
   }
 
   render() {
@@ -143,25 +147,60 @@ class ChannelRow extends React.Component {
     ); */
 
     return (
-      <li className="channels-item text-light nav-item" key={props.channel}>
-        <div className="new-channels">
-          <a href={`/channels/${channelInfo.id}`} className="new-channels-link d-block text-truncate float-left">
-            {channelInfo.channel_record.name}
+      <div>
+        <li className="new-channels">
+          <div
+            className="new-channels-link"
+            onClick={() => this.handleChannelRoute(channelInfo)}
+          >
+            <span
+              className="d-inline-block text-truncate"
+              style={{ maxWidth: '140px'}}
+            >
+              {channelInfo.channel_record.name}
+            </span>
+          </div>
+          <a
+            className="new-channels-invite"
+            href="#"
+            data-toggle="modal"
+            data-target={`#channelInvite${channelInfo.id}`}
+          >
+            <i className="fas fa-xs fa-user-plus"></i>
+            {' '}
           </a>
-          <span onClick={this.handleInvite} className="new-invite-link">
-            <a 
-                className="float-right"
+          {inviteComponent}
+        </li>
+        {/* <li className="new-channels">
+          <div
+            className="mx-3 py-2"
+            onClick={() => this.handleChannelRoute(channelInfo)}
+          >
+            <span
+              className="d-inline-block text-truncate"
+              style={{ maxWidth: '140px'}}
+            >
+              {channelInfo.channel_record.name}
+            </span>
+          </div>
+          <div
+            className="mx-3 py-2"
+            style={{ float: 'right' }}
+          >
+            <span>
+              <a
                 href="#"
                 data-toggle="modal"
                 data-target={`#channelInvite${channelInfo.id}`}
               >
-                <i className="fas fa-user-plus fa-sm"></i>
+                <i className="fas fa-xs fa-user-plus mt-1 text-light"></i>
                 {' '}
-            </a>
-          </span>
-        </div>
-        {inviteComponent}
-      </li>
+              </a>
+            </span>
+          </div>
+          {inviteComponent}
+        </li> */}
+      </div>
     );
   }
 }

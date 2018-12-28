@@ -5,17 +5,17 @@ const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
 
 // Copy third party libraries from /node_modules into /vendor
-gulp.task('vendor', () => {
+// gulp.task('vendor', () => {
 
-  // Bootstrap
-  gulp.src([
-      './node_modules/bootstrap/dist/**/*',
-      '!./node_modules/bootstrap/dist/css/bootstrap-grid*',
-      '!./node_modules/bootstrap/dist/css/bootstrap-reboot*'
-    ])
-    .pipe(gulp.dest('./public/vendor/bootstrap'))
+//   // Bootstrap
+//   gulp.src([
+//       './node_modules/bootstrap/dist/**/*',
+//       '!./node_modules/bootstrap/dist/css/bootstrap-grid*',
+//       '!./node_modules/bootstrap/dist/css/bootstrap-reboot*'
+//     ])
+//     .pipe(gulp.dest('./public/vendor/bootstrap'))
 
-});
+// });
 
 // Compile SCSS
 gulp.task('css:compile', () => {
@@ -47,7 +47,7 @@ gulp.task('css:minify', ['css:compile'], () => {
 gulp.task('css', ['css:compile', 'css:minify']);
 
 // Default task
-gulp.task('default', ['css', 'vendor']);
+gulp.task('default', ['css']);
 
 // Dev task
 gulp.task('dev', ['css'], () => {

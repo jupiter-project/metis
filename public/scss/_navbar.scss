@@ -273,9 +273,35 @@
 }
 
 .new-channels {
-  background-color: fade-out($gray-600, 0.6);
-  &:hover {
-    background-color: fade-out($gray-600, 0.2);
+  .new-channels-link {
+    width: 80%;
+    float: left;
+    // border-radius: $border-radius;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    color: fade-out($white, 0.4);
+    background-color: fade-out($gray-600, 0.6);
+    padding: 6px 10px 6px 10px;
+    margin-bottom: 10px;
+    margin-left: 6px;
+
+    &:hover {
+      color: fade-out($white, 0.2);
+      background-color: fade-out($gray-600, 0.2);
+    }
+  }
+  .new-channels-invite {
+    width: 10%;
+    float: left;
+    color: fade-out($white, 0.4);
+    background-color: fade-out($gray-600, 0.6);
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    padding: 12px 22px 12px 10px;
+    &:hover {
+      color: fade-out($white, 0.2);
+      background-color: fade-out($gray-600, 0.2);
+    }
   }
 }
 
