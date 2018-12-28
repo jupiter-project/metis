@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const events = require('events');
 const methods = require('./_methods');
 
+const addressBreakdown = process.env.APP_ACCOUNT_ADDRESS.split('-');
 
 class Gravity {
   constructor() {
@@ -26,6 +27,7 @@ class Gravity {
       },
       tables: [],
     };
+    this.fundingProperty = `funding-${addressBreakdown[addressBreakdown.length - 1]}`;
     this.data = {};
     this.tables = [];
   }
@@ -1113,7 +1115,7 @@ class Gravity {
                     self.decrypt(response.data.decryptedMessage,
                       accessData.encryptionPassword),
                   );
-                  console.log(decrypted);
+                  // console.log(decrypted);
                   decryptedRecords.push(decrypted);
                 } catch (e) {
                   console.log(e);
@@ -1456,10 +1458,203 @@ class Gravity {
     });
   }
 
+  // We use axios to make the connection to pimcore server
+  request(method, url, data, callback) {
+    return axios({
+      url,
+      method,
+      data,
+    })
+      .then((res) => {
+        if (res.data) {
+          // If callback exists, it is executed with axios response as a param
+          if (callback) {
+            return callback(res.data);
+          }
+          return res.data;
+        }
+        return ({ error: true, message: 'There was an error with the request' });
+      })
+      .catch(error => ({
+        error: true,
+        message: 'There was an error making axios request',
+        fullError: error,
+      }));
+  }
+
+  jupiterURL(givenParams) {
+    const params = givenParams;
+    if (!params.deadline) {
+      params.deadline = this.jupiter_data.deadline;
+    }
+
+    if (!params.feeNQT) {
+      params.feeNQT = this.jupiter_data.feeNQT;
+    }
+
+    const urlParams = Object.keys(params);
+    let url = `${this.jupiter_data.server}/nxt?`;
+
+    for (let x = 0; x < urlParams.length; x += 1) {
+      const thisParam = urlParams[x];
+
+      if (x === 0) {
+        url += `${thisParam}=${params[thisParam]}`;
+      } else {
+        url += `&${thisParam}=${params[thisParam]}`;
+      }
+    }
+
+    return url;
+  }
+
+  async jupiterRequest(rtype, params, data = {}, callback) {
+    const url = this.jupiterURL(params);
+
+    const response = await this.request(rtype, url, data, callback);
+
+    return response;
+  }
+
+  async getAlias(aliasName) {
+    const aliasCheckup = await this.jupiterRequest('get', {
+      aliasName,
+      requestType: 'getAlias',
+    });
+
+    if (
+      aliasCheckup.errorDescription
+      && aliasCheckup.errorDescription === 'Unknown alias'
+    ) {
+      return { available: true };
+    }
+
+    if (aliasCheckup.errorDescription) {
+      aliasCheckup.error = true;
+      return { aliasCheckup };
+    }
+
+    return aliasCheckup;
+  }
+
+  async setAlias(params) {
+    console.log(params);
+    return this.jupiterRequest('post', {
+      requestType: 'setAlias',
+      aliasName: params.alias,
+      secretPhrase: params.passphrase,
+      aliasURI: `acct:${params.account}@nxt`,
+      feeNQT: 80,
+    });
+  }
+
+  async deleteAlias(params) {
+    return this.jupiterRequest('post', {
+      requestType: 'deleteAlias',
+      aliasName: params.alias,
+      secretPhrase: params.passphrase,
+      feeNQT: 80,
+    });
+  }
+
+  async startFundingMonitor(params) {
+    return this.jupiterRequest('post', {
+      requestType: 'startFundingMonitor',
+      property: params.fundingProperty || this.fundingProperty,
+      secretPhrase: params.passphrase,
+      feeNQT: 80,
+      amount: params.amount || parseInt(this.jupiter_data.minimumTableBalance, 10),
+      threshold: params.threshold || parseInt(this.jupiter_data.minimumTableBalance / 2, 10),
+      interval: 10,
+    });
+  }
+
+  async getFundingMonitor(params = {}) {
+    return this.jupiterRequest('post', {
+      requestType: 'getFundingMonitor',
+      property: params.fundingProperty || this.fundingProperty,
+      secretPhrase: params.passphrase || process.env.APP_ACCOUNT,
+      includeMonitoredAccounts: params.includeAccounts || false,
+    });
+  }
+
+
+  async stopFundingMonitor(params) {
+    return this.jupiterRequest('post', {
+      requestType: 'stopFundingMonitor',
+      property: params.fundingProperty || this.fundingProperty,
+      secretPhrase: params.passphrase,
+      feeNQT: 80,
+    });
+  }
+
+  async setProperty(params) {
+    return this.jupiterRequest('post', {
+      requestType: 'startFundingMonitor',
+      recipient: params.recipient,
+      property: params.property,
+      value: params.value,
+      secretPhrase: params.passphrase,
+      feeNQT: 80,
+      interval: 10,
+    });
+  }
+
+  async setFundingProperty(params) {
+    const threshold = params.threshold || parseInt(this.jupiter_data.minimumTableBalance / 2, 10);
+
+    return this.jupiterRequest('post', {
+      requestType: 'startFundingMonitor',
+      recipient: params.recipient,
+      property: params.property || this.fundingProperty,
+      value: params.value || `{"threshold":"${threshold}"}`,
+      secretPhrase: params.passphrase,
+      feeNQT: 80,
+      amount: params.amount || parseInt(this.jupiter_data.minimumTableBalance, 10),
+      interval: 10,
+      threshold,
+    });
+  }
+
+  async getAccountProperties(params) {
+    return this.jupiterRequest('get', {
+      requestType: 'getAccountProperties',
+      recipient: params.recipient,
+    });
+  }
+
+  async setAcountProperty(params) {
+    const threshold = params.threshold || parseInt(this.jupiter_data.minimumTableBalance / 2, 10);
+
+    return this.jupiterRequest('post', {
+      requestType: 'setAccountProperty',
+      secretPhrase: params.passphrase || process.env.APP_ACCOUNT,
+      recipient: params.recipient,
+      property: params.property || this.fundingProperty,
+      feeNQT: 80,
+      value: params.value || `{"threshold":"${threshold}"}`,
+    });
+  }
+
+  async hasFundingProperty(params) {
+    const { properties } = await this.getAccountProperties(params);
+    const self = this;
+    let hasFundingProperty = false;
+
+    for (let x = 0; x < properties.length; x += 1) {
+      const thisProperty = properties[x];
+      if (thisProperty.property === self.fundingProperty) {
+        hasFundingProperty = true;
+      }
+    }
+
+    return hasFundingProperty;
+  }
+
   async sendMessage(
     data,
     passphrase,
-    recipient,
+    recipientRS,
     recipientPublicKey,
     config = { appEncryption: false, specialEncryption: false },
   ) {
@@ -1472,12 +1667,28 @@ class Gravity {
     } else {
       dataToBeSent = data;
     }
+    let recipient;
+    let aliasResponse;
+
+    if (!recipientRS.toLowerCase().includes('jup-')) {
+      aliasResponse = (await this.getAlias(recipientRS));
+      console.log(aliasResponse);
+      recipient = aliasResponse.accountRS;
+    } else {
+      recipient = recipientRS;
+    }
+
+    if (!recipient) {
+      return { error: true, message: 'Incorrect recipient', fullError: aliasResponse };
+    }
 
     if (recipientPublicKey) {
       callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&recipientPublicKey=${recipientPublicKey}&compressMessageToEncrypt=true`;
     } else {
       callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&messageIsPrunable=true&compressMessageToEncrypt=true`;
     }
+
+    console.log(callUrl);
 
     try {
       response = await axios.post(callUrl);

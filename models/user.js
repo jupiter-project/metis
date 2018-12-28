@@ -47,7 +47,7 @@ class User extends Model {
         validate: this.record.email,
         attribute_name: 'email',
         rules: {
-          required: true,
+          required: false,
           dataType: 'Email',
         },
       },
@@ -63,7 +63,7 @@ class User extends Model {
         validate: this.record.firstname,
         attribute_name: 'firstname',
         rules: {
-          required: true,
+          required: false,
           dataType: 'String',
         },
       },
@@ -71,7 +71,7 @@ class User extends Model {
         validate: this.record.lastname,
         attribute_name: 'lastname',
         rules: {
-          required: true,
+          required: false,
           dataType: 'String',
         },
       },
@@ -115,6 +115,31 @@ class User extends Model {
         },
       },
     ];
+  }
+
+  async setAlias(passphrase) {
+    const aliasCheckup = await gravity.getAlias(this.record.alias);
+    if (aliasCheckup.accountRS === this.record.account) {
+      return { success: false, message: 'Alias already set', fullResponse: aliasCheckup };
+    }
+
+
+    if (aliasCheckup.available) {
+      const aliasResponse = await gravity.setAlias({
+        passphrase,
+        alias: this.record.alias,
+        account: this.record.account,
+      });
+
+      if (aliasResponse.transaction) {
+        return { success: true, message: 'Alias set', fullResponse: aliasResponse };
+      }
+
+      return { success: false, message: 'Error setting alias', fullError: aliasResponse };
+    }
+
+    aliasCheckup.error = true;
+    return aliasCheckup;
   }
 
   setRecord() {
@@ -197,7 +222,7 @@ class User extends Model {
     });
   }
 
-  update() {
+  update(passphrase) {
     const self = this;
 
     return new Promise(async (resolve, reject) => {
@@ -235,6 +260,12 @@ class User extends Model {
           .then((response) => {
             // console.log(response);
             if (response.data.broadcasted && response.data.broadcasted === true) {
+              self.setAlias(passphrase)
+                .then((aliasSetting) => {
+                  if (!aliasSetting.success) {
+                    console.log(aliasSetting);
+                  }
+                });
               resolve({ success: true, message: 'Record created', record: self.record });
             } else if (response.data.errorDescription != null) {
               reject({ success: false, errors: response.data.errorDescription });

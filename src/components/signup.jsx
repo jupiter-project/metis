@@ -27,6 +27,7 @@ export class SignupForm extends React.Component {
       public_key: '',
       encryption_password: '',
       encryption_password_confirmation: '',
+      aliasIsAvailable: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.registerAccount = this.registerAccount.bind(this);
@@ -57,6 +58,14 @@ export class SignupForm extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+
+  async aliasCheckup() {
+    const { state } = this;
+    const aliasCheckup = await axios.get(`/jupiter/alias/${state.alias}`);
+
+    return aliasCheckup.data;
   }
 
   confirmedPassphrase(event) {
@@ -110,8 +119,8 @@ export class SignupForm extends React.Component {
             passphrase: this.state.generated_passphrase,
             email: this.state.email,
             alias: this.state.alias,
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
+            firstname: this.state.alias,
+            lastname: '',
             twofa_enabled: this.state.twofa_enabled,
             encryption_password: this.state.encryption_password,
           },
@@ -161,8 +170,16 @@ export class SignupForm extends React.Component {
         email: event.target.value,
       });
     } else if (iType === 'alias') {
+      const self = this;
       this.setState({
         alias: event.target.value,
+      }, async () => {
+        const aliasCheckup = await self.aliasCheckup();
+        const aliasIsAvailable = aliasCheckup.available || false;
+
+        self.setState({
+          aliasIsAvailable,
+        });
       });
     } else if (iType === 'passphrase_confirm') {
       this.setState({
@@ -223,6 +240,7 @@ export class SignupForm extends React.Component {
   }
 
   render() {
+    const { state } = this;
     const newAccountSummary = (
       <form action="/signup" method="post" className="text-left">
         <div className="col-8 mx-auto alert alert-primary text-center">
@@ -237,38 +255,6 @@ export class SignupForm extends React.Component {
               type="text"
               value={this.state.alias}
               name="alias"
-              className="form-control"
-              readOnly
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="firstname">First Name</label>
-            <input
-              type="text"
-              value={this.state.firstname}
-              name="firstname"
-              className="form-control"
-              readOnly
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="lastname">Last Name</label>
-            <input
-              type="text"
-              value={this.state.lastname}
-              name="lastname"
-              className="form-control"
-              readOnly
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="email">Email Address</label>
-            <input
-              type="text"
-              value={this.state.email}
-              name="email"
               className="form-control"
               readOnly
             />
@@ -356,36 +342,6 @@ export class SignupForm extends React.Component {
           <p>Never disclose your passphrase or encryption password!</p>
         </div>
         <div className="form-group">
-          <label htmlFor="firstname">First Name</label>
-          <input
-            type="text"
-            value={this.state.firstname}
-            name="firstname"
-            className="form-control"
-            onChange={this.handleChange.bind(this, 'firstname')}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="inputLastName">Last Name</label>
-          <input
-            type="text"
-            name="inputLastName"
-            value={this.state.lastname}
-            onChange={this.handleChange.bind(this, 'lastname')}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email Address</label>
-          <input
-            type="text"
-            name="email"
-            value={this.state.email}
-            onChange={this.handleChange.bind(this, 'email')}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
           <label htmlFor="alias">Alias</label>
           <input
             type="text"
@@ -394,6 +350,10 @@ export class SignupForm extends React.Component {
             onChange={this.handleChange.bind(this, 'alias')}
             className="form-control"
           />
+          <div className={`alert ${state.aliasIsAvailable ? 'alert-success' : 'alert-danger'}`}>
+            <i className={ `far ${state.aliasIsAvailable ? 'fa-check-circle' : 'fa-times-circle'}`} />
+            <span>{state.aliasIsAvailable ? ' Alias available' : ' Invalid alias'}</span>
+          </div>
         </div>
         <div className="form-group">
           <label htmlFor="encryption_password">Encryption Password</label>
@@ -439,11 +399,9 @@ export class SignupForm extends React.Component {
           <div className="form-group text-center">
             <button
               disabled={
-                !this.state.firstname
-                || !this.state.lastname
-                || !this.state.email
-                || !this.state.alias
-                || !this.state.encryption_password
+                !state.alias
+                || !state.aliasIsAvailable
+                || !state.encryption_password
               }
               className="btn btn-custom"
               onClick={this.confirmedPassphrase.bind(this)}
@@ -455,9 +413,8 @@ export class SignupForm extends React.Component {
           <div className="form-group text-center">
             <button
               disabled={
-                !this.state.firstname
-                || !this.state.lastname
-                || !this.state.email
+                !this.state.alias
+                || !state.aliasIsAvailable
                 || !this.state.encryption_password
               }
               className="btn btn-custom"

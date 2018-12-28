@@ -21,6 +21,14 @@ module.exports = (app) => {
   // ===============================================================================
   //  API GENERAL ROUTES
   // ===============================================================================
+
+  app.get('/jupiter/alias/:aliasName', async (req, res) => {
+    const aliasCheckup = await gravity.getAlias(req.params.aliasName);
+
+    res.send(aliasCheckup);
+  });
+
+
   app.get('/api/users/:id/:tableName', (req, res, next) => {
     // const params = req.body;
     // const { data } = params;

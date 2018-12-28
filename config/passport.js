@@ -141,9 +141,7 @@ module.exports = (passport, jobs, io) => {
         if (response.error) {
           return done(null, false, req.flash('loginMessage', 'Account is not registered or has not been confirmed in the blockchain.'));
         }
-        console.log('This is the getUser response');
-        console.log(response);
-        console.log('---------------');
+
         if (response.noUserTables || response.userNeedsSave) {
           worker.addToQueue('completeRegistration', workerData);
         }
@@ -166,6 +164,25 @@ module.exports = (passport, jobs, io) => {
           req.session.twofa_pass = false;
           req.session.jup_key = gravity.encrypt(req.body.jupkey);
           req.session.accessData = gravity.encrypt(JSON.stringify(containedDatabase));
+
+          const hasFundingProperty = await gravity.hasFundingProperty({
+            recipient: user.record.account,
+          });
+
+          if (!hasFundingProperty) {
+            const fundingResponse = await gravity.setAcountProperty({
+              recipient: user.record.account,
+            });
+            console.log(fundingResponse);
+          }
+
+          user.setAlias(req.body.jupkey)
+            .then((aliasSetting) => {
+              if (!aliasSetting.success) {
+                console.log(aliasSetting);
+              }
+            })
+            .catch(err => err);
         }
         return done(null, {
           userRecordFound: response.userRecordFound,

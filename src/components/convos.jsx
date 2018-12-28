@@ -16,7 +16,8 @@ class DataRow extends React.Component {
   render() {
     const record = this.props.parent.state.messages[this.props.message];
     const { data } = record;
-    const name = data.name === `${this.props.user.record.firstname} ${this.props.user.record.lastname}`
+    const name = data.name === `${this.props.user.record.alias}`
+      || data.name === `${this.props.user.record.firstname} ${this.props.user.record.lastname}`
       ? 'You' : data.name;
 
     const date = (new Date(record.date)).toLocaleString();
@@ -330,7 +331,7 @@ class ConvosComponent extends React.Component {
     const page = this;
 
     const record = {
-      name: `${this.props.user.record.firstname} ${this.props.user.record.lastname}`,
+      name: `${this.props.user.record.alias}` || `${this.props.user.record.firstname} ${this.props.user.record.lastname}`,
       message: this.state.message,
       sender: this.props.user.record.account,
     };
@@ -383,7 +384,9 @@ class ConvosComponent extends React.Component {
       />)
     );
 
-    let loading = <div style={{ textAlign: 'center', marginTop: '25vh', fontSize: '55px', overflow: 'hidden' }}><i className="fa fa-spinner fa-pulse"></i></div>;
+    const loading = <div style={{
+      textAlign: 'center', marginTop: '25vh', fontSize: '55px', overflow: 'hidden',
+    }}><i className="fa fa-spinner fa-pulse"></i></div>;
 
     let content = (
       <div>

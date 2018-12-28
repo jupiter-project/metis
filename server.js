@@ -123,6 +123,23 @@ app.get('/*', (req, res) => {
   res.redirect('/');
 });
 
+// Gravity call to check app account properties
+const { gravity } = require('./config/gravity');
+
+gravity.getFundingMonitor()
+  .then(async (monitorResponse) => {
+    const { monitors } = monitorResponse;
+    if (monitors.length === 0) {
+      console.log('Funding property not set for app. Setting it now...');
+      const fundingResponse = await gravity.setFundingProperty({
+        passphrase: process.env.APP_ACCOUNT,
+      });
+
+      console.log(`Jupiter response: ${JSON.stringify(fundingResponse)}`);
+    }
+  });
+
+// Worker methods
 const RegistrationWorker = require('./workers/registration.js');
 // const TransferWorker = require('./workers/transfer.js');
 

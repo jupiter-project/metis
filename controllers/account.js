@@ -15,7 +15,6 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const messages = req.session.flash;
     req.session.flash = null;
     const AccountPage = require('../views/account.jsx');
-
     page = ReactDOMServer.renderToString(
       React.createElement(AccountPage, {
         connection,
@@ -60,9 +59,12 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     user.record.firstname = params.firstname;
     user.record.lastname = params.lastname;
     user.record.email = params.email;
+    user.record.alias = params.alias;
     user.record.public_key = req.session.public_key;
 
-    user.update()
+    const jupKey = gravity.decrypt(req.session.jup_key);
+
+    user.update(jupKey)
       .then(() => {
         res.send({ success: true, message: 'Account info saved to blockchain', record: user.record });
       })

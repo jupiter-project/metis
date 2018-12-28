@@ -151,7 +151,7 @@ module.exports = {
     }
 
     // For email validation, we use regular expression to make sure that input is an email format
-    if (requirements.dataType === 'Email') {
+    if (requirements.dataType === 'Email' && requirements.required === true) {
       if (validateEmail(attributeValue) === false) {
         errors = true;
         errorMessages.push(`${attributeName} was not written in a valid email format.`);

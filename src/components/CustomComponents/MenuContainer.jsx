@@ -50,7 +50,10 @@ class ChannelRow extends React.Component {
 
           toastr.success('Invite sent!');
         } else {
-          toastr.error('There was an error sending your invite.');
+          toastr.error('There was an error in sending your invite');
+          if (response.data.message) {
+            toastr.error(response.data.message);
+          }
         }
       })
       .catch((error) => {

@@ -8,14 +8,17 @@ class AccountComponent extends React.Component {
     super(props);
     this.state = {
       user: this.props.user,
+      alias: this.props.user.record.alias,
       email: this.props.user.record.email,
       firstname: this.props.user.record.firstname,
       lastname: this.props.user.record.lastname,
       account_editing_mode: false,
+      saved_alias: this.props.user.record.alias,
       saved_email: this.props.user.record.email,
       saved_firstname: this.props.user.record.firstname,
       saved_lastname: this.props.user.record.lastname,
       submitted: false,
+      aliasIsAvailable: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,6 +28,12 @@ class AccountComponent extends React.Component {
 
   componentDidMount() {}
 
+  async aliasCheckup(aliasName) {
+    const aliasCheckup = await axios.get(`/jupiter/alias/${aliasName}`);
+
+    return aliasCheckup.data;
+  }
+
   handleChange(aField, event) {
     if (aField === 'email') {
       this.setState({ email: event.target.value });
@@ -32,6 +41,28 @@ class AccountComponent extends React.Component {
       this.setState({ firstname: event.target.value });
     } else if (aField === 'lastname') {
       this.setState({ lastname: event.target.value });
+    } else if (aField === 'alias') {
+      const self = this;
+      const aliasName = event.target.value;
+      this.setState({
+        alias: aliasName,
+      }, async () => {
+        const aliasCheckup = await self.aliasCheckup(aliasName);
+
+        let aliasIsAvailable = aliasCheckup.available || false;
+
+        if (aliasCheckup.accountRS === self.props.user.record.account) {
+          aliasIsAvailable = true;
+        }
+
+        if (!self.state.alias) {
+          aliasIsAvailable = false;
+        }
+
+        self.setState({
+          aliasIsAvailable,
+        });
+      });
     }
   }
 
@@ -41,6 +72,7 @@ class AccountComponent extends React.Component {
       this.setState({ account_editing_mode: !this.state.account_editing_mode });
     }
   }
+
 
   updateAccountInfo(event) {
     event.preventDefault();
@@ -58,6 +90,7 @@ class AccountComponent extends React.Component {
           email: this.state.email,
           api_key: this.props.user.api_key,
           public_key: this.props.public_key,
+          alias: this.state.alias,
         },
       })
       .then((response) => {
@@ -67,6 +100,7 @@ class AccountComponent extends React.Component {
             saved_email: page.state.email,
             saved_firstname: page.state.firstname,
             saved_lastname: page.state.lastname,
+            saved_alias: page.state.alias,
             submitted: false,
           });
           // toastr.success('It will take a few minutes for the changes to reflect in your end');
@@ -91,6 +125,7 @@ class AccountComponent extends React.Component {
   }
 
   render() {
+    const { state } = this;
     return (
       <div className="container">
         <div className="page-title">My Profile</div>
@@ -103,6 +138,20 @@ class AccountComponent extends React.Component {
               <h6 className="text-center">Account ID</h6>
               <div className="col-xs-12 col-sm-8 mx-auto alert alert-primary text-center">
                 <span>{this.state.user ? this.props.user.record.account : 'account id'}</span>
+              </div>
+              <div className="form-group">
+                <label htmlFor="inputEmailAddress">Alias</label>
+                <input
+                  value={this.state.alias}
+                  onChange={this.handleChange.bind(this, 'alias')}
+                  type="text"
+                  className="form-control"
+                  id="inputAliasAddress"
+                />
+                <div className={`alert ${state.aliasIsAvailable ? 'alert-success' : 'alert-danger'}`}>
+                  <i className={ `far ${state.aliasIsAvailable ? 'fa-check-circle' : 'fa-times-circle'}`} />
+                  <span>{state.aliasIsAvailable ? ' Alias available' : ' Invalid alias'}</span>
+                </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
@@ -143,7 +192,7 @@ class AccountComponent extends React.Component {
                     type="button"
                     className="btn btn-custom"
                     onClick={this.updateAccountInfo.bind(this)}
-                    disabled={this.state.submitted}
+                    disabled={this.state.submitted || !this.state.aliasIsAvailable}
                   >
                     {this.state.submitted ? 'Saving...' : 'Save'}
                   </button>
@@ -164,6 +213,16 @@ class AccountComponent extends React.Component {
               <h6 className="text-center">Account ID</h6>
               <div className="col-xs-12 col-sm-8 mx-auto alert alert-primary text-center">
                 <span>{this.state.user ? this.props.user.record.account : 'account id'}</span>
+              </div>
+              <div className="form-group">
+                <label htmlFor="inputEmailAddress">Alias</label>
+                <input
+                  value={this.state.alias}
+                  type="alias"
+                  className="form-control"
+                  id="inputAliasAddress"
+                  disabled
+                />
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
