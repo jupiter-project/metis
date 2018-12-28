@@ -19,28 +19,28 @@ const autoprefixer = require('gulp-autoprefixer');
 
 // Compile SCSS
 gulp.task('css:compile', () => {
-  return gulp.src('./public/scss/**/*.scss')
+  gulp.src('./public/scss/**/*.scss')
     .pipe(sass.sync({
-      outputStyle: 'expanded'
+      outputStyle: 'expanded',
     }).on('error', sass.logError))
     .pipe(autoprefixer({
       browsers: ['last 2 versions'],
-      cascade: false
+      cascade: false,
     }))
-    .pipe(gulp.dest('./public/css'))
+    .pipe(gulp.dest('./public/css'));
 });
 
 // Minify CSS
 gulp.task('css:minify', ['css:compile'], () => {
-  return gulp.src([
-      './public/css/*.css',
-      '!./public/css/*.min.css'
-    ])
+  gulp.src([
+    './public/css/*.css',
+    '!./public/css/*.min.css',
+  ])
     .pipe(cleanCSS())
     .pipe(rename({
-      suffix: '.min'
+      suffix: '.min',
     }))
-    .pipe(gulp.dest('./public/css'))
+    .pipe(gulp.dest('./public/css'));
 });
 
 // CSS
