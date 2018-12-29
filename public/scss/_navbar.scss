@@ -305,6 +305,39 @@
   }
 }
 
+.new-mobile-channels {
+  .new-mobile-channels-link {
+    width: 85%;
+    float: left;
+    // border-radius: $border-radius;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    color: $custom-primary;
+    background-color: fade-out($gray-600, 0.6);
+    padding: 6px 10px 6px 10px;
+    margin-bottom: 10px;
+    margin-left: 6px;
+
+    &:hover {
+      color: darken($custom-primary, 0.6);
+      background-color: fade-out($gray-600, 0.7);
+    }
+  }
+  .new-mobile-channels-invite {
+    width: 10%;
+    float: left;
+    color: $custom-primary;
+    background-color: fade-out($gray-600, 0.6);
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    padding: 12px 22px 12px 10px;
+    &:hover {
+      color: darken($custom-primary, 0.6);
+      background-color: fade-out($gray-600, 0.7);
+    }
+  }
+}
+
 .add-user-modal {
   position: fixed;
   z-index: 1;

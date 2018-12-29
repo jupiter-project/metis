@@ -267,48 +267,6 @@ class ChannelsComponent extends React.Component {
         <MenuContainer channels={state.channels} />
         {state.loading ? loading : content}
         <MobileMenuContainer channels={state.channels} />
-        {/* <div className="modal fade" id="channelsModal" tabIndex="-1" role="dialog" aria-labelledby="channelsModalLabel" aria-hidden="true">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content border-none">
-              <div className="modal-header bg-custom text-light">
-                <h5 className="modal-title" id="channelsModalLabel">Channels</h5>
-                <button type="button" className="close text-light" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-              {state.inviteUser ? (
-                  <div>
-                    <p>
-                      To invite another user to this channel,
-                      simply input the JUP Address below and click "Invite".
-                    </p>
-                    <div className="form-group">
-                      <input
-                        className="form-control"
-                        value={state.invitationAccount}
-                        onChange={this.handleChange.bind(this, 'invitationAccount')}
-                      />
-                    </div>
-                    <div className="text-right">
-                      <button className="btn btn-custom mr-2" onClick={this.handleInviteSave}>save</button>
-                      <button className="btn btn-custom" onClick={this.handleInviteClose}>close</button>
-                    </div>
-                  </div>
-                ) : (
-                  <ul className="mobile-channels-list list-unstyled mb-0">
-                {state.channels ? state.channels.map((channel, index) => <li className="channels-item" key={index}>
-                  <span className="d-block-inline text-truncate" style={{ maxWidth: '140px'}}><a className="channels-link" href={`/channels/${channel.id}`}>{channel.channel_record.name}
-                  </a></span>
-                  <span className="float-right"><a className="text-light mr-1" onClick={this.inviteUser}>invite</a>
-                    </span>
-                </li>) : null}
-                </ul>
-                )}
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     );
   }

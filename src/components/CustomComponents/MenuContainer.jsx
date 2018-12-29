@@ -50,7 +50,7 @@ class ChannelRow extends React.Component {
 
           toastr.success('Invite sent!');
         } else {
-          toastr.error('There was an error in sending your invite.');
+          toastr.error('There was an error sending your invite.');
         }
       })
       .catch((error) => {
@@ -171,35 +171,6 @@ class ChannelRow extends React.Component {
           </a>
           {inviteComponent}
         </li>
-        {/* <li className="new-channels">
-          <div
-            className="mx-3 py-2"
-            onClick={() => this.handleChannelRoute(channelInfo)}
-          >
-            <span
-              className="d-inline-block text-truncate"
-              style={{ maxWidth: '140px'}}
-            >
-              {channelInfo.channel_record.name}
-            </span>
-          </div>
-          <div
-            className="mx-3 py-2"
-            style={{ float: 'right' }}
-          >
-            <span>
-              <a
-                href="#"
-                data-toggle="modal"
-                data-target={`#channelInvite${channelInfo.id}`}
-              >
-                <i className="fas fa-xs fa-user-plus mt-1 text-light"></i>
-                {' '}
-              </a>
-            </span>
-          </div>
-          {inviteComponent}
-        </li> */}
       </div>
     );
   }

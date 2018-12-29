@@ -510,6 +510,38 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   background-color: rgba(134, 142, 150, 0.8);
 }
 
+.new-mobile-channels .new-mobile-channels-link {
+  width: 85%;
+  float: left;
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+  color: #26313d;
+  background-color: rgba(134, 142, 150, 0.4);
+  padding: 6px 10px 6px 10px;
+  margin-bottom: 10px;
+  margin-left: 6px;
+}
+
+.new-mobile-channels .new-mobile-channels-link:hover {
+  color: #252f3b;
+  background-color: rgba(134, 142, 150, 0.3);
+}
+
+.new-mobile-channels .new-mobile-channels-invite {
+  width: 10%;
+  float: left;
+  color: #26313d;
+  background-color: rgba(134, 142, 150, 0.4);
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  padding: 12px 22px 12px 10px;
+}
+
+.new-mobile-channels .new-mobile-channels-invite:hover {
+  color: #252f3b;
+  background-color: rgba(134, 142, 150, 0.3);
+}
+
 .add-user-modal {
   position: fixed;
   z-index: 1;
