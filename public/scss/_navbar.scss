@@ -313,27 +313,28 @@
     border-top-left-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
     color: $custom-primary;
-    background-color: fade-out($gray-600, 0.6);
+    color: fade-out($custom-primary, 0.2);
+    background-color: fade-out($gray-600, 0.55);
     padding: 6px 10px 6px 10px;
     margin-bottom: 10px;
     margin-left: 6px;
 
     &:hover {
-      color: darken($custom-primary, 0.6);
-      background-color: fade-out($gray-600, 0.7);
+      color: $custom-primary;
+      background-color: fade-out($gray-600, 0.75);
     }
   }
   .new-mobile-channels-invite {
     width: 10%;
     float: left;
-    color: $custom-primary;
-    background-color: fade-out($gray-600, 0.6);
+    color: fade-out($custom-primary, 0.2);
+    background-color: fade-out($gray-600, 0.55);
     border-top-right-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
     padding: 12px 22px 12px 10px;
     &:hover {
-      color: darken($custom-primary, 0.6);
-      background-color: fade-out($gray-600, 0.7);
+      color: $custom-primary;
+      background-color: fade-out($gray-600, 0.75);
     }
   }
 }
