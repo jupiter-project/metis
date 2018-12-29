@@ -591,6 +591,116 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   overflow-y: auto;
 }
 
+.convo-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  height: 91vh;
+}
+
+.convo-header {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 100%;
+  flex: 1 100%;
+  height: 8%;
+  padding: 10px;
+}
+
+.convo-header-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.convo-mobile-modal-button {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .convo-mobile-modal-button {
+    display: inline-block;
+  }
+}
+
+.convo-mobile-modal-replace {
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .convo-mobile-modal-replace {
+    display: none;
+  }
+}
+
+.convo-header-title {
+  display: inline-block;
+}
+
+.convo-header-hud {
+  display: 'inline-block';
+}
+
+.convo-messages-outer {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 100%;
+  flex: 1 100%;
+  height: 77%;
+  padding-left: 10px;
+}
+
+.convo-messages-inner {
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+}
+
+.convo-input-outer {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 100%;
+  flex: 1 100%;
+  height: 15%;
+  padding: '10px';
+  color: white;
+  padding-top: 10px;
+}
+
+.convo-input-inner {
+  width: 100%;
+  height: 100%;
+  padding: 0 10px 0 10px;
+}
+
+.convo-input-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 64px;
+}
+
+.convo-input-textarea {
+  resize: none;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 0.3rem;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  margin-right: 12px;
+  padding: 6px;
+}
+
 .card-body-icon {
   position: absolute;
   z-index: 0;

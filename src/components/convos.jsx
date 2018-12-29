@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
+import MenuContainer from './CustomComponents/MenuContainer.jsx';
+import MobileMenuContainer from './CustomComponents/MobileMenuContainer.jsx';
 
 class DataRow extends React.Component {
   constructor(props) {
@@ -21,7 +23,7 @@ class DataRow extends React.Component {
 
 
     const readOnlyLeft = (
-        <div className="card-plain text-left message d-block float-left my-2 w-100">
+      <div className="card-plain text-left message d-block float-left my-2 w-100">
         <div className="card-body p-2">
           <div className="bg-dark rounded-circle float-left mr-2">
             <img src="/img/logo.png" height="40px" alt="logo" />
@@ -29,16 +31,16 @@ class DataRow extends React.Component {
           <div id="incoming_message" className="ml-5 rounded">
             <div style={{ fontWeight: '600' }}>{name}</div>
             <div>{data.message}</div>
-            <div>{date}</div>
+            <div className="small">{date}</div>
           </div>
         </div>
         {/* <h4>{name}</h4>
         <p>{data.message}</p> */}
-    </div>
+      </div>
     );
 
     const readOnlyRight = (
-        <div className="card-plain text-right message d-block float-right my-2 w-100">
+      <div className="card-plain text-right message d-block float-right my-2 w-100">
         <div className="card-body p-2">
           <div className="bg-dark rounded-circle float-right ml-2">
             <img src="/img/logo.png" height="40px" alt="logo" />
@@ -46,12 +48,12 @@ class DataRow extends React.Component {
           <div id="incoming_message" className="mr-5 p-2 rounded">
             <div style={{ fontWeight: '600' }}><strong>You</strong></div>
             <div>{data.message}</div>
-            <div>{date}</div>
+            <div className="small">{date}</div>
           </div>
         </div>
         {/* <h4>{name}</h4>
         <p>{data.message}</p> */}
-    </div>
+      </div>
     );
 
     return (
@@ -363,90 +365,74 @@ class ConvosComponent extends React.Component {
         user={self.props.user}
         public_key={self.props.public_key}
         key={`row${(channel.signature)}`}
-        />)
+      />)
     );
 
     let loading = <div style={{ textAlign: 'center', marginTop: '25vh', fontSize: '55px', overflow: 'hidden' }}><i className="fa fa-spinner fa-pulse"></i></div>;
 
-    let content = <div>
-      <div className="page-title">{Channel.name}</div>
-      <div style={{
-        position: 'relative',
-        overflow: 'hidden',
-        height: 'calc(100vh - 190px)',
-        width: '100%',
-        border: '0px solid #ccc',
-      }}>
-        <div style={{
-          overflowY: 'scroll',
-          height: '100%',
-          width: '100%',
-          position: 'absolute',
-          padding: '20px',
-        }}>
-          <button className="btn btn-info" disabled={this.state.waitingForOldData} onClick={this.getOlderMessages.bind(this)}>
-            { this.state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
-          </button>
-          {recordList}
-          <br /><br />
-        </div>
-        {/*
-        <h1 className="page-title">{Channel.name}</h1>
-        <h2 className="page-title">{Channel.account}</h2>
-        {recordList}
-        <div className="bg-warning">
-          <div className="">
-            <div className="">
-              <div className="">
-                <div className="">
-                  <div className="">
-                    <input placeholder="" value={this.state.message}
-                    className="form-control" onChange={this.handleChange.bind(this, 'message')} />
-                    <br />
-                  </div>
-                </div>
-                <div className="">
-                  <div className="">
-                    <button type="button" className="btn btn-outline btn-default"
-                    disabled={this.state.submitted}
-                    onClick={this.createRecord.bind(this)}>
-                    <i className="glyphicon glyphicon-edit"></i>
-                    {this.state.submitted ? 'Saving...' : 'Send'}</button>
-                  </div>
-                </div>
+    let content = (
+      <div>
+        <MenuContainer channels={this.state.channels} />
+        <div className="convo-wrapper">
+          <div className="convo-header">
+            <div className="convo-header-nav">
+              <div className="convo-mobile-modal-button">
+                <button className="btn btn-custom btn-sm" data-toggle="modal" data-target="#channelsModal">
+                  Channels
+                </button>
+              </div>
+              <div className="convo-mobile-modal-replace" />
+              <div className="convo-header-title">
+                <span>{Channel.name}</span>
+              </div>
+              <div className="convo-header-hud">
+                {/* Coming soon! */}
+                {/* <span>HUD</span> */}
               </div>
             </div>
           </div>
+          <div className="convo-messages-outer">
+            <div className="convo-messages-inner">
+              <div className="convo-load-button text-right">
+                <button
+                  className="btn btn-secondary btn-sm"
+                  disabled={this.state.waitingForOldData}
+                  onClick={this.getOlderMessages.bind(this)}>
+                  {this.state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
+                </button>
+              </div>
+              <div className="convo-messages-content">
+                {recordList}
+              </div>
+            </div>
+          </div>
+          <div className="convo-input-outer">
+            <div className="convo-input-inner">
+              <form className="convo-input-form">
+                <textarea
+                  rows="4"
+                  col="50"
+                  className="convo-input-textarea"
+                  placeholder="Enter your message here..."
+                  value={this.state.message}
+                  onChange={this.handleChange.bind(this, 'message')}
+                  required="required"
+                />
+                <button
+                  type="submit"
+                  className="btn btn-custom"
+                  disabled={this.state.submitted}
+                  onClick={this.createRecord.bind(this)}
+                >
+                  SEND
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-        */}
+        <MobileMenuContainer channels={this.state.channels} />
       </div>
-      <div>
-        <form className="" style={
-          {
-            display: 'flex',
-            boxSizing: 'border-box',
-            height: '60px',
-            margin: '10px',
-          }}>
-          <input style={{
-            width: '100%',
-            padding: '15px 10px',
-            border: 'none',
-            margin: '0',
-          }} type="text"
-          className=""
-          placeholder="Enter your message here..."
-          value={this.state.message}
-          onChange={this.handleChange.bind(this, 'message')}
-          required="required" />
-          <button
-          type="submit"
-          className="btn btn-primary"
-          disabled={this.state.submitted} onClick={this.createRecord.bind(this)}
-          >SEND</button>
-        </form>
-      </div>
-    </div>
+    );
 
     return (
       this.state.loading ? loading : content
@@ -461,11 +447,11 @@ const ConvosExport = () => {
 
     render(
       <ConvosComponent
-      user={props.user}
-      validation={props.validation}
-      public_key={props.public_key}
-      accessData = {props.accessData}
-      channelId = {props.channelId}
+        user={props.user}
+        validation={props.validation}
+        public_key={props.public_key}
+        accessData={props.accessData}
+        channelId={props.channelId}
       />,
       document.getElementById('convosComponent'),
     );
