@@ -64,6 +64,14 @@ a:visited, {
   }
 }
 
+a.button-link {
+  color: white !important;
+  outline: none;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
 .bg-custom {
   background-color: $custom-primary;
 }

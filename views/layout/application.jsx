@@ -65,7 +65,7 @@ export default class ApplicationLayout extends React.Component {
                 {' '}
                 <span>My Invites</span>
               </a>
-              <a className="dropdown-item" href="/settings">
+              <a className="dropdown-item" href="/security">
                 <i className="fas fa-fw fa-lock" />
                 {' '}
                 <span>Security</span>
@@ -95,37 +95,6 @@ export default class ApplicationLayout extends React.Component {
                 <i className="fas fa-fw fa-id-card" />
                 {' '}
                 <span>My Contacts</span>
-              </a> */}
-
-              {/* <a className="dropdown-item" href="/channels">
-                <i className="fas fa-fw fa-comments" />
-                {' '}
-                <span>My Channels</span>
-              </a>
-              <a className="dropdown-item" href="/invites">
-                <i className="fas fa-fw fa-user-plus" />
-                {' '}
-                <span>My Invites</span>
-              </a>
-              <a className="dropdown-item" href="/settings">
-                <i className="fas fa-fw fa-cog" />
-                {' '}
-                <span>Settings</span>
-              </a>
-              <a className="dropdown-item" href="/account">
-                <i className="fas fa-fw fa-edit" />
-                {' '}
-                <span>My Profile</span>
-              </a>
-              <a
-                className="dropdown-item"
-                href="#"
-                data-toggle="modal"
-                data-target="#logoutModal"
-              >
-                <i className="fas fa-fw fa-sign-out-alt" />
-                {' '}
-                <span>Log out</span>
               </a> */}
             </div>
           </li>
@@ -214,7 +183,7 @@ export default class ApplicationLayout extends React.Component {
                   </a>
                 </li> */}
                 <li className="nav-item">
-                  <a className="nav-link" href="/settings">
+                  <a className="nav-link" href="/security">
                     <i className="fas fa-fw fa-lock" />
                     {' '}
                     <span>Security</span>
@@ -245,45 +214,6 @@ export default class ApplicationLayout extends React.Component {
                     <span>Log Out</span>
                   </a>
                 </li>
-                {/* <li className="nav-item">
-                  <a className="nav-link" href="/channels">
-                    <i className="fas fa-fw fa-comments" />
-                    {' '}
-                    <span>My Channels</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/invites">
-                    <i className="fas fa-fw fa-user-plus" />
-                    {' '}
-                    <span>My Invites</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/settings">
-                    <i className="fas fa-fw fa-cog" />
-                    {' '}
-                    <span>Settings</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/account">
-                    <i className="fas fa-fw fa-edit" />
-                    {' '}
-                    <span>My Profile</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    href="/#"
-                    data-toggle="modal"
-                    data-target="#logoutModal"
-                  >
-                    <i className="fas fa-fw fa-sign-out-alt" />
-                    <span>Log out</span>
-                  </a>
-                </li> */}
               </ul>
             </ul>
           </div>
@@ -442,7 +372,7 @@ export default class ApplicationLayout extends React.Component {
                   >
                     Cancel
                   </button>
-                  <a className="btn btn-custom" href="/logout">
+                  <a className="btn btn-custom button-link" href="/logout">
                     Log Out
                   </a>
                 </div>

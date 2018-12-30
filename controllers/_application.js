@@ -103,14 +103,14 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.send(page);
   });
 
-  app.get('/settings', controller.isLoggedIn, (req, res) => {
+  app.get('/security', controller.isLoggedIn, (req, res) => {
     const messages = req.session.flash;
     req.session.flash = null;
-    // Loads settings page
-    const SettingsPage = require('../views/settings.jsx');
+    // Loads security page
+    const SecurityPage = require('../views/security.jsx');
 
     page = ReactDOMServer.renderToString(
-      React.createElement(SettingsPage, {
+      React.createElement(SecurityPage, {
         connection,
         messages,
         name: 'Metis - Security',

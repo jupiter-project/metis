@@ -84,6 +84,13 @@ a:visited:active {
   text-decoration: none;
 }
 
+a.button-link {
+  color: white !important;
+  outline: none;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
 .bg-custom {
   background-color: #26313d;
 }

@@ -283,12 +283,12 @@ module.exports = (app, passport, React, ReactDOMServer) => {
           res.redirect('/2fa_setup');
         } else if (user.record.twofa_enabled === false) {
           // console.log('This is the other trigered');
-          res.redirect('/settings');
+          res.redirect('/security');
         }
       })
       .catch((err) => {
         console.log(err);
-        res.redirect('/settings');
+        res.redirect('/security');
       });
   });
 };
