@@ -4,7 +4,6 @@ import axios from 'axios';
 import toastr from 'toastr';
 import MenuContainer from './CustomComponents/MenuContainer.jsx';
 import MobileMenuContainer from './CustomComponents/MobileMenuContainer.jsx';
-import { react } from 'babel-types';
 
 class DataRow extends React.Component {
   constructor(props) {
@@ -83,9 +82,6 @@ class ConvosComponent extends React.Component {
       firstIndex: 0,
       loading: true,
       sideMenuOpen: true,
-      testState: 0,
-      tableDate: '',
-      messageSubmitted: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.createRecord = this.createRecord.bind(this);
@@ -163,8 +159,6 @@ class ConvosComponent extends React.Component {
             if (thisChannel.id === this.props.channelId) {
               this.setState((prevState) => ({
                 tableData: thisChannel.channel_record,
-                // tableDate: thisChannel.date
-                tableDate: thisChannel.date
               }), () => {
                 page.loadData('all');
               });
@@ -350,7 +344,6 @@ class ConvosComponent extends React.Component {
             password: '',
             submitted: false,
             message: '',
-            messageSubmitted: true,
           });
           toastr.success('Message sent');
         } else {
