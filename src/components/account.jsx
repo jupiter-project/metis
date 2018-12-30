@@ -101,7 +101,7 @@ class AccountComponent extends React.Component {
           </div>
           {this.state.account_editing_mode === true ? (
             <form className="card-body">
-              <h6 className="text-center">Your Account Passphrase</h6>
+              <h6 className="text-center">Account ID</h6>
               <div className="col-xs-12 col-sm-8 mx-auto alert alert-primary text-center">
                 <span>{this.state.user ? this.props.user.record.account : 'account id'}</span>
               </div>
@@ -142,29 +142,27 @@ class AccountComponent extends React.Component {
                 <div className="col">
                   <button
                     type="button"
-                    className="btn btn-success"
+                    className="btn btn-custom"
                     onClick={this.updateAccountInfo.bind(this)}
                     disabled={this.state.submitted}
                   >
-                    <i className="glyphicon glyphicon-edit" />
-                    {''}
                     {this.state.submitted ? 'Saving...' : 'Save'}
                   </button>
                 </div>
                 <div className="col text-right">
                   <button
                     type="button"
-                    className="btn btn-danger ml-auto"
+                    className="btn btn-secondary ml-auto"
                     onClick={this.switchMode.bind(this, 'account')}
                   >
-                    <i className="glyphicon glyphicon-edit" /> Cancel
+                    Cancel
                   </button>
                 </div>
               </div>
             </form>
           ) : (
             <form className="card-body">
-              <h6 className="text-center">Your Account Passphrase</h6>
+              <h6 className="text-center">Account ID</h6>
               <div className="col-xs-12 col-sm-8 mx-auto alert alert-primary text-center">
                 <span>{this.state.user ? this.props.user.record.account : 'account id'}</span>
               </div>
@@ -205,16 +203,16 @@ class AccountComponent extends React.Component {
                 <div className="col">
                   <button
                     type="button"
-                    className="btn btn-default"
+                    className="btn btn-custom"
                     onClick={this.switchMode.bind(this, 'account')}
                   >
-                    <i className="glyphicon glyphicon-edit" /> Edit
+                    Edit
                   </button>
                 </div>
                 <div className="col text-right">
                   <button
                     type="button"
-                    className="btn btn-default ml-auto"
+                    className="btn btn-secondary ml-auto"
                     disabled
                   >
                     Cancel

@@ -391,8 +391,7 @@ class ConvosComponent extends React.Component {
         <div className="convo-wrapper">
           <div className="convo-header">
             <div className="convo-header-title">
-              {/* <span>{Channel.name}</span> */}
-              <div className="page-title">{Channel.name}</div>
+              <span>{Channel.name}</span>
             </div>
             <div className="convo-header-nav">
               <div className="convo-sidebar-toggle">
@@ -411,12 +410,6 @@ class ConvosComponent extends React.Component {
                 >
                   Channels
                 </a>
-              </div>
-              <div className="convo-mobile-modal-replace" />
-              <div className="convo-header-hud">
-                <div>HUD</div>
-                {/* Coming soon! */}
-                {/* <span>HUD</span> */}
               </div>
             </div>
           </div>

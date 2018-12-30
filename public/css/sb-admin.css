@@ -67,11 +67,19 @@ button:hover, button.close:hover, .btn-link:hover {
   text-decoration: none;
 }
 
-a {
+a,
+a:link,
+a:visited {
   color: blue;
+  outline: 0;
+  border: 0;
 }
 
-a:hover {
+a:hover, a:active,
+a:link:hover,
+a:link:active,
+a:visited:hover,
+a:visited:active {
   color: darkblue;
   text-decoration: none;
 }
@@ -641,28 +649,8 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   padding: 10px;
 }
 
-.convo-header-nav {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
 .convo-mobile-modal-button {
   display: none;
-}
-
-.convo-mobile-modal-button a {
-  color: #26313d;
-}
-
-.convo-mobile-modal-button a:hover, .convo-mobile-modal-button a:active, .convo-mobile-modal-button a:focus {
-  color: rgba(38, 49, 61, 0.6);
-  text-decoration: none;
 }
 
 @media (max-width: 768px) {
@@ -671,18 +659,10 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   }
 }
 
-.convo-mobile-modal-replace {
-  display: inline-block;
-}
-
-@media (max-width: 768px) {
-  .convo-mobile-modal-replace {
-    display: none;
-  }
-}
-
 .convo-header-title {
   text-align: center;
+  font-weight: 400;
+  font-size: 22px;
 }
 
 .convo-header-hud {

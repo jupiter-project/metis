@@ -21,7 +21,7 @@ export default class ApplicationLayout extends React.Component {
     const loggedHeader = (
       <nav className="navbar navbar-expand navbar-custom static-top">
         <a className="navbar-brand" href="/">
-          <span>METIS</span>
+          <span>Metis - Public Test</span>
         </a>
 
         <button
@@ -137,7 +137,7 @@ export default class ApplicationLayout extends React.Component {
       <nav className="navbar navbar-expand navbar-custom static-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="/gravity">
-            <span>METIS</span>
+            <span>Metis - Public Test</span>
           </a>
 
           {/* <button

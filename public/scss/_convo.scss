@@ -11,40 +11,23 @@
 }
 
 .convo-header-nav {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
+  // display: flex;
+  // flex-wrap: nowrap;
+  // justify-content: space-between;
 }
 
 .convo-mobile-modal-button {
   display: none;
-  
-  a {
-    color: $custom-primary;
-
-    &:hover,
-    &:active,
-    &:focus {
-      color: fade-out($custom-primary, 0.4);
-      text-decoration: none;
-    }
-  }
 
   @media (max-width: 768px) {
     display: inline-block;
   }
 }
 
-.convo-mobile-modal-replace {
-  display: inline-block;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-}
-
 .convo-header-title {
   text-align: center;
+  font-weight: 400;
+  font-size: 22px;
 }
 
 .convo-header-hud {

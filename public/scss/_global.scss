@@ -50,10 +50,15 @@ button, button.close, .btn-link {
   }
 }
 
-a {
+a,
+a:link,
+a:visited, {
   color: blue;
+  outline: 0;
+  border: 0;
 
-  &:hover {
+  &:hover,
+  &:active {
     color: darkblue;
     text-decoration: none;
   }
