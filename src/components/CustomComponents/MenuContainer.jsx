@@ -105,14 +105,18 @@ class ChannelRow extends React.Component {
             </div>
             <div className="modal-footer">
               <button
+                className="btn btn-custom"
+                onClick={this.inviteUser.bind(this)}
+                data-dismiss="modal"
+              >
+                Invite
+              </button>
+              <button
                 className="btn btn-secondary"
                 type="button"
                 data-dismiss="modal"
               >
                 Cancel
-              </button>
-              <button className="btn btn-custom" onClick={this.inviteUser.bind(this)} data-dismiss="modal">
-                Invite
               </button>
             </div>
           </div>

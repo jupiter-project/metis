@@ -14,13 +14,21 @@ export class HomeComponent extends React.Component {
   render() {
     return (
       <div>
-        <div className="card card-register mx-auto mt-5">
+        <div className="card card-register mx-auto mt-5" style={{ border: '0' }}>
           <div className="card-body">
             <h3 className="text-center">Welcome</h3>
             <p>To get started you can create your first <a href="/channels">channel</a>, or provide your account ID to a friend to get invited to a channel and check your <a href="/invites">invites</a> to accept access.</p>
-            <div className="text-center alert alert-warning mb-0">
-              {this.state.user ? this.props.user.record.account : 'Invitation Code'}
-            </div>
+            <h5 className="text-center">
+              <div className="mb-2">
+                Account ID
+              </div>
+              <div>
+                {this.state.user ? this.props.user.record.account : 'Account ID'}
+              </div>
+            </h5>
+            {/* <div className="text-center alert alert-primary mb-0">
+              {this.state.user ? this.props.user.record.account : 'Account ID'}
+            </div> */}
           </div>
         </div>
       </div>

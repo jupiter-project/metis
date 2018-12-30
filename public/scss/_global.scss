@@ -18,17 +18,45 @@ th {
   min-width: 120px;
 }
 
-input[type="text"], input[type="password"], input[type="radio"], input[type="text"]:disabled, textarea {
+textarea,
+select,
+input,
+button,
+input[type="text"],
+input[type="password"],
+input[type="radio"],
+input[type="text"]:disabled,
+textarea {
   outline: none;
-  box-shadow:none !important;
   border:1px solid #ccc !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
 }
 
-button, a, button.close, .btn-link {
+textarea, select, input, button { outline: none; }
+
+textarea, select, input, button { outline: 0; }
+
+button, button.close, .btn-link {
   color: $custom-primary;
   outline: none;
   box-shadow:none !important;
   border:none !important;
+
+  &:hover {
+    color: $custom-primary;
+    text-decoration: none;
+  }
+}
+
+a {
+  color: blue;
+
+  &:hover {
+    color: darkblue;
+    text-decoration: none;
+  }
 }
 
 .bg-custom {

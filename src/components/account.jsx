@@ -91,6 +91,7 @@ class AccountComponent extends React.Component {
   }
 
   render() {
+    console.log(this.props.user.record.account);
     return (
       <div className="container">
         <div className="page-title">My Profile</div>
@@ -100,6 +101,10 @@ class AccountComponent extends React.Component {
           </div>
           {this.state.account_editing_mode === true ? (
             <form className="card-body">
+              <h6 className="text-center">Your Account Passphrase</h6>
+              <div className="col-xs-12 col-sm-8 mx-auto alert alert-primary text-center">
+                <span>{this.state.user ? this.props.user.record.account : 'account id'}</span>
+              </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <label htmlFor="inputFirstName">First Name</label>
@@ -159,6 +164,10 @@ class AccountComponent extends React.Component {
             </form>
           ) : (
             <form className="card-body">
+              <h6 className="text-center">Your Account Passphrase</h6>
+              <div className="col-xs-12 col-sm-8 mx-auto alert alert-primary text-center">
+                <span>{this.state.user ? this.props.user.record.account : 'account id'}</span>
+              </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <label htmlFor="inputFirstName">First Name</label>

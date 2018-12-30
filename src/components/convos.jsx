@@ -391,7 +391,8 @@ class ConvosComponent extends React.Component {
         <div className="convo-wrapper">
           <div className="convo-header">
             <div className="convo-header-title">
-              <span>{Channel.name}</span>
+              {/* <span>{Channel.name}</span> */}
+              <div className="page-title">{Channel.name}</div>
             </div>
             <div className="convo-header-nav">
               <div className="convo-sidebar-toggle">

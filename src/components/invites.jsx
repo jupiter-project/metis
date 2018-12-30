@@ -95,14 +95,18 @@ class DataRow extends React.Component {
           </div>
           <div className="modal-footer">
             <button
+              className="btn btn-custom"
+              onClick={this.acceptInvite.bind(this)}
+              data-dismiss="modal"
+            >
+              Accept
+            </button>
+            <button
               className="btn btn-secondary"
               type="button"
               data-dismiss="modal"
             >
               Cancel
-            </button>
-            <button className="btn btn-custom" onClick={this.acceptInvite.bind(this)} data-dismiss="modal">
-              Accept
             </button>
           </div>
         </div>
@@ -121,8 +125,6 @@ class DataRow extends React.Component {
                 data-toggle="modal"
                 data-target="#inviteInvite"
               >
-                <i className="fas fa-fw fa-check-square" />
-                {' '}
                 <span>Accept</span>
               </a>
           </td>
