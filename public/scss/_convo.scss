@@ -6,7 +6,7 @@
 
 .convo-header {
   flex: 1 100%;
-  height: 8%;
+  height: 12%;
   padding: 10px;
 }
 
@@ -18,6 +18,17 @@
 
 .convo-mobile-modal-button {
   display: none;
+  
+  a {
+    color: $custom-primary;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: fade-out($custom-primary, 0.4);
+      text-decoration: none;
+    }
+  }
 
   @media (max-width: 768px) {
     display: inline-block;
@@ -33,7 +44,7 @@
 }
 
 .convo-header-title {
-  display: inline-block;
+  text-align: center;
 }
 
 .convo-header-hud {
@@ -42,7 +53,7 @@
 
 .convo-messages-outer {
   flex: 1 100%;
-  height: 77%;
+  height: 73%;
   padding-left: 10px;
   // border-top: 2px solid lightgray;
 }
@@ -92,4 +103,37 @@
   font-size: 16px;
   margin-right: 12px;
   padding: 6px;
+}
+
+.convo-input-text {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  color: $custom-primary;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: $border-radius;
+  margin-right: 12px;
+
+  &:required,
+  &:focus, 
+  &:valid,
+  &:invalid {
+    border: 1px solid #ced4da;
+  }
+}
+
+.convo-sidebar-toggle {
+  display: inline-block;
+  
+  .btn-link {
+    color: $custom-primary;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }

@@ -4,6 +4,7 @@ import axios from 'axios';
 import toastr from 'toastr';
 import MenuContainer from './CustomComponents/MenuContainer.jsx';
 import MobileMenuContainer from './CustomComponents/MobileMenuContainer.jsx';
+import { react } from 'babel-types';
 
 class DataRow extends React.Component {
   constructor(props) {
@@ -81,6 +82,10 @@ class ConvosComponent extends React.Component {
       transactionIds: [],
       firstIndex: 0,
       loading: true,
+      sideMenuOpen: true,
+      testState: 0,
+      tableDate: '',
+      messageSubmitted: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.createRecord = this.createRecord.bind(this);
@@ -88,6 +93,13 @@ class ConvosComponent extends React.Component {
 
   componentDidMount() {
     this.loadTableData();
+  }
+
+  componentDidUpdate() {
+    if (!this.state.messageSubmitted) {
+      const objDiv = document.getElementById('messageList');
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
   }
 
   resetRecords(newData) {
@@ -151,9 +163,11 @@ class ConvosComponent extends React.Component {
             const thisChannel = response.data.channels[x];
 
             if (thisChannel.id === this.props.channelId) {
-              this.setState({
+              this.setState((prevState) => ({
                 tableData: thisChannel.channel_record,
-              }, () => {
+                // tableDate: thisChannel.date
+                tableDate: thisChannel.date
+              }), () => {
                 page.loadData('all');
               });
             }
@@ -298,11 +312,13 @@ class ConvosComponent extends React.Component {
   monitorData() {
     const self = this;
 
-    setInterval(() => {
-      if (!(self.state.submitted || self.state.update_submitted)) {
-        self.checkUpdates();
-      }
-    }, 1500);
+    if (this.state.messageSubmitted) {
+      setInterval(() => {
+        if (!(self.state.submitted || self.state.update_submitted)) {
+          self.checkUpdates();
+        }
+      }, 1500);
+    }
   }
 
   handleChange(aField, event) {
@@ -338,6 +354,7 @@ class ConvosComponent extends React.Component {
             password: '',
             submitted: false,
             message: '',
+            messageSubmitted: true,
           });
           toastr.success('Message sent');
         } else {
@@ -353,6 +370,11 @@ class ConvosComponent extends React.Component {
       });
   }
 
+  toggleSideMenu = () => {
+    this.setState({
+      sideMenuOpen: !this.state.sideMenuOpen
+    })
+  }
 
   render() {
     const self = this;
@@ -372,27 +394,40 @@ class ConvosComponent extends React.Component {
 
     let content = (
       <div>
-        <MenuContainer channels={this.state.channels} />
+        {this.state.sideMenuOpen ? <MenuContainer channels={this.state.channels} /> : null}
         <div className="convo-wrapper">
           <div className="convo-header">
+            <div className="convo-header-title">
+              <span>{Channel.name}</span>
+            </div>
             <div className="convo-header-nav">
-              <div className="convo-mobile-modal-button">
-                <button className="btn btn-custom btn-sm" data-toggle="modal" data-target="#channelsModal">
-                  Channels
+              <div className="convo-sidebar-toggle">
+                <button className="btn btn-link" onClick={this.toggleSideMenu}>
+                  {this.state.sideMenuOpen ? <i className="fas fa-chevron-circle-left"></i> : <i className="fas fa-chevron-circle-right"></i>}
                 </button>
               </div>
-              <div className="convo-mobile-modal-replace" />
-              <div className="convo-header-title">
-                <span>{Channel.name}</span>
+              <div className="convo-mobile-modal-button">
+                {/* <button className="btn btn-custom btn-sm" data-toggle="modal" data-target="#channelsModal">
+                  Channels
+                </button> */}
+                <a
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#channelsModal"
+                >
+                  Channels
+                </a>
               </div>
+              <div className="convo-mobile-modal-replace" />
               <div className="convo-header-hud">
+                <div>HUD</div>
                 {/* Coming soon! */}
                 {/* <span>HUD</span> */}
               </div>
             </div>
           </div>
           <div className="convo-messages-outer">
-            <div className="convo-messages-inner">
+            <div className="convo-messages-inner" id="messageList">
               <div className="convo-load-button text-right">
                 <button
                   className="btn btn-secondary btn-sm"
@@ -409,10 +444,17 @@ class ConvosComponent extends React.Component {
           <div className="convo-input-outer">
             <div className="convo-input-inner">
               <form className="convo-input-form">
-                <textarea
+                {/* <textarea
                   rows="4"
                   col="50"
                   className="convo-input-textarea"
+                  placeholder="Enter your message here..."
+                  value={this.state.message}
+                  onChange={this.handleChange.bind(this, 'message')}
+                  required="required"
+                /> */}
+                <input
+                  className="convo-input-text"
                   placeholder="Enter your message here..."
                   value={this.state.message}
                   onChange={this.handleChange.bind(this, 'message')}
