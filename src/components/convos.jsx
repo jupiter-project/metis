@@ -157,9 +157,9 @@ class ConvosComponent extends React.Component {
             const thisChannel = response.data.channels[x];
 
             if (thisChannel.id === this.props.channelId) {
-              this.setState((prevState) => ({
+              this.setState({
                 tableData: thisChannel.channel_record,
-              }), () => {
+              }, () => {
                 page.loadData('all');
               });
             }
