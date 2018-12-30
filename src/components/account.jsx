@@ -91,7 +91,6 @@ class AccountComponent extends React.Component {
   }
 
   render() {
-    console.log(this.props.user.record.account);
     return (
       <div className="container">
         <div className="page-title">My Profile</div>
@@ -200,22 +199,13 @@ class AccountComponent extends React.Component {
                 />
               </div>
               <div className="form-row mt-2">
-                <div className="col">
+                <div className="mx-auto">
                   <button
                     type="button"
                     className="btn btn-custom"
                     onClick={this.switchMode.bind(this, 'account')}
                   >
                     Edit
-                  </button>
-                </div>
-                <div className="col text-right">
-                  <button
-                    type="button"
-                    className="btn btn-secondary ml-auto"
-                    disabled
-                  >
-                    Cancel
                   </button>
                 </div>
               </div>

@@ -25,7 +25,7 @@ module.exports = {
     } else if (req.isAuthenticated()) {
       return next();
     } else {
-      res.redirect('/login');
+      res.redirect('/home');
     }
     return null;
   },
@@ -52,7 +52,7 @@ module.exports = {
       return next();
     } else {
       // console.log('Needs to log');
-      res.redirect('/login');
+      res.redirect('/home');
     }
     return null;
   },
@@ -63,7 +63,7 @@ module.exports = {
       return next();
     }
     console.log('Needs to log');
-    res.redirect('/login');
+    res.redirect('/home');
     return null;
   },
   isLoggedInIndex: (req, res, next) => {
@@ -83,7 +83,7 @@ module.exports = {
     } else if (req.isAuthenticated()) {
       return next();
     } else {
-      res.redirect('/login');
+      res.redirect('/home');
     }
     return null;
   },

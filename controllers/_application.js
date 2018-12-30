@@ -103,6 +103,35 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.send(page);
   });
 
+  app.get('/home', (req, res) => {
+    const messages = req.session.flash;
+    req.session.flash = null;
+
+
+    const requirements = {
+      passphrase: process.env.APP_ACCOUNT,
+      address: process.env.APP_ACCOUNT_ADDRESS,
+      public_key: process.env.APP_PUBLIC_KEY,
+      encryption: process.env.SESSION_SECRET !== undefined ? process.env.SESSION_SECRET : 'undefined',
+      name: process.env.APPNAME,
+    };
+
+    // Loads public home page
+
+    const PublicHomePage = require('../views/public_home_page.jsx');
+
+    page = ReactDOMServer.renderToString(
+      React.createElement(PublicHomePage, {
+        messages,
+        requirements,
+        name: 'Metis - Home',
+        user: req.user,
+        dashboard: false,
+      }),
+    );
+    res.send(page);
+  });
+
   app.get('/security', controller.isLoggedIn, (req, res) => {
     const messages = req.session.flash;
     req.session.flash = null;
