@@ -96,10 +96,8 @@ class ConvosComponent extends React.Component {
   }
 
   componentDidUpdate() {
-    if (!this.state.messageSubmitted) {
-      const objDiv = document.getElementById('messageList');
-      objDiv.scrollTop = objDiv.scrollHeight;
-    }
+    const objDiv = document.getElementById('messageList');
+    objDiv.scrollTop = objDiv.scrollHeight;
   }
 
   resetRecords(newData) {
@@ -312,13 +310,11 @@ class ConvosComponent extends React.Component {
   monitorData() {
     const self = this;
 
-    if (this.state.messageSubmitted) {
-      setInterval(() => {
-        if (!(self.state.submitted || self.state.update_submitted)) {
-          self.checkUpdates();
-        }
-      }, 1500);
-    }
+    setInterval(() => {
+      if (!(self.state.submitted || self.state.update_submitted)) {
+        self.checkUpdates();
+      }
+    }, 1500);
   }
 
   handleChange(aField, event) {
