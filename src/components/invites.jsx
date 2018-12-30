@@ -26,7 +26,6 @@ class DataRow extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state.channel_record);
   }
 
   handleChange(aField, event) {
@@ -80,7 +79,7 @@ class DataRow extends React.Component {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id=" ">
-              Accept your invite
+              Accept Your Invite
             </h5>
             <button
               className="close"
@@ -92,7 +91,7 @@ class DataRow extends React.Component {
             </button>
           </div>
           <div className="modal-body">
-            By clicking 'Accept', your account will be permanently linked to this channel.<br />
+            By clicking on 'Accept', your account will be permanently linked to this channel.<br />
           </div>
           <div className="modal-footer">
             <button
@@ -199,8 +198,8 @@ class InvitesComponent extends React.Component {
 
     return (
         <div className="container-fluid card-plain">
-          <h1 className="page-title">Your Invites</h1>
-          <div className="table-responsive">
+          <h1 className="page-title">My Invites</h1>
+          <div className="table-responsive mt-5">
             <table className="table table-striped table-bordered table-hover">
               <thead>
                 <tr className="text-center">

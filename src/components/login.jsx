@@ -72,7 +72,7 @@ export class LoginForm extends React.Component {
     const confirmationPage = (
       <form action="/login" method="post" className="">
         <div className="form-group text-center">
-          <p>You are about to login to the account:</p>
+          <p>You are about to log into the account:</p>
           <div className="h4">{this.state.account}</div>
         </div>
         <input type="hidden" name="account" value={this.state.account} />
@@ -141,8 +141,8 @@ export class LoginForm extends React.Component {
       <div>
         {this.state.confirmation_page === false ? <div className="card card-register mx-auto my-5">
           <div className="card-body">
-            <p>Metis is a decentralized chat application. Think Telegram or Rocket Chat, but 100% private, decentralized, and fully encrypted GROUP messaging.  Every message is encrypted and can ONLY be read by the group participants. The channel creator sends initial invites to Metis users. Add friends to your group by sending them to</p>
-            <h4 className="text-center"><a href="https://metis.sigwo.com/signup">metis.sigwo.com</a></h4>
+            <p>Metis is a decentralized chat application. Think Telegram or Rocket Chat, but 100% private, decentralized, and fully encrypted GROUP messaging. Every message is encrypted and can ONLY be read by the group participants. The channel creator sends initial invites to Metis users, and next, everyone in the channel can invite other peple. Want to add your friends to you favorite group? Let them sign up at</p>
+            <h4 className="text-center"><a href="https://metis.sigwo.tech/signup">metis.sigwo.tech</a></h4>
           </div>
         </div> : null}
         <div className="card card-register mx-auto mt-5">

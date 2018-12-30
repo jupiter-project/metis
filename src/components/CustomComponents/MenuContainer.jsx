@@ -81,7 +81,7 @@ class ChannelRow extends React.Component {
           <div className="modal-content" style={{ position: 'fixed', zIndex: 2000, color: 'black' }}>
             <div className="modal-header">
               <h5 className="modal-title" id=" ">
-                Invite to this channel
+                Invite to This Channel
               </h5>
               <button
                 className="close"
@@ -97,7 +97,7 @@ class ChannelRow extends React.Component {
               JUP account you wish to invite below and press on the Invite button. */}
               <p>
                 To invite another user to this channel,
-                simply input the JUP Address below and click "Invite".
+                simply enter his/her Account ID and click on "Invite".
               </p>
               <div className="form-group">
                 <input className="form-control" value={state.invitationAccount} onChange={this.handleChange.bind(this, 'invitationAccount')} />
@@ -182,7 +182,7 @@ export default class MenuContainer extends React.Component {
     const self = this;
     return (
       <ul className="sidebar navbar-nav float-left channels-list" style={{ position: 'inherit' }}>
-        <div className="h4 text-light p-2">Channels List</div>
+        <div className="h4 text-light p-2">My Channels</div>
         {props.channels ? props.channels.map((channel, index) => (
           <ChannelRow
             parent={self}

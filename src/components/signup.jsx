@@ -226,7 +226,7 @@ export class SignupForm extends React.Component {
     const newAccountSummary = (
       <form action="/signup" method="post" className="text-left">
         <div className="col-8 mx-auto alert alert-primary text-center">
-          <span>Passphrase and encryption password confirmed. Your account ID is:</span>
+          <span>Passphrase and encryption password confirmed. Your Account ID is:</span>
           <br />
           {this.state.confirmation_message}
         </div>
@@ -352,7 +352,7 @@ export class SignupForm extends React.Component {
           <p>Carefully write down your 12-word passphrase as well as
             your encryption password (see below) on a piece of paper or
             alternatively, securely save it in an encrypted document.
-            The order of the words is important and all are lowercase.</p>
+            The order of the words of the passphrase is important and all are lowercase.</p>
           <p>Never disclose your passphrase or encryption password!</p>
         </div>
         <div className="form-group">
@@ -525,11 +525,6 @@ export class SignupForm extends React.Component {
               should be written down carefully and kept in a
               safe place. If you lose your passphrase, you will permanently lose
               access to your account, there is no way to recover it.
-            </div>
-            <div className="form-group">
-              By continuing you declare that you have taken notice of and agree
-              on the following: the app creator has access to read all
-              information stored within the app.
             </div>
             <div className="form-group">
               Click on the button below to start.

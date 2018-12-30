@@ -87,7 +87,7 @@ class MobileChannelRow extends React.Component {
         <div className="add-user-modal">
           <div className="add-user-modal-content">
             <div className="add-user-modal-header bg-custom text-light">
-              <h5 className="modal-title">Invite User</h5>
+              <h5 className="modal-title">Invite to This Channel</h5>
               <button type="button" className="close text-light" onClick={this.toggleInvite}>
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -96,8 +96,8 @@ class MobileChannelRow extends React.Component {
               <div className="add-user-modal-inputbox">
                 <div className="mb-2">
                   To invite another user to this channel,
-                  simply input the JUP Address below and
-                  click "Invite".
+                  simply enter the Account ID below and
+                  click on "Invite".
                 </div>
                 <input
                   className="form-control"
@@ -162,7 +162,7 @@ export default class MobileMenuContainer extends React.Component {
         <div className="modal-dialog" role="document">
           <div className="modal-content border-none">
             <div className="modal-header bg-custom text-light">
-              <h5 className="modal-title" id="channelsModalLabel">Channels</h5>
+              <h5 className="modal-title" id="channelsModalLabel">My Channels</h5>
               <button type="button" className="close text-light" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

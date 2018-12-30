@@ -70,9 +70,9 @@ class SettingsOptions extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="page-title">My Settings</div>
+        <div className="page-title">Security</div>
         <div className="col-xs-12 col-sm-10 mx-auto mb-3">
-          <div className="card card-register mx-auto">
+          <div className="card card-register mx-auto mt-5">
             <div className="card-header bg-custom text-light h5">
               Two-Factor Authentication
             </div>

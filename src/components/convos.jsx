@@ -455,7 +455,7 @@ class ConvosComponent extends React.Component {
                   disabled={this.state.submitted}
                   onClick={this.createRecord.bind(this)}
                 >
-                  SEND
+                  Send
                 </button>
               </form>
             </div>

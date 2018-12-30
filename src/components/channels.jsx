@@ -222,7 +222,7 @@ class ChannelsComponent extends React.Component {
     // );
 
     const newChannelForm = (
-      <div className="card card-register mx-auto my-5">
+      <div className="card card-register mx-auto mt-5">
         <div className="card-header bg-custom text-light h5">
           Add New Channel
         </div>
@@ -248,7 +248,7 @@ class ChannelsComponent extends React.Component {
         <div className="row">
           <div className="mx-auto">
             <button type="button" className="btn btn-custom channels-modal" data-toggle="modal" data-target="#channelsModal">
-              View my channels
+              View My Channels
             </button>
           </div>
         </div>

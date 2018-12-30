@@ -113,7 +113,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       React.createElement(SettingsPage, {
         connection,
         messages,
-        name: 'Metis - Settings',
+        name: 'Metis - Security',
         user: req.user,
         dashboard: true,
         validation: req.session.jup_key,

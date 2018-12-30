@@ -12,8 +12,8 @@ export default class ApplicationLayout extends React.Component {
   render() {
     const linksList = (
       <div>
-        <li className="nav-item"><a className="nav-link" href="/channels"><i className="fas fa-fw fa-file" />{' '}<span>Your Channels</span></a></li>
-        <li className="nav-item"><a className="nav-link" href="/invites"><i className="fas fa-fw fa-file" />{' '}<span>Your Invites</span></a></li>
+        <li className="nav-item"><a className="nav-link" href="/channels"><i className="fas fa-fw fa-file" />{' '}<span>My Channels</span></a></li>
+        <li className="nav-item"><a className="nav-link" href="/invites"><i className="fas fa-fw fa-file" />{' '}<span>My Invites</span></a></li>
 {false && 'Generated plop links go here'}
       </div>
     );
@@ -50,15 +50,62 @@ export default class ApplicationLayout extends React.Component {
               className="dropdown-menu dropdown-menu-right"
               aria-labelledby="alertsDropdown"
             >
+              <a className="dropdown-item" href="/account">
+                <i className="fas fa-fw fa-user" />
+                {' '}
+                <span>My Profile</span>
+              </a>
               <a className="dropdown-item" href="/channels">
                 <i className="fas fa-fw fa-comments" />
                 {' '}
-                <span>Channels</span>
+                <span>My Channels</span>
+              </a>
+              <a className="dropdown-item" href="/invites">
+                <i className="fas fa-fw fa-envelope" />
+                {' '}
+                <span>My Invites</span>
+              </a>
+              <a className="dropdown-item" href="/settings">
+                <i className="fas fa-fw fa-lock" />
+                {' '}
+                <span>Security</span>
+              </a>
+              <a
+                className="dropdown-item"
+                href="#"
+                data-toggle="modal"
+                data-target="#logoutModal"
+              >
+                <i className="fas fa-fw fa-sign-out-alt" />
+                {' '}
+                <span>Log Out</span>
+              </a>
+              {/* <a className="dropdown-item" href="/">
+                <i className="fas fa-fw fa-question" />
+                {' '}
+                <span>Help or FAQ</span>
+              </a> */}
+              {/* <a className="dropdown-item" href="/">
+                <i className="fas fa-fw fa-info" />
+                {' '}
+                <span>About</span>
+              </a> */}
+
+              {/* <a className="dropdown-item" href="/contacts">
+                <i className="fas fa-fw fa-id-card" />
+                {' '}
+                <span>My Contacts</span>
+              </a> */}
+
+              {/* <a className="dropdown-item" href="/channels">
+                <i className="fas fa-fw fa-comments" />
+                {' '}
+                <span>My Channels</span>
               </a>
               <a className="dropdown-item" href="/invites">
                 <i className="fas fa-fw fa-user-plus" />
                 {' '}
-                <span>Invites</span>
+                <span>My Invites</span>
               </a>
               <a className="dropdown-item" href="/settings">
                 <i className="fas fa-fw fa-cog" />
@@ -79,7 +126,7 @@ export default class ApplicationLayout extends React.Component {
                 <i className="fas fa-fw fa-sign-out-alt" />
                 {' '}
                 <span>Log out</span>
-              </a>
+              </a> */}
             </div>
           </li>
         </ul>
@@ -139,17 +186,77 @@ export default class ApplicationLayout extends React.Component {
               </div>
               <ul className="nav flex-column">
                 <li className="nav-item">
+                  <a className="nav-link" href="/account">
+                    <i className="fas fa-fw fa-user" />
+                    {' '}
+                    <span>My Profile</span>
+                  </a>
+                </li>
+                <li className="nav-item">
                   <a className="nav-link" href="/channels">
                     <i className="fas fa-fw fa-comments" />
                     {' '}
-                    <span>Channels</span>
+                    <span>My Channels</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/invites">
+                    <i className="fas fa-fw fa-envelope" />
+                    {' '}
+                    <span>My Invites</span>
+                  </a>
+                </li>
+                {/* <li className="nav-item">
+                  <a className="nav-link" href="/contacts">
+                    <i className="fas fa-fw fa-id-card" />
+                    {' '}
+                    <span>My Contacts</span>
+                  </a>
+                </li> */}
+                <li className="nav-item">
+                  <a className="nav-link" href="/settings">
+                    <i className="fas fa-fw fa-lock" />
+                    {' '}
+                    <span>Security</span>
+                  </a>
+                </li>
+                {/* <li className="nav-item">
+                  <a className="nav-link" href="/">
+                    <i className="fas fa-fw fa-question" />
+                    {' '}
+                    <span>Help or FAQ</span>
+                  </a>
+                </li> */}
+                {/* <li className="nav-item">
+                  <a className="nav-link" href="/">
+                    <i className="fas fa-fw fa-info" />
+                    {' '}
+                    <span>About</span>
+                  </a>
+                </li> */}
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
+                    href="/#"
+                    data-toggle="modal"
+                    data-target="#logoutModal"
+                  >
+                    <i className="fas fa-fw fa-sign-out-alt" />
+                    <span>Log Out</span>
+                  </a>
+                </li>
+                {/* <li className="nav-item">
+                  <a className="nav-link" href="/channels">
+                    <i className="fas fa-fw fa-comments" />
+                    {' '}
+                    <span>My Channels</span>
                   </a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/invites">
                     <i className="fas fa-fw fa-user-plus" />
                     {' '}
-                    <span>Invites</span>
+                    <span>My Invites</span>
                   </a>
                 </li>
                 <li className="nav-item">
@@ -176,7 +283,7 @@ export default class ApplicationLayout extends React.Component {
                     <i className="fas fa-fw fa-sign-out-alt" />
                     <span>Log out</span>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </ul>
           </div>
@@ -325,8 +432,7 @@ export default class ApplicationLayout extends React.Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  Select "Log out" below if you are ready to end your current
-                  session.
+                  Click on “Log Out” if you are ready to end your current session.
                 </div>
                 <div className="modal-footer">
                   <button
@@ -337,7 +443,7 @@ export default class ApplicationLayout extends React.Component {
                     Cancel
                   </button>
                   <a className="btn btn-custom" href="/logout">
-                    Log out
+                    Log Out
                   </a>
                 </div>
               </div>
