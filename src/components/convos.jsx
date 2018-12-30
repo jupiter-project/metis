@@ -34,8 +34,6 @@ class DataRow extends React.Component {
             <div className="small">{date}</div>
           </div>
         </div>
-        {/* <h4>{name}</h4>
-        <p>{data.message}</p> */}
       </div>
     );
 
@@ -51,8 +49,6 @@ class DataRow extends React.Component {
             <div className="small">{date}</div>
           </div>
         </div>
-        {/* <h4>{name}</h4>
-        <p>{data.message}</p> */}
       </div>
     );
 
@@ -92,8 +88,13 @@ class ConvosComponent extends React.Component {
   }
 
   componentDidUpdate() {
-    const objDiv = document.getElementById('messageList');
-    objDiv.scrollTop = objDiv.scrollHeight;
+    // const objDiv = document.getElementById('messageList');
+    // objDiv.scrollTop = objDiv.scrollHeight;
+    // this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    this.messageEnd.scrollIntoView({ behavior: 'smooth' });
   }
 
   resetRecords(newData) {
@@ -133,6 +134,8 @@ class ConvosComponent extends React.Component {
       transactionIds: ids,
       messages: currentMessages,
     });
+
+    this.scrollToBottom();
   }
 
   loadTableData() {
@@ -264,6 +267,7 @@ class ConvosComponent extends React.Component {
                 queryScope: 'unconfirmed',
                 loading: false,
               });
+              page.scrollToBottom();
             }
           } else if (page.state.queryScope === 'unconfirmed') {
             const newMessages = response.data.messages;
@@ -416,6 +420,7 @@ class ConvosComponent extends React.Component {
             </div>
           </div>
           <div className="convo-messages-outer">
+
             <div className="convo-messages-inner" id="messageList">
               <div className="convo-load-button text-right">
                 <button
@@ -428,20 +433,15 @@ class ConvosComponent extends React.Component {
               <div className="convo-messages-content">
                 {recordList}
               </div>
+              <div style={{ float: 'left', clear: 'both' }}
+                ref={(el) => { this.messageEnd = el }}
+              />
             </div>
+
           </div>
           <div className="convo-input-outer">
             <div className="convo-input-inner">
               <form className="convo-input-form">
-                {/* <textarea
-                  rows="4"
-                  col="50"
-                  className="convo-input-textarea"
-                  placeholder="Enter your message here..."
-                  value={this.state.message}
-                  onChange={this.handleChange.bind(this, 'message')}
-                  required="required"
-                /> */}
                 <input
                   className="convo-input-text"
                   placeholder="Enter your message here..."

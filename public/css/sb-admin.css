@@ -699,18 +699,6 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   height: 64px;
 }
 
-.convo-input-textarea {
-  resize: none;
-  width: 100%;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  border-radius: 0.3rem;
-  background-color: #f8f8f8;
-  font-size: 16px;
-  margin-right: 12px;
-  padding: 6px;
-}
-
 .convo-input-text {
   display: block;
   width: 100%;
