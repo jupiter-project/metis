@@ -120,7 +120,7 @@ class DataRow extends React.Component {
           <td>{this.state.date}</td>
           <td>
             <a
-                className="btn btn-custom"
+                className="btn btn-custom button-link"
                 href="#"
                 data-toggle="modal"
                 data-target="#inviteInvite"
