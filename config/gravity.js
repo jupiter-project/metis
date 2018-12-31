@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const events = require('events');
 const methods = require('./_methods');
 
-const addressBreakdown = process.env.APP_ACCOUNT_ADDRESS.split('-');
+const addressBreakdown = process.env.APP_ACCOUNT_ADDRESS ? process.env.APP_ACCOUNT_ADDRESS.split('-') : [];
 
 class Gravity {
   constructor() {
