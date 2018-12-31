@@ -1,7 +1,9 @@
 const axios = require('axios');
 const crypto = require('crypto');
 const events = require('events');
+const _ = require('lodash')
 const methods = require('./_methods');
+
 
 const addressBreakdown = process.env.APP_ACCOUNT_ADDRESS ? process.env.APP_ACCOUNT_ADDRESS.split('-') : [];
 
@@ -652,10 +654,38 @@ class Gravity {
                 try {
                   // This decrypts the message from the blockchain using native encryption
                   // as well as the encryption based on encryption variable
+
+                  let recordPassword;
+                  // let copyOfPassword;
+
+                  if (scope.accessData) {
+                    recordPassword = scope.accessData.encryptionPassword;
+                    // copyOfPassword = _.clone(password);
+                  } else {
+                    recordPassword = password;
+                  }
+                  const { decryptedMessage } = response.data;
+                  // const dataClone = _.clone(decryptedMessage);
+
                   const decrypted = JSON.parse(
-                    self.decrypt(response.data.decryptedMessage,
-                      password),
+                    self.decrypt(decryptedMessage,
+                      recordPassword),
                   );
+                  /*
+                  let decryptedCopy;
+
+                  try {
+                    decryptedCopy = self.decrypt(dataClone, password);
+                  } catch (e) {
+                    decryptedCopy = { error: true, fullError: e };
+                  }
+
+                  if (decryptedCopy.id) {
+                    console.log(decryptedCopy);
+                    console.log(dataClone);
+                    console.log(this.password);
+                  } */
+
                   decrypted.confirmed = true;
                   decryptedRecords.push(decrypted);
                 } catch (e) {
@@ -1924,7 +1954,7 @@ class Gravity {
     });
   }
 
-  async getUnconfirmedData(address, passphrase, filter = {}) {
+  async getUnconfirmedData(address, passphrase, filter = {}, accessData) {
     const self = this;
     const unconfirmedData = [];
 
@@ -1969,9 +1999,21 @@ class Gravity {
           console.log(e);
           decryptedData = e;
         }
+
         try {
-          dataObject.data = JSON.parse(self.decrypt(decryptedData.decryptedMessage))
-          || decryptedData;
+          let unconfirmedDataObject;
+
+          if (accessData) {
+            unconfirmedDataObject = JSON.parse(self.decrypt(
+              decryptedData.decryptedMessage,
+              accessData.encryptionPassword,
+            ));
+          }
+
+          if (!unconfirmedDataObject) {
+            unconfirmedDataObject = JSON.parse(self.decrypt(decryptedData.decryptedMessage));
+          }
+          dataObject.data = unconfirmedDataObject || decryptedData;
         } catch (e) {
           dataObject.data = decryptedData;
         }

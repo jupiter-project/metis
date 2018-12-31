@@ -347,7 +347,7 @@ class Model {
     let recordTable;
     let user;
 
-    console.log('Access link in create model method');
+    // console.log('Access link in create model method');
 
     return new Promise((resolve, reject) => {
       if (self.verify().errors === true) {
@@ -361,10 +361,19 @@ class Model {
             [`${self.model}_record`]: stringifiedRecord,
             date: Date.now(),
           };
-          const encryptedRecord = gravity.encrypt(JSON.stringify(fullRecord));
+
+          let encryptedRecord;
+          if (accessLink && accessLink.encryptionPassword) {
+            encryptedRecord = gravity.encrypt(
+              JSON.stringify(fullRecord),
+              accessLink.encryptionPassword,
+            );
+          } else {
+            encryptedRecord = gravity.encrypt(JSON.stringify(fullRecord));
+          }
+
           let callUrl;
 
-          console.log(JSON.stringify(fullRecord));
 
           if (self.model === 'user') {
             if (self.prunableOnCreate) {
