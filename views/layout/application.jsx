@@ -25,16 +25,34 @@ export default class ApplicationLayout extends React.Component {
           <span>Metis - Public Test</span>
         </a>
 
-        <button
-          className="btn btn-link btn-sm text-white d-block d-md-none ml-auto"
-          href="/#"
-          data-toggle="collapse"
-          data-target="#mobile-menu"
-        >
-          <i className="fas fa-fw fa-bars" />
-        </button>
+        <ul className="navbar-nav ml-auto mobile-nav-button">
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="https://sigwo.tech/feedback"
+              target="_blank"
+            >
+              Feedback
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link mt-1"
+              href="/#"
+              data-toggle="collapse"
+              data-target="#mobile-menu"
+            >
+              <i className="fas fa-fw fa-bars" />
+            </a>
+          </li>
+        </ul>
 
-        <ul className="navbar-nav ml-auto d-none d-md-block">
+        <ul className="navbar-nav ml-auto desktop-nav">
+          <li className="nav-item">
+            <a className="nav-link" href="https://sigwo.tech/feedback" target="_blank">
+              Feedback
+            </a>
+          </li>
           <li className="nav-item dropdown">
             <a
               className="nav-link dropdown-toggle"
@@ -152,8 +170,8 @@ export default class ApplicationLayout extends React.Component {
     const loggedWrapper = (
       <div id="wrapper">
         <div id="content-wrapper">
-          <div className="collapse navbar-collapse" id="mobile-menu">
-            <ul className="navbar-nav d-block d-lg-none text-left">
+          <div className="collapse navbar-collapse mobile-nav" id="mobile-menu">
+            <ul className="navbar-nav text-left">
               <div className="card card-account bg-secondary">
                 <div className="card-body">
                   <span className="h5">

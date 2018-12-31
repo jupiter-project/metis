@@ -393,3 +393,27 @@
   height: calc(100vh - #{$navbar-base-height});
   overflow-y: auto;
 }
+
+.mobile-nav-button {
+  display: flex;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.mobile-nav {
+  display: block;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.desktop-nav {
+  display: none;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}

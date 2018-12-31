@@ -646,6 +646,40 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   overflow-y: auto;
 }
 
+.mobile-nav-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .mobile-nav-button {
+    display: none;
+  }
+}
+
+.mobile-nav {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .mobile-nav {
+    display: none;
+  }
+}
+
+.desktop-nav {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktop-nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
 .convo-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
