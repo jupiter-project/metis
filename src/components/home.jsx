@@ -14,18 +14,18 @@ export class HomeComponent extends React.Component {
   render() {
     return (
       <div>
-        <div className="card card-register mx-auto mt-5 text-center" style={{ border: '0' }}>
+        <div className="card card-register mx-auto mt-5 text-center">
           <div className="card-body">
             <h3>Welcome</h3>
-            <p>To get started you can create your first <a href="/channels">channel</a>, or provide your account ID to a friend to get invited to a channel and check your <a href="/invites">invites</a> to accept access.</p>
-            <h5>
-              <div className="mb-2">
+            <p className="text-justify">To get started you can create your first <a href="/channels">channel</a>, or provide your account ID to a friend to get invited to a channel and check your <a href="/invites">invites</a> to accept access.</p>
+            <div className="mt-5">
+              <h5>
                 Account ID
-              </div>
-              <div>
+              </h5>
+              <h6>
                 {this.state.user ? this.props.user.record.account : 'Account ID'}
-              </div>
-            </h5>
+              </h6>
+            </div>
             {/* <div className="text-center alert alert-primary mb-0">
               {this.state.user ? this.props.user.record.account : 'Account ID'}
             </div> */}
