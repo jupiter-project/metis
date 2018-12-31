@@ -18,6 +18,8 @@
     }
   }
   a.dropdown-item {
+    // new addition
+    padding: .25rem 1.25rem;
     color: fade-out($black, 0.2);
     &:active,
     &:focus,
@@ -26,6 +28,14 @@
       background-color: transparent;
     }
   }
+}
+
+.dropdown-alias-card {
+  margin: .25rem .75rem;
+  padding: .25rem .75rem;
+  background: fade-out($custom-primary, 0.5);
+  color: white;
+  border-radius: $border-radius;
 }
 
 .navbar-nav {

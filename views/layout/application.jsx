@@ -1,4 +1,5 @@
 import React from 'react';
+import { thisExpression } from 'babel-types';
 
 export default class ApplicationLayout extends React.Component {
   constructor(props) {
@@ -50,6 +51,14 @@ export default class ApplicationLayout extends React.Component {
               className="dropdown-menu dropdown-menu-right"
               aria-labelledby="alertsDropdown"
             >
+              <div className="dropdown-alias-card">
+                <span
+                  className="d-inline-block text-truncate small"
+                  style={{ maxWidth: '120px'}}
+                >
+                  Hello, {this.state.user_exists ? this.state.user.record.alias : 'Alias'}
+                </span>
+              </div>
               <a className="dropdown-item" href="/account">
                 <i className="fas fa-fw fa-user" />
                 {' '}
@@ -149,7 +158,7 @@ export default class ApplicationLayout extends React.Component {
                 <div className="card-body">
                   <span className="h5">
                   {this.state.user_exists
-                    ? `${this.state.user.record.firstname} ${this.state.user.record.lastname}`
+                    ? `Hello, ${this.state.user.record.alias}`
                     : 'your name'}</span>
                 </div>
               </div>
