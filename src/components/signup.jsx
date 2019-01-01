@@ -484,6 +484,12 @@ export class SignupForm extends React.Component {
               access to your account, there is no way to recover it.
             </div>
             <div className="form-group">
+              Proceed with CAUTION! This is a test release. You may lose data. 
+              Encryption of data doesn’t prevent copy and paste or screen shots of the 
+              conversation. Sigwo Technologies, LLC or the Darcrus Project are 
+              not responsible for any loss of data. Use at your own risk.
+            </div>
+            <div className="form-group">
               Click on the button below to start.
             </div>
             <div className="form-group text-center">
