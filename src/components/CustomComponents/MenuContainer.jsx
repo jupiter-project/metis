@@ -154,7 +154,7 @@ class ChannelRow extends React.Component {
     ); */
 
     return (
-      <div>
+      <div style={{ position: 'inherit' }}>
         <li className="new-channels">
           <div
             className="new-channels-link"
