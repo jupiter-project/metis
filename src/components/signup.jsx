@@ -335,11 +335,11 @@ export class SignupForm extends React.Component {
           <span>{this.state.generated_passphrase}</span>
         </div>
         <div className="form-group my-4">
-          <p>Carefully write down your 12-word passphrase as well as
+          <p className="text-justify">Carefully write down your 12-word passphrase as well as
             your encryption password (see below) on a piece of paper or
             alternatively, securely save it in an encrypted document.
             The order of the words of the passphrase is important and all are lowercase.</p>
-          <p>Never disclose your passphrase or encryption password!</p>
+          <p className="text-center">Never disclose your passphrase or encryption password!</p>
         </div>
         <div className="form-group">
           <label htmlFor="alias">Alias</label>
@@ -434,7 +434,7 @@ export class SignupForm extends React.Component {
           <div className="text-center">{this.state.confirmation_message}</div>
         </div>
         <div className="form-group">
-          <p>Please enter your passphrase and encryption password to verify you wrote them down correctly.</p>
+          <p className="text-justify">Please enter your passphrase and encryption password to verify you wrote them down correctly.</p>
         </div>
         <div className="form-group" id="jup-confirm">
           <label htmlFor="confirmPassphrase">Passphrase</label>
@@ -475,7 +475,7 @@ export class SignupForm extends React.Component {
           generatedAccount
         ) : (
           <div>
-            <div className="form-group">
+            <div className="form-group text-justify">
               This app is based on blockchain technology. The
               blockchain will generate an account for you with
               a secure passphrase. This 12-word passphrase
@@ -483,13 +483,13 @@ export class SignupForm extends React.Component {
               safe place. If you lose your passphrase, you will permanently lose
               access to your account, there is no way to recover it.
             </div>
-            <div className="form-group">
+            <div className="form-group text-justify">
               Proceed with CAUTION! This is a test release. You may lose data. 
               Encryption of data doesn’t prevent copy and paste or screen shots of the 
               conversation. Sigwo Technologies, LLC or the Darcrus Project are 
               not responsible for any loss of data. Use at your own risk.
             </div>
-            <div className="form-group">
+            <div className="form-group text-center">
               Click on the button below to start.
             </div>
             <div className="form-group text-center">

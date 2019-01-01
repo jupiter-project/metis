@@ -99,8 +99,7 @@ class ChannelRow extends React.Component {
               {/* Use this form to invite another user to this channel. Please write the
               JUP account you wish to invite below and press on the Invite button. */}
               <p>
-                To invite another user to this channel,
-                simply enter his/her Account ID and click on "Invite".
+                To invite another user to this channel, simply enter his/her alias or JUP ID and click on "Invite".
               </p>
               <div className="form-group">
                 <input className="form-control" value={state.invitationAccount} onChange={this.handleChange.bind(this, 'invitationAccount')} />
@@ -154,7 +153,7 @@ class ChannelRow extends React.Component {
     ); */
 
     return (
-      <div>
+      <div style={{ position: 'inherit' }}>
         <li className="new-channels">
           <div
             className="new-channels-link"
