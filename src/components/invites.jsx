@@ -121,7 +121,6 @@ class DataRow extends React.Component {
           <td>
             <a
                 className="btn btn-custom button-link"
-                href="#"
                 data-toggle="modal"
                 data-target="#inviteInvite"
               >
