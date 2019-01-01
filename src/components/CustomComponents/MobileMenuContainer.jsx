@@ -95,9 +95,7 @@ class MobileChannelRow extends React.Component {
             <div className="add-user-modal-body">
               <div className="add-user-modal-inputbox">
                 <div className="mb-2">
-                  To invite another user to this channel,
-                  simply enter the Account ID below and
-                  click on "Invite".
+                  To invite another user to this channel, simply enter his/her alias or JUP ID and click on "Invite".
                 </div>
                 <input
                   className="form-control"
