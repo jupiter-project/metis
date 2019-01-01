@@ -72,13 +72,13 @@ class DataRow extends React.Component {
       id="inviteInvite"
       tabIndex="-1"
       role="dialog"
-      aria-labelledby=" "
+      aria-labelledby="inviteInvite"
       aria-hidden="true"
     >
       <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id=" ">
+            <h5 className="modal-title">
               Accept Your Invite
             </h5>
             <button
