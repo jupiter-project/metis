@@ -67,50 +67,93 @@ class DataRow extends React.Component {
     const fullData = this.props.parent.state.invites[this.props.invite];
 
     const inviteComponent = (
-    <div
-      className="modal fade"
-      id="inviteInvite"
-      role="dialog"
-      aria-labelledby="inviteInvite"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog" role="document">
-        <div className="modal-content" style={{ position: 'fixed', zIndex: '100', color: 'black' }}>
-          <div className="modal-header">
-            <h5 className="modal-title">
-              Accept Your Invite
-            </h5>
-            <button
-              className="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div className="modal-body">
-            By clicking on 'Accept', your account will be permanently linked to this channel.<br />
-          </div>
-          <div className="modal-footer">
-            <button
-              className="btn btn-custom"
-              onClick={this.acceptInvite.bind(this)}
-              data-dismiss="modal"
-            >
-              Accept
-            </button>
-            <button
-              className="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
+      <div>
+        <div
+          className="modal fade"
+          id="NewInviteModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="NewInviteModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="NewInviteModalLabel">Accept Your Invite</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p>By clicking on 'Accept', your account will be permanently linked to this channel.</p>
+              </div>
+              <div className="modal-footer">
+                {/* <button type="button" className="btn btn-custom">Continue</button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button> */}
+                <button
+                  className="btn btn-custom"
+                  onClick={this.acceptInvite.bind(this)}
+                  data-dismiss="modal"
+                >
+                  Accept
+                </button>
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  data-dismiss="modal"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+        {/* <div
+          className="modal fade"
+          id="inviteInvite"
+          role="dialog"
+          aria-labelledby="inviteInvite"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content" style={{ position: 'fixed', zIndex: '100', color: 'black' }}>
+              <div className="modal-header">
+                <h5 className="modal-title">
+                  Accept Your Invite
+                </h5>
+                <button
+                  className="close"
+                  type="button"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                By clicking on 'Accept', your account will be permanently linked to this channel.<br />
+              </div>
+              <div className="modal-footer">
+                <button
+                  className="btn btn-custom"
+                  onClick={this.acceptInvite.bind(this)}
+                  data-dismiss="modal"
+                >
+                  Accept
+                </button>
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  data-dismiss="modal"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div> */}
       </div>
-    </div>);
+    );
 
     const readOnly = (
       <tr className="text-center" key={`row-${(inviteInfo.id)}-data`}>
@@ -130,7 +173,7 @@ class DataRow extends React.Component {
                   type="button"
                   className="btn btn-custom"
                   data-toggle="modal"
-                  data-target="#inviteInvite"
+                  data-target="#NewInviteModal"
                 >
                   <span>Accept</span>
                 </button>
