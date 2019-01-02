@@ -70,13 +70,12 @@ class DataRow extends React.Component {
     <div
       className="modal fade"
       id="inviteInvite"
-      tabIndex="-1"
       role="dialog"
       aria-labelledby="inviteInvite"
       aria-hidden="true"
     >
       <div className="modal-dialog" role="document">
-        <div className="modal-content">
+        <div className="modal-content" style={{ position: 'fixed', zIndex: '100', color: 'black' }}>
           <div className="modal-header">
             <h5 className="modal-title">
               Accept Your Invite
