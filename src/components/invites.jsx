@@ -118,18 +118,28 @@ class DataRow extends React.Component {
           <td>{fullData.sender}</td>
           <td>{this.state.date}</td>
           <td>
-            <a
+            {/* <a
                 className="btn btn-custom button-link"
                 data-toggle="modal"
                 data-target="#inviteInvite"
               >
                 <span>Accept</span>
-              </a>
+              </a> */}
+              <div style={{ display: 'fixed' }}>
+                <button
+                  type="button"
+                  className="btn btn-custom"
+                  data-toggle="modal"
+                  data-target="#inviteInvite"
+                >
+                  <span>Accept</span>
+                </button>
+                {inviteComponent}
+              </div>
           </td>
           { /* <td>
               <button className="btn btn-success" onClick={this.editMode.bind(this)}>Edit</button>
           </td> */}
-          {inviteComponent}
       </tr>
     );
 
@@ -213,6 +223,40 @@ class InvitesComponent extends React.Component {
                 {recordList}
               </tbody>
             </table>
+          </div>
+          <button
+            type="button"
+            className="btn btn-custom"
+            data-toggle="modal"
+            data-target="#testerModal"
+          >
+            Tester Modal
+          </button>
+          <div
+            className="modal fade"
+            id="testerModal"
+            tabIndex="-1"
+            role="dialog"
+            aria-labelledby="testerModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="testerModalLabel">Tester Modal</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p>this is a test modal...</p>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-custom">Continue</button>
+                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
     );
