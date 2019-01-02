@@ -3,6 +3,174 @@ import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
+class NewDataRow extends React.Component {
+  constructor(props) {
+    super(props);
+    const invite = this.props.parent.state.invites[this.props.invite];
+    const record = invite.channel;
+    this.state = {
+      fullData: invite,
+      inviteData: this.props.parent.state.invites[this.props.invite].channel,
+      account: record.account,
+      name: record.name,
+      invites: [],
+      edit_mode: false,
+      confirmed: record.confirmed,
+      date: (new Date(record.date)).toLocaleString(),
+      submitted: false,
+      invitationAccount: '',
+      channel_record: record.channel_record,
+    };
+  }
+
+  acceptInvite = () => {
+    const page = this;
+    const data = {
+      channel_record: this.state.channel_record,
+    };
+
+    data.channel_record.invited = true;
+    data.channel_record.sender = this.state.fullData.sender;
+
+    axios.post('/channels/import', { data })
+      .then((response) => {
+        if (response.data.success) {
+          page.props.parent.setState({
+            update_submitted: false,
+          });
+
+          toastr.success('Invite accepted!');
+        } else {
+          toastr.error('There was an error in sending your invite');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error('There was an error');
+      });
+  }
+
+  render() {
+    const inviteInfo = this.props.parent.state.invites[this.props.invite].channel;
+    const fullData = this.props.parent.state.invites[this.props.invite];
+
+    const inviteComponent = (
+      <div
+        className="modal fade"
+        id="NewIniviteModalTwo"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="NewInviteModalLabelTwo"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="NewInviteModalLabelTwo">Accept Your Invite</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <p>By clicking on 'Accept', your account will be permanently linked to this channel.</p>
+            </div>
+            <div className="modal-footer">
+              {/* <button type="button" className="btn btn-custom">Continue</button>
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button> */}
+              <button
+                className="btn btn-custom"
+                onClick={() => this.acceptInvite()}
+                data-dismiss="modal"
+              >
+                Accept
+              </button>
+              <button
+                className="btn btn-secondary"
+                type="button"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    const TableBody = (
+      <div className="card text-center" style={{ maxWidth: '20rem', marginLeft: 'auto', marginRight: 'auto', marginBottom: '32px' }} key={`row-${(inviteInfo.id)}-data`}>
+        <div className="card-header">
+          {inviteInfo.channel_record.name}
+        </div>
+        <div className="card-body">
+          <div>You have recieved a new invite from</div>
+          <div>{fullData.sender}</div>
+          <div className="mt-3">
+            <button
+              type="button"
+              className="btn btn-custom"
+              data-toggle="modal"
+              data-target="#NewIniviteModalTwo"
+            >
+              Accept
+            </button>
+          </div>
+          {/* <div style={{ marginTop: '8px' }}>{this.state.date}</div> */}
+        </div>
+
+        {/* <div key={`row-${(inviteInfo.id)}-data`} style={{ background: 'lightgray', padding: '10px', margin: '10px', maxWidth: '25rem' }}>
+          <div
+            style={{
+              // background: 'red',
+            }}
+          >
+            <div style={{fontWeight: 'bold'}}>Channel Name:</div>
+            <div style={{ paddingBottom: '8px' }}>
+              {inviteInfo.channel_record.name}
+            </div>
+          </div>
+          <div
+            style={{
+              // background: 'orange',
+            }}
+          >
+            <div style={{fontWeight: 'bold'}}>Invite From:</div>
+            <div style={{ paddingBottom: '8px' }}>
+              {fullData.sender}
+            </div>
+          </div>
+          <div
+            style={{
+              // background: 'blue',
+              textAlign: 'center',
+              padding: '8px'
+            }}
+          >
+            <button
+              type="button"
+              className="btn btn-custom"
+              data-toggle="modal"
+              data-target="#NewIniviteModalTwo"
+            >
+              Accept
+            </button>
+          </div>
+          <div className="small pb-1">Sent: {this.state.date}</div>
+        </div> */}
+
+
+      </div>
+    );
+
+    return (
+      <div>
+        {TableBody}
+        {inviteComponent}
+      </div>
+    );
+  }
+}
+
 class DataRow extends React.Component {
   constructor(props) {
     super(props);
@@ -239,6 +407,17 @@ class InvitesComponent extends React.Component {
   render() {
     const self = this;
 
+    const NewRecordList = (
+      this.state.invites.map((invite, index) => <NewDataRow
+        parent={self}
+        invite={index}
+        user={self.props.user}
+        public_key={self.props.public_key}
+        key={`row${invite.channel.id}`}
+      />
+      )
+    );
+
     const recordList = (
       this.state.invites.map((invite, index) => <DataRow
           parent={self}
@@ -250,9 +429,12 @@ class InvitesComponent extends React.Component {
     );
 
     return (
-        <div className="container-fluid card-plain">
+        <div>
           <h1 className="page-title">My Invites</h1>
-          <div className="table-responsive mt-5">
+          <div className="container">
+            {NewRecordList}
+          </div>
+          {/* <div className="table-responsive mt-5">
             <table className="table table-striped table-bordered table-hover">
               <thead>
                 <tr className="text-center">
@@ -266,8 +448,8 @@ class InvitesComponent extends React.Component {
                 {recordList}
               </tbody>
             </table>
-          </div>
-          <button
+          </div> */}
+          {/* <button
             type="button"
             className="btn btn-custom"
             data-toggle="modal"
@@ -300,7 +482,7 @@ class InvitesComponent extends React.Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
     );
   }
