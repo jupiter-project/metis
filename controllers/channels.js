@@ -121,11 +121,13 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
   app.get('/data/messages/:scope/:firstIndex', controller.isLoggedIn, async (req, res) => {
     let response;
+
     const tableData = {
       passphrase: req.headers.channelaccess,
       account: req.headers.channeladdress,
-      encryptionPassword: req.headers.channelkey,
+      password: req.headers.channelkey,
     };
+
     const channel = new Channel(tableData);
     channel.user = JSON.parse(gravity.decrypt(req.session.accessData));
 

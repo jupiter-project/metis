@@ -1,7 +1,7 @@
 const axios = require('axios');
 const crypto = require('crypto');
 const events = require('events');
-const _ = require('lodash')
+// const _ = require('lodash')
 const methods = require('./_methods');
 
 
@@ -672,6 +672,7 @@ class Gravity {
                       recordPassword),
                   );
                   /*
+
                   let decryptedCopy;
 
                   try {
@@ -2093,6 +2094,7 @@ class Gravity {
     const encryptionPassword = filter.encryptionPassword || this.password;
     const encryptionPassphrase = filter.encryptionPassphrase || process.env.APP_ACCOUNT;
     let unEncryptedData;
+    let encryptionLevel;
 
     if (!filter.blockchainEncryptionDisabled && thisTransaction.confirmed) {
       try {
@@ -2141,9 +2143,20 @@ class Gravity {
           decryptedData.decryptedMessage,
           encryptionPassword,
         );
+        encryptionLevel = 'channel';
       } catch (e) {
-        console.log(e);
-        console.log('Error: Gravity file, line 1772, failed to decrypt messagee');
+        // console.log(e);
+        console.log('Error: Gravity file, line 2147, failed to decrypt messagee');
+        try {
+          unEncryptedData = this.decrypt(
+            decryptedData.decryptedMessage,
+            process.env.ENCRYPT_PASSWORD,
+          );
+          encryptionLevel = 'app';
+        } catch (err) {
+          // console.log(e);
+          console.log('Error: Gravity file, line 2155, failed to decrypt messagee');
+        }
       }
     } else if (filter.blockchainEncryptionDisabled) {
       try {
@@ -2168,6 +2181,9 @@ class Gravity {
       dataObject.data = JSON.parse(unEncryptedData);
     }
     dataObject.date = dataObject.data.date || thisTransaction.fullRecord.date;
+    dataObject.data.encryptionLevel = encryptionLevel;
+    dataObject.encryptionLevel = encryptionLevel;
+
     // console.log(dataObject);
 
     return dataObject;
@@ -2215,6 +2231,7 @@ class Gravity {
         const order = filter.order || 'asc';
         this.sortByDate(dataTransactions, order);
       }
+      console.log(dataTransactions);
 
       return dataTransactions;
     }

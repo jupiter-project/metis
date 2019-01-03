@@ -22,7 +22,6 @@ class DataRow extends React.Component {
 
     const date = (new Date(record.date)).toLocaleString();
 
-
     const readOnlyLeft = (
       <div className="card-plain text-left message d-block float-left my-2 w-100">
         <div className="card-body p-2">
@@ -259,6 +258,7 @@ class ConvosComponent extends React.Component {
       },
     };
     const index = this.state.queryScope === 'unconfirmed' ? 0 : this.state.firstIndex;
+
     axios.get(`/data/messages/${this.state.queryScope}/${index}`, config)
       .then((response) => {
         // console.log(response.data);

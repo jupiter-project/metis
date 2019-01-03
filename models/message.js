@@ -38,9 +38,10 @@ class Message extends Model {
         [`${self.model}_record`]: stringifiedRecord,
         date: Date.now(),
       };
+
       const encryptedRecord = gravity.encrypt(
         JSON.stringify(fullRecord),
-        tableData.encryptionPassword,
+        tableData.password,
       );
 
       const callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${userData.passphrase}&recipient=${tableData.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${tableData.publicKey}&compressMessageToEncrypt=true`;

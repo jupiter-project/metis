@@ -43,6 +43,7 @@ class Channel extends Model {
   }
 
   loadRecords(accessData) {
+    // console.log(this);
     return super.loadRecords(accessData);
   }
 
@@ -63,7 +64,11 @@ class Channel extends Model {
             [`${self.model}_record`]: stringifiedRecord,
             date: Date.now(),
           };
-          const encryptedRecord = gravity.encrypt(JSON.stringify(fullRecord));
+
+          const encryptedRecord = gravity.encrypt(
+            JSON.stringify(fullRecord),
+            accessLink.encryptionPassword,
+          );
 
           const callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.user.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.user.publicKey}&compressMessageToEncrypt=true`;
 
@@ -121,6 +126,8 @@ class Channel extends Model {
     if (queryMode === 'unconfirmed') {
       query.noConfirmed = true;
     }
+
+
     // console.log(query);
     const response = await gravity.getDataTransactions(query);
 
