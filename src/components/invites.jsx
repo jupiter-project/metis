@@ -21,21 +21,9 @@ class DataRow extends React.Component {
       invitationAccount: '',
       channel_record: record.channel_record,
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.acceptInvite = this.acceptInvite.bind(this);
   }
 
-  componentDidMount() {
-  }
-
-  handleChange(aField, event) {
-    this.setState({
-      [aField]: event.target.value,
-    });
-  }
-
-  acceptInvite(event) {
-    event.preventDefault();
+  acceptInvite = () => {
     const page = this;
     const data = {
       channel_record: this.state.channel_record,
@@ -67,76 +55,76 @@ class DataRow extends React.Component {
     const fullData = this.props.parent.state.invites[this.props.invite];
 
     const inviteComponent = (
-    <div
-      className="modal fade"
-      id="inviteInvite"
-      tabIndex="-1"
-      role="dialog"
-      aria-labelledby="inviteInvite"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">
-              Accept Your Invite
-            </h5>
-            <button
-              className="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div className="modal-body">
-            By clicking on 'Accept', your account will be permanently linked to this channel.<br />
-          </div>
-          <div className="modal-footer">
-            <button
-              className="btn btn-custom"
-              onClick={this.acceptInvite.bind(this)}
-              data-dismiss="modal"
-            >
-              Accept
-            </button>
-            <button
-              className="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
+      <div
+        className="modal fade"
+        id="NewIniviteModalTwo"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="NewInviteModalLabelTwo"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="NewInviteModalLabelTwo">Accept Your Invite</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <p>By clicking on 'Accept', your account will be permanently linked to this channel.</p>
+            </div>
+            <div className="modal-footer">
+              {/* <button type="button" className="btn btn-custom">Continue</button>
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button> */}
+              <button
+                className="btn btn-custom"
+                onClick={() => this.acceptInvite()}
+                data-dismiss="modal"
+              >
+                Accept
+              </button>
+              <button
+                className="btn btn-secondary"
+                type="button"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>);
+    );
 
-    const readOnly = (
-      <tr className="text-center" key={`row-${(inviteInfo.id)}-data`}>
-          <td>{inviteInfo.channel_record.name}</td>
-          <td>{fullData.sender}</td>
-          <td>{this.state.date}</td>
-          <td>
-            <a
-                className="btn btn-custom button-link"
-                href="#"
-                data-toggle="modal"
-                data-target="#inviteInvite"
-              >
-                <span>Accept</span>
-              </a>
-          </td>
-          { /* <td>
-              <button className="btn btn-success" onClick={this.editMode.bind(this)}>Edit</button>
-          </td> */}
-          {inviteComponent}
-      </tr>
+    const TableBody = (
+      <div className="card text-center" style={{ maxWidth: '20rem', marginLeft: 'auto', marginRight: 'auto', marginBottom: '32px' }} key={`row-${(inviteInfo.id)}-data`}>
+        <div className="card-header bg-custom text-light h5">
+          {inviteInfo.channel_record.name}
+        </div>
+        <div className="card-body">
+          <div>You have recieved a new invite from</div>
+          <div>{fullData.sender}</div>
+          <div className="mt-3">
+            <button
+              type="button"
+              className="btn btn-custom"
+              data-toggle="modal"
+              data-target="#NewIniviteModalTwo"
+            >
+              Accept
+            </button>
+          </div>
+          {/* <div style={{ marginTop: '8px' }}>{this.state.date}</div> */}
+        </div>
+      </div>
     );
 
     return (
-      this.state.edit_mode ? readOnly : readOnly
+      <div>
+        {TableBody}
+        {inviteComponent}
+      </div>
     );
   }
 }
@@ -188,33 +176,22 @@ class InvitesComponent extends React.Component {
   render() {
     const self = this;
 
-    const recordList = (
+    const RecordList = (
       this.state.invites.map((invite, index) => <DataRow
-          parent={self}
-          invite={index}
-          user={self.props.user}
-          public_key={self.props.public_key}
-          key={`row${(invite.id)}`}
-          />)
+        parent={self}
+        invite={index}
+        user={self.props.user}
+        public_key={self.props.public_key}
+        key={`row${invite.channel.id}`}
+      />
+      )
     );
 
     return (
-        <div className="container-fluid card-plain">
+        <div>
           <h1 className="page-title">My Invites</h1>
-          <div className="table-responsive mt-5">
-            <table className="table table-striped table-bordered table-hover">
-              <thead>
-                <tr className="text-center">
-                  <th>Channel</th>
-                  <th>Sender</th>
-                  <th>Created</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recordList}
-              </tbody>
-            </table>
+          <div className="container">
+            {RecordList}
           </div>
         </div>
     );
