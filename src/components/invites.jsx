@@ -98,14 +98,18 @@ class DataRow extends React.Component {
     );
 
     const TableBody = (
-      <div className="card text-center" style={{ maxWidth: '20rem', marginLeft: 'auto', marginRight: 'auto', marginBottom: '32px' }} key={`row-${(inviteInfo.id)}-data`}>
-        <div className="card-header bg-custom text-light h5">
-          {inviteInfo.channel_record.name}
-        </div>
-        <div className="card-body">
-          <div>You have recieved a new invite from</div>
-          <div>{fullData.sender}</div>
-          <div className="mt-3">
+      <div style={{ border: '2px solid black', borderRadius: '0.375rem', padding: '14px', marginTop: '20px', marginBottom: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
+        <div style={{ flexGrow: '1' }}>
+          <h5>
+            You have been invited to join '{inviteInfo.channel_record.name}'
+          </h5>
+          <div>
+            <span style={{ fontWeight: 'bold' }}>From:</span> {fullData.sender}
+          </div>
+          <div>
+          <span style={{ fontWeight: 'bold' }}>Date:</span> {this.state.date}
+          </div>
+          <div style={{ textAlign: 'right' }}>
             <button
               type="button"
               className="btn btn-custom"
@@ -115,7 +119,6 @@ class DataRow extends React.Component {
               Accept
             </button>
           </div>
-          {/* <div style={{ marginTop: '8px' }}>{this.state.date}</div> */}
         </div>
       </div>
     );
