@@ -94,6 +94,12 @@ class ConvosComponent extends React.Component {
     // this.scrollToBottom();
   }
 
+  updateMessage() {
+    this.setState({
+      message: this.state.message
+    })
+  }
+
   scrollToBottom = () => {
     this.messageEnd.scrollIntoView({ behavior: 'smooth' });
   }
@@ -438,7 +444,7 @@ class ConvosComponent extends React.Component {
           </div>
           <div className="convo-input-outer">
             <div className="convo-input-inner">
-              <form className="convo-input-form">
+              <form className="convo-input-form" onSubmit={this.updateMessage}>
                 <input
                   className="convo-input-text"
                   placeholder="Enter your message here..."
