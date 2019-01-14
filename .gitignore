@@ -8,6 +8,7 @@
 /.bundle
 
 /public/js/bundle.js
+/public/bundle.js
 
 *.swp
 
