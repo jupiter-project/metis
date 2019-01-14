@@ -502,9 +502,9 @@ class ConvosComponent extends React.Component {
             <div className="convo-header-title">
               <span>{Channel.name}</span>
               <br />
-              <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#memberListModal">
-                Member list
-              </button>
+              <a className="btn btn-link" href="#" data-toggle="modal" data-target="#memberListModal">
+                Members
+              </a>
               {memberModal}
             </div>
             <div className="convo-header-nav">
@@ -538,7 +538,7 @@ class ConvosComponent extends React.Component {
                   {this.state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
                 </button>
               </div>
-              <div className="convo-messages-content">
+              <div className="convo-messages-content container">
                 {recordList}
               </div>
               <div style={{ float: 'left', clear: 'both' }}
