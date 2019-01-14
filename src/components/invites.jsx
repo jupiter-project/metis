@@ -88,16 +88,16 @@ class DataRow extends React.Component {
     const inviteComponent = (
       <div
         className="modal fade"
-        id="NewIniviteModalTwo"
+        id={`NewIniviteModal${state.inviteData.id}`}
         tabIndex="-1"
         role="dialog"
-        aria-labelledby="NewInviteModalLabelTwo"
+        aria-labelledby={`NewIniviteModalLabel${state.inviteData.id}`}
         aria-hidden="true"
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="NewInviteModalLabelTwo">
+              <h5 className="modal-title" id={`NewIniviteModalLabel${state.inviteData.id}`}>
                 Accept Your Invite to '{state.inviteData.channel_record.name}'
               </h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -147,7 +147,7 @@ class DataRow extends React.Component {
               type="button"
               className="btn btn-custom"
               data-toggle="modal"
-              data-target="#NewIniviteModalTwo"
+              data-target={`#NewIniviteModal${state.inviteData.id}`}
             >
               Accept
             </button>
