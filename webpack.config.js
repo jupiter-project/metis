@@ -5,7 +5,7 @@ const glob = require('glob');
 module.exports = {
   entry: ['babel-polyfill', ...glob.sync('./src/components/*.jsx')],
   output: {
-    path: `${__dirname}/public/js`,
+    path: `${__dirname}/public/`,
     filename: 'bundle.js',
   },
   module: {

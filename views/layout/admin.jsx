@@ -411,7 +411,7 @@ export default class ApplicationLayout extends React.Component {
           <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js" />
 
           <script
-            src="/js/bundle.js"
+            src="/bundle.js"
             data-props={JSON.stringify(this.props.data)}
             id="props"
           />
