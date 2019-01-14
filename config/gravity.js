@@ -1662,7 +1662,7 @@ class Gravity {
       secretPhrase: params.passphrase || process.env.APP_ACCOUNT,
       recipient: params.recipient,
       property: params.property || this.fundingProperty,
-      feeNQT: 80,
+      feeNQT: params.feeNQT || 10,
       value: params.value || `{"threshold":"${threshold}"}`,
     });
   }

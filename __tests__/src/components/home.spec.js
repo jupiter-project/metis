@@ -1,14 +1,14 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { HomeComponent } from '../../../src/components/home.jsx';
 
 let wrapper;
-let mountWrapper;
+// let mountWrapper;
 
-const mockEvent = {
+/* const mockEvent = {
   preventDefault: jest.fn(() => true),
-};
+}; */
 
 describe('Home', () => {
   describe('<HomeComponent />', () => {

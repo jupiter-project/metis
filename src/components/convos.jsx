@@ -62,6 +62,8 @@ class ConvosComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      aliases: [],
+      members: [],
       passphrase: '',
       name: '',
       password: '',
@@ -170,6 +172,7 @@ class ConvosComponent extends React.Component {
                 tableData: thisChannel.channel_record,
               }, () => {
                 page.loadData('all');
+                page.loadMembersList();
               });
             }
           }
@@ -373,34 +376,137 @@ class ConvosComponent extends React.Component {
   toggleSideMenu = () => {
     this.setState({
       sideMenuOpen: !this.state.sideMenuOpen
-    })
+    });
+  }
+
+  async loadMembersList() {
+    const { state } = this;
+    const { props } = this;
+    const self = this;
+    const config = {
+      headers: {
+        channeladdress: state.tableData.account,
+        channelkey: state.tableData.password,
+        channelpublic: state.tableData.publicKey,
+      },
+    };
+
+    let response;
+
+    try {
+      response = await axios.get('/data/members', config);
+    } catch (e) {
+      response = e;
+    }
+
+    if (!response.data.error) {
+      const { members } = response.data;
+      const { aliases } = response.data;
+      this.setState({
+        members,
+        aliases,
+      }, async () => {
+        const { alias } = props.user.record;
+        if (!self.state.members.includes(alias) && !self.state.aliases.includes(alias)) {
+          const res = await self.addMember();
+          if (res.success) {
+            toastr.success("Your alias has been added to this channel's member list");
+          } else {
+            console.log(res);
+          }
+        }
+      });
+    }
+    return response.data;
+  }
+
+  async addMember() {
+    const { state } = this;
+
+    const params = {
+      channeladdress: state.tableData.account,
+      channelkey: state.tableData.password,
+      channelpublic: state.tableData.publicKey,
+    };
+
+    let response;
+
+    try {
+      response = await axios.post('/data/members', params);
+    } catch (e) {
+      response = e;
+      return e;
+    }
+
+    return response.data;
   }
 
   render() {
     const self = this;
-    const Channel = this.state.tableData || {};
+    const { state } = this;
+    const Channel = state.tableData || {};
 
     const recordList = (
-      this.state.messages.map((channel, index) => <DataRow
-        parent={self}
-        message={index}
-        user={self.props.user}
-        public_key={self.props.public_key}
-        key={`row${(channel.signature)}`}
-      />)
+      state.messages.map((channel, index) => (
+        <DataRow
+          parent={self}
+          message={index}
+          user={self.props.user}
+          public_key={self.props.public_key}
+          key={`row${(channel.signature)}`}
+        />))
     );
 
-    const loading = <div style={{
-      textAlign: 'center', marginTop: '25vh', fontSize: '55px', overflow: 'hidden',
-    }}><i className="fa fa-spinner fa-pulse"></i></div>;
+    const loading = (
+      <div style={{
+        textAlign: 'center', marginTop: '25vh', fontSize: '55px', overflow: 'hidden',
+      }}
+      >
+        <i className="fa fa-spinner fa-pulse" />
+      </div>
+    );
 
-    let content = (
+    const memberList = state.members.map(m => (
+      <div>
+        <p>{m}</p>
+      </div>
+    ));
+    const memberModal = (
+      <div className="modal fade" id="memberListModal" tabIndex="-1" role="dialog" aria-labelledby="memberListModalLabel" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="memberListModalLabel">
+                {`${Channel.name} list`}
+              </h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              {state.members.length > 0 ? memberList : null}
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    const content = (
       <div>
         {this.state.sideMenuOpen ? <MenuContainer channels={this.state.channels} /> : null}
         <div className="convo-wrapper">
           <div className="convo-header">
             <div className="convo-header-title">
               <span>{Channel.name}</span>
+              <br />
+              <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#memberListModal">
+                Member list
+              </button>
+              {memberModal}
             </div>
             <div className="convo-header-nav">
               <div className="convo-sidebar-toggle">
