@@ -23,6 +23,36 @@ class DataRow extends React.Component {
     };
   }
 
+  async addMember() {
+    const { state } = this;
+    const { channel_record } = state.inviteData;
+    const params = {
+      channeladdress: channel_record.account,
+      channelkey: channel_record.password,
+      channelpublic: channel_record.publicKey,
+    };
+
+    if (
+      !params.channelkey
+      || !params.channeladdress
+      || !params.channelpublic
+      ) {
+      toastr.error('Error with invite acceptance');
+      return { error: true, message: 'COuld not add user to member list of channel' }
+    }
+
+    let response;
+
+    try {
+      response = await axios.post('/data/members', params);
+    } catch (e) {
+      response = e;
+      return e;
+    }
+
+    return response.data;
+  }
+
   acceptInvite = () => {
     const page = this;
     const data = {
@@ -38,7 +68,7 @@ class DataRow extends React.Component {
           page.props.parent.setState({
             update_submitted: false,
           });
-
+          page.addMember();
           toastr.success('Invite accepted!');
         } else {
           toastr.error('There was an error in sending your invite');
@@ -53,6 +83,7 @@ class DataRow extends React.Component {
   render() {
     const inviteInfo = this.props.parent.state.invites[this.props.invite].channel;
     const fullData = this.props.parent.state.invites[this.props.invite];
+    const { state } = this;
 
     const inviteComponent = (
       <div
@@ -66,7 +97,9 @@ class DataRow extends React.Component {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="NewInviteModalLabelTwo">Accept Your Invite</h5>
+              <h5 className="modal-title" id="NewInviteModalLabelTwo">
+                Accept Your Invite to '{state.inviteData.channel_record.name}'
+              </h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -154,7 +187,6 @@ class InvitesComponent extends React.Component {
 
     axios.get('/channels/invites')
       .then((response) => {
-        console.log(response.data);
         if (response.data.records) {
           page.setState({
             invites: response.data.records,
