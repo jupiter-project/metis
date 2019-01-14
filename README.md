@@ -1,4 +1,4 @@
-# Jupiter Metis  [![Build Status](https://travis-ci.org/SigwoTechnologies/jupiter-gravity.svg?branch=master)](https://travis-ci.org/SigwoTechnologies/jupiter-gravity)
+# Jupiter Metis  [![pipeline status](https://gitlab.com/sigwotechnologies/metis/badges/master/pipeline.svg)](https://gitlab.com/sigwotechnologies/metis/commits/master)
 
 We’re all familiar with using our favorite chat apps and we often just assume we can trust them with our personal information. It’s not until our private life is compromised do we suddenly reconsider how we’re doing things. 
 
