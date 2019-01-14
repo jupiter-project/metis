@@ -527,7 +527,7 @@ class ConvosComponent extends React.Component {
               </div>
             </div>
           </div>
-          <div className="convo-messages-outer">
+          <div className="convo-messages-outer container">
 
             <div className="convo-messages-inner" id="messageList">
               <div className="convo-load-button text-right">
@@ -538,7 +538,7 @@ class ConvosComponent extends React.Component {
                   {this.state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
                 </button>
               </div>
-              <div className="convo-messages-content container">
+              <div className="convo-messages-content">
                 {recordList}
               </div>
               <div style={{ float: 'left', clear: 'both' }}
