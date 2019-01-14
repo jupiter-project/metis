@@ -22,7 +22,7 @@
 /bower_components
 
 # Ignore package-lock
-package-lock.json
+# package-lock.json
 
 .env*
 .gravity*.js
