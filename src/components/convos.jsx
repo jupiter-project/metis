@@ -4,20 +4,25 @@ import axios from 'axios';
 import toastr from 'toastr';
 import MenuContainer from './CustomComponents/MenuContainer.jsx';
 import MobileMenuContainer from './CustomComponents/MobileMenuContainer.jsx';
+import { messagesConfig } from '../../config/constants';
+
+
+const { maxMessageLength } = messagesConfig;
 
 class DataRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: {},
+      // smessage: {},
     };
   }
 
   render() {
-    const record = this.props.parent.state.messages[this.props.message];
+    const { props } = this;
+    const record = props.parent.state.messages[props.message];
     const { data } = record;
-    const name = data.name === `${this.props.user.record.alias}`
-      || data.name === `${this.props.user.record.firstname} ${this.props.user.record.lastname}`
+    const name = data.name === `${props.user.record.alias}`
+      || data.name === `${props.user.record.firstname} ${props.user.record.lastname}`
       ? 'You' : data.name;
 
     const date = (new Date(record.date)).toLocaleString();
@@ -64,17 +69,17 @@ class ConvosComponent extends React.Component {
     this.state = {
       aliases: [],
       members: [],
-      passphrase: '',
-      name: '',
-      password: '',
+      // passphrase: '',
+      // sname: '',
+      // password: '',
       messages: [],
       message: '',
       submitted: false,
-      update_submitted: false,
+      // update_submitted: false,
       tableData: {},
-      querying: false,
+      // querying: false,
       waitingForData: false,
-      monitoring: false,
+      // monitoring: false,
       queryScope: 'all',
       transactionIds: [],
       firstIndex: 0,
@@ -95,23 +100,6 @@ class ConvosComponent extends React.Component {
     // this.scrollToBottom();
   }
 
-  updateMessage() {
-    this.setState({
-      message: this.state.message
-    })
-  }
-
-  scrollToBottom = () => {
-    this.messageEnd.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  resetRecords(newData) {
-    this.setState({
-      messages: newData,
-      waitingForData: false,
-    });
-  }
-
   setTransactionsIds(messages) {
     const transactionIds = [];
     for (let x = 0; x < messages.length; x += 1) {
@@ -126,70 +114,11 @@ class ConvosComponent extends React.Component {
     });
   }
 
-  handleNewData(messages) {
-    const ids = this.state.transactionIds;
-    const currentMessages = this.state.messages;
-    for (let x = 0; x < messages.length; x += 1) {
-      const thisMessage = messages[x];
-
-      if (!ids.includes(thisMessage.fullRecord.transaction)) {
-        currentMessages.push(thisMessage);
-        ids.push(thisMessage.fullRecord.transaction);
-      }
-    }
-
-    this.setState({
-      transactionIds: ids,
-      messages: currentMessages,
-    });
-
-    this.scrollToBottom();
-  }
-
-  loadTableData() {
-    const page = this;
-    const config = {
-      headers: {
-        user_api_key: this.props.user.record.api_key,
-        user_public_key: this.props.public_key,
-        accessData: this.props.accessData,
-      },
-    };
-
-    axios.get(`/api/users/${this.props.user.id}/channels`, config)
-      .then((response) => {
-        if (response.data.success) {
-          page.setState({
-            channels: response.data.channels,
-            loading: false,
-          });
-          // page.monitorData();
-          for (let x = 0; x < response.data.channels.length; x += 1) {
-            const thisChannel = response.data.channels[x];
-
-            if (thisChannel.id === this.props.channelId) {
-              this.setState({
-                tableData: thisChannel.channel_record,
-              }, () => {
-                page.loadData('all');
-                page.loadMembersList();
-              });
-            }
-          }
-        } else {
-          toastr.error('No record history');
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        toastr.error('There was an error');
-      });
-  }
-
   getOlderMessages() {
     const page = this;
-    const currentIndex = parseInt(this.state.firstIndex, 10);
-    const currentMessages = parseInt(this.state.messages.length, 10);
+    const { state } = this;
+    const currentIndex = parseInt(state.firstIndex, 10);
+    const currentMessages = parseInt(state.messages.length, 10);
     const newIndex = currentIndex + currentMessages;
 
     this.setState({
@@ -202,7 +131,7 @@ class ConvosComponent extends React.Component {
       const response = await page.getData('all');
 
       if (response.success && response.messages) {
-        const currentData = this.state.messages;
+        const currentData = state.messages;
         const newData = response.messages;
 
         const mergedData = newData.concat(currentData);
@@ -219,50 +148,72 @@ class ConvosComponent extends React.Component {
   }
 
   async getData(queryScope) {
+    const { props } = this;
+    const { state } = this;
     const config = {
       headers: {
-        user_api_key: this.props.user.record.api_key,
-        user_public_key: this.props.public_key,
-        accessdata: this.props.accessData,
-        channelaccess: this.state.tableData.passphrase,
-        channeladdress: this.state.tableData.account,
-        channelkey: this.state.tableData.password,
-        channelpublic: this.state.tableData.publicKey,
+        user_api_key: props.user.record.api_key,
+        user_public_key: props.public_key,
+        accessdata: props.accessData,
+        channelaccess: state.tableData.passphrase,
+        channeladdress: state.tableData.account,
+        channelkey: state.tableData.password,
+        channelpublic: state.tableData.publicKey,
       },
     };
     let indexNumber;
     if (queryScope === 'unconfirmed') {
       indexNumber = 0;
     } else {
-      indexNumber = this.state.firstIndex;
+      indexNumber = state.firstIndex;
     }
     const response = await axios.get(`/data/messages/${queryScope}/${indexNumber}`, config);
 
     return response.data;
   }
 
+  scrollToBottom = () => {
+    this.messageEnd.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  toggleSideMenu = () => {
+    const self = this;
+    this.setState({
+      sideMenuOpen: !self.state.sideMenuOpen,
+    });
+  }
+
+  checkUpdates() {
+    const { state } = this;
+    if (!state.waitingForData) {
+      this.loadData();
+    }
+  }
+
   loadData() {
     const page = this;
+    const { props } = this;
+    const { state } = this;
     this.setState({
       waitingForData: true,
     });
 
-    const currentData = JSON.stringify(this.state.messages);
+    const currentData = JSON.stringify(state.messages);
 
     const config = {
       headers: {
-        user_api_key: this.props.user.record.api_key,
-        user_public_key: this.props.public_key,
-        accessdata: this.props.accessData,
-        channelaccess: this.state.tableData.passphrase,
-        channeladdress: this.state.tableData.account,
-        channelkey: this.state.tableData.password,
-        channelpublic: this.state.tableData.publicKey,
+        user_api_key: props.user.record.api_key,
+        user_public_key: props.public_key,
+        accessdata: props.accessData,
+        channelaccess: state.tableData.passphrase,
+        channeladdress: state.tableData.account,
+        channelkey: state.tableData.password,
+        channelpublic: state.tableData.publicKey,
       },
     };
-    const index = this.state.queryScope === 'unconfirmed' ? 0 : this.state.firstIndex;
+    const index = state.queryScope === 'unconfirmed' ? 0 : state.firstIndex;
 
-    axios.get(`/data/messages/${this.state.queryScope}/${index}`, config)
+    axios.get(`/data/messages/${state.queryScope}/${index}`, config)
       .then((response) => {
         // console.log(response.data);
         if (response.data.success) {
@@ -309,10 +260,80 @@ class ConvosComponent extends React.Component {
       });
   }
 
-  checkUpdates() {
-    if (!this.state.waitingForData) {
-      this.loadData();
+  loadTableData() {
+    const page = this;
+    const { props } = this;
+    const config = {
+      headers: {
+        user_api_key: props.user.record.api_key,
+        user_public_key: props.public_key,
+        accessData: props.accessData,
+      },
+    };
+
+    axios.get(`/api/users/${props.user.id}/channels`, config)
+      .then((response) => {
+        if (response.data.success) {
+          page.setState({
+            channels: response.data.channels,
+            loading: false,
+          });
+          // page.monitorData();
+          for (let x = 0; x < response.data.channels.length; x += 1) {
+            const thisChannel = response.data.channels[x];
+
+            if (thisChannel.id === props.channelId) {
+              this.setState({
+                tableData: thisChannel.channel_record,
+              }, () => {
+                page.loadData('all');
+                page.loadMembersList();
+              });
+            }
+          }
+        } else {
+          toastr.error('No record history');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error('There was an error');
+      });
+  }
+
+  updateMessage() {
+    const self = this;
+    this.setState({
+      message: self.state.message,
+    });
+  }
+
+  resetRecords(newData) {
+    this.setState({
+      messages: newData,
+      waitingForData: false,
+    });
+  }
+
+  handleNewData(messages) {
+    const { state } = this;
+    const ids = state.transactionIds;
+    const currentMessages = state.messages;
+    for (let x = 0; x < messages.length; x += 1) {
+      const thisMessage = messages[x];
+
+      if (!ids.includes(thisMessage.fullRecord.transaction)) {
+        currentMessages.push(thisMessage);
+        ids.push(thisMessage.fullRecord.transaction);
+      }
     }
+
+    this.setState({
+      transactionIds: ids,
+      messages: currentMessages,
+    });
+
+    this.scrollToBottom();
   }
 
   monitorData() {
@@ -333,6 +354,8 @@ class ConvosComponent extends React.Component {
 
   createRecord(event) {
     event.preventDefault();
+    const { props } = this;
+    const { state } = this;
     this.setState({
       submitted: true,
     });
@@ -340,44 +363,53 @@ class ConvosComponent extends React.Component {
     const page = this;
 
     const record = {
-      name: `${this.props.user.record.alias}` || `${this.props.user.record.firstname} ${this.props.user.record.lastname}`,
-      message: this.state.message,
-      sender: this.props.user.record.account,
+      name: `${props.user.record.alias}` || `${props.user.record.firstname} ${props.user.record.lastname}`,
+      message: state.message,
+      sender: props.user.record.account,
     };
 
-    axios.post('/data/messages', {
-      data: record,
-      user: this.props.accessData,
-      tableData: this.state.tableData,
-    })
-      .then((response) => {
-        if (response.data.success) {
-          page.setState({
-            passphrase: '',
-            name: '',
-            password: '',
-            submitted: false,
-            message: '',
-          });
-          toastr.success('Message sent');
-        } else {
-          response.data.validations.messages.map((message) => {
-            toastr.error(message);
-            return null;
-          });
-        }
+    if (record.message
+      && record.message.length > 0
+      && record.message.length <= maxMessageLength
+    ) {
+      axios.post('/data/messages', {
+        data: record,
+        user: props.accessData,
+        tableData: state.tableData,
       })
-      .catch((error) => {
-        console.log(error);
-        toastr.error('There was an error');
-      });
+        .then((response) => {
+          if (response.data.success) {
+            page.setState({
+              passphrase: '',
+              name: '',
+              password: '',
+              submitted: false,
+              message: '',
+            });
+            toastr.success('Message sent');
+          } else if (response.data.validations) {
+            response.data.validations.messages.map((message) => {
+              toastr.error(message);
+              return null;
+            });
+          } else {
+            response.data.messages.map((message) => {
+              toastr.error(message);
+              return null;
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          toastr.error('There was an error');
+        });
+    } else if (record.message && record.message.length > maxMessageLength) {
+      toastr.error(`Message exceeds limit (${maxMessageLength} characters)`);
+    } else {
+      toastr.error('Invalid message');
+    }
   }
 
-  toggleSideMenu = () => {
-    this.setState({
-      sideMenuOpen: !this.state.sideMenuOpen
-    });
-  }
 
   async loadMembersList() {
     const { state } = this;
@@ -406,6 +438,7 @@ class ConvosComponent extends React.Component {
         members,
         aliases,
       }, async () => {
+        console.log(`Your aliases are ${state.aliases}`);
         const { alias } = props.user.record;
         if (!self.state.members.includes(alias) && !self.state.aliases.includes(alias)) {
           const res = await self.addMember();
@@ -496,7 +529,7 @@ class ConvosComponent extends React.Component {
 
     const content = (
       <div>
-        {this.state.sideMenuOpen ? <MenuContainer channels={this.state.channels} /> : null}
+        {state.sideMenuOpen ? <MenuContainer channels={state.channels} /> : null}
         <div className="convo-wrapper">
           <div className="convo-header">
             <div className="convo-header-title">
@@ -509,12 +542,13 @@ class ConvosComponent extends React.Component {
             </div>
             <div className="convo-header-nav">
               <div className="convo-sidebar-toggle">
-                <button className="btn btn-link" onClick={this.toggleSideMenu}>
-                  {this.state.sideMenuOpen ? <i className="fas fa-chevron-circle-left"></i> : <i className="fas fa-chevron-circle-right"></i>}
+                <button type="button" className="btn btn-link" onClick={this.toggleSideMenu}>
+                  {state.sideMenuOpen ? <i className="fas fa-chevron-circle-left" /> : <i className="fas fa-chevron-circle-right" />}
                 </button>
               </div>
               <div className="convo-mobile-modal-button">
-                {/* <button className="btn btn-custom btn-sm" data-toggle="modal" data-target="#channelsModal">
+                {/* <button className="btn btn-custom btn-sm"
+                  data-toggle="modal" data-target="#channelsModal">
                   Channels
                 </button> */}
                 <a
@@ -532,35 +566,39 @@ class ConvosComponent extends React.Component {
             <div className="convo-messages-inner" id="messageList">
               <div className="convo-load-button text-right">
                 <button
+                  type="button"
                   className="btn btn-secondary btn-sm"
-                  disabled={this.state.waitingForOldData}
+                  disabled={state.waitingForOldData}
                   onClick={this.getOlderMessages.bind(this)}>
-                  {this.state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
+                  {state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
                 </button>
               </div>
               <div className="convo-messages-content">
                 {recordList}
               </div>
-              <div style={{ float: 'left', clear: 'both' }}
-                ref={(el) => { this.messageEnd = el }}
+              <div
+                style={{ float: 'left', clear: 'both' }}
+                ref={(el) => { this.messageEnd = el; }}
               />
             </div>
 
           </div>
           <div className="convo-input-outer">
-            <div className="convo-input-inner">
-              <form className="convo-input-form" onSubmit={this.updateMessage}>
+            <div className="convo-input-inner" style={{ marginBottom: '0px' }}>
+              <form className="convo-input-form" style={{ marginBottom: '5px' }} onSubmit={this.updateMessage}>
                 <input
+                  type="text"
+                  maxLength={maxMessageLength}
                   className="convo-input-text"
                   placeholder="Enter your message here..."
-                  value={this.state.message}
+                  value={state.message}
                   onChange={this.handleChange.bind(this, 'message')}
                   required="required"
                 />
                 <button
                   type="submit"
                   className="btn btn-custom"
-                  disabled={this.state.submitted}
+                  disabled={state.submitted}
                   onClick={this.createRecord.bind(this)}
                 >
                   Send
@@ -568,13 +606,16 @@ class ConvosComponent extends React.Component {
               </form>
             </div>
           </div>
+          <div className="mx-auto">
+            <p className="">{`${state.message.length}/${maxMessageLength}`}</p>
+          </div>
         </div>
-        <MobileMenuContainer channels={this.state.channels} />
+        <MobileMenuContainer channels={state.channels} />
       </div>
     );
 
     return (
-      this.state.loading ? loading : content
+      state.loading ? loading : content
     );
   }
 }

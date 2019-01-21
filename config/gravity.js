@@ -1,7 +1,7 @@
 const axios = require('axios');
 const crypto = require('crypto');
 const events = require('events');
-// const _ = require('lodash')
+const _ = require('lodash');
 const methods = require('./_methods');
 
 
@@ -2039,6 +2039,7 @@ class Gravity {
 
     let rawTransactions;
     let rawUnconfirmedTransactions;
+    let transactions;
 
     if (!filter.noUnconfirmed) {
       try {
@@ -2047,8 +2048,9 @@ class Gravity {
         console.log('Error in gravity.js, line 1662, could not retrieve unconfirmed transactions');
         return { error: true, fullError: e };
       }
-      for (let x = 0; x < rawUnconfirmedTransactions.unconfirmedTransactions.length; x += 1) {
-        const thisTransaction = rawUnconfirmedTransactions.unconfirmedTransactions[x];
+      transactions = _.get(rawUnconfirmedTransactions, 'unconfirmedTransactions', []);
+      for (let x = 0; x < transactions.length; x += 1) {
+        const thisTransaction = transactions[x];
         thisTransaction.confirmed = false;
         if (self.validateTransaction(thisTransaction, filter)) {
           validTransactions.push(thisTransaction);
@@ -2068,9 +2070,9 @@ class Gravity {
         console.log('Error in gravity.js, line 1671, could not retrieve unconfirmed transactions');
         return { error: true, fullError: e };
       }
-
-      for (let x = 0; x < rawTransactions.transactions.length; x += 1) {
-        const thisTransaction = rawTransactions.transactions[x];
+      transactions = _.get(rawTransactions, 'transactions', []);
+      for (let x = 0; x < transactions.length; x += 1) {
+        const thisTransaction = transactions[x];
         thisTransaction.confirmed = true;
         if (self.validateTransaction(thisTransaction, filter)) {
           validTransactions.push(thisTransaction);
@@ -2231,7 +2233,7 @@ class Gravity {
         const order = filter.order || 'asc';
         this.sortByDate(dataTransactions, order);
       }
-      console.log(dataTransactions);
+      // console.log(dataTransactions);
 
       return dataTransactions;
     }
