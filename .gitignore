@@ -7,23 +7,20 @@
 # Ignore bundler config.
 /.bundle
 
-/public/js/bundle.js
+# Ignore the Generated bundle script
 /public/bundle.js
 
+# Ignore temp swap files
 *.swp
 
-#Ignore public bundle
-/public/js/bundle.min.js
-
-#Ignore other generated files
-/public/css/
-
-
+# Ignore node modules
 /node_modules
+
+# Ignore bower components
 /bower_components
 
-# Ignore package-lock
-# package-lock.json
-
+# Ignore enviroment varilables
 .env*
+
+# Ignore gravity development files
 .gravity*.js
