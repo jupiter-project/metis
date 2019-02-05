@@ -80,10 +80,10 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
 
     const requirements = {
-      passphrase: process.env.APP_ACCOUNT,
-      address: process.env.APP_ACCOUNT_ADDRESS,
-      public_key: process.env.APP_PUBLIC_KEY,
-      encryption: process.env.SESSION_SECRET !== undefined ? process.env.SESSION_SECRET : 'undefined',
+      passphrase: process.env.APP_ACCOUNT ? 'yes' : false,
+      address: process.env.APP_ACCOUNT_ADDRESS ? 'yes' : false,
+      public_key: process.env.APP_PUBLIC_KEY ? 'yes' : false,
+      encryption: process.env.SESSION_SECRET !== undefined ? 'defined' : 'undefined',
       name: process.env.APPNAME,
     };
 
@@ -107,12 +107,11 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const messages = req.session.flash;
     req.session.flash = null;
 
-
     const requirements = {
-      passphrase: process.env.APP_ACCOUNT,
-      address: process.env.APP_ACCOUNT_ADDRESS,
-      public_key: process.env.APP_PUBLIC_KEY,
-      encryption: process.env.SESSION_SECRET !== undefined ? process.env.SESSION_SECRET : 'undefined',
+      passphrase: process.env.APP_ACCOUNT ? 'yes' : false,
+      address: process.env.APP_ACCOUNT_ADDRESS ? 'yes' : false,
+      public_key: process.env.APP_PUBLIC_KEY ? 'yes' : false,
+      encryption: process.env.SESSION_SECRET !== undefined ? 'defined' : 'undefined',
       name: process.env.APPNAME,
     };
 
