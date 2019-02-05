@@ -62,7 +62,7 @@ module.exports = {
     if (req.isAuthenticated()) {
       return next();
     }
-    console.log('Needs to log');
+    // console.log('Needs to log');
     res.redirect('/home');
     return null;
   },
