@@ -12,11 +12,12 @@ Try it out at https://metis.sigwo.com, then build your own instance!
 
 To build your own local Metis instance to truly protect your communications!
 1. Download Metis
-    - Insert pic of github repo and annotate where to click and in what order
-2. Install node
-    - https://nodejs.org/en/download/ and follow directions for your OS
+2. Install Dependencies
+    - Nodejs - https://nodejs.org/en/download/ and follow directions for your OS
+    - Redis - https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
+    - Run `npm install`
 3. Download Jupiter wallet and create Jupiter address for your Metis instance
-    - Navigate to https://github.com/SigwoTechnologies/jupiter to download and for installation instructions
+    - Navigate to https://github.com/SigwoTechnologies/jupiter/releases to download and for installation instructions
 4. Buy Jupiter, send 10 Jupiter (or more) to the address you created
     - This will activate your Metis application and allow you to send messages to your friends
 5. Modify the .env file
@@ -24,6 +25,5 @@ To build your own local Metis instance to truly protect your communications!
 6. Start the metis application
     - To start Metis, type in `npm run start`
 7. Open your browser and type in 127.0.0.1:4000
-    - Insert pic of a local Metis instance running
 
 This is a 100% local instance of Metis that talks to Jupiter's blockchain. Anyone can complete these steps and create their own private, encrypted, and shielded communications. Even though this is a local only instance, you can log into ANY Metis instance with your credentials and it will still work and have all your past conversations waiting for you! This is due to all your conversations being encrypted and stored on Jupiter's decentralized blockchain.
