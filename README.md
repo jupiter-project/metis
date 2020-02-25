@@ -8,7 +8,7 @@ With Jupiter Metis, you always have the power over your privacy and what, if any
 
 Metis runs on the blockchain and is 100% encrypted with AES encryption. By using blockchain to talk, you’re protecting your communications and keeping your chats private!
 
-Try it out at https://metis.sigwo.com, then build your own instance!
+Try it out at https://metis.gojupiter.tech, then build your own instance!
 
 To build your own local Metis instance to truly protect your communications!
 1. Download Metis
