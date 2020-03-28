@@ -5,6 +5,7 @@ import toastr from 'toastr';
 import MenuContainer from './CustomComponents/MenuContainer.jsx';
 import MobileMenuContainer from './CustomComponents/MobileMenuContainer.jsx';
 import { messagesConfig } from '../../config/constants';
+import { urlencoded } from 'body-parser';
 
 
 const { maxMessageLength } = messagesConfig;
@@ -21,6 +22,11 @@ class DataRow extends React.Component {
     const { props } = this;
     const record = props.parent.state.messages[props.message];
     const { data } = record;
+    const rand = require("crypto").createHash('md5').update(props.user.record.alias).digest("hex")
+    const rand0 = require("crypto").createHash('md5').update(data.name).digest("hex")
+    const identicon = "https://www.gravatar.com/avatar/"+rand+"?s=64&d=identicon"
+    const oIdenticon = "https://www.gravatar.com/avatar/"+rand0+"?s=64&d=identicon"
+
     const name = data.name === `${props.user.record.alias}`
       || data.name === `${props.user.record.firstname} ${props.user.record.lastname}`
       ? 'You' : data.name;
@@ -31,7 +37,7 @@ class DataRow extends React.Component {
       <div className="card-plain text-left message d-block float-left my-2 w-100">
         <div className="card-body p-2">
           <div className="bg-dark rounded-circle float-left mr-2">
-            <img src="/img/logo.png" height="40px" alt="logo" />
+            <img src={oIdenticon} height="40px" alt="logo" />
           </div>
           <div id="incoming_message" className="ml-5 rounded">
             <div style={{ fontWeight: '600' }}>{name}</div>
@@ -46,7 +52,7 @@ class DataRow extends React.Component {
       <div className="card-plain text-right message d-block float-right my-2 w-100">
         <div className="card-body p-2">
           <div className="bg-dark rounded-circle float-right ml-2">
-            <img src="/img/logo.png" height="40px" alt="logo" />
+            <img src={identicon} height="40px" alt="logo" />
           </div>
           <div id="incoming_message" className="mr-5 p-2 rounded">
             <div style={{ fontWeight: '600' }}><strong>You</strong></div>
