@@ -25,5 +25,5 @@
 # Ignore package-lock
 # package-lock.json
 
-.env*
+*.env*
 .gravity*.js
