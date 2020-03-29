@@ -206,14 +206,16 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
   @media (max-width: 600px) {
     width: 80%;
+    background-color: white;
   }
 }
 
 #outgoing_message {
-  width: 50%;
+  width: 100%;
 
   @media (max-width: 600px) {
-    width: 80%;
+    width: 100%;
+    background-color: white;
   }
 } */
 .smaller {
@@ -323,7 +325,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   z-index: 10;
   width: 290px !important;
   background-color: #495057;
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh);
 }
 
 .sidebar .nav-item:last-child {
@@ -688,15 +690,18 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   -webkit-box-direction: normal;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
-  height: 91vh;
+  height: 100vh;
+  background-color: slategray;
 }
 
 .convo-header {
   -webkit-box-flex: 1;
-  -ms-flex: 1 100%;
-  flex: 1 100%;
+  -ms-flex: 1 45%;
+  flex: 1 45%;
   height: 12%;
-  padding: 10px;
+  /* padding: 10px; */
+  width: 60%;
+  background-color: slategray;
 }
 
 .convo-mobile-modal-button {
@@ -713,41 +718,48 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   text-align: center;
   font-weight: 400;
   font-size: 22px;
+  width: 60%;
+  background-color: slategray;
 }
 
 .convo-header-hud {
   display: 'inline-block';
+  background-color: slategray;
 }
 
 .convo-messages-outer {
   -webkit-box-flex: 1;
-  -ms-flex: 1 100%;
-  flex: 1 100%;
+  -ms-flex: 1 60%;
+  flex: 1 60%;
   height: 73%;
-  padding-left: 10px;
+  padding-left: 5px;
+  margin-left: 0em;
+  background-color: slategray;
 }
 
 .convo-messages-inner {
   overflow-y: auto;
   height: 100%;
-  width: 100%;
-  padding: 10px;
+  width: 60%;
+  padding: 5px 5px 5px 5px;
+  background-color:#303e4d;
+  border-radius: 0.3rem;
 }
 
 .convo-input-outer {
   -webkit-box-flex: 1;
-  -ms-flex: 1 100%;
-  flex: 1 100%;
+  -ms-flex: 1 60%;
+  flex: 1 60%;
   height: 15%;
   padding: '10px';
   color: white;
-  padding-top: 10px;
+  /* padding-top: 5px; */
 }
 
 .convo-input-inner {
-  width: 100%;
+  width: 60%;
   height: 100%;
-  padding: 0 10px 0 10px;
+  /* padding: 0 10px 0 10px; */
 }
 
 .convo-input-form {
@@ -757,20 +769,20 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   height: 64px;
+  padding: 5px;
 }
 
 .convo-input-text {
   display: block;
-  width: 100%;
+  width: 60%;
   height: 100%;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
-  color: #26313d;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.3rem;
-  margin-right: 12px;
+  margin-right: 3px;
 }
 
 .convo-input-text:required, .convo-input-text:focus, .convo-input-text:valid, .convo-input-text:invalid {

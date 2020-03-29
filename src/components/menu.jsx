@@ -13,15 +13,6 @@ class MenuComponent extends React.Component {
                 <li className="nav-item">
                     <a className="nav-link" href="/account">Account</a>
                 </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/pool">Pool</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/donations">Donation Change</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/investments">Invest More</a>
-                </li>
             </ul>
         </nav>
     );

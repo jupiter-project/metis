@@ -55,7 +55,7 @@ const find = require('find');
 
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for authentication)
-app.use(bodyParser()); // get information from html forms
+app.use(express.urlencoded({ extended: true })) // get information from html forms
 
 app.use((req, res, next) => {
   if (req.url !== '/favicon.ico') {
@@ -163,7 +163,22 @@ io.sockets.on('connection', (socket) => {
 
 // Tells server to listen to port 4000 when app is initialized
 server.listen(4000, () => {
-  console.log('Metis app running on port 4000');
+  console.log('')
+  console.log('_________________________________________________________________')
+  console.log(' ▄▄       ▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ ') 
+  console.log('▐░░▌     ▐░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌') 
+  console.log('▐░▌░▌   ▐░▐░▌▐░█▀▀▀▀▀▀▀▀▀  ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ') 
+  console.log('▐░▌▐░▌ ▐░▌▐░▌▐░▌               ▐░▌          ▐░▌     ▐░▌          ')
+  console.log('▐░▌ ▐░▐░▌ ▐░▌▐░█▄▄▄▄▄▄▄▄▄      ▐░▌          ▐░▌     ▐░█▄▄▄▄▄▄▄▄▄ ')
+  console.log('▐░▌  ▐░▌  ▐░▌▐░░░░░░░░░░░▌     ▐░▌          ▐░▌     ▐░░░░░░░░░░░▌')
+  console.log('▐░▌   ▀   ▐░▌▐░█▀▀▀▀▀▀▀▀▀      ▐░▌          ▐░▌      ▀▀▀▀▀▀▀▀▀█░▌')
+  console.log('▐░▌       ▐░▌▐░▌               ▐░▌          ▐░▌               ▐░▌')
+  console.log('▐░▌       ▐░▌▐░█▄▄▄▄▄▄▄▄▄      ▐░▌      ▄▄▄▄█░█▄▄▄▄  ▄▄▄▄▄▄▄▄▄█░▌')
+  console.log('▐░▌       ▐░▌▐░░░░░░░░░░░▌     ▐░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌')
+  console.log(' ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ ')
+  console.log('_________________________________________________________________')
+  console.log('')
+  console.log(`Metis version ${process.env.VERSION} is now running on port 4000 🎉`);
   console.log(`Jupiter Node running on ${process.env.JUPITERSERVER}`);
 });
 

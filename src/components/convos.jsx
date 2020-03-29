@@ -516,7 +516,7 @@ class ConvosComponent extends React.Component {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="memberListModalLabel">
-                {`${Channel.name} members`}
+                {`${Channel.name} Members`}
               </h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -568,8 +568,7 @@ class ConvosComponent extends React.Component {
             </div>
           </div>
           <div className="convo-messages-outer container">
-
-            <div className="convo-messages-inner" id="messageList">
+            <div className="convo-messages-inner" id="messageList" style={{ color: "#f0f0f0"}}>
               <div className="convo-load-button text-right">
                 <button
                   type="button"
@@ -583,14 +582,14 @@ class ConvosComponent extends React.Component {
                 {recordList}
               </div>
               <div
-                style={{ float: 'left', clear: 'both' }}
+                style={{ float: 'left', clear: 'both', color: '#f0f0f0' }}
                 ref={(el) => { this.messageEnd = el; }}
               />
-            </div>
-
+                <p className="">{`${state.message.length}/${maxMessageLength}`}</p>
+            </div>   
           </div>
           <div className="convo-input-outer">
-            <div className="convo-input-inner" style={{ marginBottom: '0px' }}>
+            <div className="convo-input-inner" style={{ marginBottom: '0px' }}onSubmit={this.updateMessage}>
               <form className="convo-input-form" style={{ marginBottom: '5px' }} onSubmit={this.updateMessage}>
                 <input
                   type="text"
@@ -607,13 +606,10 @@ class ConvosComponent extends React.Component {
                   disabled={state.submitted}
                   onClick={this.createRecord.bind(this)}
                 >
-                  Send
+                  Send    ✔
                 </button>
               </form>
             </div>
-          </div>
-          <div className="mx-auto">
-            <p className="">{`${state.message.length}/${maxMessageLength}`}</p>
           </div>
         </div>
         <MobileMenuContainer channels={state.channels} />
