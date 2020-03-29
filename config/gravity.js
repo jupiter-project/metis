@@ -12,6 +12,7 @@ class Gravity {
     this.algorithm = process.env.ENCRYPT_ALGORITHM;
     this.password = process.env.ENCRYPT_PASSWORD;
     this.sender = process.env.APP_ACCOUNT;
+    this.version = process.env.VERSION,
     this.jupiter_data = {
       server: process.env.JUPITERSERVER,
       feeNQT: 500,

@@ -1,5 +1,6 @@
 import React from 'react';
 import ApplicationLayout from './layout/application.jsx';
+import { gravity } from '../config/gravity';
 
 class PublicHomePageView extends React.Component {
   render() {
@@ -19,6 +20,7 @@ class PublicHomePageView extends React.Component {
             </div>
             <div className="text-center mt-3">
               Returning user? Log in <a href="login">here</a>.
+              <div className="text-right">{gravity.version}</div>
             </div>
           </div>
         </div>
