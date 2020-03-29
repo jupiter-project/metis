@@ -19,8 +19,9 @@
 # Ignore bower components
 /bower_components
 
-# Ignore enviroment varilables
+# Ignore enviroment variables
 .env*
 
 # Ignore gravity development files
+dev
 .gravity*.js

@@ -1,8 +1,11 @@
+import _ from 'lodash';
 import controller from '../config/controller';
 import { gravity } from '../config/gravity';
+import { messagesConfig } from '../config/constants';
 import Invite from '../models/invite';
 import Channel from '../models/channel';
 import Message from '../models/message';
+
 
 const connection = process.env.SOCKET_SERVER;
 
@@ -143,16 +146,23 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   });
 
   app.post('/data/messages', controller.isLoggedIn, async (req, res) => {
+    const { maxMessageLength } = messagesConfig;
+    const hasMessage = _.get(req, 'body.data.message', null);
     let response;
-    const { tableData } = req.body;
-    const message = new Message(req.body.data);
-    message.record.sender = req.user.record.account;
-    const userData = JSON.parse(gravity.decrypt(req.session.accessData));
-    try {
-      const data = await message.sendMessage(userData, tableData, message.record);
-      response = data;
-    } catch (e) {
-      response = { success: false, fullError: e };
+
+    if (hasMessage && hasMessage.length <= maxMessageLength) {
+      const { tableData } = req.body;
+      const message = new Message(req.body.data);
+      message.record.sender = req.user.record.account;
+      const userData = JSON.parse(gravity.decrypt(req.session.accessData));
+      try {
+        const data = await message.sendMessage(userData, tableData, message.record);
+        response = data;
+      } catch (e) {
+        response = { success: false, fullError: e };
+      }
+    } else {
+      response = { success: false, messages: [`Message exceeds allowable limit of ${maxMessageLength} characters`] };
     }
     res.send(response);
   });

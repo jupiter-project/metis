@@ -85,6 +85,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       public_key: process.env.APP_PUBLIC_KEY ? 'yes' : false,
       encryption: process.env.SESSION_SECRET !== undefined ? 'defined' : 'undefined',
       name: process.env.APPNAME,
+      version: process.env.VERSION,
     };
 
     // Loads gravity setup progress page
@@ -113,6 +114,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       public_key: process.env.APP_PUBLIC_KEY ? 'yes' : false,
       encryption: process.env.SESSION_SECRET !== undefined ? 'defined' : 'undefined',
       name: process.env.APPNAME,
+      version: process.env.VERSION,
     };
 
     // Loads public home page

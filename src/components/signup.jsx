@@ -486,7 +486,7 @@ export class SignupForm extends React.Component {
             <div className="form-group text-justify">
               Proceed with CAUTION! This is a test release. You may lose data. 
               Encryption of data doesn’t prevent copy and paste or screen shots of the 
-              conversation. Sigwo Technologies, LLC or the Darcrus Project are 
+              conversation. The Jupiter Project or Sigwo Technologies LLC are 
               not responsible for any loss of data. Use at your own risk.
             </div>
             <div className="form-group text-center">
