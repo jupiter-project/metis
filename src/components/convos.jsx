@@ -609,9 +609,6 @@ class ConvosComponent extends React.Component {
               </form>
             </div>
           </div>
-          <div className="mx-auto">
-            <p className="">{`${state.message.length}/${maxMessageLength}`}</p>
-          </div>
         </div>
         <MobileMenuContainer channels={state.channels} />
       </div>
