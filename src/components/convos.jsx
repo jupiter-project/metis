@@ -586,7 +586,8 @@ class ConvosComponent extends React.Component {
             </div>   
           </div>
           <div className="convo-input-outer">
-            <div className="convo-input-inner" style={{ marginBottom: '0px' }}onSubmit={this.updateMessage}>
+
+            <div className="convo-input-inner" style={{ marginBottom: '0px' }}>
               <form className="convo-input-form" style={{ marginBottom: '5px' }} onSubmit={this.updateMessage}>
                 <input
                   type="text"
@@ -607,6 +608,9 @@ class ConvosComponent extends React.Component {
                 </button>
               </form>
             </div>
+          </div>
+          <div className="mx-auto">
+            <p className="">{`${state.message.length}/${maxMessageLength}`}</p>
           </div>
         </div>
         <MobileMenuContainer channels={state.channels} />
