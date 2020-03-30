@@ -131,7 +131,7 @@ class DataRow extends React.Component {
     );
 
     const TableBody = (
-      <div style={{ border: '2px solid black', borderRadius: '0.375rem', padding: '14px', marginTop: '20px', marginBottom: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
+      <div style={{ border: '2px solid black', backgroundColor: '#26313d', borderRadius: '0.25rem', padding: '14px', marginTop: '20px', marginBottom: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
         <div style={{ flexGrow: '1' }}>
           <h5>
             You have been invited to join '{inviteInfo.channel_record.name}'
@@ -224,7 +224,7 @@ class InvitesComponent extends React.Component {
 
     return (
         <div>
-          <h1 className="page-title">My Invites</h1>
+          <h1 className="page-title">Invites</h1>
           <div className="container">
             {RecordList}
           </div>

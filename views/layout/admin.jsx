@@ -54,7 +54,7 @@ export default class ApplicationLayout extends React.Component {
             >
               <i className="fas fa-fw fa-user" />
               {' '}
-              <span>My Account</span>
+              <span>Account</span>
             </a>
             <div
               className="dropdown-menu dropdown-menu-right"

@@ -17,7 +17,9 @@ export class HomeComponent extends React.Component {
         <div className="card card-register mx-auto mt-5 text-center">
           <div className="card-body">
             <h3>Welcome</h3>
-            <p className="text-justify">To get started you can create your first <a href="/channels">channel</a>, or provide your account ID to a friend to get invited to a channel and check your <a href="/invites">invites</a> to accept access.</p>
+            <p className="text-justify">To get started you can create your first <a href="/channels">chat</a>, 
+            or provide your account ID to a friend to get invited to a chat and check your <a href="/invites">
+              invites</a> to accept access.</p>
             <div className="mt-5">
               <h5>
                 Account ID

@@ -160,7 +160,7 @@ export default class MobileMenuContainer extends React.Component {
         <div className="modal-dialog" role="document">
           <div className="modal-content border-none">
             <div className="modal-header bg-custom text-light">
-              <h5 className="modal-title" id="channelsModalLabel">My Channels</h5>
+              <h5 className="modal-title" id="channelsModalLabel">Chats</h5>
               <button type="button" className="close text-light" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

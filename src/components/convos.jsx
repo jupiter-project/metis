@@ -23,9 +23,9 @@ class DataRow extends React.Component {
     const record = props.parent.state.messages[props.message];
     const { data } = record;
     const rand = require("crypto").createHash('md5').update(props.user.record.alias).digest("hex")
-    const rand0 = require("crypto").createHash('md5').update(data.name).digest("hex")
+    const oRand = require("crypto").createHash('md5').update(data.name).digest("hex")
     const identicon = "https://www.gravatar.com/avatar/"+rand+"?s=64&d=identicon"
-    const oIdenticon = "https://www.gravatar.com/avatar/"+rand0+"?s=64&d=identicon"
+    const oIdenticon = "https://www.gravatar.com/avatar/"+oRand+"?s=64&d=identicon"
 
     const name = data.name === `${props.user.record.alias}`
       || data.name === `${props.user.record.firstname} ${props.user.record.lastname}`
@@ -41,8 +41,8 @@ class DataRow extends React.Component {
           </div>
           <div id="incoming_message" className="ml-5 rounded">
             <div style={{ fontWeight: '600' }}>{name}</div>
-            <div>{data.message}</div>
-            <div className="small">{date}</div>
+            <div style={{ width: '60%' }}>{data.message}</div>
+            <div className="small" style={{ color: 'grey' }}>{date}</div>
           </div>
         </div>
       </div>
@@ -56,8 +56,8 @@ class DataRow extends React.Component {
           </div>
           <div id="incoming_message" className="mr-5 p-2 rounded">
             <div style={{ fontWeight: '600' }}><strong>You</strong></div>
-            <div>{data.message}</div>
-            <div className="small">{date}</div>
+            <div style={{ width: '-60%' }}>{data.message}</div>
+            <div className="small" style={{ color: 'grey' }}>{date}</div>
           </div>
         </div>
       </div>
@@ -539,19 +539,17 @@ class ConvosComponent extends React.Component {
         <div className="convo-wrapper">
           <div className="convo-header">
             <div className="convo-header-title">
-              <span>{Channel.name}</span>
-              <br />
-              <a className="btn btn-link" href="#" data-toggle="modal" data-target="#memberListModal">
-                Members
-              </a>
-              {memberModal}
+                <a href="#" data-toggle="modal" data-target="#memberListModal" data-toggle="tooltip" title="Click for member list">
+                  {/* Members */}<span>{Channel.name}</span>
+                </a>
+                {memberModal}
             </div>
-            <div className="convo-header-nav">
+            {/* <div className="convo-header-nav">
               <div className="convo-sidebar-toggle">
                 <button type="button" className="btn btn-link" onClick={this.toggleSideMenu}>
                   {state.sideMenuOpen ? <i className="fas fa-chevron-circle-left" /> : <i className="fas fa-chevron-circle-right" />}
                 </button>
-              </div>
+              </div> */}
               <div className="convo-mobile-modal-button">
                 {/* <button className="btn btn-custom btn-sm"
                   data-toggle="modal" data-target="#channelsModal">
@@ -562,9 +560,9 @@ class ConvosComponent extends React.Component {
                   data-toggle="modal"
                   data-target="#channelsModal"
                 >
-                  Channels
+                  Chats
                 </a>
-              </div>
+              {/* </div> */}
             </div>
           </div>
           <div className="convo-messages-outer container">
@@ -585,7 +583,6 @@ class ConvosComponent extends React.Component {
                 style={{ float: 'left', clear: 'both', color: '#f0f0f0' }}
                 ref={(el) => { this.messageEnd = el; }}
               />
-                <p className="">{`${state.message.length}/${maxMessageLength}`}</p>
             </div>   
           </div>
           <div className="convo-input-outer">
@@ -601,12 +598,12 @@ class ConvosComponent extends React.Component {
                   required="required"
                 />
                 <button
-                  type="submit"
+                  type="submit" style={{ width: "80px"}}
                   className="btn btn-custom"
                   disabled={state.submitted}
                   onClick={this.createRecord.bind(this)}
                 >
-                  Send    ✔
+                ✔ <p className="" style={{color: 'grey'}}>{`${state.message.length}/${maxMessageLength}`}</p>
                 </button>
               </form>
             </div>

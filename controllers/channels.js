@@ -20,7 +20,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       React.createElement(PageFile, {
         connection,
         messages,
-        name: 'Metis - My Channels',
+        name: 'Metis - Chats',
         user: req.user,
         dashboard: true,
         public_key: req.session.public_key,
@@ -42,7 +42,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       React.createElement(PageFile, {
         connection,
         messages,
-        name: 'Metis - My Invites',
+        name: 'Metis - Invites',
         user: req.user,
         dashboard: true,
         public_key: req.session.public_key,

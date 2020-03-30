@@ -14,8 +14,8 @@ export default class ApplicationLayout extends React.Component {
   render() {
     const linksList = (
       <div>
-        <li className="nav-item"><a className="nav-link" href="/channels"><i className="fas fa-fw fa-file" />{' '}<span>My Channels</span></a></li>
-        <li className="nav-item"><a className="nav-link" href="/invites"><i className="fas fa-fw fa-file" />{' '}<span>My Invites</span></a></li>
+        <li className="nav-item"><a className="nav-link" href="/channels"><i className="fas fa-fw fa-file" />{' '}<span>Chats</span></a></li>
+        <li className="nav-item"><a className="nav-link" href="/invites"><i className="fas fa-fw fa-file" />{' '}<span>Invites</span></a></li>
 {false && 'Generated plop links go here'}
       </div>
     );
@@ -49,12 +49,59 @@ export default class ApplicationLayout extends React.Component {
         </ul>
 
         <ul className="navbar-nav ml-auto desktop-nav">
+          {/* <li className="nav-item">
+            <a className="nav-link">
+              <span>
+                Hello, {this.state.user_exists ? this.state.user.record.alias : 'Alias'}
+              </span>
+            </a>
+          </li> */}
           <li className="nav-item">
-            <a className="nav-link" href="https://sigwo.tech/feedback" target="_blank">
-              Feedback
+            <a className="nav-link" href="/account" data-toggle="tooltip" 
+            title={this.state.user_exists ? this.state.user.record.alias : 'Alias'}>
+              {/* <span>
+                Hello, {this.state.user_exists ? this.state.user.record.alias : 'Alias'}
+              </span> */}
+                {' '}
+                {/* <span>Profile |</span> */}
+                <i className="fas fa-fw fa-user" /> 
             </a>
           </li>
-          <li className="nav-item dropdown">
+          <li className="nav-item">
+            <a className="nav-link" href="/channels" data-toggle="tooltip" title="Chats">
+              {' '}
+              {/* <span>Chats |</span> */}
+              <i className="fas fa-fw fa-comments" /> 
+            </a>
+          </li>
+          <li classname="nav-item">
+            <a className="nav-link" href="/invites" data-toggle="tooltip" title="Invites">
+              {' '}
+              {/* <span>Invites |</span> */}
+              <i className="fas fa-fw fa-envelope" /> 
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/security" data-toggle="tooltip" title="Security">
+                {' '}
+                {/* <span>Security</span> */}
+                <i className="fas fa-fw fa-lock" /> 
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+                {' '}
+                {/* <span>Log Out</span> */}
+                <i className="fas fa-fw fa-sign-out-alt" data-toggle="tooltip" title="Logout"/> 
+              </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="https://sigwo.tech/feedback" target="_blank" data-toggle="tooltip" title="Feedback">
+              {/* Feedback | */}
+              <i className="fas fa-fw fa-lightbulb" />
+            </a>
+          </li>
+          {/* <li className="nav-item dropdown">
             <a
               className="nav-link dropdown-toggle"
               href="#"
@@ -64,41 +111,39 @@ export default class ApplicationLayout extends React.Component {
               aria-haspopup="true"
               aria-expanded="false"
             >
-            My Account
-            </a>
-            <div
-              className="dropdown-menu dropdown-menu-right"
-              aria-labelledby="alertsDropdown"
-            >
-              <div className="dropdown-alias-card">
-                <span
+            <i className="fas fa-fw fa-cog fa-lg"></i>
+            </a> */}
+            {/* Redo top bar here */}
+            {/* <div className="dropdown-menu" aria-labelledby="alertsDropdown">
+              <div className="dropdown-alias-card"> */}
+                {/* <span
                   className="d-inline-block text-truncate small"
                   style={{ maxWidth: '120px'}}
                 >
                   Hello, {this.state.user_exists ? this.state.user.record.alias : 'Alias'}
-                </span>
-              </div>
-              <a className="dropdown-item" href="/account">
+                </span> */}
+              {/* </div> */}
+              {/* <a className="dropdown-item" href="/account">
                 <i className="fas fa-fw fa-user" />
                 {' '}
-                <span>My Profile</span>
-              </a>
-              <a className="dropdown-item" href="/channels">
+                <span>Profile</span>
+              </a> */}
+              {/* <a className="dropdown-item" href="/channels">
                 <i className="fas fa-fw fa-comments" />
                 {' '}
-                <span>My Channels</span>
+                <span>Chats</span>
               </a>
               <a className="dropdown-item" href="/invites">
                 <i className="fas fa-fw fa-envelope" />
                 {' '}
-                <span>My Invites</span>
-              </a>
-              <a className="dropdown-item" href="/security">
+                <span>Invites</span>
+              </a> */}
+              {/* <a className="dropdown-item" href="/security">
                 <i className="fas fa-fw fa-lock" />
                 {' '}
                 <span>Security</span>
-              </a>
-              <a
+              </a> */}
+              {/* <a
                 className="dropdown-item"
                 href="#"
                 data-toggle="modal"
@@ -107,7 +152,7 @@ export default class ApplicationLayout extends React.Component {
                 <i className="fas fa-fw fa-sign-out-alt" />
                 {' '}
                 <span>Log Out</span>
-              </a>
+              </a> */}
               {/* <a className="dropdown-item" href="/">
                 <i className="fas fa-fw fa-question" />
                 {' '}
@@ -122,10 +167,10 @@ export default class ApplicationLayout extends React.Component {
               {/* <a className="dropdown-item" href="/contacts">
                 <i className="fas fa-fw fa-id-card" />
                 {' '}
-                <span>My Contacts</span>
+                <span>Contacts</span>
               </a> */}
-            </div>
-          </li>
+            {/* </div>
+          </li> */}
         </ul>
       </nav>
     );
@@ -186,28 +231,28 @@ export default class ApplicationLayout extends React.Component {
                   <a className="nav-link" href="/account">
                     <i className="fas fa-fw fa-user" />
                     {' '}
-                    <span>My Profile</span>
+                    <span>Profile</span>
                   </a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/channels">
                     <i className="fas fa-fw fa-comments" />
                     {' '}
-                    <span>My Channels</span>
+                    <span>Chats</span>
                   </a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/invites">
                     <i className="fas fa-fw fa-envelope" />
                     {' '}
-                    <span>My Invites</span>
+                    <span>Invites</span>
                   </a>
                 </li>
                 {/* <li className="nav-item">
                   <a className="nav-link" href="/contacts">
                     <i className="fas fa-fw fa-id-card" />
                     {' '}
-                    <span>My Contacts</span>
+                    <span>Contacts</span>
                   </a>
                 </li> */}
                 <li className="nav-item">

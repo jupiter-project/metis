@@ -193,7 +193,7 @@ class ChannelsComponent extends React.Component {
 
     (
       <a className="text-light mr-1">
-        invite {channel.id}
+        Invite {channel.id}
       </a>
     )
   }
@@ -224,14 +224,14 @@ class ChannelsComponent extends React.Component {
     const newChannelForm = (
       <div className="card card-register mx-auto mt-5">
         <div className="card-header bg-custom text-light h5">
-          Add New Channel
+          Add New Chat
         </div>
         <div className="card-body">
           <div className="form-group">
-            <input placeholder="Enter new channel name here..." value={state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
+            <input placeholder="Enter new chat name here..." value={state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
           </div>
           <div className="text-center">
-            <button className="btn btn-custom" disabled={state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
+            <button className="btn btn-custom" disabled={state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {state.submitted ? 'Adding Chat...' : 'Add Chat'}</button>
           </div>
         </div>
       </div>);
@@ -244,11 +244,11 @@ class ChannelsComponent extends React.Component {
     }}><i className="fa fa-spinner fa-pulse"></i></div>;
 
     const content = <div>
-      <div className="page-title">My Channels</div>
+      <div className="page-title">Chats</div>
         <div className="row">
           <div className="mx-auto">
             <button type="button" className="btn btn-custom channels-modal" data-toggle="modal" data-target="#channelsModal">
-              View My Channels
+              View Chats
             </button>
           </div>
         </div>
@@ -256,7 +256,7 @@ class ChannelsComponent extends React.Component {
           ? newChannelForm
           : <div className="card card-register mx-auto my-5">
             <div className="card-body">
-              <div className="text-center alert alert-warning m-0">Unable to create channels yet, confirming account details in the blockchain</div>
+              <div className="text-center alert alert-warning m-0">Unable to create chats yet, confirming account details in the blockchain.</div>
             </div>
           </div>
         }

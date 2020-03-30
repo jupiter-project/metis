@@ -128,7 +128,7 @@ class AccountComponent extends React.Component {
     const { state } = this;
     return (
       <div className="container">
-        <div className="page-title">My Profile</div>
+        <div className="page-title">Profile</div>
         <div className="card card-register mx-auto mt-5">
           <div className="card-header bg-custom text-light h5">
             Account Information

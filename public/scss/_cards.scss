@@ -25,16 +25,20 @@
 }
 
 .card-account {
-  color: $white;
+  // color: $white;
   a {
     color: $white;
   }
   .card-body {
     padding: 5%;
     text-align: center;
+    background-color: #26313d;
+    border-radius: .25em;
   }
 }
 
 .card-plain {
   border: none;
+  background-color: #26313d;
+  border-radius: .25em;
 }

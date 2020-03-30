@@ -19,7 +19,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       React.createElement(AccountPage, {
         connection,
         messages,
-        name: 'Metis - My Profile',
+        name: 'Metis - Profile',
         user: req.user,
         dashboard: true,
         public_key: req.session.public_key,

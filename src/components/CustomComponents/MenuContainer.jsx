@@ -71,6 +71,8 @@ class ChannelRow extends React.Component {
     const { props } = this;
     const { state } = this;
     const channelInfo = props.parent.props.channels[props.channel];
+    const rand = require("crypto").createHash('md5').update(this.state.channelData.id).digest("hex")
+    const identicon = "https://www.gravatar.com/avatar/"+rand+"?s=64&d=identicon"
 
     const inviteComponent = (
       <div
@@ -163,7 +165,7 @@ class ChannelRow extends React.Component {
               className="d-inline-block text-truncate"
               style={{ maxWidth: '140px'}}
             >
-              {channelInfo.channel_record.name}
+              <img src={ identicon } height="20px" alt="logo" /> {channelInfo.channel_record.name}
             </span>
           </div>
           <a
@@ -188,7 +190,7 @@ export default class MenuContainer extends React.Component {
     const self = this;
     return (
       <ul className="sidebar navbar-nav float-left channels-list" style={{ position: 'inherit' }}>
-        <div className="h4 text-light p-2">My Channels</div>
+        <div className="h4 text-light p-2">Chats</div>
         {props.channels ? props.channels.map((channel, index) => (
           <ChannelRow
             parent={self}

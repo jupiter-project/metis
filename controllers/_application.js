@@ -54,7 +54,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   });
 
   // ===============================================================================
-  // HOMEPAGE, SETTINGS, POOL, DONATION_CHANGE INVEST_MORE
+  // HOMEPAGE, SETTINGS
   // ===============================================================================
   app.get('/', controller.isLoggedInIndex, (req, res) => {
     const messages = req.session.flash;
@@ -66,7 +66,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       React.createElement(IndexPage, {
         connection,
         messages,
-        name: 'Metis - Welcome',
+        name: 'Metis',
         user: req.user,
         dashboard: true,
       }),
