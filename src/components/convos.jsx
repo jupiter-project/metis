@@ -539,10 +539,12 @@ class ConvosComponent extends React.Component {
         <div className="convo-wrapper">
           <div className="convo-header">
             <div className="convo-header-title">
-                <a href="#" data-toggle="modal" data-target="#memberListModal" data-toggle="tooltip" title="Click for member list">
+              <div className data-toggle="tooltip" title="Click for member list">
+                <a href="#" data-toggle="modal" data-target="#memberListModal">
                   {/* Members */}<span>{Channel.name}</span>
                 </a>
                 {memberModal}
+              </div>
             </div>
             {/* <div className="convo-header-nav">
               <div className="convo-sidebar-toggle">
