@@ -74,7 +74,7 @@ export default class ApplicationLayout extends React.Component {
               <i className="fas fa-fw fa-comments" /> 
             </a>
           </li>
-          <li classname="nav-item">
+          <li className="nav-item">
             <a className="nav-link" href="/invites" data-toggle="tooltip" title="Invites">
               {' '}
               {/* <span>Invites |</span> */}
