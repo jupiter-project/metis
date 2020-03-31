@@ -1,14 +1,12 @@
 .convo-wrapper {
-  // display: flex;
-  // flex-flow: row wrap;
-  // height: 91vh;
-  // height: 100%;
-  width: calc(100% - $sidebar-base-width);
+  display: flex;
+  flex-flow: row wrap;
+  height: 91vh;
 }
 
 .convo-header {
   flex: 1 100%;
-  // height: 12%;
+  height: 12%;
   padding: 10px;
 }
 
@@ -38,14 +36,14 @@
 
 .convo-messages-outer {
   flex: 1 100%;
-  // height: 73%;
+  height: 73%;
   padding-left: 10px;
   // border-top: 2px solid lightgray;
 }
 
 .convo-messages-inner {
   overflow-y: auto;
-  // height: 100%;
+  height: 100%;
   width: 100%;
   padding: 10px;
 }
@@ -60,7 +58,7 @@
 
 .convo-input-outer {
   flex: 1 100%;
-  // height: 15%;
+  height: 15%;
   padding: '10px';
   color: white;
   padding-top: 10px;
@@ -69,20 +67,20 @@
 
 .convo-input-inner {
   width: 100%;
-  // height: 100%;
+  height: 100%;
   padding: 0 10px 0 10px;
 }
 
 .convo-input-form {
   display: flex;
   box-sizing: border-box;
-  // height: 64px;
+  height: 64px;
 }
 
 .convo-input-text {
   display: block;
   width: 100%;
-  // height: 100%;
+  height: 100%;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   color: $custom-primary;

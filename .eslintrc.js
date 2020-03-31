@@ -5,6 +5,7 @@ module.exports = {
         "es6": true,
         "jest": true,
     },
+    "parser":"babel-eslint",
     "extends": "airbnb",
     "rules": {
         "no-console" : "off",
@@ -17,7 +18,7 @@ module.exports = {
         "no-alert" : "off",
         "import/extensions" : "off",
         "react/jsx-filename-extension" : "off",
-        "react/no-multi-comp":"off",
+        "react/no-multi-comp":"off"
     },
     "parserOptions": {
         "ecmaFeatures": {

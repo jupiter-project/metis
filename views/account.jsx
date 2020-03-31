@@ -5,7 +5,7 @@ class AccountPage extends React.Component {
   render() {
     return (
         <ApplicationLayout data={this.props}>
-            <div id="new-account-section">
+            <div id="account-section">
 
             </div>
         </ApplicationLayout>
