@@ -68,12 +68,12 @@ app.use((req, res, next) => {
   return null;
 });
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // Here is where we load the api routes. We put them here so passport deserializer
 // is not called everytime we make an api call to them
 require('./config/api.js')(app);
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 // Sets public directory
 app.use(express.static(`${__dirname}/public`));

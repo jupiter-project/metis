@@ -211,7 +211,7 @@ class ChannelsComponent extends React.Component {
     // channelData should grab the current channel selected.
     // const channelData = this.state.channels[channel]
     // this.setState({ channelData });
-    console.log(channelData);
+    // console.log(channelData);
   }
 
   render() {
