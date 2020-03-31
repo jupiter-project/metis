@@ -7,8 +7,6 @@ import MobileMenuContainer from './CustomComponents/MobileMenuContainer.jsx';
 import { messagesConfig } from '../../config/constants';
 import { urlencoded } from 'body-parser';
 
-
-
 const { maxMessageLength } = messagesConfig;
 
 class DataRow extends React.Component {
@@ -27,7 +25,6 @@ class DataRow extends React.Component {
     const rand0 = require("crypto").createHash('md5').update(data.name).digest("hex")
     const identicon = "https://www.gravatar.com/avatar/"+rand+"?s=64&d=identicon"
     const oIdenticon = "https://www.gravatar.com/avatar/"+rand0+"?s=64&d=identicon"
-
     const name = data.name === `${props.user.record.alias}`
       || data.name === `${props.user.record.firstname} ${props.user.record.lastname}`
       ? 'You' : data.name;
