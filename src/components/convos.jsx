@@ -8,6 +8,7 @@ import { messagesConfig } from '../../config/constants';
 import { urlencoded } from 'body-parser';
 
 
+
 const { maxMessageLength } = messagesConfig;
 
 class DataRow extends React.Component {
@@ -34,7 +35,7 @@ class DataRow extends React.Component {
     const date = (new Date(record.date)).toLocaleString();
 
     const readOnlyLeft = (
-      <div className="card-plain text-left message d-block float-left my-2 w-100">
+      <div className="card-plain text-left message d-block my-2 w-100">
         <div className="card-body p-2">
           <div className="bg-dark rounded-circle float-left mr-2">
             <img src={oIdenticon} height="40px" alt="logo" />
@@ -49,7 +50,7 @@ class DataRow extends React.Component {
     );
 
     const readOnlyRight = (
-      <div className="card-plain text-right message d-block float-right my-2 w-100">
+      <div className="card-plain text-right message d-block my-2 w-100">
         <div className="card-body p-2">
           <div className="bg-dark rounded-circle float-right ml-2">
             <img src={identicon} height="40px" alt="logo" />
@@ -498,7 +499,7 @@ class ConvosComponent extends React.Component {
 
     const loading = (
       <div style={{
-        textAlign: 'center', marginTop: '25vh', fontSize: '55px', overflow: 'hidden',
+        textAlign: 'center', paddingTop: '25vh', fontSize: '55px', overflow: 'hidden'
       }}
       >
         <i className="fa fa-spinner fa-pulse" />
@@ -537,7 +538,77 @@ class ConvosComponent extends React.Component {
       <div>
         {state.sideMenuOpen ? <MenuContainer channels={state.channels} /> : null}
         <div className="convo-wrapper">
-          <div className="convo-header">
+          <div className="h-100">
+            <div>
+              <span>{Channel.name}</span>
+              <br />
+              <a className="btn btn-link" href="#" data-toggle="modal" data-target="#memberListModal">
+                Members
+              </a>
+              {memberModal}
+            </div>
+            <div>
+              <div className="convo-sidebar-toggle">
+                <button type="button" className="btn btn-link" onClick={this.toggleSideMenu}>
+                  {state.sideMenuOpen ? <i className="fas fa-chevron-circle-left" /> : <i className="fas fa-chevron-circle-right" />}
+                </button>
+              </div>
+              <div className="convo-mobile-modal-button">
+                <a
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#channelsModal"
+                >
+                  Channels
+                </a>
+              </div>
+            </div>
+            <div>
+              <div id="messageList">
+                <div className="convo-load-button text-right">
+                  <button
+                    type="button"
+                    className="btn btn-secondary btn-sm"
+                    disabled={state.waitingForOldData}
+                    onClick={this.getOlderMessages.bind(this)}>
+                    {state.waitingForOldData ? 'Loading messages' : 'Load older messages'}
+                  </button>
+                </div>
+                <div className="convo-messages-content">
+                  {recordList}
+                </div>
+                <div
+                  style={{ float: 'left', clear: 'both' }}
+                  ref={(el) => { this.messageEnd = el; }}
+                />
+              </div>  
+            </div>
+            <div style={{ marginBottom: '0px' }}>
+              <form className="convo-input-form" style={{ marginBottom: '5px' }} onSubmit={this.updateMessage}>
+                <input
+                  type="text"
+                  maxLength={maxMessageLength}
+                  className="convo-input-text"
+                  placeholder="Enter your message here..."
+                  value={state.message}
+                  onChange={this.handleChange.bind(this, 'message')}
+                  required="required"
+                />
+                <button
+                  type="submit"
+                  className="btn btn-custom"
+                  disabled={state.submitted}
+                  onClick={this.createRecord.bind(this)}
+                >
+                  Send
+                </button>
+              </form>
+              <div className="mx-auto">
+                <p className="">{`${state.message.length}/${maxMessageLength}`}</p>
+              </div>
+            </div>
+          </div>
+          {/* <div className="convo-header">
             <div className="convo-header-title">
               <span>{Channel.name}</span>
               <br />
@@ -557,6 +628,7 @@ class ConvosComponent extends React.Component {
                   data-toggle="modal" data-target="#channelsModal">
                   Channels
                 </button> */}
+
                 <a
                   href="#"
                   data-toggle="modal"

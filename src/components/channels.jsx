@@ -1,9 +1,18 @@
+
 import React from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
-import MenuContainer from './CustomComponents/MenuContainer.jsx';
-import MobileMenuContainer from './CustomComponents/MobileMenuContainer.jsx';
+// import MenuContainer from './CustomComponents/MenuContainer.jsx';
+// import MobileMenuContainer from './CustomComponents/MobileMenuContainer.jsx';
+
+// new chat-ui components
+import UserSidebar from './CustomComponents/UserSidebar.jsx';
+import ChannelHeader from './CustomComponents/ChannelHeader.jsx';
+import TypingIndicator from './CustomComponents/TypingIndicator.jsx';
+import CreateMessageForm from './CustomComponents/CreateMessageForm.jsx';
+import MessageList from './CustomComponents/MessageList.jsx';
+import MemberList from './CustomComponents/MemberList.jsx';
 
 class ChannelsComponent extends React.Component {
   constructor(props) {
@@ -13,12 +22,35 @@ class ChannelsComponent extends React.Component {
       name: '',
       password: '',
       channels: [],
-      submitted: false,
-      update_submitted: false,
+      messages: [],
       loading: true,
       inviteUser: false,
       invitationAccount: '',
+      // new state data
+      userSidebarOpen: false,
+      currentChannel: {},
+      currentChannelId: '',
+      currentChannelMessages: [],
+      tableData: {},
+      memberListOpen: window.innerWidth > 1000,
+      public_key: '',
+      queryScope: 'all',
+      firstIndex: 0,
+      waitingForData: false,
+      monitoring: false,
+      submitted: false,
+      update_submitted: false,
+      transactionIds: [],
+      localMessages: [],
+      remoteMessages: [],
     };
+
+    this.actions = {
+      setUserSidebar: userSidebarOpen => this.setState({ userSidebarOpen }),
+      setMemberList: memberListOpen => this.setState({ memberListOpen }),
+      setCurrentChannel: (channel) => this.setState({ currentChannel: channel.channel_record, currentChannelId: channel.id }, () => this.loadMessages(channel)),
+    }
+
     this.handleChange = this.handleChange.bind(this);
     this.createRecord = this.createRecord.bind(this);
   }
@@ -27,14 +59,104 @@ class ChannelsComponent extends React.Component {
     this.loadData();
   }
 
-  resetRecords(newData) {
+  componentDidUpdate() {
+    console.log('currentChannel: ', this.state.currentChannel);
+    console.log('currentChannelId: ', this.state.currentChannelId);
+    console.log('currentChannelMessages: ', this.state.currentChannelMessages);
+  }
+
+  setTransactionIds(messages) {
+    const transactionIds = [];
+    for (let x = 0; x < messages.length; x += 1) {
+      const thisMessage = messages[x];
+      if (thisMessage && thisMessage.fullRecord) {
+        transactionIds.push(thisMessage.fullRecord.transaction);
+      }
+    }
+
     this.setState({
-      channels: newData,
+      transactionIds,
     });
+  }
+
+  loadMessages(channel) {
+    const page = this;
+    const { props, state } = this;
+
+    this.setState({
+      waitingForData: true,
+    });
+
+    const currentData = JSON.stringify(state.messages);
+
+    const config = {
+      headers: {
+        user_api_key: props.user.record.api_key,
+        user_public_key: props.public_key,
+        accessdata: props.accessData,
+        channelaccess: channel.channel_record.passphrase,
+        channeladdress: channel.channel_record.account,
+        channelkey: channel.channel_record.password,
+        channelpublic: channel.channel_record.publicKey,
+        // channelaccess: state.currentChannel.passphrase,
+        // channeladdress: state.currentChannel.account,
+        // channelkey: state.currentChannel.password,
+        // channelpublic: state.currentChannel.publicKey,
+      },
+    };
+
+    const index = state.queryScope === 'unconfirmed' ? 0 : state.firstIndex;
+
+    axios.get(`/data/messages/${state.queryScope}/${index}`, config)
+      .then((response) => {
+        if (response.data.success) {
+          if (page.state.queryScope === 'all') {
+            const responseData = JSON.stringify(response.data.messages);
+
+            if (currentData !== responseData && response.data.messages) {
+              page.setTransactionIds(response.data.messages);
+              page.setState({
+                messages: response.data.messages,
+                currentChannelMessages: response.data.messages,
+                queryScope: 'unconfirmed',
+                loading: false,
+              });
+            }
+          } else if (page.state.queryScope === 'unconfirmed') {
+            const newMessages = response.data.messages;
+            if (newMessages.length > 0) {
+              page.handleNewData(response.data.messages);
+            }
+          }
+          page.setState({
+            waitingForData: false,
+            loading: false,
+          }, () => {
+            if (!page.state.monitoring) {
+              page.setState({
+                monitoring: true,
+              }, () => {
+                page.monitorData();
+              });
+            }
+          });
+        } else {
+          page.setState({
+            waitingForData: false,
+            loading: false,
+          });
+          toastr.error('No record history');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toastr.error('There was an error');
+      })
   }
 
   loadData() {
     const page = this;
+    const { props, state } = this;
     const config = {
       headers: {
         user_api_key: this.props.user.record.api_key,
@@ -43,18 +165,18 @@ class ChannelsComponent extends React.Component {
       },
     };
 
-    axios.get(`/api/users/${this.props.user.id}/channels`, config)
+    axios.get(`/api/users/${props.user.id}/channels`, config)
       .then((response) => {
         if (response.data.success) {
-          // console.log('Response channel');
-          // console.log(response.data);
           page.setState({
             channels: response.data.channels,
-            channelTableExist: true,
             loading: false,
           });
           page.monitorData();
         } else {
+          page.setState({
+            loading: false,
+          })
           toastr.error('No record table in database.');
         }
       })
@@ -62,34 +184,42 @@ class ChannelsComponent extends React.Component {
         console.log(error);
         toastr.error('There was an error');
       });
+      // page.loadMessages();
   }
 
   checkUpdates() {
-    const self = this;
-    const currentData = JSON.stringify(this.state.channels);
-    const config = {
-      headers: {
-        user_api_key: this.props.user.record.api_key,
-        user_public_key: this.props.public_key,
-        accessData: this.props.accessData,
-      },
-    };
+    const { state } = this;
+    if (!state.waitingForData) {
+      // this.loadMessages();
+    }
+  }
 
-    axios.get(`/api/users/${this.props.user.id}/channels`, config)
-      .then((response) => {
-        if (response.data.success) {
-          // console.log(response.data);
-          const responseData = response.data.channels;
+  resetRecords(newData) {
+    this.setState({
+      channels: newData,
+    });
+  }
 
-          if (currentData !== JSON.stringify(responseData)) {
-            self.resetRecords(responseData);
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        toastr.error("Could not connect to server. Unable to check and update page's records.");
-      });
+  handleNewData(messages) {
+    const { state } = this;
+    const ids = state.transactionIds;
+    const currentMessages = state.messages;
+    const currentChannelMessages = state.currentChannelMessages;
+    for (let x = 0; x < messages.length; x += 1) {
+      const thisMessage = message[x];
+
+      if (!ids.includes(thisMessage.fullRecord.transaction)) {
+        currentMessages.push(thisMessage);
+        currentChannelMessages.push(thisMessage);
+        ids.push(thisMessage.fullRecord.transaction);
+      }
+    }
+
+    this.setState({
+      transactionIds: ids,
+      messages: currentMessages,
+      currentChannelMessages: currentMessages,
+    });
   }
 
   monitorData() {
@@ -99,9 +229,8 @@ class ChannelsComponent extends React.Component {
       if (!(self.state.submitted || self.state.update_submitted)) {
         self.checkUpdates();
       }
-    }, 3000);
+    }, 1500);
   }
-
 
   handleChange(aField, event) {
     if (aField === 'passphrase') {
@@ -146,7 +275,7 @@ class ChannelsComponent extends React.Component {
           });
         } else {
           // console.log(response.data);
-          // toastr.error(response.data.message);
+          toastr.error(response.data.message);
           response.data.validations.messages.map((message) => {
             toastr.error(message);
             return null;
@@ -215,58 +344,48 @@ class ChannelsComponent extends React.Component {
   }
 
   render() {
-    const { state } = this;
-
-    // const recordList = (
-    //   state.channels.map((channel, index) => <li className="channels-list-item text-light nav-item" key={index}><a className="nav-link" href={`/channels/${channel.id}`}><span className="d-inline-block text-truncate" style={{ maxWidth: '180px' }}>{channel.channel_record.name}</span></a></li>)
-    // );
-
-    const newChannelForm = (
-      <div className="card card-register mx-auto mt-5">
-        <div className="card-header bg-custom text-light h5">
-          Add New Channel
-        </div>
-        <div className="card-body">
-          <div className="form-group">
-            <input placeholder="Enter new channel name here..." value={state.name } className="form-control" onChange={this.handleChange.bind(this, 'name')} />
-          </div>
-          <div className="text-center">
-            <button className="btn btn-custom" disabled={state.submitted} onClick={this.createRecord.bind(this)}><i className="glyphicon glyphicon-edit"></i>  {state.submitted ? 'Adding Channel...' : 'Add Channel'}</button>
-          </div>
-        </div>
-      </div>);
-
-    const loading = <div style={{
-      textAlign: 'center',
-      paddingTop: '25vh',
-      fontSize: '55px',
-      overflow: 'hidden',
-    }}><i className="fa fa-spinner fa-pulse"></i></div>;
-
-    const content = <div>
-      <div className="page-title">My Channels</div>
-        <div className="row">
-          <div className="mx-auto">
-            <button type="button" className="btn btn-custom channels-modal" data-toggle="modal" data-target="#channelsModal">
-              View My Channels
-            </button>
-          </div>
-        </div>
-        { state.channels.length > 0 || this.state.channelTableExist
-          ? newChannelForm
-          : <div className="card card-register mx-auto my-5">
-            <div className="card-body">
-              <div className="text-center alert alert-warning m-0">Unable to create channels yet, confirming account details in the blockchain</div>
-            </div>
-          </div>
-        }
-    </div>;
+    const { channels, messages, currentChannelMessages, userSidebarOpen, currentChannel, memberListOpen } = this.state;
+    const { user, public_key, accessData } = this.props;
+    const { state, actions } = this;
 
     return (
-      <div>
-        <MenuContainer channels={state.channels} />
-        {state.loading ? loading : content}
-        <MobileMenuContainer channels={state.channels} />
+      <div className="main-wrapper">
+        <UserSidebar
+          user={user}
+          channels={channels}
+          state={state}
+          public_key={public_key}
+          accessData={accessData}
+          actions={actions}
+        />
+        <div className="section">
+          <ChannelHeader
+            user={user}
+            channelData={currentChannel}
+            state={state}
+            actions={actions}
+          />
+          <div className="custom-row">
+            <div className="custom-col">
+              <MessageList
+                state={state}
+                messages={currentChannelMessages}
+                loading={this.state.loading}
+              />
+              <TypingIndicator />
+              <CreateMessageForm />
+            </div>
+            {memberListOpen && (
+                <MemberList user={user} />
+              )}
+          </div>
+        </div>
+        {/* <MetisNotification
+          user={this.props.user}
+        /> */}
+        {/* <MenuContainer channels={state.channels} /> */}
+        {/* {state.loading ? loading : content} */}
+        {/* <MobileMenuContainer channels={state.channels} /> */}
       </div>
     );
   }

@@ -1,21 +1,121 @@
 // Global styling for this template
 
-::-webkit-scrollbar {
-  display: none;
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.chat-ui {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  font-size: 16px;
+  font-family: sans-serif;
+  background: #f2f2f2;
+  margin: 0;
 }
 
-body {
+// ::-webkit-scrollbar {
+//   display: none;
+// }
+
+// html {
+//   position: relative;
+//   // min-height: 100%;
+// }
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+button,
+input {
+  outline: none;
+  min-width: 0;
+  flex: none;
+}
+
+img,
+svg {
+  display: block;
+  flex: none;
+}
+
+[disabled] {
+  opacity: 0.5;
+}
+
+.main-wrapper {
+  display: flex;
+  margin: auto;
+  width: 100%;
   height: 100%;
-
+  background: #fff;
+  overflow: hidden;
 }
 
-th {
-  min-width: 120px;
+aside {
+  flex: none;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fcfcfc;
+  z-index: 2;
+  transform: rotateY(360deg);
+}
+
+.section {
+  flex: 1 1 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.custom-row {
+  flex: 1 1 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-col {
+  flex: 1 1 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+// th {
+//   min-width: 120px;
+// }
+
+@media (max-width: 640px) {
+  aside {
+    position: absolute;
+    left: 0;
+    top: 4.8rem;
+    bottom: 0;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease-out;
+    box-shadow: 0 0 0.38rem rgba(0, 0, 0, 0.1);
+  }
+  aside[data-open='true'] {
+    transform: translateX(0);
+  }
+  aside[data-open='true'] + section > *:not(header) {
+    opacity: 0.2;
+    transition: opacity 0.4s;
+    overflow: hidden;
+  }
 }
 
 textarea,
@@ -78,126 +178,8 @@ a.button-link {
 
 .page-title {
   text-align: center;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-bottom: 10px;
   font-weight: 400;
   font-size: 22px;
 }
-
-#wrapper {
-  display: flex;
-  #content-wrapper {
-    overflow-x: hidden;
-    width: 100%;
-    //padding-top: 1rem;
-    padding-bottom: $sticky-footer-height;
-  }
-}
-// Fixed Nav Option
-body.fixed-nav {
-  #content-wrapper {
-    margin-top: $navbar-base-height;
-    padding-left: $sidebar-collapsed-width;
-    padding-bottom: 0px;
-    padding-bottom: $sticky-footer-height;
-  }
-  &.sidebar-toggled {
-    #content-wrapper {
-      padding-left: 0;
-      padding-bottom: $sticky-footer-height;
-    }
-  }
-  @media (min-width: 768px) {
-    #content-wrapper {
-      padding-left: $sidebar-base-width;
-      padding-bottom: $sticky-footer-height;
-    }
-    &.sidebar-toggled {
-      #content-wrapper {
-        padding-left: $sidebar-collapsed-width;
-        padding-bottom: $sticky-footer-height;
-      }
-    }
-  }
-}
-
-#unlogged-wrapper {
-  display: flex;
-  #content-wrapper {
-    overflow-x: hidden;
-    width: 100%;
-    padding-top: 1rem;
-    padding-bottom: $sticky-footer-height;
-  }
-}
-// Fixed Nav Option
-body.fixed-nav {
-  #content-wrapper {
-    margin-top: $navbar-base-height;
-    padding-left: $sidebar-collapsed-width;
-    padding-bottom: $sticky-footer-height;
-  }
-  &.sidebar-toggled {
-    #content-wrapper {
-      padding-left: 0;
-      padding-bottom: $sticky-footer-height;
-    }
-  }
-  @media (min-width: 768px) {
-    #content-wrapper {
-      padding-left: $sidebar-base-width;
-      padding-bottom: $sticky-footer-height;
-    }
-    &.sidebar-toggled {
-      #content-wrapper {
-        padding-left: $sidebar-collapsed-width;
-        padding-bottom: $sticky-footer-height;
-      }
-    }
-  }
-}
-
-// Scroll to top button
-.scroll-to-top {
-  position: fixed;
-  right: 15px;
-  bottom: 15px;
-  display: none;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-
-  color: white;
-  background: transparent;
-
-  line-height: 45px;
-  color: $white;
-  background: fade-out($gray-800, 0.5);
-  line-height: 46px;
-  &:focus,
-  &:hover {
-    color: white;
-  }
-  &:hover {
-    background: transparent;
-  }
-  i {
-    font-weight: 800;
-  }
-}
-
-/* #incoming_message {
-  width: 50%;
-
-  @media (max-width: 600px) {
-    width: 80%;
-  }
-}
-
-#outgoing_message {
-  width: 50%;
-
-  @media (max-width: 600px) {
-    width: 80%;
-  }
-} */

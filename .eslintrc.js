@@ -5,7 +5,6 @@ module.exports = {
         "es6": true,
         "jest": true,
     },
-    "parser":"babel-eslint",
     "extends": "airbnb",
     "rules": {
         "no-console" : "off",

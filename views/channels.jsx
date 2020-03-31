@@ -5,9 +5,9 @@ class ChannelsPage extends React.Component {
   render() {
     return (
         <ApplicationLayout data={this.props}>
-            <div id="ChannelsComponent">
+          <div id="ChannelsComponent">
 
-            </div>
+          </div>
         </ApplicationLayout>
     );
   }

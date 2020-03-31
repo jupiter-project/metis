@@ -1,0 +1,55 @@
+.create-message-form {
+  flex: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #e0e0e0;
+  height: 3.6rem;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.create-message-form input:first-child {
+  flex: 1 1 100%;
+  padding: 1rem;
+  // border: 0;
+  font-size: 1rem;
+}
+
+.create-message-form_input {
+  border: 0 !important;
+}
+
+.create-message-form button {
+  position: relative;
+  border: 0;
+  background: #fff;
+  padding: 0;
+}
+
+.create-message-form > * {
+  margin-right: 0.62rem;
+}
+
+.create-message-form svg {
+  width: 2rem;
+  height: 2rem;
+  fill: #006eff;
+}
+
+.file-input_container {
+  position: relative;
+}
+
+.file-input_component {
+  flex: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}

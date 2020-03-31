@@ -12,13 +12,11 @@ export default class ApplicationLayout extends React.Component {
   }
 
   render() {
-    const linksList = (
-      <div>
-        <li className="nav-item"><a className="nav-link" href="/channels"><i className="fas fa-fw fa-file" />{' '}<span>My Channels</span></a></li>
-        <li className="nav-item"><a className="nav-link" href="/invites"><i className="fas fa-fw fa-file" />{' '}<span>My Invites</span></a></li>
-{false && 'Generated plop links go here'}
-      </div>
-    );
+//     const loggedHeader = (
+//       <nav className="navbar navbar-expand navbar-custom static-top">
+//         <a className="navbar-brand" href="/">
+//           <span>Metis - Public Test</span>
+//         </a>
 
     const loggedHeader = (
       <nav className="navbar navbar-expand navbar-custom static-top">
@@ -26,109 +24,94 @@ export default class ApplicationLayout extends React.Component {
           <span>Metis - Public Test {gravity.version}</span>
         </a>
 
-        <ul className="navbar-nav ml-auto mobile-nav-button">
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              href="https://sigwo.tech/feedback"
-              target="_blank"
-            >
-              Feedback
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="nav-link mt-1"
-              href="/#"
-              data-toggle="collapse"
-              data-target="#mobile-menu"
-            >
-              <i className="fas fa-fw fa-bars" />
-            </a>
-          </li>
-        </ul>
+//         <ul className="navbar-nav ml-auto desktop-nav">
+//           <li className="nav-item">
+//             <a className="nav-link" href="https://sigwo.tech/feedback" target="_blank">
+//               Feedback
+//             </a>
+//           </li>
+//           <li className="nav-item dropdown">
+//             <a
+//               className="nav-link dropdown-toggle"
+//               href="#"
+//               id="alertsDropdown"
+//               role="button"
+//               data-toggle="dropdown"
+//               aria-haspopup="true"
+//               aria-expanded="false"
+//             >
+//             My Account
+//             </a>
+//             <div
+//               className="dropdown-menu dropdown-menu-right"
+//               aria-labelledby="alertsDropdown"
+//             >
+//               <div className="dropdown-alias-card">
+//                 <span
+//                   className="d-inline-block text-truncate small"
+//                   style={{ maxWidth: '120px'}}
+//                 >
+//                   Hello, {this.state.user_exists ? this.state.user.record.alias : 'Alias'}
+//                 </span>
+//               </div>
+//               <a className="dropdown-item" href="/account">
+//                 <i className="fas fa-fw fa-user" />
+//                 {' '}
+//                 <span>My Profile</span>
+//               </a>
+//               <a className="dropdown-item" href="/channels">
+//                 <i className="fas fa-fw fa-comments" />
+//                 {' '}
+//                 <span>My Channels</span>
+//               </a>
+//               <a className="dropdown-item" href="/invites">
+//                 <i className="fas fa-fw fa-envelope" />
+//                 {' '}
+//                 <span>My Invites</span>
+//               </a>
+//               <a className="dropdown-item" href="/security">
+//                 <i className="fas fa-fw fa-lock" />
+//                 {' '}
+//                 <span>Security</span>
+//               </a>
+//               <a
+//                 className="dropdown-item"
+//                 href="#"
+//                 data-toggle="modal"
+//                 data-target="#logoutModal"
+//               >
+//                 <i className="fas fa-fw fa-sign-out-alt" />
+//                 {' '}
+//                 <span>Log Out</span>
+//               </a>
+//               {/* <a className="dropdown-item" href="/">
+//                 <i className="fas fa-fw fa-question" />
+//                 {' '}
+//                 <span>Help or FAQ</span>
+//               </a> */}
+//               {/* <a className="dropdown-item" href="/">
+//                 <i className="fas fa-fw fa-info" />
+//                 {' '}
+//                 <span>About</span>
+//               </a> */}
 
-        <ul className="navbar-nav ml-auto desktop-nav">
-          <li className="nav-item">
-            <a className="nav-link" href="https://sigwo.tech/feedback" target="_blank">
-              Feedback
-            </a>
-          </li>
-          <li className="nav-item dropdown">
-            <a
-              className="nav-link dropdown-toggle"
-              href="#"
-              id="alertsDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-            My Account
-            </a>
-            <div
-              className="dropdown-menu dropdown-menu-right"
-              aria-labelledby="alertsDropdown"
-            >
-              <div className="dropdown-alias-card">
-                <span
-                  className="d-inline-block text-truncate small"
-                  style={{ maxWidth: '120px'}}
-                >
-                  Hello, {this.state.user_exists ? this.state.user.record.alias : 'Alias'}
-                </span>
-              </div>
-              <a className="dropdown-item" href="/account">
-                <i className="fas fa-fw fa-user" />
-                {' '}
-                <span>My Profile</span>
-              </a>
-              <a className="dropdown-item" href="/channels">
-                <i className="fas fa-fw fa-comments" />
-                {' '}
-                <span>My Channels</span>
-              </a>
-              <a className="dropdown-item" href="/invites">
-                <i className="fas fa-fw fa-envelope" />
-                {' '}
-                <span>My Invites</span>
-              </a>
-              <a className="dropdown-item" href="/security">
-                <i className="fas fa-fw fa-lock" />
-                {' '}
-                <span>Security</span>
-              </a>
-              <a
-                className="dropdown-item"
-                href="#"
-                data-toggle="modal"
-                data-target="#logoutModal"
-              >
-                <i className="fas fa-fw fa-sign-out-alt" />
-                {' '}
-                <span>Log Out</span>
-              </a>
-              {/* <a className="dropdown-item" href="/">
-                <i className="fas fa-fw fa-question" />
-                {' '}
-                <span>Help or FAQ</span>
-              </a> */}
-              {/* <a className="dropdown-item" href="/">
-                <i className="fas fa-fw fa-info" />
-                {' '}
-                <span>About</span>
-              </a> */}
+//               {/* <a className="dropdown-item" href="/contacts">
+//                 <i className="fas fa-fw fa-id-card" />
+//                 {' '}
+//                 <span>My Contacts</span>
+//               </a> */}
+//             </div>
+//           </li>
+//         </ul>
+//       </nav>
+//     );
 
-              {/* <a className="dropdown-item" href="/contacts">
-                <i className="fas fa-fw fa-id-card" />
-                {' '}
-                <span>My Contacts</span>
-              </a> */}
-            </div>
-          </li>
-        </ul>
-      </nav>
-    );
+//     const unloggedHeader = (
+// <nav className="navbar navbar-expand navbar-custom static-top">
+//   <div className="container-fluid">
+//     <a className="navbar-brand" href="/home">
+//       <span>Metis - Public Test</span>
+//     </a>
 
     const unloggedHeader = (
       <nav className="navbar navbar-expand navbar-custom static-top">
@@ -137,182 +120,231 @@ export default class ApplicationLayout extends React.Component {
             <span>Metis - Public Test {gravity.version}</span>
           </a>
 
-          {/* <button
-            className="btn btn-link btn-sm text-white d-block d-lg-none ml-auto"
-            href="/#"
-            data-toggle="collapse"
-            data-target="#mobile-menu"
-          >
-            <i className="fas fa-fw fa-bars" />
-          </button> */}
-
-          <div className="d-none d-lg-block ml-auto">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link" href="/signup">
-                  <i className="fas fa-fw fa-user-plus" />
-                  {' '}
-                  <span>Sign Up</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/login">
-                  <i className="fas fa-fw fa-sign-in-alt" />
-                  {' '}
-                  <span>Log In</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    );
+//     <div className="d-none d-lg-block ml-auto">
+//       <ul className="navbar-nav">
+//         <li className="nav-item">
+//           <a className="nav-link" href="/signup">
+//             <i className="fas fa-fw fa-user-plus" />
+//             {' '}
+//             <span>Sign Up</span>
+//           </a>
+//         </li>
+//         <li className="nav-item">
+//           <a className="nav-link" href="/login">
+//             <i className="fas fa-fw fa-sign-in-alt" />
+//             {' '}
+//             <span>Log In</span>
+//           </a>
+//         </li>
+//       </ul>
+//     </div>
+//   </div>
+// </nav>
+//     );
 
     const loggedWrapper = (
-      <div id="wrapper">
-        <div id="content-wrapper">
-          <div className="collapse navbar-collapse mobile-nav" id="mobile-menu">
-            <ul className="navbar-nav text-left">
-              <div className="card card-account bg-secondary">
-                <div className="card-body">
-                  <span className="h5">
-                  {this.state.user_exists
-                    ? `Hello, ${this.state.user.record.alias}`
-                    : 'your name'}</span>
+      <React.Fragment>
+        {this.props.children}
+        {/* <div id="wrapper">
+          <div id="content-wrapper">
+            <div className="collapse navbar-collapse mobile-nav" id="mobile-menu">
+              <ul className="navbar-nav text-left">
+                <div className="card card-account bg-secondary">
+                  <div className="card-body">
+                    <span className="h5">
+                    {this.state.user_exists
+                      ? `Hello, ${this.state.user.record.alias}`
+                      : 'your name'}</span>
+                  </div>
                 </div>
-              </div>
-              <ul className="nav flex-column">
+                <ul className="nav flex-column">
+                  <li className="nav-item">
+                    <a className="nav-link" href="/account">
+                      <i className="fas fa-fw fa-user" />
+                      {' '}
+                      <span>My Profile</span>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/channels">
+                      <i className="fas fa-fw fa-comments" />
+                      {' '}
+                      <span>My Channels</span>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/invites">
+                      <i className="fas fa-fw fa-envelope" />
+                      {' '}
+                      <span>My Invites</span>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/contacts">
+                      <i className="fas fa-fw fa-id-card" />
+                      {' '}
+                      <span>My Contacts</span>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/security">
+                      <i className="fas fa-fw fa-lock" />
+                      {' '}
+                      <span>Security</span>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/">
+                      <i className="fas fa-fw fa-question" />
+                      {' '}
+                      <span>Help or FAQ</span>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/">
+                      <i className="fas fa-fw fa-info" />
+                      {' '}
+                      <span>About</span>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="nav-link"
+                      href="/#"
+                      data-toggle="modal"
+                      data-target="#logoutModal"
+                    >
+                      <i className="fas fa-fw fa-sign-out-alt" />
+                      <span>Log Out</span>
+                    </a>
+                  </li>
+                </ul>
+              </ul>
+            </div>
+            {this.props.children}
+          </div>
+        </div> */}
+      </React.Fragment>
+    );
+
+    const unloggedNavbar = (
+      <React.Fragment>
+        <nav className="navbar navbar-expand navbar-custom static-top">
+          <div className="container-fluid">
+            <a className="navbar-brand" href="/home">
+              <span>Metis - Public Test</span>
+            </a>
+
+            {/* <button
+              className="btn btn-link btn-sm text-white d-block d-lg-none ml-auto"
+              href="/#"
+              data-toggle="collapse"
+              data-target="#mobile-menu"
+            >
+              <i className="fas fa-fw fa-bars" />
+            </button> */}
+
+            <div className="d-none d-lg-block ml-auto">
+              <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link" href="/account">
-                    <i className="fas fa-fw fa-user" />
+                  <a className="nav-link" href="/signup">
+                    <i className="fas fa-fw fa-user-plus" />
                     {' '}
-                    <span>My Profile</span>
+                    <span>Sign Up</span>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/channels">
-                    <i className="fas fa-fw fa-comments" />
+                  <a className="nav-link" href="/login">
+                    <i className="fas fa-fw fa-sign-in-alt" />
                     {' '}
-                    <span>My Channels</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/invites">
-                    <i className="fas fa-fw fa-envelope" />
-                    {' '}
-                    <span>My Invites</span>
-                  </a>
-                </li>
-                {/* <li className="nav-item">
-                  <a className="nav-link" href="/contacts">
-                    <i className="fas fa-fw fa-id-card" />
-                    {' '}
-                    <span>My Contacts</span>
-                  </a>
-                </li> */}
-                <li className="nav-item">
-                  <a className="nav-link" href="/security">
-                    <i className="fas fa-fw fa-lock" />
-                    {' '}
-                    <span>Security</span>
-                  </a>
-                </li>
-                {/* <li className="nav-item">
-                  <a className="nav-link" href="/">
-                    <i className="fas fa-fw fa-question" />
-                    {' '}
-                    <span>Help or FAQ</span>
-                  </a>
-                </li> */}
-                {/* <li className="nav-item">
-                  <a className="nav-link" href="/">
-                    <i className="fas fa-fw fa-info" />
-                    {' '}
-                    <span>About</span>
-                  </a>
-                </li> */}
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    href="/#"
-                    data-toggle="modal"
-                    data-target="#logoutModal"
-                  >
-                    <i className="fas fa-fw fa-sign-out-alt" />
-                    <span>Log Out</span>
+                    <span>Log In</span>
                   </a>
                 </li>
               </ul>
-            </ul>
+            </div>
           </div>
-          {this.props.children}
-        </div>
-      </div>
-    );
-
-    const unloggedWrapper = (
-      <div id="wrapper">
-        {/* <ul className="sidebar navbar-nav d-none d-lg-block">
-          <li className="nav-item">
-            <a className="nav-link" href="https://docs.sigwo.com">
-              <i className="fas fa-fw fa-file" />
-              {' '}
-              <span>Documentation</span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              href="https://github.com/SigwoTechnologies/jupiter-gravity"
-            >
-              <i className="fab fa-fw fa-github" />
-              {' '}
-              <span>GitHub</span>
-            </a>
-          </li>
-        </ul> */}
-
-        {/* <div className="collapse navbar-collapse" id="mobile-menu">
-          <ul className="navbar-nav d-block d-lg-none text-left">
+        </nav>
+        <div className="collapse navbar-collapse mobile-nav" id="mobile-menu">
+          <ul className="navbar-nav text-left">
+            <div className="card card-account bg-secondary">
+              <div className="card-body">
+                <span className="h5">
+                {this.state.user_exists
+                  ? `Hello, ${this.state.user.record.alias}`
+                  : 'your name'}</span>
+              </div>
+            </div>
             <ul className="nav flex-column">
               <li className="nav-item">
-                <a className="nav-link" href="https://docs.sigwo.com">
-                  <i className="fas fa-fw fa-file" />
+                <a className="nav-link" href="/account">
+                  <i className="fas fa-fw fa-user" />
                   {' '}
-                  <span>Documentation</span>
+                  <span>My Profile</span>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/channels">
+                  <i className="fas fa-fw fa-comments" />
+                  {' '}
+                  <span>My Channels</span>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/invites">
+                  <i className="fas fa-fw fa-envelope" />
+                  {' '}
+                  <span>My Invites</span>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/contacts">
+                  <i className="fas fa-fw fa-id-card" />
+                  {' '}
+                  <span>My Contacts</span>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/security">
+                  <i className="fas fa-fw fa-lock" />
+                  {' '}
+                  <span>Security</span>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/">
+                  <i className="fas fa-fw fa-question" />
+                  {' '}
+                  <span>Help or FAQ</span>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/">
+                  <i className="fas fa-fw fa-info" />
+                  {' '}
+                  <span>About</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a
                   className="nav-link"
-                  href="https://github.com/SigwoTechnologies/jupiter-gravity"
+                  href="/#"
+                  data-toggle="modal"
+                  data-target="#logoutModal"
                 >
-                  <i className="fab fa-fw fa-github" />
-                  {' '}
-                  <span>GitHub</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/signup">
-                  <i className="fas fa-fw fa-user-plus" />
-                  {' '}
-                  <span>Sign up</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/login">
-                  <i className="fas fa-fw fa-sign-in-alt" />
-                  {' '}
-                  <span>Login</span>
+                  <i className="fas fa-fw fa-sign-out-alt" />
+                  <span>Log Out</span>
                 </a>
               </li>
             </ul>
           </ul>
-        </div> */}
-
-        <div id="content-wrapper">
-          {this.props.children}
         </div>
+      </React.Fragment>
+    );
+
+    const unloggedWrapper = (
+      <div className="w-100">
+        {unloggedNavbar}
+        {this.props.children}
       </div>
     );
 
@@ -354,17 +386,12 @@ export default class ApplicationLayout extends React.Component {
 
           <link href="/css/sb-admin.css" rel="stylesheet" />
         </head>
-        <body className="p-0">
+        <body>
           <span id="toastrMessages" />
-          <div
-            id={this.props.data.dashboard === true ? 'logged-in' : 'logged-out'}
-          >
-            {this.props.data.dashboard === true ? loggedHeader : unloggedHeader}
 
-            {this.props.data.dashboard === true
-              ? loggedWrapper
-              : unloggedWrapper}
-          </div>
+          {this.props.data.dashboard
+            ? loggedWrapper
+            : unloggedWrapper}
 
           <div
             className="modal fade"
