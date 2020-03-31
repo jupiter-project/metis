@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import MetisNotification from './CustomComponents/MetisNotifications.jsx';
 
 export class HomeComponent extends React.Component {
   constructor(props) {
@@ -8,8 +9,6 @@ export class HomeComponent extends React.Component {
       user: this.props.user,
     };
   }
-
-  componentDidMount() {}
 
   render() {
     return (
@@ -33,6 +32,9 @@ export class HomeComponent extends React.Component {
             </div> */}
           </div>
         </div>
+        <MetisNotification
+          user={this.props.user}
+        />
       </div>
     );
   }

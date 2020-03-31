@@ -5,8 +5,9 @@ class IndexPage extends React.Component {
   render() {
     return (
         <ApplicationLayout data={this.props}>
-            <div id="home-dashboard">
-            </div>
+          <div id="home-dashboard">
+          
+          </div>
         </ApplicationLayout>
     );
   }
