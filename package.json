@@ -69,6 +69,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "popper.js": "^1.14.4",
+    "prop-types": "^15.7.2",
     "qrcode": "^0.9.0",
     "react": "^16.5.2",
     "react-alert": "^4.0.4",

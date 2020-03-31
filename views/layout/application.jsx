@@ -388,6 +388,12 @@ export default class ApplicationLayout extends React.Component {
         </head>
         <body>
           <span id="toastrMessages" />
+          <div id="metis-notifications" />
+          <div
+            id={this.props.data.dashboard === true ? 'logged-in' : 'logged-out'}
+          >
+            {this.props.data.dashboard === true ? loggedHeader : unloggedHeader}
+
 
           {this.props.data.dashboard
             ? loggedWrapper

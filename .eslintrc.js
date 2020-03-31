@@ -17,7 +17,7 @@ module.exports = {
         "no-alert" : "off",
         "import/extensions" : "off",
         "react/jsx-filename-extension" : "off",
-        "react/no-multi-comp":"off"
+        "react/no-multi-comp":"off",
     },
     "parserOptions": {
         "ecmaFeatures": {
