@@ -2061,7 +2061,7 @@ class Gravity {
 
     if (!filter.noConfirmed) {
       try {
-        const numberOfRecords = filter.numberOfRecords || 5;
+        const numberOfRecords = filter.numberOfRecords || 10;
         const firstIndex = filter.firstIndex || 0;
         const lastIndex = parseInt(firstIndex, 10) + parseInt(numberOfRecords, 10);
         const urlCall = `${this.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${address}&withMessage=true&type=1&firstIndex=${firstIndex}&lastIndex=${lastIndex}`;
