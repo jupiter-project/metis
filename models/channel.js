@@ -107,8 +107,8 @@ class Channel extends Model {
     });
   }
 
-  async loadMessages(queryMode, nextIndex = 0, limit = 5) {
-    const numberOfRecords = limit || 5;
+  async loadMessages(queryMode, nextIndex = 0, limit = 10) {
+    const numberOfRecords = limit || 10;
     const lastIndex = parseInt(nextIndex, 10) + parseInt(numberOfRecords, 10);
     const query = {
       lastIndex,
