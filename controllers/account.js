@@ -281,10 +281,10 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     user.update()
       .then(() => {
         if (twofaEnabled) {
-          // console.log('This thing trigered');
+          // console.log('This thing triggered');
           res.redirect('/2fa_setup');
         } else if (user.record.twofa_enabled === false) {
-          // console.log('This is the other trigered');
+          // console.log('This is the other triggered');
           res.redirect('/security');
         }
       })
