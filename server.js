@@ -162,7 +162,7 @@ io.sockets.on('connection', (socket) => {
 });
 
 // Tells server to listen to port 4000 when app is initialized
-server.listen(4000, () => {
+server.listen(4010, () => {
   console.log('')
   console.log('_________________________________________________________________')
   console.log(' ▄▄       ▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ ') 
