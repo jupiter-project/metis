@@ -342,7 +342,7 @@ export class SignupForm extends React.Component {
           <p className="text-center">Never disclose your passphrase or encryption password!</p>
         </div>
         <div className="form-group">
-          <label htmlFor="alias">Alias</label>
+          <label htmlFor="alias">Alias (No spaces or special characters)</label>
           <input
             type="text"
             name="alias"
