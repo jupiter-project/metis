@@ -308,7 +308,7 @@ export default class ApplicationLayout extends React.Component {
           <li className="nav-item">
             <a
               className="nav-link"
-              href="https://github.com/SigwoTechnologies/jupiter-gravity"
+              href="https://github.com/jupiter-project/gravity"
             >
               <i className="fab fa-fw fa-github" />
               {' '}
@@ -330,7 +330,7 @@ export default class ApplicationLayout extends React.Component {
               <li className="nav-item">
                 <a
                   className="nav-link"
-                  href="https://github.com/SigwoTechnologies/jupiter-gravity"
+                  href="https://github.com/jupiter-project/gravity"
                 >
                   <i className="fab fa-fw fa-github" />
                   {' '}

@@ -16,7 +16,7 @@ class PublicHomePageView extends React.Component {
             people. Want to add your friends to your favorite group? Let them sign up at</p><br />
             <h4 className="text-center"><a href="https://metis.gojupiter.tech/signup">metis.gojupiter.tech</a></h4>
             <div className="text-center mt-3">or download the latest release 
-              <a href="https://github.com/SigwoTechnologies/metis-app/releases"> here</a>.
+              <a href="https://github.com/jupiter-project/metis/releases"> here</a>.
             </div>
             <div className="text-center mt-3">
               Returning user? Log in <a href="login">here</a>.
