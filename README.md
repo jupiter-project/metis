@@ -1,4 +1,4 @@
-# Jupiter Metis  [![pipeline status](https://github.com/SigwoTechnologies/metis/blob/master/public/img/pipeline.svg)](https://gitlab.com/sigwotechnologies/metis/commits/master)
+# Jupiter Metis  
 
 We’re all familiar with using our favorite chat apps and we often just assume we can trust them with our personal information. It’s not until our private life is compromised do we suddenly reconsider how we’re doing things. 
 
