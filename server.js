@@ -14,6 +14,7 @@ require('babel-register')({
 const express = require('express');
 
 const app = express();
+const port = process.env.PORT || 4000
 
 // Loads job queue modules and variables
 
@@ -109,7 +110,12 @@ const server = Object.keys(sslOptions).length >= 2
 const io = require('socket.io').listen(server);
 
 
-require('./config/passport')(passport, jobs, io); //  pass passport for configuration
+// require('./config/passport')(passport, jobs, io); //  pass passport for configuration
+const { serializeUser, deserializeUser, metisSignup, metisLogin } = require('./config/passport');
+serializeUser(passport); //  pass passport for configuration
+deserializeUser(passport); //  pass passport for configuration
+metisSignup(passport); //  pass passport for configuration
+metisLogin(passport, jobs, io); //  pass passport for configuration
 
 // Sets get routes. Files are converted to react elements
 find.fileSync(/\.js$/, `${__dirname}/controllers`).forEach((file) => {
@@ -162,7 +168,7 @@ io.sockets.on('connection', (socket) => {
 });
 
 // Tells server to listen to port 4000 when app is initialized
-server.listen(4000, () => {
+server.listen(port, () => {
   console.log('')
   console.log('_________________________________________________________________')
   console.log(' ▄▄       ▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ ') 
@@ -178,7 +184,7 @@ server.listen(4000, () => {
   console.log(' ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ ')
   console.log('_________________________________________________________________')
   console.log('')
-  console.log(`Metis version ${process.env.VERSION} is now running on port 4000 🎉`);
+  console.log(`Metis version ${process.env.VERSION} is now running on port ${port} 🎉`);
   console.log(`Jupiter Node running on ${process.env.JUPITERSERVER}`);
 });
 

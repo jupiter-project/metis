@@ -6,13 +6,22 @@ import RegistrationWorker from '../workers/registration';
 // Loads up passport code
 const LocalStrategy = require('passport-local').Strategy;
 
-module.exports = (passport, jobs, io) => {
-  // Used to serialize the user for the session
+// Used to serialize the user for the session
+const serializeUser = (passport) => {
   passport.serializeUser((accessData, done) => {
     done(null, accessData);
   });
+}
 
-  // Used to deserialize the user
+/**
+ * In a typical web application, the credentials used to authenticate a user will only be transmitted during the login request. 
+ * If authentication succeeds, a session will be established and maintained via a cookie set in the user's browser.
+ * Each subsequent request will not contain credentials, but rather the unique cookie that identifies the session.
+ * In order to support login sessions, Passport will serialize and deserialize user instances to and from the session.
+ * @param {*} passport 
+ */
+const deserializeUser = (passport) => {
+  debugger;
   passport.deserializeUser((accessData, done) => {
     const user = new User({ id: accessData.id }, accessData);
 
@@ -27,10 +36,13 @@ module.exports = (passport, jobs, io) => {
         done(err, null);
       });
   });
+}
 
-  // ===================================================
-  // LOCAL SIGNUP CODE
-  // ===================================================
+/**
+ * Signup to Metis
+ * @param {*} passport 
+ */
+const metisSignup = (passport) => {
   passport.use('gravity-signup', new LocalStrategy({
     usernameField: 'account',
     passwordField: 'accounthash',
@@ -57,8 +69,6 @@ module.exports = (passport, jobs, io) => {
           public_key: params.public_key,
           encryption_password: params.encryption_password,
         };
-
-        // console.log(data);
 
         // We verify the user data here
         user = new User(data);
@@ -107,10 +117,13 @@ module.exports = (passport, jobs, io) => {
       eventEmitter.emit('sent_jupiter_to_new_account');
     });
   }));
+}
 
-  // ==================================================================
-  // GRAVITY LOGIN
-  // ==================================================================
+/**
+ * Login to Metis
+ * @param {*} passport 
+ */
+const metisLogin = (passport, jobs, io) => {
   passport.use('gravity-login', new LocalStrategy({
     usernameField: 'account',
     passwordField: 'accounthash',
@@ -202,4 +215,11 @@ module.exports = (passport, jobs, io) => {
         return done(null, false, req.flash('loginMessage', 'Login Error'));
       });
   }));
+};
+
+module.exports = {
+  serializeUser,
+  deserializeUser,
+  metisSignup,
+  metisLogin 
 };
