@@ -1,8 +1,8 @@
-FROM node:9
+FROM node:10
 WORKDIR /apps/metis
 COPY package*.json ./
 RUN npm install
-RUN npm install -g socket.io
 COPY . .
+RUN npm install -g concurrently nodemon webpack jest plop 
 EXPOSE 4000
 CMD ["npm", "start"]

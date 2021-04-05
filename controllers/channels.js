@@ -6,10 +6,16 @@ import Invite from '../models/invite';
 import Channel from '../models/channel';
 import Message from '../models/message';
 
-
 const connection = process.env.SOCKET_SERVER;
 
+const decryptUserData = (req) => {
+  JSON.parse(gravity.decrypt(req.session.accessData));
+};
+
 module.exports = (app, passport, React, ReactDOMServer) => {
+  /**
+   * Render Channels page
+   */
   app.get('/channels', controller.isLoggedIn, (req, res) => {
     const messages = req.session.flash;
     req.session.flash = null;
@@ -32,6 +38,9 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.send(page);
   });
 
+  /**
+   * Render invites page
+   */
   app.get('/invites', controller.isLoggedIn, (req, res) => {
     const messages = req.session.flash;
     req.session.flash = null;
@@ -54,9 +63,15 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.send(page);
   });
 
+  /**
+   * Get a user's invites
+   */
   app.get('/channels/invites', controller.isLoggedIn, async (req, res) => {
+  // app.get('/channels/invites', async (req, res) => {
+    console.log('/n/n/nChannel Invites/n/n');
+    console.log(req.session);
     const invite = new Invite();
-    const userData = JSON.parse(gravity.decrypt(req.session.accessData));
+    const userData = decryptUserData(req);
     invite.user = userData;
     let response;
     try {
@@ -68,11 +83,14 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.send(response);
   });
 
-  app.post('/channels/invite', controller.isLoggedIn, async (req, res) => {
+  /**
+   * Send an invite
+   */
+  app.post('/channels/invite', async (req, res) => {
     const { data } = req.body;
     data.sender = req.user.record.account;
     const invite = new Invite(data);
-    invite.user = JSON.parse(gravity.decrypt(req.session.accessData));
+    invite.user = decryptUserData(req);
     let response;
 
     try {
@@ -87,11 +105,11 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   app.post('/channels/import', controller.isLoggedIn, async (req, res) => {
     const { data } = req.body;
     const channel = new Channel(data.channel_record);
-    channel.user = JSON.parse(gravity.decrypt(req.session.accessData));
+    channel.user = decryptUserData(req);
 
     let response;
     try {
-      response = await channel.import(JSON.parse(gravity.decrypt(req.session.accessData)));
+      response = await channel.import(channel.user);
     } catch (e) {
       response = { error: true, fullError: e };
     }
@@ -99,6 +117,9 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.send(response);
   });
 
+  /**
+   * Render a channel's conversations
+   */
   app.get('/channels/:id', controller.isLoggedIn, (req, res) => {
     const messages = req.session.flash;
     req.session.flash = null;
@@ -122,6 +143,9 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.send(page);
   });
 
+  /**
+   * Get a channel's messages
+   */
   app.get('/data/messages/:scope/:firstIndex', controller.isLoggedIn, async (req, res) => {
     let response;
 
@@ -132,7 +156,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     };
 
     const channel = new Channel(tableData);
-    channel.user = JSON.parse(gravity.decrypt(req.session.accessData));
+    channel.user = decryptUserData(req);
 
     try {
       const data = await channel.loadMessages(req.params.scope, req.params.firstIndex);
@@ -145,6 +169,9 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.send(response);
   });
 
+  /**
+   * Send a message
+   */
   app.post('/data/messages', controller.isLoggedIn, async (req, res) => {
     const { maxMessageLength } = messagesConfig;
     const hasMessage = _.get(req, 'body.data.message', null);
@@ -154,7 +181,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       const { tableData } = req.body;
       const message = new Message(req.body.data);
       message.record.sender = req.user.record.account;
-      const userData = JSON.parse(gravity.decrypt(req.session.accessData));
+      const userData = decryptUserData(req);
       try {
         const data = await message.sendMessage(userData, tableData, message.record);
         response = data;
