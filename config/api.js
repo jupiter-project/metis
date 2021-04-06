@@ -22,13 +22,18 @@ module.exports = (app) => {
   //  API GENERAL ROUTES
   // ===============================================================================
 
+  /**
+   * Get alias
+   */
   app.get('/jupiter/alias/:aliasName', async (req, res) => {
     const aliasCheckup = await gravity.getAlias(req.params.aliasName);
 
     res.send(aliasCheckup);
   });
 
-
+  /**
+   * Get a table associated with a user
+   */
   app.get('/api/users/:id/:tableName', (req, res, next) => {
     // const params = req.body;
     // const { data } = params;
@@ -36,6 +41,9 @@ module.exports = (app) => {
     const { tableName } = req.params;
     const exceptions = ['users'];
     let model = '';
+
+    console.log(req.user);
+    console.log(req.headers);
 
     // If table in route is in the exception list, then it goes lower in the route list
     if (exceptions.includes(tableName)) {
@@ -67,6 +75,10 @@ module.exports = (app) => {
         },
       );
 
+      console.log('\n\nGRAVITY DECRYPT\n\n\n')
+      console.log(headers);
+      console.log('\n\nGRAVITY DECRYPT\n\n\n')
+
       recordObject.loadRecords(JSON.parse(gravity.decrypt(headers.accessdata)))
         .then((response) => {
           const { records } = response;
@@ -81,6 +93,9 @@ module.exports = (app) => {
     }
   });
 
+  /**
+   * Create a record, assigned to the current user
+   */
   app.post('/api/:tableName', (req, res, next) => {
     const params = req.body;
     const { data } = params;
@@ -126,6 +141,9 @@ module.exports = (app) => {
     }
   });
 
+  /**
+   * Update a record, assigned to the current user
+   */
   app.put('/api/:tableName', (req, res, next) => {
     const params = req.body;
     const { data } = params;

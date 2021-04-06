@@ -47,7 +47,6 @@ const flash = require('connect-flash');
 const morgan = require('morgan');
 
 const cookieParser = require('cookie-parser');
-
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 
@@ -82,13 +81,15 @@ app.use(express.static(`${__dirname}/public`));
 // required for passport
 const sessionSecret = process.env.SESSION_SECRET !== undefined ? process.env.SESSION_SECRET : 'undefined';
 const sslOptions = {};
-if (process.env.CERTFILE) {
+if (process.env.CERTFILE) { // Set the certificate file
   sslOptions.cert = fs.readFileSync(`${__dirname}/${process.env.CERTFILE}`);
 }
-if (process.env.KEYFILE) {
+if (process.env.KEYFILE) { // set the key file
   sslOptions.key = fs.readFileSync(`${__dirname}/${process.env.KEYFILE}`);
 }
 
+// Create a session middleware with the given options.
+// @see https://www.npmjs.com/package/express-session
 app.use(session({
   secret: sessionSecret,
   saveUninitialized: true,
@@ -97,12 +98,16 @@ app.use(session({
     host: process.env.REDIS_HOST || 'localhost',
     port: process.env.REDIS_PORT || '6379',
   }),
-  cookie: { secure: (sslOptions.length) },
+  // @see https://stackoverflow.com/questions/16434893/node-express-passport-req-user-undefined
+  cookie: { secure: (sslOptions.length) }, // use secure cookies if SSL env vars are present
 }));
+
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+// If both cert and key files env vars exist use https, 
+// otherwise use http
 const server = Object.keys(sslOptions).length >= 2
   ? require('https').createServer(sslOptions, app)
   : require('http').createServer(app);
@@ -122,8 +127,7 @@ find.fileSync(/\.js$/, `${__dirname}/controllers`).forEach((file) => {
   require(file)(app, passport, React, ReactDOMServer, jobs);
 });
 
-
-// The following routes any invalid routes black to the root page
+// Route any invalid routes black to the root page
 app.get('/*', (req, res) => {
   req.flash('errorMessage', 'Invalid route');
   res.redirect('/');

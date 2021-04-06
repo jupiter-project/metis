@@ -252,6 +252,31 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     failureFlash: true,
   }));
 
+  // used for the mobile app
+  app.post('/appLogin', (req, res, next) => {
+    console.log('\n\n\nappLogin\n\n\n');
+
+    console.log(req.headers);
+
+    console.log('\n\n\nappLogin\n\n\n');
+    passport.authenticate('gravity-login', (err, userInfo) => {
+      if (err) return next(err);
+      const accountData = JSON.parse(gravity.decrypt(userInfo.accountData));
+
+      // {
+      //   "account":"JUP-H496-3XEM-94ZH-3R548",
+      //   "accounthash":"JUP-H496-3XEM-94ZH-3R548",
+      //   "encryptionPassword":"damn kitchen play help bare stone greet won wow mirror alas silently",
+      //   "passphrase":"damn kitchen play help bare stone greet won wow mirror alas silently",
+      //   "publicKey":"b8fbe029cd72e3a8ee96b6675bb19026f6b0a2bac6c99fccb36443247386ed15",
+      //   "originalTime":1616384679085
+      // }
+
+      userInfo.publicKey = accountData.publicKey;
+      res.json(userInfo);
+    })(req, res, next);
+  })
+
   // ===============================================================================
   // GET PASSPHRASE
   // ===============================================================================
