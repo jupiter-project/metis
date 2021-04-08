@@ -9,7 +9,7 @@ import Message from '../models/message';
 const connection = process.env.SOCKET_SERVER;
 
 const decryptUserData = (req) => {
-  JSON.parse(gravity.decrypt(req.session.accessData));
+  return JSON.parse(gravity.decrypt(req.session.accessData));
 };
 
 module.exports = (app, passport, React, ReactDOMServer) => {
