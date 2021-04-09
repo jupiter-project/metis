@@ -91,7 +91,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
 
     // @TODO: req.user non-functional - get record.account from a different place
-    console.log('\n\n\n\n/channels/invite\n\n\n\n', req.user);
+    console.log('\n\n\n\nInvite User\n\n\n\n', req.user);
     data.sender = req.user.record.account;
     
     const invite = new Invite(data);
