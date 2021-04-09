@@ -66,7 +66,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   /**
    * Get a user's invites
    */
-  app.get('/channels/invites', controller.isLoggedIn, async (req, res) => {
+  app.get('/channels/invites', async (req, res) => {
   // app.get('/channels/invites', async (req, res) => {
     console.log('/n/n/nChannel Invites/n/n');
     console.log(req.session);
@@ -88,7 +88,12 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    */
   app.post('/channels/invite', async (req, res) => {
     const { data } = req.body;
+
+
+    // @TODO: req.user non-functional - get record.account from a different place
+    console.log('\n\n\n\n/channels/invite\n\n\n\n', req.user);
     data.sender = req.user.record.account;
+    
     const invite = new Invite(data);
     invite.user = decryptUserData(req);
     let response;
@@ -102,7 +107,10 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     res.send(response);
   });
 
-  app.post('/channels/import', controller.isLoggedIn, async (req, res) => {
+  /**
+   * Accept channel invite
+   */
+  app.post('/channels/import', async (req, res) => {
     const { data } = req.body;
     const channel = new Channel(data.channel_record);
     channel.user = decryptUserData(req);
