@@ -45,6 +45,7 @@
   "license": "MIT",
   "dependencies": {
     "ajv": "^6.5.4",
+    "apn": "^2.2.0",
     "axios": "^0.16.2",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
@@ -66,6 +67,8 @@
     "method-override": "^2.3.9",
     "morgan": "^1.8.2",
     "nodemailer": "^4.1.2",
+    "path": "^0.12.7",
+    "express-device": "^0.4.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "popper.js": "^1.14.4",

@@ -30,7 +30,14 @@ module.exports = {
     return null;
   },
 
+
   isLoggedIn: (req, res, next) => {
+
+    // TODO validate if user is authenticated for mobile?
+    if (req.device && req.device.type && req.device.type === 'phone') {
+      return next();
+    }
+
     // If user is autenticated in the session, carry on
     // console.log('User',req.user ? req.user.record.admin: null);
     if (req.isAuthenticated() && req.user && req.user.record.admin) {
