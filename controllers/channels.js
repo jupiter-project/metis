@@ -170,7 +170,14 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     channel.user = JSON.parse(gravity.decrypt(req.headers.accessdata));
 
     try {
-      const data = await channel.loadMessages(req.params.scope, req.params.firstIndex);
+      const order = _.get(req, 'headers.order', 'desc');
+      const limit = _.get(req, 'headers.limit', 10);
+      const data = await channel.loadMessages(
+        req.params.scope,
+        req.params.firstIndex,
+        order,
+        limit,
+      );
       response = data;
     } catch (e) {
       console.log(e);
@@ -191,8 +198,15 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     if (hasMessage && hasMessage.length <= maxMessageLength) {
       const { tableData } = req.body;
       const message = new Message(req.body.data);
-      message.record.sender = req.user.record.account;
-      const userData = decryptUserData(req);
+      // TODO fix issue "req.user" related to passportjs to improve this code, we should be able to
+      // TODO get that info from mobile requests
+      // message.record.sender = req.user.record.account || req?.body?.user?.account;
+      message.record.sender = _.get(req, 'user.record.account', req.body.user.account);
+      // accountData
+      // const userData = decryptUserData(req);
+
+      const accessData = _.get(req, 'session.accessData', req.body.user.accountData);
+      const userData = JSON.parse(gravity.decrypt(accessData));
       try {
         const data = await message.sendMessage(userData, tableData, message.record);
         response = data;

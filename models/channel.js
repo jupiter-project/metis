@@ -107,7 +107,7 @@ class Channel extends Model {
     });
   }
 
-  async loadMessages(queryMode, nextIndex = 0, limit = 10) {
+  async loadMessages(queryMode, nextIndex = 0, order = 'desc', limit = 10) {
     const numberOfRecords = limit || 10;
     const lastIndex = parseInt(nextIndex, 10) + parseInt(numberOfRecords, 10);
     const query = {
@@ -120,7 +120,7 @@ class Channel extends Model {
       encryptionPassphrase: this.record.passphrase,
       includeUnconfirmed: true,
       multiChannel: true,
-      order: 'desc',
+      order,
       firstIndex: nextIndex,
     };
     if (queryMode === 'unconfirmed') {
