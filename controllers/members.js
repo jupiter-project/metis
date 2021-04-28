@@ -1,8 +1,10 @@
 import controller from '../config/controller';
-import { gravity } from '../config/gravity';
 import metis from '../config/metis';
 
+const device = require('express-device');
+
 module.exports = (app) => {
+  app.use(device.capture());
   app.get('/data/members', controller.isLoggedIn, async (req, res) => {
     const tableData = {
       account: req.headers.channeladdress,
@@ -11,7 +13,7 @@ module.exports = (app) => {
 
     const memberList = await metis.getMember({
       channel: tableData.account,
-      account: req.user.record.account,
+      account: req.device.type === 'phone' ? req.headers.channelpublic : req.user.record.account,
       password: tableData.password,
     });
 

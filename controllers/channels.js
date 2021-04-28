@@ -7,12 +7,14 @@ import Channel from '../models/channel';
 import Message from '../models/message';
 
 const connection = process.env.SOCKET_SERVER;
+const device = require('express-device');
 
 const decryptUserData = (req) => {
   return JSON.parse(gravity.decrypt(req.session.accessData));
 };
 
 module.exports = (app, passport, React, ReactDOMServer) => {
+  app.use(device.capture());
   /**
    * Render Channels page
    */
@@ -93,7 +95,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     // @TODO: req.user non-functional - get record.account from a different place
     console.log('\n\n\n\nInvite User\n\n\n\n', req.user);
     data.sender = req.user.record.account;
-    
+
     const invite = new Invite(data);
     invite.user = decryptUserData(req);
     let response;
@@ -164,10 +166,18 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     };
 
     const channel = new Channel(tableData);
-    channel.user = decryptUserData(req);
+    // TODO check the function decryptUserData is using "req.session.accessData"
+    channel.user = JSON.parse(gravity.decrypt(req.headers.accessdata));
 
     try {
-      const data = await channel.loadMessages(req.params.scope, req.params.firstIndex);
+      const order = _.get(req, 'headers.order', 'desc');
+      const limit = _.get(req, 'headers.limit', 10);
+      const data = await channel.loadMessages(
+        req.params.scope,
+        req.params.firstIndex,
+        order,
+        limit,
+      );
       response = data;
     } catch (e) {
       console.log(e);
@@ -188,8 +198,15 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     if (hasMessage && hasMessage.length <= maxMessageLength) {
       const { tableData } = req.body;
       const message = new Message(req.body.data);
-      message.record.sender = req.user.record.account;
-      const userData = decryptUserData(req);
+      // TODO fix issue "req.user" related to passportjs to improve this code, we should be able to
+      // TODO get that info from mobile requests
+      // message.record.sender = req.user.record.account || req?.body?.user?.account;
+      message.record.sender = _.get(req, 'user.record.account', req.body.user.account);
+      // accountData
+      // const userData = decryptUserData(req);
+
+      const accessData = _.get(req, 'session.accessData', req.body.user.accountData);
+      const userData = JSON.parse(gravity.decrypt(accessData));
       try {
         const data = await message.sendMessage(userData, tableData, message.record);
         response = data;

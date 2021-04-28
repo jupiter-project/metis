@@ -172,12 +172,12 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       .then((response) => {
         // new_account_created = true;
         // bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
-        const { accountRS } = response.data;
+        const { accountRS, publicKey } = response.data;
         res.send({
           success: true,
-          account: accountRS,
+          account: accountRS, // TODO check if the right value should be response.data.account
           accounthash: accountRS,
-          public_key: response.data.publicKey,
+          public_key: publicKey,
         });
       })
       .catch((error) => {
