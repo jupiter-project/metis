@@ -207,6 +207,10 @@ const metisLogin = (passport, jobs, io) => {
           database: response.database,
           accountData: gravity.encrypt(JSON.stringify(containedDatabase)),
           id: user.data.id,
+          userData : {
+            alias: data.alias,
+            account: data.account
+          }
         });
       })
       .catch((err) => {
