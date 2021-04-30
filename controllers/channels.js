@@ -73,7 +73,8 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     console.log('/n/n/nChannel Invites/n/n');
     console.log(req.session);
     const invite = new Invite();
-    const userData = decryptUserData(req);
+    const accessData = _.get(req, 'session.accessData', req.headers.accessdata);
+    const userData = JSON.parse(gravity.decrypt(accessData));
     invite.user = userData;
     let response;
     try {
@@ -81,7 +82,6 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     } catch (e) {
       response = e;
     }
-    // console.log(response);
     res.send(response);
   });
 
@@ -94,10 +94,14 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     // @TODO: req.user non-functional - get record.account from a different place
     console.log('\n\n\n\nInvite User\n\n\n\n', req.user);
-    data.sender = req.user.record.account;
+    // data.sender = req.user.record.account;
+    data.sender = _.get(req, 'user.record.account', req.headers.account);
 
     const invite = new Invite(data);
-    invite.user = decryptUserData(req);
+
+    // TODO change these 2 lines once the passport issue is solved
+    const accessData = _.get(req, 'session.accessData', req.headers.accessdata);
+    invite.user = JSON.parse(gravity.decrypt(accessData));
     let response;
 
     try {
@@ -167,8 +171,8 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     const channel = new Channel(tableData);
     // TODO check the function decryptUserData is using "req.session.accessData"
-    channel.user = JSON.parse(gravity.decrypt(req.headers.accessdata));
-
+    const accessData = _.get(req, 'session.accessData', req.headers.accessdata);
+    channel.user = JSON.parse(gravity.decrypt(accessData));
     try {
       const order = _.get(req, 'headers.order', 'desc');
       const limit = _.get(req, 'headers.limit', 10);
