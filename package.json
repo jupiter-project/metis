@@ -9,7 +9,7 @@
     "eslint": "./node_modules/.bin/eslint --ext .js --ext .jsx ./ --ignore-pattern public/",
     "eslint-folders": "eslint --ext .js --ext .jsx . --ignore-pattern public/ | grep /home",
     "gulp": "gulp",
-    "dev": "concurrently 'DEBUG=express-session nodemon server.js NODE_ENV=production' 'webpack -p --watch' ",
+    "dev": "concurrently \"nodemon server.js NODE_ENV=production\" \"webpack -p --watch\" ",
     "start": "webpack -p && node server.js NODE_ENV=production",
     "gravity:db": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.loadTables('console');\"",
     "gravity:db:create": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.createAppDatabase();\"",

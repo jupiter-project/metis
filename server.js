@@ -114,6 +114,8 @@ const server = Object.keys(sslOptions).length >= 2
 // Enables websocket
 const io = require('socket.io').listen(server);
 
+
+// require('./config/passport')(passport, jobs, io); //  pass passport for configuration
 const { serializeUser, deserializeUser, metisSignup, metisLogin } = require('./config/passport');
 serializeUser(passport); //  pass passport for configuration
 deserializeUser(passport); //  pass passport for configuration
