@@ -67,7 +67,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     transporter.sendMail({
       subject: `Report user: ${data.message.sender}`,
       html: body,
-      to: "luislugovip@gmail.com",
+      to: "info+report-a-user@sigwo.com",
       from: process.env.EMAIL
     }, (err, data) => {
       if (err != null) {
