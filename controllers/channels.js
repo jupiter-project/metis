@@ -5,6 +5,7 @@ import { messagesConfig } from '../config/constants';
 import Invite from '../models/invite';
 import Channel from '../models/channel';
 import Message from '../models/message';
+import mailer from 'nodemailer';
 
 const connection = process.env.SOCKET_SERVER;
 const device = require('express-device');
@@ -39,6 +40,44 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     res.send(page);
   });
+
+  app.post('/reportUser', controller.isLoggedIn, (req, res) => {
+
+    let transporter = mailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: process.env.EMAIL,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN,
+      }
+    });
+    
+    const data = req.body.data
+
+    const body = `
+      User Report: <br />
+      The user <b>${data.reporter}</b> wants to report the following message: <br />
+      ${JSON.stringify(data.message)}
+      <br />
+      Description:
+      ${data.description}
+    `
+    transporter.sendMail({
+      subject: `Report user: ${data.message.sender}`,
+      html: body,
+      to: "luislugovip@gmail.com",
+      from: process.env.EMAIL
+    }, (err, data) => {
+      if (err != null) {
+        res.send({ success: true })
+        return
+      }
+
+      res.send({ success: true, data })
+    });
+  })
 
   /**
    * Render invites page
