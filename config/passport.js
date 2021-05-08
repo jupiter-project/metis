@@ -14,11 +14,11 @@ const serializeUser = (passport) => {
 }
 
 /**
- * In a typical web application, the credentials used to authenticate a user will only be transmitted during the login request. 
+ * In a typical web application, the credentials used to authenticate a user will only be transmitted during the login request.
  * If authentication succeeds, a session will be established and maintained via a cookie set in the user's browser.
  * Each subsequent request will not contain credentials, but rather the unique cookie that identifies the session.
  * In order to support login sessions, Passport will serialize and deserialize user instances to and from the session.
- * @param {*} passport 
+ * @param {*} passport
  */
 const deserializeUser = (passport) => {
   debugger;
@@ -40,7 +40,7 @@ const deserializeUser = (passport) => {
 
 /**
  * Signup to Metis
- * @param {*} passport 
+ * @param {*} passport
  */
 const metisSignup = (passport) => {
   passport.use('gravity-signup', new LocalStrategy({
@@ -121,7 +121,7 @@ const metisSignup = (passport) => {
 
 /**
  * Login to Metis
- * @param {*} passport 
+ * @param {*} passport
  */
 const metisLogin = (passport, jobs, io) => {
   passport.use('gravity-login', new LocalStrategy({
@@ -148,7 +148,6 @@ const metisLogin = (passport, jobs, io) => {
       accountData: gravity.encrypt(JSON.stringify(containedDatabase)),
       originalTime: Date.now(),
     };
-
     gravity.getUser(account, req.body.jupkey, containedDatabase)
       .then(async (response) => {
         if (response.error) {
@@ -225,5 +224,5 @@ module.exports = {
   serializeUser,
   deserializeUser,
   metisSignup,
-  metisLogin 
+  metisLogin
 };

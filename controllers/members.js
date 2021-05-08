@@ -1,6 +1,7 @@
 import controller from '../config/controller';
 import metis from '../config/metis';
 
+const _ = require('lodash');
 const device = require('express-device');
 
 module.exports = (app) => {
@@ -31,9 +32,9 @@ module.exports = (app) => {
 
     const response = await metis.addToMemberList({
       channel: tableData.account,
-      account: req.user.record.account,
+      account: _.get(req, 'user.record.account', req.headers.account),
       password: tableData.password,
-      alias: req.user.record.alias,
+      alias: _.get(req, 'user.record.alias', req.headers.alias),
     });
 
     res.send(response);
