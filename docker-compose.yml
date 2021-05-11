@@ -8,6 +8,7 @@ services:
     build: .
     depends_on:
       - redis
+      - mongo
     ports:
       - "4000:4000"
     restart: always
@@ -18,3 +19,15 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: metisPN
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb_data:/data/db
+    logging:
+      driver: none

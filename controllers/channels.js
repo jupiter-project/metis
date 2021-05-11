@@ -1,11 +1,11 @@
 import _ from 'lodash';
+import mailer from 'nodemailer';
 import controller from '../config/controller';
 import { gravity } from '../config/gravity';
 import { messagesConfig } from '../config/constants';
 import Invite from '../models/invite';
 import Channel from '../models/channel';
 import Message from '../models/message';
-import mailer from 'nodemailer';
 
 const connection = process.env.SOCKET_SERVER;
 const device = require('express-device');
@@ -53,7 +53,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         refreshToken: process.env.REFRESH_TOKEN,
       }
     });
-    
+
     const data = req.body.data
 
     const body = `
@@ -249,6 +249,11 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       // const userData = decryptUserData(req);
 
       const accessData = _.get(req, 'session.accessData', req.body.user.accountData);
+
+      console.log('accessData ###>', accessData);
+      console.log('tableData ###>', tableData);
+      console.log('message.record ###>', message.record);
+
       const userData = JSON.parse(gravity.decrypt(accessData));
       try {
         const data = await message.sendMessage(userData, tableData, message.record);

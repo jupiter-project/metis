@@ -1,3 +1,4 @@
+require('./server/config/config');
 const kue = require('kue');
 const fs = require('fs');
 
@@ -53,6 +54,9 @@ const RedisStore = require('connect-redis')(session);
 // File and folder finding module
 const find = require('find');
 
+const mongoose = require('mongoose');
+
+
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for authentication)
 app.use(express.urlencoded({ extended: true })) // get information from html forms
@@ -106,7 +110,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-// If both cert and key files env vars exist use https, 
+// If both cert and key files env vars exist use https,
 // otherwise use http
 const server = Object.keys(sslOptions).length >= 2
   ? require('https').createServer(sslOptions, app)
@@ -114,7 +118,12 @@ const server = Object.keys(sslOptions).length >= 2
 // Enables websocket
 const io = require('socket.io').listen(server);
 
-const { serializeUser, deserializeUser, metisSignup, metisLogin } = require('./config/passport');
+const mongoDBOptions = { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true };
+
+const {
+  serializeUser, deserializeUser, metisSignup, metisLogin,
+} = require('./config/passport');
+
 serializeUser(passport); //  pass passport for configuration
 deserializeUser(passport); //  pass passport for configuration
 metisSignup(passport); //  pass passport for configuration
@@ -169,23 +178,30 @@ io.sockets.on('connection', (socket) => {
   socket.emit('connected');
 });
 
+mongoose.connect(process.env.URL_DB, mongoDBOptions, (err, resp) => {
+  if (err) {
+    throw err;
+  }
+  console.log('Mongo db Online.!');
+});
+
 // Tells server to listen to port 4000 when app is initialized
 server.listen(port, () => {
-  console.log('')
-  console.log('_________________________________________________________________')
-  console.log(' ▄▄       ▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ ') 
-  console.log('▐░░▌     ▐░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌') 
-  console.log('▐░▌░▌   ▐░▐░▌▐░█▀▀▀▀▀▀▀▀▀  ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ') 
-  console.log('▐░▌▐░▌ ▐░▌▐░▌▐░▌               ▐░▌          ▐░▌     ▐░▌          ')
-  console.log('▐░▌ ▐░▐░▌ ▐░▌▐░█▄▄▄▄▄▄▄▄▄      ▐░▌          ▐░▌     ▐░█▄▄▄▄▄▄▄▄▄ ')
-  console.log('▐░▌  ▐░▌  ▐░▌▐░░░░░░░░░░░▌     ▐░▌          ▐░▌     ▐░░░░░░░░░░░▌')
-  console.log('▐░▌   ▀   ▐░▌▐░█▀▀▀▀▀▀▀▀▀      ▐░▌          ▐░▌      ▀▀▀▀▀▀▀▀▀█░▌')
-  console.log('▐░▌       ▐░▌▐░▌               ▐░▌          ▐░▌               ▐░▌')
-  console.log('▐░▌       ▐░▌▐░█▄▄▄▄▄▄▄▄▄      ▐░▌      ▄▄▄▄█░█▄▄▄▄  ▄▄▄▄▄▄▄▄▄█░▌')
-  console.log('▐░▌       ▐░▌▐░░░░░░░░░░░▌     ▐░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌')
-  console.log(' ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ ')
-  console.log('_________________________________________________________________')
-  console.log('')
+  console.log('');
+  console.log('_________________________________________________________________');
+  console.log(' ▄▄       ▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ ');
+  console.log('▐░░▌     ▐░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌');
+  console.log('▐░▌░▌   ▐░▐░▌▐░█▀▀▀▀▀▀▀▀▀  ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ');
+  console.log('▐░▌▐░▌ ▐░▌▐░▌▐░▌               ▐░▌          ▐░▌     ▐░▌          ');
+  console.log('▐░▌ ▐░▐░▌ ▐░▌▐░█▄▄▄▄▄▄▄▄▄      ▐░▌          ▐░▌     ▐░█▄▄▄▄▄▄▄▄▄ ');
+  console.log('▐░▌  ▐░▌  ▐░▌▐░░░░░░░░░░░▌     ▐░▌          ▐░▌     ▐░░░░░░░░░░░▌');
+  console.log('▐░▌   ▀   ▐░▌▐░█▀▀▀▀▀▀▀▀▀      ▐░▌          ▐░▌      ▀▀▀▀▀▀▀▀▀█░▌');
+  console.log('▐░▌       ▐░▌▐░▌               ▐░▌          ▐░▌               ▐░▌');
+  console.log('▐░▌       ▐░▌▐░█▄▄▄▄▄▄▄▄▄      ▐░▌      ▄▄▄▄█░█▄▄▄▄  ▄▄▄▄▄▄▄▄▄█░▌');
+  console.log('▐░▌       ▐░▌▐░░░░░░░░░░░▌     ▐░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌');
+  console.log(' ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ ');
+  console.log('_________________________________________________________________');
+  console.log('');
   console.log(`Metis version ${process.env.VERSION} is now running on port ${port} 🎉`);
   console.log(`Jupiter Node running on ${process.env.JUPITERSERVER}`);
 });
