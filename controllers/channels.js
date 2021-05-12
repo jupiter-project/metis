@@ -1,17 +1,34 @@
 import _ from 'lodash';
+import mailer from 'nodemailer';
 import controller from '../config/controller';
 import { gravity } from '../config/gravity';
 import { messagesConfig } from '../config/constants';
 import Invite from '../models/invite';
 import Channel from '../models/channel';
 import Message from '../models/message';
-import mailer from 'nodemailer';
 
 const connection = process.env.SOCKET_SERVER;
 const device = require('express-device');
+const Notifications = require('../models/notifications');
+const { sendPushNotification } = require('../config/notifications');
 
 const decryptUserData = (req) => {
   return JSON.parse(gravity.decrypt(req.session.accessData));
+};
+
+const getPNTokensAndSendPushNotification = (members, channelName, senderAlias) => {
+  Notifications.find({ alias: { $in: members }, token: { $ne: '' } })
+    .then((data) => {
+      if (data && Array.isArray(data) && !_.isEmpty(data)) {
+        const tokens = _.map(data, 'token');
+        const alert = `${senderAlias} has sent a message to '${channelName}' channel`;
+        const payload = { title: 'New Message' };
+        sendPushNotification(tokens, alert, 1, payload, 'channels');
+      }
+    })
+    .catch((error) => {
+      console.error('Notifications error', error);
+    });
 };
 
 module.exports = (app, passport, React, ReactDOMServer) => {
@@ -53,7 +70,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         refreshToken: process.env.REFRESH_TOKEN,
       }
     });
-    
+
     const data = req.body.data
 
     const body = `
@@ -247,12 +264,18 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       message.record.sender = _.get(req, 'user.record.account', req.body.user.account);
       // accountData
       // const userData = decryptUserData(req);
-
+      let members = _.get(req, 'body.members', []);
+      const channelName = _.get(tableData, 'name', 'a channel');
       const accessData = _.get(req, 'session.accessData', req.body.user.accountData);
       const userData = JSON.parse(gravity.decrypt(accessData));
       try {
         const data = await message.sendMessage(userData, tableData, message.record);
         response = data;
+
+        if (Array.isArray(members)) {
+          members = members.filter(member => member !== message.record.name);
+        }
+        getPNTokensAndSendPushNotification(members, channelName, message.record.name);
       } catch (e) {
         response = { success: false, fullError: e };
       }

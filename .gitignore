@@ -25,3 +25,5 @@
 # Ignore gravity development files
 dev
 .gravity*.js
+
+.idea
