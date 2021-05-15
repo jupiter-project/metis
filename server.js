@@ -181,7 +181,7 @@ mongoose.connect(process.env.URL_DB, mongoDBOptions, (err, resp) => {
   if (err) {
     throw err;
   }
-  console.log('Mongo db Online.!');
+  console.log('Mongo DB Online.');
 });
 
 // Tells server to listen to port 4000 when app is initialized

@@ -42,9 +42,6 @@ module.exports = (app) => {
     const exceptions = ['users'];
     let model = '';
 
-    console.log(req.user);
-    console.log(req.headers);
-
     // If table in route is in the exception list, then it goes lower in the route list
     if (exceptions.includes(tableName)) {
       next();
@@ -74,10 +71,6 @@ module.exports = (app) => {
           user_api_key: headers.user_api_key,
         },
       );
-
-      console.log('\n\nGRAVITY DECRYPT\n\n\n')
-      console.log(headers);
-      console.log('\n\nGRAVITY DECRYPT\n\n\n')
 
       recordObject.loadRecords(JSON.parse(gravity.decrypt(headers.accessdata)))
         .then((response) => {
@@ -177,7 +170,6 @@ module.exports = (app) => {
 
       recordObject.update()
         .then((response) => {
-          // console.log(response);
           res.send(response);
         })
         .catch((err) => {

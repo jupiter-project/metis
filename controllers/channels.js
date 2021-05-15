@@ -125,9 +125,6 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    * Get a user's invites
    */
   app.get('/channels/invites', async (req, res) => {
-  // app.get('/channels/invites', async (req, res) => {
-    console.log('/n/n/nChannel Invites/n/n');
-    console.log(req.session);
     const invite = new Invite();
     const accessData = _.get(req, 'session.accessData', req.headers.accessdata);
     const userData = JSON.parse(gravity.decrypt(accessData));
@@ -146,11 +143,6 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    */
   app.post('/channels/invite', async (req, res) => {
     const { data } = req.body;
-
-
-    // @TODO: req.user non-functional - get record.account from a different place
-    console.log('\n\n\n\nInvite User\n\n\n\n', req.user);
-    // data.sender = req.user.record.account;
     data.sender = _.get(req, 'user.record.account', req.headers.account);
 
     const invite = new Invite(data);
