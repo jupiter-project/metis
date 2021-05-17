@@ -27,3 +27,4 @@ dev
 .gravity*.js
 
 .idea
+/logs/log-api.log

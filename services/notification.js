@@ -1,4 +1,5 @@
 const Notifications = require('../models/notifications');
+const logger = require('../utils/logger');
 
 module.exports = {
   addTokenNotification: (req, res) => {
@@ -12,10 +13,13 @@ module.exports = {
           res.json({ ok: true, newNotification });
         })
         .catch((err) => {
+          logger.error(err);
           res.status(400).json({ ok: false, err });
         });
     } else {
-      res.status(400).json({ ok: false, error: 'bad request' });
+      const error = { ok: false, error: 'bad request' };
+      logger.error(error);
+      res.status(400).json(error);
     }
   },
 };
