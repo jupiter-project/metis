@@ -22,13 +22,18 @@ module.exports = (app) => {
   //  API GENERAL ROUTES
   // ===============================================================================
 
+  /**
+   * Get alias
+   */
   app.get('/jupiter/alias/:aliasName', async (req, res) => {
     const aliasCheckup = await gravity.getAlias(req.params.aliasName);
 
     res.send(aliasCheckup);
   });
 
-
+  /**
+   * Get a table associated with a user
+   */
   app.get('/api/users/:id/:tableName', (req, res, next) => {
     // const params = req.body;
     // const { data } = params;
@@ -81,6 +86,9 @@ module.exports = (app) => {
     }
   });
 
+  /**
+   * Create a record, assigned to the current user
+   */
   app.post('/api/:tableName', (req, res, next) => {
     const params = req.body;
     const { data } = params;
@@ -126,6 +134,9 @@ module.exports = (app) => {
     }
   });
 
+  /**
+   * Update a record, assigned to the current user
+   */
   app.put('/api/:tableName', (req, res, next) => {
     const params = req.body;
     const { data } = params;
@@ -159,7 +170,6 @@ module.exports = (app) => {
 
       recordObject.update()
         .then((response) => {
-          // console.log(response);
           res.send(response);
         })
         .catch((err) => {

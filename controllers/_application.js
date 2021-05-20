@@ -172,12 +172,12 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       .then((response) => {
         // new_account_created = true;
         // bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
-        const { accountRS } = response.data;
+        const { accountRS, publicKey } = response.data;
         res.send({
           success: true,
-          account: accountRS,
+          account: accountRS, // TODO check if the right value should be response.data.account
           accounthash: accountRS,
-          public_key: response.data.publicKey,
+          public_key: publicKey,
         });
       })
       .catch((error) => {
@@ -251,6 +251,18 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     failureRedirect: '/login',
     failureFlash: true,
   }));
+
+  // used for the mobile app
+  app.post('/appLogin', (req, res, next) => {
+    console.log('Mobile App Login');
+
+    passport.authenticate('gravity-login', (err, userInfo) => {
+      if (err) return next(err);
+      const accountData = JSON.parse(gravity.decrypt(userInfo.accountData));
+      userInfo.publicKey = accountData.publicKey;
+      res.json(userInfo);
+    })(req, res, next);
+  })
 
   // ===============================================================================
   // GET PASSPHRASE
