@@ -89,6 +89,7 @@
     "speakeasy": "^2.0.0",
     "toastr": "^2.1.4",
     "winston": "^3.3.3",
+    "winston-papertrail": "^1.0.5",
     "winston-mongodb": "^5.0.7"
   },
   "devDependencies": {
