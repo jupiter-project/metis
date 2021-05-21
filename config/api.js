@@ -178,7 +178,6 @@ module.exports = (app) => {
 
       recordObject.update()
         .then((response) => {
-          // console.log(response);
           res.send(response);
         })
         .catch((err) => {
