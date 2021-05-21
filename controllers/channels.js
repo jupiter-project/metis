@@ -165,9 +165,12 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    * Accept channel invite
    */
   app.post('/channels/import', async (req, res) => {
-    const { data } = req.body;
+    const { data, user } = req.body;
     const channel = new Channel(data.channel_record);
-    channel.user = decryptUserData(req);
+    // TODO check the function decryptUserData is using "req.session.accessData"
+    const accessData = _.get(req, 'session.accessData', user.accountData);
+    channel.user = JSON.parse(gravity.decrypt(accessData));
+    // channel.user = decryptUserData(req);
 
     let response;
     try {
@@ -269,6 +272,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         }
         getPNTokensAndSendPushNotification(members, channelName, message.record.name);
       } catch (e) {
+        console.error('[Error sending messages]', e);
         response = { success: false, fullError: e };
       }
     } else {

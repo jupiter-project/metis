@@ -115,7 +115,11 @@ const server = Object.keys(sslOptions).length >= 2
   ? require('https').createServer(sslOptions, app)
   : require('http').createServer(app);
 // Enables websocket
-const io = require('socket.io').listen(server);
+const socketIO = require('socket.io');
+
+const io = socketIO(server);
+module.exports.io = socketIO(server);
+require('./sockets/socket');
 
 const mongoDBOptions = { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true };
 
@@ -172,10 +176,6 @@ jobs.process('completeRegistration', (job, done) => {
 /* jobs.process('fundAccount', (job, done) => {
   transferWorker.fundAccount(job.data, job.id, done);
 }); */
-
-io.sockets.on('connection', (socket) => {
-  socket.emit('connected');
-});
 
 mongoose.connect(process.env.URL_DB, mongoDBOptions, (err, resp) => {
   if (err) {
