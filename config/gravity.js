@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const events = require('events');
 const _ = require('lodash');
 const methods = require('./_methods');
+const logger = require('../utils/logger');
 
 
 const addressBreakdown = process.env.APP_ACCOUNT_ADDRESS ? process.env.APP_ACCOUNT_ADDRESS.split('-') : [];
@@ -83,19 +84,19 @@ class Gravity {
       self.loadAppData()
         .then((response) => {
           if (returnType === 'console') {
-            console.log(
+            logger.info(
               `Database tables associated with your app ${
                 response.app.appData.name
               } (${response.app.address})`,
             );
-            console.log(response.tables);
-            console.log('If you wish to show table details, run "npm run gravity:db"');
-            console.log('If you wish to add a new table, run "npm run gravity:db:add"');
+            logger.info(response.tables);
+            logger.info('If you wish to show table details, run "npm run gravity:db"');
+            logger.info('If you wish to add a new table, run "npm run gravity:db:add"');
           }
           resolve(response.tables);
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           reject(error);
         });
     });
@@ -111,24 +112,24 @@ class Gravity {
           const { tables } = response.app;
 
           if (returnType === 'console') {
-            console.log(`Database tables associated with your app ${response.app.appData.name}(${response.app.address})`);
+            logger.info(`Database tables associated with your app ${response.app.appData.name}(${response.app.address})`);
             Object.keys(tables).forEach((x) => {
               current = tables[x];
               const [key] = Object.keys(tables[x]);
-              console.log(`Table => ${key}`);
-              console.log('---Table Address');
-              console.log(current[key].address);
-              console.log('---Table Passphrase');
-              console.log(current[key].passphrase);
-              console.log('---Table Public Key');
-              console.log(current[key].public_key);
-              console.log('----------------------------------------------------------------');
+              logger.info(`Table => ${key}`);
+              logger.info('---Table Address');
+              logger.info(current[key].address);
+              logger.info('---Table Passphrase');
+              logger.info(current[key].passphrase);
+              logger.info('---Table Public Key');
+              logger.info(current[key].public_key);
+              logger.info('----------------------------------------------------------------');
             });
           }
           resolve(tables);
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           reject(error);
         });
     });
@@ -444,7 +445,7 @@ class Gravity {
           eventEmitter.emit('loaded_records');
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           reject({ success: false, error: 'There was an error loading records' });
         });
     });
@@ -498,7 +499,7 @@ class Gravity {
                     decryptedRecords.push(JSON.parse(response.data.decryptedMessage));
                   }
                 } catch (e) {
-                  console.log(e);
+                  logger.error(e);
                   // Error here tend to be trying to decrypt a regular message from Jupiter
                   // rather than a gravity encrypted message
                 }
@@ -508,7 +509,7 @@ class Gravity {
                 }
               })
               .catch((error) => {
-                console.log(error);
+                logger.error(error);
                 reject(error);
               });
           });
@@ -534,7 +535,7 @@ class Gravity {
           eventEmitter.emit('database_retrieved');
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           resolve({ success: false, errors: error });
         });
     });
@@ -609,7 +610,7 @@ class Gravity {
             }
             eventEmitter.emit('set_responseData');
           } catch (e) {
-            console.log(e);
+            logger.error(e);
             eventEmitter.emit('set_responseData');
           }
         } else if (Object.keys(pendingRecords).length > 0) {
@@ -624,7 +625,7 @@ class Gravity {
                   const decriptedPending = JSON.parse(response.data.decryptedMessage);
                   decryptedPendings.push(decriptedPending);
                 } catch (e) {
-                  console.log(e);
+                  logger.error(e);
                 }
 
                 recordCounter += 1;
@@ -691,7 +692,7 @@ class Gravity {
                   decrypted.confirmed = true;
                   decryptedRecords.push(decrypted);
                 } catch (e) {
-                  // console.log(e);
+                  logger.error(e);
                   // Error here tend to be trying to decrypt a regular message from Jupiter
                   // rather than a gravity encrypted message
                 }
@@ -701,7 +702,7 @@ class Gravity {
                 }
               })
               .catch((error) => {
-                console.log(error);
+                logger.error(error);
                 reject(error);
               });
           });
@@ -746,7 +747,7 @@ class Gravity {
           eventEmitter.emit('database_retrieved');
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           resolve({ success: false, errors: error });
         });
     });
@@ -790,7 +791,7 @@ class Gravity {
                   decryptedRecords.push(decrypted);
                   // console.log(decryptedRecords);
                 } catch (e) {
-                  console.log(e);
+                  logger.error(e);
                 }
                 recordCounter += 1;
 
@@ -799,7 +800,7 @@ class Gravity {
                 }
               })
               .catch((error) => {
-                console.log(error);
+                logger.error(error);
                 reject({ success: false, error: error.response });
               });
           });
@@ -823,7 +824,7 @@ class Gravity {
           eventEmitter.emit('database_retrieved');
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           resolve({ success: false, errors: error });
         });
     });
@@ -886,7 +887,7 @@ class Gravity {
                   decriptedPending.confirmed = true;
                   decryptedPendings.push(decriptedPending);
                 } catch (e) {
-                  console.log(e);
+                  logger.error(e);
                 }
                 recordCounter += 1;
 
@@ -927,7 +928,7 @@ class Gravity {
 
                   decryptedRecords.push(decrypted);
                 } catch (e) {
-                  console.log(e);
+                  logger.error(e);
                 }
                 recordCounter += 1;
 
@@ -936,7 +937,7 @@ class Gravity {
                 }
               })
               .catch((error) => {
-                console.log(error);
+                logger.error(error);
                 reject(error);
               });
           });
@@ -988,7 +989,7 @@ class Gravity {
             eventEmitter.emit('table_retrieved');
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             reject({ success: false, errors: error });
           });
       });
@@ -1004,7 +1005,7 @@ class Gravity {
           eventEmitter.emit('table_access_retrieved');
         })
         .catch((err) => {
-          console.log(err);
+          logger.error(err);
           reject('There was an error');
         });
     });
@@ -1031,7 +1032,7 @@ class Gravity {
         };
         resolve({ user: JSON.stringify(userObject) });
       } else if (containedDatabase) {
-        console.log('Retrieving database from the user');
+        logger.info('Retrieving database from the user');
         self.retrieveUserFromPassphrase(containedDatabase)
           .then((response) => {
             if (response.databaseFound && !response.userNeedsSave) {
@@ -1050,8 +1051,8 @@ class Gravity {
               };
               resolve(returnData);
             } else {
-              console.log(response);
-              console.log('Retrieved database from the app now');
+              logger.info(response);
+              logger.info('Retrieved database from the app now');
               self.retrieveUserFromApp(account, passphrase)
                 .then((res) => {
                   res.noUserTables = response.noUserTables;
@@ -1059,18 +1060,19 @@ class Gravity {
                   res.database = response.database;
                   res.userNeedsSave = response.userNeedsSave;
                   res.tables = response.tables;
-                  console.log(res);
+                  logger.info(res);
                   resolve(res);
                 })
                 .catch((error) => {
-                  console.log('This is the first stage');
+                  logger.error(error);
+                  logger.info('This is the first stage');
                   reject(error);
                 });
             }
           })
           .catch((error) => {
-            console.log('This is the second stage');
-            console.log(error);
+            logger.error(error);
+            logger.info('This is the second stage');
             reject(error);
           });
       } else {
@@ -1079,7 +1081,8 @@ class Gravity {
             resolve(response);
           })
           .catch((error) => {
-            console.log('This is the third stage');
+            logger.error(error);
+            logger.info('This third the second stage');
             reject(error);
           });
       }
@@ -1150,7 +1153,7 @@ class Gravity {
                   // console.log(decrypted);
                   decryptedRecords.push(decrypted);
                 } catch (e) {
-                  console.log(e);
+                  logger.error(e);
                 }
                 recordCounter += 1;
 
@@ -1159,7 +1162,7 @@ class Gravity {
                 }
               })
               .catch((error) => {
-                console.log(error);
+                logger.error(error);
                 reject(error);
               });
           });
@@ -1192,7 +1195,7 @@ class Gravity {
             eventEmitter.emit('table_retrieved');
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             reject({ success: false, errors: error });
           });
       });
@@ -1220,7 +1223,7 @@ class Gravity {
           }
         })
         .catch((err) => {
-          console.log(err);
+          logger.error(err);
           reject('There was an error');
         });
     });
@@ -1270,7 +1273,7 @@ class Gravity {
                   const decrypted = JSON.parse(self.decrypt(response.data.decryptedMessage));
                   decryptedRecords.push(decrypted);
                 } catch (e) {
-                  console.log(e);
+                  logger.error(e);
                 }
                 recordCounter += 1;
 
@@ -1279,7 +1282,7 @@ class Gravity {
                 }
               })
               .catch((error) => {
-                console.log(error);
+                logger.error(error);
                 reject(error);
               });
           });
@@ -1308,7 +1311,7 @@ class Gravity {
             eventEmitter.emit('table_retrieved');
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             reject({ success: false, errors: error });
           });
       });
@@ -1324,7 +1327,7 @@ class Gravity {
           eventEmitter.emit('table_access_retrieved');
         })
         .catch((err) => {
-          console.log(err);
+          logger.error(err);
           reject('There was an error');
         });
     });
@@ -1364,7 +1367,7 @@ class Gravity {
           eventEmitter.emit('records_retrieved');
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           reject({ success: false, errors: error });
         });
     });
@@ -1406,7 +1409,7 @@ class Gravity {
               reject(response.data);
             } else {
               if (terminalCalled) {
-                console.log(`Balance: ${(parseFloat(response.data.balanceNQT) / (10 ** self.jupiter_data.moneyDecimals))} JUP.`);
+                logger.info(`Balance: ${(parseFloat(response.data.balanceNQT) / (10 ** self.jupiter_data.moneyDecimals))} JUP.`);
               }
               let minimumAppBalance = false;
               let minimumTableBalance = false;
@@ -1430,7 +1433,7 @@ class Gravity {
             }
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             reject({ success: false, message: 'There was an error obtaining account Jupiter balance' });
           });
       });
@@ -1442,7 +1445,7 @@ class Gravity {
             eventEmitter.emit('account_retrieved');
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             reject({ success: false, message: 'There was an error obtaining account Jupiter balance' });
           });
       } else {
@@ -1480,7 +1483,7 @@ class Gravity {
           if (response.data.signatureHash != null) {
             resolve({ success: true, data: response.data });
           } else {
-            console.log('Cannot send Jupiter to new account, Jupiter issuer has insufficient balance!');
+            logger.info('Cannot send Jupiter to new account, Jupiter issuer has insufficient balance!');
             reject({ error: true, data: response.data });
           }
         })
@@ -1570,7 +1573,7 @@ class Gravity {
   }
 
   async setAlias(params) {
-    console.log(params);
+    logger.info(params);
     return this.jupiterRequest('post', {
       requestType: 'setAlias',
       aliasName: params.alias,
@@ -1704,7 +1707,7 @@ class Gravity {
 
     if (!recipientRS.toLowerCase().includes('jup-')) {
       aliasResponse = (await this.getAlias(recipientRS));
-      console.log(aliasResponse);
+      logger.info(aliasResponse);
       recipient = aliasResponse.accountRS;
     } else {
       recipient = recipientRS;
@@ -1720,7 +1723,7 @@ class Gravity {
       callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&messageIsPrunable=true&compressMessageToEncrypt=true`;
     }
 
-    console.log(callUrl);
+    logger.info(callUrl);
 
     try {
       response = await axios.post(callUrl);
@@ -1743,8 +1746,8 @@ class Gravity {
           resolve({ address, publicKey: response.data.publicKey, success: true });
         })
         .catch((error) => {
-          console.log(error);
-          console.log('There was an error in address creation');
+          logger.error(error);
+          logger.info('There was an error in address creation');
           reject({ success: false, message: 'There was an error creating a new Jupiter address' });
         });
     });
@@ -1764,8 +1767,8 @@ class Gravity {
           });
         })
         .catch((error) => {
-          console.log(error);
-          console.log('There was an error in address creation');
+          logger.error(error);
+          logger.info('There was an error in address creation');
           reject({ success: false, message: 'There was an error in getting account information' });
         });
     });
@@ -1794,7 +1797,7 @@ class Gravity {
         // able to record information
         self.sendMoney(address)
           .then((response) => {
-            console.log(`Table ${tableName} funded with JUP.`);
+            logger.info(`Table ${tableName} funded with JUP.`);
             resolve({
               success: true,
               message: `Table ${tableName} pushed to the blockchain and funded.`,
@@ -1805,7 +1808,7 @@ class Gravity {
             });
           })
           .catch((err) => {
-            console.log(err);
+            logger.error(err);
             reject({ success: false, message: 'Unable to send Jupiter to new table address' });
           });
       });
@@ -1832,18 +1835,18 @@ class Gravity {
         try {
           response = await axios.post(callUrl);
         } catch (e) {
-          console.log(e);
+          logger.error(e);
           response = { error: true, fullError: e };
         }
 
         if (response.data.broadcasted && !response.error) {
-          console.log(`Table ${tableName} pushed to the blockchain and linked to your account.`);
+          logger.info(`Table ${tableName} pushed to the blockchain and linked to your account.`);
           const tableListUpdateUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${database.passphrase}&recipient=${database.account}&messageToEncrypt=${encryptedTableData}&feeNQT=${(self.jupiter_data.feeNQT / 2)}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${database.publicKey}&compressMessageToEncrypt=true`;
 
           try {
             response = await axios.post(tableListUpdateUrl);
           } catch (e) {
-            console.log(e);
+            logger.error(e);
             response = { error: true, fullError: e };
           }
 
@@ -1863,27 +1866,27 @@ class Gravity {
             });
           }
         } else if (response.data.errorDescription != null) {
-          console.log('There was an Error');
-          console.log(response);
-          console.log(response.data);
-          console.log(`Error: ${response.data.errorDescription}`);
+          logger.info('There was an Error');
+          logger.info(response);
+          logger.info(response.data);
+          logger.error(`Error: ${response.data.errorDescription}`);
           reject({
             success: false,
             message: response.data.errorDescription,
             jupiter_response: response.data,
           });
         } else {
-          console.log('Unable to save data in the blockchain');
-          console.log(response.data);
+          logger.info('Unable to save data in the blockchain');
+          logger.error(response.data);
           reject({ success: false, message: 'Unable to save data in the blockchain', jupiter_response: response.data });
         }
       });
 
       eventEmitter.on('tableName_obtained', () => {
-        console.log('These are the tables');
-        console.log(self.tables);
-        console.log(tableList);
-        console.log(currentTables);
+        logger.info('These are the tables');
+        logger.info(self.tables);
+        logger.info(tableList);
+        logger.info(currentTables);
         // let databaseCurrentTableMatch = true;
         let tableInCurrentTableList = true;
         if (currentTables) {
@@ -1919,12 +1922,12 @@ class Gravity {
 
                 eventEmitter.emit('address_retrieved');
               } else {
-                console.log(response);
+                logger.error(response);
                 reject('There was an error');
               }
             })
             .catch((error) => {
-              console.log(error);
+              logger.error(error);
               reject('Error creating Jupiter address for your table.');
             });
         }
@@ -1948,7 +1951,7 @@ class Gravity {
             }
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             reject('Error in creating table');
           });
       });
@@ -1998,7 +2001,7 @@ class Gravity {
           // eslint-disable-next-line no-await-in-loop
           decryptedData = await self.decryptFromRecord(thisTransaction, address, passphrase);
         } catch (e) {
-          console.log(e);
+          logger.error(e);
           decryptedData = e;
         }
 
@@ -2046,7 +2049,8 @@ class Gravity {
       try {
         rawUnconfirmedTransactions = (await axios.get(`${this.jupiter_data.server}/nxt?requestType=getUnconfirmedTransactions&account=${address}`)).data;
       } catch (e) {
-        console.log('Error in gravity.js, line 1662, could not retrieve unconfirmed transactions');
+        logger.error(e);
+        logger.error('Error in gravity.js, line 1662, could not retrieve unconfirmed transactions');
         return { error: true, fullError: e };
       }
       transactions = _.get(rawUnconfirmedTransactions, 'unconfirmedTransactions', []);
@@ -2068,7 +2072,8 @@ class Gravity {
         // console.log(urlCall);
         rawTransactions = (await axios.get(urlCall)).data;
       } catch (e) {
-        console.log('Error in gravity.js, line 1671, could not retrieve unconfirmed transactions');
+        logger.error(e);
+        logger.error('Error in gravity.js, line 1671, could not retrieve unconfirmed transactions');
         return { error: true, fullError: e };
       }
       transactions = _.get(rawTransactions, 'transactions', []);
@@ -2110,8 +2115,8 @@ class Gravity {
           decryptedData = undefined;
         }
       } catch (e) {
-        console.log(e);
-        console.log('Error: Gravity file, line 1741, failed to decrypt message');
+        logger.error(e);
+        logger.error('Error: Gravity file, line 1741, failed to decrypt message');
       }
     }
 
@@ -2135,8 +2140,8 @@ class Gravity {
           decryptedData = response;
         }
       } catch (e) {
-        console.log(e);
-        console.log('Error: Gravity file, line 1760, failed to decrypt message');
+        logger.error(e);
+        logger.error('Error: Gravity file, line 1760, failed to decrypt message');
       }
     }
 
@@ -2148,8 +2153,8 @@ class Gravity {
         );
         encryptionLevel = 'channel';
       } catch (e) {
-        // console.log(e);
-        console.log('Error: Gravity file, line 2147, failed to decrypt messagee');
+        logger.error(e);
+        logger.error('Error: Gravity file, line 2147, failed to decrypt messagee');
         try {
           unEncryptedData = this.decrypt(
             decryptedData.decryptedMessage,
@@ -2157,8 +2162,8 @@ class Gravity {
           );
           encryptionLevel = 'app';
         } catch (err) {
-          // console.log(e);
-          console.log('Error: Gravity file, line 2155, failed to decrypt messagee');
+          logger.error(e);
+          logger.error('Error: Gravity file, line 2155, failed to decrypt messagee');
         }
       }
     } else if (filter.blockchainEncryptionDisabled) {
@@ -2168,8 +2173,8 @@ class Gravity {
           encryptionPassword,
         );
       } catch (e) {
-        console.log(e);
-        console.log('Error: Gravity file, line 1782, failed to decrypt thisTransaction.attachment.message');
+        logger.error(e);
+        logger.error('Error: Gravity file, line 1782, failed to decrypt thisTransaction.attachment.message');
       }
     }
 
@@ -2314,7 +2319,7 @@ class Gravity {
         // able to record information
         self.sendMoney(address)
           .then((response) => {
-            console.log(`Table ${tableName} funded with JUP.`);
+            logger.info(`Table ${tableName} funded with JUP.`);
             resolve({
               success: true,
               message: `Table ${tableName} pushed to the blockchain and funded.`,
@@ -2325,7 +2330,7 @@ class Gravity {
             });
           })
           .catch((err) => {
-            console.log(err);
+            logger.error(err);
             reject({ success: false, message: 'Unable to send Jupiter to new table address' });
           });
       });
@@ -2340,27 +2345,26 @@ class Gravity {
         axios.post(callUrl)
           .then((response) => {
             if (response.data.broadcasted && response.data.broadcasted === true) {
-              console.log(`Table ${tableName} pushed to the blockchain and linked to your account.`);
+              logger.info(`Table ${tableName} pushed to the blockchain and linked to your account.`);
               eventEmitter.emit('table_created');
             } else if (response.data.errorDescription != null) {
-              console.log('There was an Error');
-              console.log(response);
-              console.log(response.data);
-              console.log(`Error: ${response.data.errorDescription}`);
+              logger.info('There was an Error');
+              logger.info(response);
+              logger.info(response.data);
+              logger.error(`Error: ${response.data.errorDescription}`);
               reject({
                 success: false,
                 message: response.data.errorDescription,
                 jupiter_response: response.data,
               });
             } else {
-              console.log('Unable to save data in the blockchain');
-              console.log(response.data);
+              logger.error('Unable to save data in the blockchain');
+              logger.error(response.data);
               reject({ success: false, message: 'Unable to save data in the blockchain', jupiter_response: response.data });
             }
           })
           .catch((error) => {
-            console.log('There was an error');
-            console.log(error);
+            logger.error(error);
             reject({ success: false, message: 'There was an error', error: error.response });
           });
 
@@ -2371,19 +2375,19 @@ class Gravity {
             if (response.data.broadcasted && response.data.broadcasted === true) {
               // console.log('Table list updated');
             } else if (response.data.errorDescription != null) {
-              console.log('There was an Error');
-              console.log(response.data);
-              console.log(`Error:${response.data.errorDescription}`);
-              console.log(response.data);
+              logger.info('There was an Error');
+              logger.info(response.data);
+              logger.error(`Error:${response.data.errorDescription}`);
+              logger.error(response.data);
             } else {
-              console.log(response.data);
-              console.log(encryptedTableData);
+              logger.info(response.data);
+              logger.info(encryptedTableData);
             }
           })
           .catch((error) => {
-            console.log('There was an error in updating table list');
-            console.log(error);
-            console.log(encryptedTableData);
+            logger.info('There was an error in updating table list');
+            logger.error(error);
+            logger.info(encryptedTableData);
           });
       });
 
@@ -2412,12 +2416,12 @@ class Gravity {
 
                 eventEmitter.emit('address_retrieved');
               } else {
-                console.log(response);
+                logger.error(response);
                 reject('There was an error');
               }
             })
             .catch((error) => {
-              console.log(error);
+              logger.error(error);
               reject('Error creating Jupiter address for your table.');
             });
         }
@@ -2437,9 +2441,9 @@ class Gravity {
                 tableList = response.tables;
               }
 
-              console.log('You are about to create a new database table for your Gravity app.');
-              console.log('The following tables are already linked to your database:');
-              console.log(tableList);
+              logger.info('You are about to create a new database table for your Gravity app.');
+              logger.info('The following tables are already linked to your database:');
+              logger.info(tableList);
               try {
                 const answer = await self.makeQuestion('What will be the name of your new table?\n');
                 tableName = answer;
@@ -2453,7 +2457,7 @@ class Gravity {
               }
             })
             .catch((error) => {
-              console.log(error);
+              logger.error(error);
               reject('Error in creating table');
             });
         }
@@ -2464,14 +2468,14 @@ class Gravity {
           if (response.minimumAppBalance === true) {
             eventEmitter.emit('verified_balance');
           } else {
-            console.log('Error in creating new table: insufficient app balance.');
-            console.log(`A minimum of ${parseFloat((self.jupiter_data.minimumAppBalance) / (10 ** self.jupiter_data.moneyDecimals))} JUP is required to create a table with Gravity.`);
+            logger.error('Error in creating new table: insufficient app balance.');
+            logger.error(`A minimum of ${parseFloat((self.jupiter_data.minimumAppBalance) / (10 ** self.jupiter_data.moneyDecimals))} JUP is required to create a table with Gravity.`);
             eventEmitter.emit('insufficient_balance');
           }
         })
         .catch((error) => {
-          console.log('There was an error trying to create a new table in Jupiter.');
-          console.log(error);
+          logger.error('There was an error trying to create a new table in Jupiter.');
+          logger.error(error);
           eventEmitter.emit('insufficient_balance');
         });
     });
@@ -2489,7 +2493,7 @@ class Gravity {
     let password;
     let passphrase;
 
-    console.log('You are about to create a Gravity app. Please answer the following questions:');
+    logger.info('You are about to create a Gravity app. Please answer the following questions:');
 
     rl.question('What is the name of the app?\n', (answer1) => {
       appname = answer1;
@@ -2503,9 +2507,9 @@ class Gravity {
             'Password for encryption': password,
             'Jupiter server': server,
           };
-          console.log('Please verify the data you entered:');
-          console.log(currentData);
-          console.log('');
+          logger.info('Please verify the data you entered:');
+          logger.info(currentData);
+          logger.info('');
           rl.question("You are about to create a Jupiter account which will hold your Gravity app's data. Is the information provided above accurate? If so, press ENTER. If not, press CTRL+C to cancel and rerun command.\n", () => {
             passphrase = methods.generate_passphrase();
 
@@ -2542,28 +2546,28 @@ class Gravity {
 
                   fs.writeFile('.gravity.js', moduleInString, (err) => {
                     if (err) {
-                      return console.log(err);
+                      return logger.error(err);
                     }
                     fs.writeFile('.env', envVariablesInString, (error) => {
                       if (error) {
-                        return console.log(error);
+                        return logger.error(err);
                       }
-                      console.log('\nSuccess! .gravity.js and .env files generated!');
-                      console.log('\nPlease write down the 12-word passphrase and account address assigned to your app as well as the password assigned for encryption (See .env or .gravity.js files). If you lose your passphrase or your encryption password, you will lose access to all saved data.');
-                      console.log('\nIn order to begin saving information into the Jupiter blockchain, you will need to obtain Jupiter tokens from https://exchange.darcr.us.');
+                      logger.info('\nSuccess! .gravity.js and .env files generated!');
+                      logger.info('\nPlease write down the 12-word passphrase and account address assigned to your app as well as the password assigned for encryption (See .env or .gravity.js files). If you lose your passphrase or your encryption password, you will lose access to all saved data.');
+                      logger.info('\nIn order to begin saving information into the Jupiter blockchain, you will need to obtain Jupiter tokens from https://exchange.darcr.us.');
                       rl.close();
                       return null;
                     });
                     return null;
                   });
                 } else {
-                  console.log(response.data.message);
+                  logger.info(response.data.message);
                   rl.close();
                 }
               })
               .catch((error) => {
-                console.log(error);
-                console.log('There was an error in database creation');
+                logger.error(error);
+                logger.error('There was an error in database creation');
                 rl.close();
               });
           });

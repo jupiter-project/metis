@@ -1,5 +1,6 @@
 const apn = require('apn');
 const { APN_OPTIONS } = require('./apn');
+const logger = require('../utils/logger');
 
 /**
  * Sends a push notification to devices
@@ -11,7 +12,7 @@ const { APN_OPTIONS } = require('./apn');
  * @returns {Promise}
  */
 async function sendPushNotification(tokens, alert, badgeCount, payload, category) {
-  console.log('[Notifications][sendPushNotification] -> Start');
+  logger.info('[Notifications][sendPushNotification] -> Start');
 
   const apnProvider = new apn.Provider(APN_OPTIONS);
   const notification = new apn.Notification();
@@ -31,7 +32,7 @@ async function sendPushNotification(tokens, alert, badgeCount, payload, category
   const result = await apnProvider.send(notification, tokens);
 
   // Show the result of the send operation:
-  console.log(JSON.stringify(result));
+  logger.info(JSON.stringify(result));
 }
 
 module.exports = {

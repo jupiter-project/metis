@@ -5,13 +5,14 @@ import RegistrationWorker from '../workers/registration';
 
 // Loads up passport code
 const LocalStrategy = require('passport-local').Strategy;
+const logger = require('../utils/logger');
 
 // Used to serialize the user for the session
 const serializeUser = (passport) => {
   passport.serializeUser((accessData, done) => {
     done(null, accessData);
   });
-}
+};
 
 /**
  * In a typical web application, the credentials used to authenticate a user will only be transmitted during the login request.
@@ -27,16 +28,17 @@ const deserializeUser = (passport) => {
 
     user.findById()
       .then((response) => {
-        console.log('Deserializer response');
-        console.log(response);
+        logger.info('Deserializer response');
+        logger.info(response);
         const thisUser = user;
         done(null, thisUser);
       })
       .catch((err) => {
+        logger.error(err);
         done(err, null);
       });
   });
-}
+};
 
 /**
  * Signup to Metis
@@ -55,7 +57,7 @@ const metisSignup = (passport) => {
       let user;
 
       eventEmitter.on('sent_jupiter_to_new_account', () => {
-        console.log('Saving new account data in Jupiter...');
+        logger.info('Saving new account data in Jupiter...');
 
         const data = {
           account,
@@ -85,12 +87,12 @@ const metisSignup = (passport) => {
                 parseInt(0.05 * 100000000, 10),
               );
             } catch (e) {
-              console.log(e);
+              logger.error(e);
               moneyTransfer = e;
             }
 
             if (!moneyTransfer.success) {
-              console.log('SendMoney was not completed');
+              logger.info('SendMoney was not completed');
             }
 
             return done(null, {
@@ -100,7 +102,7 @@ const metisSignup = (passport) => {
             }, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in.'));
           })
           .catch((err) => {
-            console.log(err);
+            logger.error(err);
             let errorMessage;
             if (err.verification_error !== undefined && err.verification_error === true) {
               err.errors.forEach((x) => {
@@ -185,13 +187,13 @@ const metisLogin = (passport, jobs, io) => {
             const fundingResponse = await gravity.setAcountProperty({
               recipient: user.record.account,
             });
-            console.log(fundingResponse);
+            logger.info(fundingResponse);
           }
 
           user.setAlias(req.body.jupkey)
             .then((aliasSetting) => {
               if (!aliasSetting.success) {
-                console.log(aliasSetting);
+                logger.info(aliasSetting);
               }
             })
             .catch(err => err);
@@ -213,8 +215,8 @@ const metisLogin = (passport, jobs, io) => {
         });
       })
       .catch((err) => {
-        console.log('Unable to query your user list. Please make sure you have a users table in your database.');
-        console.log(err);
+        logger.error('Unable to query your user list. Please make sure you have a users table in your database.');
+        logger.error(err);
         return done(null, false, req.flash('loginMessage', 'Login Error'));
       });
   }));
