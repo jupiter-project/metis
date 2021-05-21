@@ -151,7 +151,6 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
 
     // @TODO: req.user non-functional - get record.account from a different place
-    logger.info('\n\n\n\nInvite User\n\n\n\n', req.user);
     // data.sender = req.user.record.account;
     data.sender = _.get(req, 'user.record.account', req.headers.account);
 

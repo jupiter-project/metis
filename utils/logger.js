@@ -4,14 +4,17 @@ const {
   transports,
 } = require('winston');
 require('winston-mongodb');
-require('winston-papertrail').Papertrail;
+const os = require('os');
+require('winston-syslog');
 
 const { hasJsonStructure } = require('../utils/utils');
 
-const winstonPapertrail = new transports.Papertrail({
-  level: 'info',
+const papertrail = new transports.Syslog({
   host: process.env.PAPERTRAIL_HOST,
   port: process.env.PAPERTRAIL_PORT,
+  protocol: 'tls4',
+  localhost: os.hostname(),
+  eol: '\n',
 });
 
 const mongoDbTransport = new transports.MongoDB({
@@ -41,7 +44,7 @@ const transportsArray = [
   new transports.Console({
     level: 'info',
   }),
-  winstonPapertrail,
+  papertrail,
 ];
 
 if (process.env.NODE_ENV === 'production') {

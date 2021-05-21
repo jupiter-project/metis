@@ -89,6 +89,8 @@
     "toastr": "^2.1.4",
     "winston": "^3.3.3",
     "winston-papertrail": "^1.0.5",
+    "winston-syslog": "^2.4.4",
+    "os": "^0.1.1",
     "winston-mongodb": "^5.0.7"
   },
   "devDependencies": {
