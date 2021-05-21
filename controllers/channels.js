@@ -173,10 +173,10 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    * Accept channel invite
    */
   app.post('/channels/import', async (req, res) => {
-    const { data } = req.body;
+    const { data, user } = req.body;
     const channel = new Channel(data.channel_record);
     // TODO check the function decryptUserData is using "req.session.accessData"
-    const accessData = _.get(req, 'session.accessData', req.body.user.accountData);
+    const accessData = _.get(req, 'session.accessData', user.accountData);
     channel.user = JSON.parse(gravity.decrypt(accessData));
     // channel.user = decryptUserData(req);
 
