@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import toastr from 'toastr';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 class AppNotifications extends React.Component {
   constructor(props) {
     super(props);
-    this.socket = io(this.props.connection);
+    // this.socket = io(this.props.connection);
   }
 
   componentDidMount() {
@@ -24,21 +24,21 @@ class AppNotifications extends React.Component {
       });
     }
 
-    this.socket.on('disconnect', () => {
-      toastr.error('Connection interrupted');
-    });
-
-    if (this.props.user) {
-      this.socket.on(`fullyRegistered#${this.props.user.record.account}`, () => {
-        toastr.success('Registration details have been completed!');
-      });
-    }
-
-    if (this.props.user) {
-      this.socket.on(`channelsCreated#${this.props.user.record.account}`, () => {
-        toastr.success('Channels are now enabled! You may create new channels or accept channel invitations');
-      });
-    }
+    // this.socket.on('disconnect', () => {
+    //   toastr.error('Connection interrupted');
+    // });
+    //
+    // if (this.props.user) {
+    //   this.socket.on(`fullyRegistered#${this.props.user.record.account}`, () => {
+    //     toastr.success('Registration details have been completed!');
+    //   });
+    // }
+    //
+    // if (this.props.user) {
+    //   this.socket.on(`channelsCreated#${this.props.user.record.account}`, () => {
+    //     toastr.success('Channels are now enabled! You may create new channels or accept channel invitations');
+    //   });
+    // }
   }
 
   render() {
