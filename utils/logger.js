@@ -37,7 +37,7 @@ const transportsArray = [
 ];
 
 if (process.env.NODE_ENV === 'production') {
-  transportsArray.push(mongoDbTransport);
+  // transportsArray.push(mongoDbTransport);
 }
 
 module.exports = createLogger({
