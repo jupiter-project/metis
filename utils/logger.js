@@ -25,7 +25,6 @@ const transportsArray = [
     maxsize: 5120000,
     maxFiles: 5,
     filename: '/var/log/metis/log-api.log',
-    format: format.combine(format.timestamp(), format.json()),
   }),
   new transports.Console({
     level: 'info',
