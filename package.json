@@ -46,6 +46,7 @@
   "dependencies": {
     "ajv": "^6.5.4",
     "apn": "^2.2.0",
+    "appoptics-apm": "^10.0.1",
     "axios": "^0.16.2",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
