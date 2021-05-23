@@ -1,7 +1,6 @@
 const apn = require('apn');
 const { APN_OPTIONS } = require('./apn');
-const logger = require('../utils/logger');
-
+const logger = require('../utils/logger')(module);
 /**
  * Sends a push notification to devices
  * @param tokens It's a String containing the hex-encoded device token. Could be a string or array

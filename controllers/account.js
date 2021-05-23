@@ -3,7 +3,7 @@ import { gravity } from '../config/gravity';
 import controller from '../config/controller';
 import User from '../models/user';
 
-const logger = require('../utils/logger');
+const logger = require('../utils/logger')(module);
 
 module.exports = (app, passport, React, ReactDOMServer) => {
   let page;

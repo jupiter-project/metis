@@ -4,6 +4,7 @@ const {
   transports,
 } = require('winston');
 require('winston-mongodb');
+const path = require('path');
 
 const { hasJsonStructure } = require('../utils/utils');
 
@@ -17,11 +18,6 @@ const mongoDbTransport = new transports.MongoDB({
   format: format.combine(format.timestamp(), format.json()),
 });
 
-const getMessageFormat = (message) => {
-  return hasJsonStructure(message)
-    ? JSON.stringify(message)
-    : message;
-};
 
 const transportsArray = [
   new transports.File({
@@ -36,15 +32,26 @@ const transportsArray = [
   }),
 ];
 
+const getMessageFormat = message => (hasJsonStructure(message)
+  ? JSON.stringify(message)
+  : message);
+
+const getLabel = (callingModule) => {
+  const parts = callingModule.filename.split(path.sep);
+  return path.join(parts[parts.length - 2], parts.pop());
+};
+
 if (process.env.NODE_ENV === 'production') {
   transportsArray.push(mongoDbTransport);
 }
 
-module.exports = createLogger({
-  format: format.combine(
-    format.simple(),
-    format.timestamp(),
-    format.printf(info => `[${info.timestamp}] ${info.level} ${getMessageFormat(info.message)}`),
-  ),
-  transports: transportsArray,
-});
+module.exports = function (callingModule) {
+  return createLogger({
+    format: format.combine(
+      format.simple(),
+      format.timestamp(),
+      format.printf(info => `[${info.timestamp}] [${getLabel(callingModule)}] ${info.level} ${getMessageFormat(info.message)}`),
+    ),
+    transports: transportsArray,
+  });
+};

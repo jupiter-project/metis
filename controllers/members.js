@@ -3,7 +3,7 @@ import metis from '../config/metis';
 
 const _ = require('lodash');
 const device = require('express-device');
-const logger = require('../utils/logger');
+const logger = require('../utils/logger')(module);
 
 module.exports = (app) => {
   app.use(device.capture());

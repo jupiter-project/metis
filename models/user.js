@@ -4,7 +4,7 @@ import Model from './_model';
 import methods from '../config/_methods';
 import { gravity } from '../config/gravity';
 
-const logger = require('../utils/logger');
+const logger = require('../utils/logger')(module);
 
 class User extends Model {
   constructor(data, accessPass) {

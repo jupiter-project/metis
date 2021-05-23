@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const events = require('events');
 const _ = require('lodash');
 const methods = require('./_methods');
-const logger = require('../utils/logger');
+const logger = require('../utils/logger')(module);
 
 
 const addressBreakdown = process.env.APP_ACCOUNT_ADDRESS ? process.env.APP_ACCOUNT_ADDRESS.split('-') : [];
@@ -692,7 +692,7 @@ class Gravity {
                   decrypted.confirmed = true;
                   decryptedRecords.push(decrypted);
                 } catch (e) {
-                  logger.error(e);
+                  // console.log(e);
                   // Error here tend to be trying to decrypt a regular message from Jupiter
                   // rather than a gravity encrypted message
                 }
@@ -1064,14 +1064,12 @@ class Gravity {
                   resolve(res);
                 })
                 .catch((error) => {
-                  logger.error(error);
                   logger.info('This is the first stage');
                   reject(error);
                 });
             }
           })
           .catch((error) => {
-            logger.error(error);
             logger.info('This is the second stage');
             reject(error);
           });
@@ -1081,7 +1079,6 @@ class Gravity {
             resolve(response);
           })
           .catch((error) => {
-            logger.error(error);
             logger.info('This third the second stage');
             reject(error);
           });
@@ -1877,7 +1874,7 @@ class Gravity {
           });
         } else {
           logger.info('Unable to save data in the blockchain');
-          logger.error(response.data);
+          logger.info(response.data);
           reject({ success: false, message: 'Unable to save data in the blockchain', jupiter_response: response.data });
         }
       });
@@ -2049,7 +2046,6 @@ class Gravity {
       try {
         rawUnconfirmedTransactions = (await axios.get(`${this.jupiter_data.server}/nxt?requestType=getUnconfirmedTransactions&account=${address}`)).data;
       } catch (e) {
-        logger.error(e);
         logger.error('Error in gravity.js, line 1662, could not retrieve unconfirmed transactions');
         return { error: true, fullError: e };
       }
@@ -2072,7 +2068,6 @@ class Gravity {
         // console.log(urlCall);
         rawTransactions = (await axios.get(urlCall)).data;
       } catch (e) {
-        logger.error(e);
         logger.error('Error in gravity.js, line 1671, could not retrieve unconfirmed transactions');
         return { error: true, fullError: e };
       }

@@ -120,7 +120,7 @@ const socketIO = require('socket.io');
 const io = socketIO(server);
 module.exports.io = socketIO(server);
 require('./sockets/socket');
-const logger = require('./utils/logger');
+const logger = require('./utils/logger')(module);
 
 const mongoDBOptions = { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true };
 

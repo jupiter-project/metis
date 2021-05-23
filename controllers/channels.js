@@ -11,7 +11,7 @@ const connection = process.env.SOCKET_SERVER;
 const device = require('express-device');
 const Notifications = require('../models/notifications');
 const { sendPushNotification } = require('../config/notifications');
-const logger = require('../utils/logger');
+const logger = require('../utils/logger')(module);
 
 const decryptUserData = (req) => {
   return JSON.parse(gravity.decrypt(req.session.accessData));

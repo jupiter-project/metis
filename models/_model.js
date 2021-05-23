@@ -3,7 +3,7 @@ import events from 'events';
 import { gravity } from '../config/gravity';
 import validate from './_validations';
 
-const logger = require('../utils/logger');
+const logger = require('../utils/logger')(module);
 
 class Model {
   constructor(data, accessData = null) {

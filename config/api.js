@@ -1,7 +1,8 @@
 import find from 'find';
 import { gravity } from './gravity';
 
-const logger = require('../utils/logger');
+const logger = require('../utils/logger')(module);
+
 
 // This file handles the app's different pages and how they are routed by the system
 

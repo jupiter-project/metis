@@ -2,7 +2,7 @@ import axios from 'axios';
 import { gravity } from '../config/gravity';
 import controller from '../config/controller';
 
-const logger = require('../utils/logger');
+const logger = require('../utils/logger')(module);
 
 // This files handles the app's different pages and how they are routed by the system
 

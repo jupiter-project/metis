@@ -1,5 +1,5 @@
 const Notifications = require('../models/notifications');
-const logger = require('../utils/logger');
+const logger = require('../utils/logger')(module);
 
 module.exports = {
   addTokenNotification: (req, res) => {

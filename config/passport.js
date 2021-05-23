@@ -5,7 +5,7 @@ import RegistrationWorker from '../workers/registration';
 
 // Loads up passport code
 const LocalStrategy = require('passport-local').Strategy;
-const logger = require('../utils/logger');
+const logger = require('../utils/logger')(module);
 
 // Used to serialize the user for the session
 const serializeUser = (passport) => {
