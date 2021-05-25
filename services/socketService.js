@@ -1,4 +1,6 @@
 
+const logger = require('../utils/logger')(module);
+
 const joinChat = function (data, callback) {
   const { room, event } = data;
   if (!room || !event) {
@@ -33,7 +35,7 @@ const invites = function (data) {
 };
 
 const connection = function (socket) {
-  console.log('a user connected');
+  logger.info('a user connected');
 
   socket.on('joinChat', joinChat);
 
