@@ -168,6 +168,12 @@ class User extends Model {
     return bcrypt.compareSync(accounthash, this.record.accounthash);
   }
 
+  validEncryptionPassword(encryptionPassword) {
+    // TODO remove this function once we implement JWT authentication
+    const validFields = encryptionPassword && this.record.encryption_password;
+    return validFields && encryptionPassword === this.record.encryption_password;
+  }
+
   generateKey() {
     const generatedPhrase = methods.generate_keywords();
     const unfilteredKey = bcrypt.hashSync(generatedPhrase, bcrypt.genSaltSync(8), null);
