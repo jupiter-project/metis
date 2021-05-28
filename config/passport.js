@@ -171,12 +171,12 @@ const metisLogin = (passport, jobs, io) => {
 
         if (!user.validEncryptionPassword(containedDatabase.encryptionPassword)) {
           valid = false;
-          return done(true, null, req.flash('loginMessage', 'Wrong encryption password'));
+          return done(true, null, req.send({ error: true, message: 'Wrong encryption password' }));
         }
 
         if (!user.validPassword(accounthash)) {
           valid = false;
-          return done(null, false, req.send({ error: true, message: 'Wrong encryption password' }));
+          return done(null, false, req.flash('loginMessage', 'Wrong hashphrase'));
         }
 
         if (valid) {
