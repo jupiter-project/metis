@@ -2550,7 +2550,7 @@ class Gravity {
                       }
                       console.log('\nSuccess! .gravity.js and .env files generated!');
                       console.log('\nPlease write down the 12-word passphrase and account address assigned to your app as well as the password assigned for encryption (See .env or .gravity.js files). If you lose your passphrase or your encryption password, you will lose access to all saved data.');
-                      console.log('\nIn order to begin saving information into the Jupiter blockchain, you will need to obtain Jupiter tokens from https://exchange.darcr.us.');
+                      console.log('\nIn order to begin saving information into the Jupiter blockchain, you will need to obtain Jupiter coins from an exchange. Please check https://jup.io for listings.');
                       rl.close();
                       return null;
                     });
