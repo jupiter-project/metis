@@ -17,13 +17,19 @@ const decryptUserData = (req) => {
   return JSON.parse(gravity.decrypt(req.session.accessData));
 };
 
-const getPNTokensAndSendPushNotification = (members, channelName, senderAlias) => {
+const getPNTokensAndSendPushNotification = (
+  members,
+  channelName,
+  senderAlias,
+  channel,
+  message,
+) => {
   Notifications.find({ alias: { $in: members }, token: { $ne: '' } })
     .then((data) => {
       if (data && Array.isArray(data) && !_.isEmpty(data)) {
         const tokens = _.map(data, 'token');
-        const alert = `${senderAlias} has sent a message to '${channelName}' channel`;
-        const payload = { title: 'New Message' };
+        const alert = `${message}`;
+        const payload = { title: `${senderAlias} @ ${channelName}`, channel };
         sendPushNotification(tokens, alert, 1, payload, 'channels');
       }
     })
@@ -163,6 +169,20 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     try {
       response = await invite.send();
+
+      Notifications.find({ alias: { $in: members }, token: { $ne: '' } })
+        .then((data) => {
+          if (data && Array.isArray(data) && !_.isEmpty(data)) {
+            const tokens = _.map(data, 'token');
+            const alert = `${message}`;
+            const payload = { title: `${senderAlias} @ ${channelName}`, channel };
+            sendPushNotification(tokens, alert, 1, payload, 'channels');
+          }
+        })
+        .catch((error) => {
+          logger.error(error);
+        });
+
     } catch (e) {
       logger.error(e);
       response = e;
@@ -271,6 +291,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       // accountData
       // const userData = decryptUserData(req);
       let members = _.get(req, 'body.members', []);
+      const channel = _.get(req, 'body.channel', []);
       const channelName = _.get(tableData, 'name', 'a channel');
       const accessData = _.get(req, 'session.accessData', req.body.user.accountData);
       const userData = JSON.parse(gravity.decrypt(accessData));
@@ -281,7 +302,13 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         if (Array.isArray(members)) {
           members = members.filter(member => member !== message.record.name);
         }
-        getPNTokensAndSendPushNotification(members, channelName, message.record.name);
+        getPNTokensAndSendPushNotification(
+          members,
+          channelName,
+          message.record.name,
+          channel,
+          hasMessage,
+        );
       } catch (e) {
         logger.error(e);
         response = { success: false, fullError: e };
