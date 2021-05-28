@@ -176,7 +176,7 @@ const metisLogin = (passport, jobs, io) => {
 
         if (!user.validPassword(accounthash)) {
           valid = false;
-          return done(null, false, req.flash('loginMessage', 'Wrong hashphrase'));
+          return done(null, false, req.send({ error: true, message: 'Wrong encryption password' }));
         }
 
         if (valid) {
