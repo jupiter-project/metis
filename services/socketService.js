@@ -52,13 +52,9 @@ const invites = function (data) {
 
 const connection = function (socket) {
   logger.info('a user connected');
-
   socket.on('joinChat', joinChat);
-
   socket.on('leaveChat', leaveChat);
-
   socket.on('createMessage', createMessage);
-
   socket.on('invites', invites);
 };
 
