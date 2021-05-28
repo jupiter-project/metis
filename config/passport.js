@@ -168,6 +168,12 @@ const metisLogin = (passport, jobs, io) => {
           valid = false;
           return done(null, false, req.flash('loginMessage', 'Account is not registered'));
         }
+
+        if (!user.validEncryptionPassword(containedDatabase.encryptionPassword)) {
+          valid = false;
+          return done(true, null, req.send({ error: true, message: 'Wrong encryption password' }));
+        }
+
         if (!user.validPassword(accounthash)) {
           valid = false;
           return done(null, false, req.flash('loginMessage', 'Wrong hashphrase'));
@@ -208,10 +214,10 @@ const metisLogin = (passport, jobs, io) => {
           database: response.database,
           accountData: gravity.encrypt(JSON.stringify(containedDatabase)),
           id: user.data.id,
-          userData : {
+          userData: {
             alias: data.alias,
-            account: data.account
-          }
+            account: data.account,
+          },
         });
       })
       .catch((err) => {
