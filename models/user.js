@@ -4,6 +4,7 @@ import Model from './_model';
 import methods from '../config/_methods';
 import { gravity } from '../config/gravity';
 
+const logger = require('../utils/logger')(module);
 
 class User extends Model {
   constructor(data, accessPass) {
@@ -167,6 +168,12 @@ class User extends Model {
     return bcrypt.compareSync(accounthash, this.record.accounthash);
   }
 
+  validEncryptionPassword(encryptionPassword) {
+    // TODO remove this function once we implement JWT authentication
+    const validFields = encryptionPassword && this.record.encryption_password;
+    return validFields && encryptionPassword === this.record.encryption_password;
+  }
+
   generateKey() {
     const generatedPhrase = methods.generate_keywords();
     const unfilteredKey = bcrypt.hashSync(generatedPhrase, bcrypt.genSaltSync(8), null);
@@ -207,7 +214,7 @@ class User extends Model {
           self.record = JSON.parse(record.user);
           resolve(true);
         } catch (e) {
-          console.log(e);
+          logger.error(e);
         }
       } else {
         try {
@@ -263,7 +270,7 @@ class User extends Model {
               self.setAlias(passphrase)
                 .then((aliasSetting) => {
                   if (!aliasSetting.success) {
-                    console.log(aliasSetting);
+                    logger.info(aliasSetting);
                   }
                 });
               resolve({ success: true, message: 'Record created', record: self.record });
@@ -274,7 +281,7 @@ class User extends Model {
             }
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             reject({ success: false, errors: error.response });
           });
       }

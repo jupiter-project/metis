@@ -2,6 +2,8 @@ import axios from 'axios';
 import { gravity } from '../config/gravity';
 import controller from '../config/controller';
 
+const logger = require('../utils/logger')(module);
+
 // This files handles the app's different pages and how they are routed by the system
 
 module.exports = (app, passport, React, ReactDOMServer) => {
@@ -181,7 +183,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        logger.error(error);
         res.send({
           success: false,
           message: 'There was an error in verifying the passphrase with the Blockchain',
@@ -222,7 +224,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        logger.error(error);
         res.send({ success: false, message: 'There was an error', error: error.response });
       });
   });
@@ -254,15 +256,19 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
   // used for the mobile app
   app.post('/appLogin', (req, res, next) => {
-    console.log('Mobile App Login');
+    logger.info('\n\n\nappLogin\n\n\n');
+    logger.info(JSON.stringify(req.headers));
+    logger.info('\n\n\nappLogin\n\n\n');
 
     passport.authenticate('gravity-login', (err, userInfo) => {
       if (err) return next(err);
+
       const accountData = JSON.parse(gravity.decrypt(userInfo.accountData));
+
       userInfo.publicKey = accountData.publicKey;
       res.json(userInfo);
     })(req, res, next);
-  })
+  });
 
   // ===============================================================================
   // GET PASSPHRASE

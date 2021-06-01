@@ -18,7 +18,8 @@
     "gravity:app:balance": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.getBalance();\"",
     "gravity:app:scaffold": "plop scaffold",
     "gravity:app:model": "plop model",
-    "gravity:app:page": "plop page"
+    "gravity:app:page": "plop page",
+    "change-log": "git log --pretty=\"- %s\" > CHANGELOG.md"
   },
   "jest": {
     "setupFiles": [
@@ -46,6 +47,7 @@
   "dependencies": {
     "ajv": "^6.5.4",
     "apn": "^2.2.0",
+    "appoptics-apm": "^10.0.1",
     "axios": "^0.16.2",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
@@ -84,10 +86,14 @@
     "react-toastr": "^2.9.4",
     "react-transition-group": "^2.5.0",
     "request": "^2.88.0",
-    "socket.io": "^2.1.1",
-    "socket.io-client": "^2.1.1",
+    "socket.io": "^4.1.2",
     "speakeasy": "^2.0.0",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "winston": "^3.3.3",
+    "winston-papertrail": "^1.0.5",
+    "winston-syslog": "^2.4.4",
+    "os": "^0.1.1",
+    "winston-mongodb": "^5.0.7"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

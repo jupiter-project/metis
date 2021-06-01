@@ -11,6 +11,7 @@ const connection = process.env.SOCKET_SERVER;
 const device = require('express-device');
 const Notifications = require('../models/notifications');
 const { sendPushNotification } = require('../config/notifications');
+const logger = require('../utils/logger')(module);
 
 const decryptUserData = (req) => {
   return JSON.parse(gravity.decrypt(req.session.accessData));
@@ -27,7 +28,7 @@ const getPNTokensAndSendPushNotification = (members, channelName, senderAlias) =
       }
     })
     .catch((error) => {
-      console.error('Notifications error', error);
+      logger.error(error);
     });
 };
 
@@ -68,10 +69,10 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         clientId: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         refreshToken: process.env.REFRESH_TOKEN,
-      }
+      },
     });
 
-    const data = req.body.data
+    const data = req.body.data;
 
     const body = `
       User Report: <br />
@@ -80,21 +81,21 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       <br />
       Description:
       ${data.description}
-    `
+    `;
     transporter.sendMail({
       subject: `Report user: ${data.message.sender}`,
       html: body,
-      to: "info+report-a-user@sigwo.com",
-      from: process.env.EMAIL
+      to: 'info+report-a-user@sigwo.com',
+      from: process.env.EMAIL,
     }, (err, data) => {
       if (err != null) {
-        res.send({ success: true })
-        return
+        res.send({ success: true });
+        return;
       }
 
-      res.send({ success: true, data })
+      res.send({ success: true, data });
     });
-  })
+  });
 
   /**
    * Render invites page
@@ -125,6 +126,9 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    * Get a user's invites
    */
   app.get('/channels/invites', async (req, res) => {
+  // app.get('/channels/invites', async (req, res) => {
+    logger.info('/n/n/nChannel Invites/n/n');
+    logger.info(req.session);
     const invite = new Invite();
     const accessData = _.get(req, 'session.accessData', req.headers.accessdata);
     const userData = JSON.parse(gravity.decrypt(accessData));
@@ -133,6 +137,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     try {
       response = await invite.get('channelInvite');
     } catch (e) {
+      logger.error(e);
       response = e;
     }
     res.send(response);
@@ -143,6 +148,10 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    */
   app.post('/channels/invite', async (req, res) => {
     const { data } = req.body;
+
+
+    // @TODO: req.user non-functional - get record.account from a different place
+    // data.sender = req.user.record.account;
     data.sender = _.get(req, 'user.record.account', req.headers.account);
 
     const invite = new Invite(data);
@@ -155,6 +164,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     try {
       response = await invite.send();
     } catch (e) {
+      logger.error(e);
       response = e;
     }
 
@@ -165,14 +175,18 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    * Accept channel invite
    */
   app.post('/channels/import', async (req, res) => {
-    const { data } = req.body;
+    const { data, user } = req.body;
     const channel = new Channel(data.channel_record);
-    channel.user = decryptUserData(req);
+    // TODO check the function decryptUserData is using "req.session.accessData"
+    const accessData = _.get(req, 'session.accessData', user.accountData);
+    channel.user = JSON.parse(gravity.decrypt(accessData));
+    // channel.user = decryptUserData(req);
 
     let response;
     try {
       response = await channel.import(channel.user);
     } catch (e) {
+      logger.error(e);
       response = { error: true, fullError: e };
     }
 
@@ -232,7 +246,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       );
       response = data;
     } catch (e) {
-      console.log(e);
+      logger.error(e);
       response = { success: false, fullError: e };
     }
 
@@ -269,10 +283,12 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         }
         getPNTokensAndSendPushNotification(members, channelName, message.record.name);
       } catch (e) {
+        logger.error(e);
         response = { success: false, fullError: e };
       }
     } else {
       response = { success: false, messages: [`Message exceeds allowable limit of ${maxMessageLength} characters`] };
+      logger.error(response);
     }
     res.send(response);
   });
