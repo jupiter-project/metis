@@ -3,6 +3,8 @@ import { gravity } from '../config/gravity';
 import controller from '../config/controller';
 import User from '../models/user';
 
+const logger = require('../utils/logger')(module);
+
 module.exports = (app, passport, React, ReactDOMServer) => {
   let page;
   const connection = process.env.SOCKET_SERVER;
@@ -36,7 +38,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         res.send({ success: true, account_info: userInfo, message: 'Retrieved account info' });
       })
       .catch((error) => {
-        console.log(error);
+        logger.error(error);
         res.send({ success: false, errors: error });
       });
   });
@@ -69,7 +71,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         res.send({ success: true, message: 'Account info saved to blockchain', record: user.record });
       })
       .catch((err) => {
-        console.log(err);
+        logger.error(err);
         res.send(err);
       });
   });
@@ -97,7 +99,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        logger.error(error);
         res.send({ success: false, message: 'There was an error', error: error.response });
       });
   });
@@ -123,11 +125,17 @@ module.exports = (app, passport, React, ReactDOMServer) => {
           });
         })
         .catch((err) => {
-          console.log(err);
+          logger.error(err);
           res.send({ success: false, message: 'There was an error updating api key' });
         });
     } else {
-      res.send({ success: false, status: 'error', error: 'Api key provided in request is incorrect' });
+      const error = {
+        success: false,
+        status: 'error',
+        error: 'Api key provided in request is incorrect',
+      };
+      logger.error(error);
+      res.send(error);
     }
   });
 
@@ -193,7 +201,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         res.send({ user, status: 'success', secret: secret.otpauth_url });
       })
       .catch((err) => {
-        console.log(err);
+        logger.error(err);
         res.send(err);
       });
   });
@@ -214,7 +222,9 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       req.flash('generalMessages', 'Passed verification!');
       res.send({ status: 'success', message: 'Verification code is correct!' });
     } else {
-      res.send({ status: 'error', message: 'Verification code is incorrect!' });
+      const error = { status: 'error', message: 'Verification code is incorrect!' };
+      logger.error(error);
+      res.send(error);
     }
   });
 
@@ -246,11 +256,13 @@ module.exports = (app, passport, React, ReactDOMServer) => {
           res.send({ user, status: 'success', message: 'Authentication succeeded! Update pushed to blockchain for saving.' });
         })
         .catch((err) => {
-          console.log(err);
+          logger.error(err);
           res.send(err);
         });
     } else {
-      res.send({ status: 'error', message: 'Verification code is incorrect!' });
+      const error = { status: 'error', message: 'Verification code is incorrect!' };
+      logger.error(error);
+      res.send(error);
     }
   });
 
@@ -289,7 +301,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        logger.error(err);
         res.redirect('/security');
       });
   });

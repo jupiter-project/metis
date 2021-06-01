@@ -1,6 +1,8 @@
 import find from 'find';
 import { gravity } from './gravity';
 
+const logger = require('../utils/logger')(module);
+
 
 // This file handles the app's different pages and how they are routed by the system
 
@@ -42,8 +44,8 @@ module.exports = (app) => {
     const exceptions = ['users'];
     let model = '';
 
-    console.log(req.user);
-    console.log(req.headers);
+    logger.info(req.user);
+    logger.info(req.headers);
 
     // If table in route is in the exception list, then it goes lower in the route list
     if (exceptions.includes(tableName)) {
@@ -75,9 +77,9 @@ module.exports = (app) => {
         },
       );
 
-      console.log('\n\nGRAVITY DECRYPT\n\n\n')
-      console.log(headers);
-      console.log('\n\nGRAVITY DECRYPT\n\n\n')
+      logger.info('\n\nGRAVITY DECRYPT\n\n\n');
+      logger.info(headers);
+      logger.info('\n\nGRAVITY DECRYPT\n\n\n');
 
       recordObject.loadRecords(JSON.parse(gravity.decrypt(headers.accessdata)))
         .then((response) => {
@@ -87,7 +89,7 @@ module.exports = (app) => {
           res.send({ success: true, [tableName]: records, [`total_${tableName}_number`]: response.records_found });
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           res.send({ success: false, errors: error });
         });
     }
@@ -135,7 +137,7 @@ module.exports = (app) => {
           res.send(response);
         })
         .catch((err) => {
-          console.log(err);
+          logger.error(err);
           res.send(err);
         });
     }
@@ -177,11 +179,10 @@ module.exports = (app) => {
 
       recordObject.update()
         .then((response) => {
-          // console.log(response);
           res.send(response);
         })
         .catch((err) => {
-          console.log(err);
+          logger.error(err);
           res.send(err);
         });
     }

@@ -50,6 +50,8 @@ module.exports = {
       res.redirect('/2fa_checkup');
     } else if (req.isAuthenticated()) {
       return next();
+    } else if (req.device && req.device.type && req.device.type === 'phone') {
+      return next();
     } else {
       // console.log('Needs to log');
       res.redirect('/home');

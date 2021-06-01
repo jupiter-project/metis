@@ -399,6 +399,7 @@ export default class ApplicationLayout extends React.Component {
 
           <link href="/css/sb-admin.css" rel="stylesheet" />
         </head>
+        <script src="//rum-static.pingdom.net/pa-608f5d35365abb0011000313.js" async></script>
         <body className="p-0">
           <span id="toastrMessages" />
           <div

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import mailer from 'nodemailer';
 import controller from '../config/controller';
 import { gravity } from '../config/gravity';
 import { messagesConfig } from '../config/constants';
@@ -7,12 +8,32 @@ import Channel from '../models/channel';
 import Message from '../models/message';
 
 const connection = process.env.SOCKET_SERVER;
+const device = require('express-device');
+const Notifications = require('../models/notifications');
+const { sendPushNotification } = require('../config/notifications');
+const logger = require('../utils/logger')(module);
 
 const decryptUserData = (req) => {
-  JSON.parse(gravity.decrypt(req.session.accessData));
+  return JSON.parse(gravity.decrypt(req.session.accessData));
+};
+
+const getPNTokensAndSendPushNotification = (members, channelName, senderAlias) => {
+  Notifications.find({ alias: { $in: members }, token: { $ne: '' } })
+    .then((data) => {
+      if (data && Array.isArray(data) && !_.isEmpty(data)) {
+        const tokens = _.map(data, 'token');
+        const alert = `${senderAlias} has sent a message to '${channelName}' channel`;
+        const payload = { title: 'New Message' };
+        sendPushNotification(tokens, alert, 1, payload, 'channels');
+      }
+    })
+    .catch((error) => {
+      logger.error(error);
+    });
 };
 
 module.exports = (app, passport, React, ReactDOMServer) => {
+  app.use(device.capture());
   /**
    * Render Channels page
    */
@@ -36,6 +57,44 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     );
 
     res.send(page);
+  });
+
+  app.post('/reportUser', controller.isLoggedIn, (req, res) => {
+
+    let transporter = mailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: process.env.EMAIL,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN,
+      },
+    });
+
+    const data = req.body.data;
+
+    const body = `
+      User Report: <br />
+      The user <b>${data.reporter}</b> wants to report the following message: <br />
+      ${JSON.stringify(data.message)}
+      <br />
+      Description:
+      ${data.description}
+    `;
+    transporter.sendMail({
+      subject: `Report user: ${data.message.sender}`,
+      html: body,
+      to: 'info+report-a-user@sigwo.com',
+      from: process.env.EMAIL,
+    }, (err, data) => {
+      if (err != null) {
+        res.send({ success: true });
+        return;
+      }
+
+      res.send({ success: true, data });
+    });
   });
 
   /**
@@ -66,20 +125,21 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   /**
    * Get a user's invites
    */
-  app.get('/channels/invites', controller.isLoggedIn, async (req, res) => {
+  app.get('/channels/invites', async (req, res) => {
   // app.get('/channels/invites', async (req, res) => {
-    console.log('/n/n/nChannel Invites/n/n');
-    console.log(req.session);
+    logger.info('/n/n/nChannel Invites/n/n');
+    logger.info(req.session);
     const invite = new Invite();
-    const userData = decryptUserData(req);
+    const accessData = _.get(req, 'session.accessData', req.headers.accessdata);
+    const userData = JSON.parse(gravity.decrypt(accessData));
     invite.user = userData;
     let response;
     try {
       response = await invite.get('channelInvite');
     } catch (e) {
+      logger.error(e);
       response = e;
     }
-    // console.log(response);
     res.send(response);
   });
 
@@ -88,29 +148,45 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    */
   app.post('/channels/invite', async (req, res) => {
     const { data } = req.body;
-    data.sender = req.user.record.account;
+
+
+    // @TODO: req.user non-functional - get record.account from a different place
+    // data.sender = req.user.record.account;
+    data.sender = _.get(req, 'user.record.account', req.headers.account);
+
     const invite = new Invite(data);
-    invite.user = decryptUserData(req);
+
+    // TODO change these 2 lines once the passport issue is solved
+    const accessData = _.get(req, 'session.accessData', req.headers.accessdata);
+    invite.user = JSON.parse(gravity.decrypt(accessData));
     let response;
 
     try {
       response = await invite.send();
     } catch (e) {
+      logger.error(e);
       response = e;
     }
 
     res.send(response);
   });
 
-  app.post('/channels/import', controller.isLoggedIn, async (req, res) => {
-    const { data } = req.body;
+  /**
+   * Accept channel invite
+   */
+  app.post('/channels/import', async (req, res) => {
+    const { data, user } = req.body;
     const channel = new Channel(data.channel_record);
-    channel.user = decryptUserData(req);
+    // TODO check the function decryptUserData is using "req.session.accessData"
+    const accessData = _.get(req, 'session.accessData', user.accountData);
+    channel.user = JSON.parse(gravity.decrypt(accessData));
+    // channel.user = decryptUserData(req);
 
     let response;
     try {
       response = await channel.import(channel.user);
     } catch (e) {
+      logger.error(e);
       response = { error: true, fullError: e };
     }
 
@@ -156,13 +232,21 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     };
 
     const channel = new Channel(tableData);
-    channel.user = decryptUserData(req);
-
+    // TODO check the function decryptUserData is using "req.session.accessData"
+    const accessData = _.get(req, 'session.accessData', req.headers.accessdata);
+    channel.user = JSON.parse(gravity.decrypt(accessData));
     try {
-      const data = await channel.loadMessages(req.params.scope, req.params.firstIndex);
+      const order = _.get(req, 'headers.order', 'desc');
+      const limit = _.get(req, 'headers.limit', 10);
+      const data = await channel.loadMessages(
+        req.params.scope,
+        req.params.firstIndex,
+        order,
+        limit,
+      );
       response = data;
     } catch (e) {
-      console.log(e);
+      logger.error(e);
       response = { success: false, fullError: e };
     }
 
@@ -180,16 +264,31 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     if (hasMessage && hasMessage.length <= maxMessageLength) {
       const { tableData } = req.body;
       const message = new Message(req.body.data);
-      message.record.sender = req.user.record.account;
-      const userData = decryptUserData(req);
+      // TODO fix issue "req.user" related to passportjs to improve this code, we should be able to
+      // TODO get that info from mobile requests
+      // message.record.sender = req.user.record.account || req?.body?.user?.account;
+      message.record.sender = _.get(req, 'user.record.account', req.body.user.account);
+      // accountData
+      // const userData = decryptUserData(req);
+      let members = _.get(req, 'body.members', []);
+      const channelName = _.get(tableData, 'name', 'a channel');
+      const accessData = _.get(req, 'session.accessData', req.body.user.accountData);
+      const userData = JSON.parse(gravity.decrypt(accessData));
       try {
         const data = await message.sendMessage(userData, tableData, message.record);
         response = data;
+
+        if (Array.isArray(members)) {
+          members = members.filter(member => member !== message.record.name);
+        }
+        getPNTokensAndSendPushNotification(members, channelName, message.record.name);
       } catch (e) {
+        logger.error(e);
         response = { success: false, fullError: e };
       }
     } else {
       response = { success: false, messages: [`Message exceeds allowable limit of ${maxMessageLength} characters`] };
+      logger.error(response);
     }
     res.send(response);
   });

@@ -3,6 +3,8 @@ import events from 'events';
 import { gravity } from '../config/gravity';
 import validate from './_validations';
 
+const logger = require('../utils/logger')(module);
+
 class Model {
   constructor(data, accessData = null) {
     // Default values of model
@@ -73,7 +75,7 @@ class Model {
             }
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             reject(error.response);
           });
       });
@@ -89,7 +91,7 @@ class Model {
             eventEmitter.emit('data_prepared');
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             reject(error.response);
           });
       }
@@ -131,7 +133,7 @@ class Model {
           reject('Table could not be found');
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           reject(error);
         });
     });
@@ -170,7 +172,7 @@ class Model {
           });
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           reject(error);
         });
     });
@@ -223,7 +225,7 @@ class Model {
             resolve({ user, success: true, isUserRecord: true });
           })
           .catch((err) => {
-            console.log(err);
+            logger.error(err);
             reject({ success: false, errors: 'There was an error in authentication of request/user validation' });
           });
       } else {
@@ -305,7 +307,7 @@ class Model {
               eventEmitter.emit('tableData_loaded');
             })
             .catch((err) => {
-              console.log(err);
+              logger.error(err);
               reject(err);
             });
         } else {
@@ -332,7 +334,7 @@ class Model {
             eventEmitter.emit('verified_request');
           })
           .catch((err) => {
-            console.log(err);
+            logger.error(err);
             reject({ success: false, errors: 'There was an error in authentication of request/user validation' });
           });
       } else {
@@ -377,7 +379,7 @@ class Model {
 
           if (self.model === 'user') {
             if (self.prunableOnCreate) {
-              console.log('Record is prunable');
+              logger.info('Record is prunable');
               callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.data.public_key}&encryptedMessageIsPrunable=true&compressMessageToEncrypt=true`;
             } else {
               callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.data.public_key}&compressMessageToEncrypt=true`;
@@ -414,7 +416,7 @@ class Model {
               eventEmitter.emit('id_generated');
             })
             .catch((err) => {
-              console.log(err);
+              logger.error(err);
               reject({ success: false, errors: err });
             });
         });
@@ -467,7 +469,7 @@ class Model {
               eventEmitter.emit('authenticate_user_request');
             })
             .catch((err) => {
-              console.log(err);
+              logger.error(err);
               reject({ success: false, errors: 'There was an error in authentication of request/user validation' });
             });
         } else {
@@ -570,7 +572,7 @@ class Model {
               }
             })
             .catch((error) => {
-              console.log(error);
+              logger.error(error);
               reject({ success: false, errors: error.response });
             });
         });
@@ -615,7 +617,7 @@ class Model {
               eventEmitter.emit('authenticate_user_request');
             })
             .catch((err) => {
-              console.log(err);
+              logger.error(err);
               reject({ success: false, errors: 'There was an error in authentication of request/user validation' });
             });
         } else {
@@ -690,7 +692,7 @@ class Model {
           resolve({ success: true, records: collectionList, params: self.model_params });
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           reject({ success: false, errors: error });
         });
     });

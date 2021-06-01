@@ -2,6 +2,7 @@ import find from 'find';
 
 const controller = require('../config/controller.js');
 const { gravity } = require('../config/gravity.js');
+const logger = require('../utils/logger')(module);
 
 module.exports = (app, passport, React, ReactDOMServer) => {
   const connection = process.env.SOCKET_SERVER;
@@ -55,7 +56,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         res.send({ success: true, application: response.app, tables: response.tables });
       })
       .catch((error) => {
-        console.log(error);
+        logger.error(error);
         res.send({ success: false, message: 'There was an error retrieving app data' });
       });
   });
@@ -98,7 +99,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
             });
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             res.send({ success: false, message: 'Invalid table', error: 'table-not-found' });
           });
       } else {
@@ -111,7 +112,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
             res.send(response);
           })
           .catch((error) => {
-            console.log(error);
+            logger.error(error);
             res.send({ success: false, errors: error });
           });
       }
@@ -125,11 +126,13 @@ module.exports = (app, passport, React, ReactDOMServer) => {
           res.send({ success: true, balances: response });
         })
         .catch((error) => {
-          console.log(error);
+          logger.error(error);
           res.send({ success: false, message: 'There was an error retrieving app data' });
         });
     } else {
-      res.send({ success: false, message: 'Address secret was not included in request' });
+      const error = { success: false, message: 'Address secret was not included in request' };
+      logger.error(error);
+      res.send(error);
     }
   });
 };

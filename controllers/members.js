@@ -1,38 +1,51 @@
 import controller from '../config/controller';
-import { gravity } from '../config/gravity';
 import metis from '../config/metis';
 
+const _ = require('lodash');
+const device = require('express-device');
+const logger = require('../utils/logger')(module);
+
 module.exports = (app) => {
+  app.use(device.capture());
   app.get('/data/members', controller.isLoggedIn, async (req, res) => {
     const tableData = {
       account: req.headers.channeladdress,
       password: req.headers.channelkey,
     };
-
-    const memberList = await metis.getMember({
-      channel: tableData.account,
-      account: req.user.record.account,
-      password: tableData.password,
-    });
+    let memberList = null;
+    try {
+      memberList = await metis.getMember({
+        channel: tableData.account,
+        account: req.device.type === 'phone' ? req.headers.channelpublic : req.user.record.account,
+        password: tableData.password,
+      });
+    } catch (error) {
+      logger.error(error);
+    }
 
     res.send(memberList);
   });
 
   app.post('/data/members', controller.isLoggedIn, async (req, res) => {
-    console.log(req.body);
+    logger.info(req.body);
     const tableData = {
       account: req.body.channeladdress,
       password: req.body.channelkey,
     };
 
-    console.log(tableData);
+    logger.info(tableData);
+    let response = null;
 
-    const response = await metis.addToMemberList({
-      channel: tableData.account,
-      account: req.user.record.account,
-      password: tableData.password,
-      alias: req.user.record.alias,
-    });
+    try {
+      response = await metis.addToMemberList({
+        channel: tableData.account,
+        account: _.get(req, 'user.record.account', req.headers.account),
+        password: tableData.password,
+        alias: _.get(req, 'user.record.alias', req.headers.alias),
+      });
+    } catch (error) {
+      logger.error(error);
+    }
 
     res.send(response);
   });

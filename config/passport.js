@@ -5,20 +5,21 @@ import RegistrationWorker from '../workers/registration';
 
 // Loads up passport code
 const LocalStrategy = require('passport-local').Strategy;
+const logger = require('../utils/logger')(module);
 
 // Used to serialize the user for the session
 const serializeUser = (passport) => {
   passport.serializeUser((accessData, done) => {
     done(null, accessData);
   });
-}
+};
 
 /**
- * In a typical web application, the credentials used to authenticate a user will only be transmitted during the login request. 
+ * In a typical web application, the credentials used to authenticate a user will only be transmitted during the login request.
  * If authentication succeeds, a session will be established and maintained via a cookie set in the user's browser.
  * Each subsequent request will not contain credentials, but rather the unique cookie that identifies the session.
  * In order to support login sessions, Passport will serialize and deserialize user instances to and from the session.
- * @param {*} passport 
+ * @param {*} passport
  */
 const deserializeUser = (passport) => {
   debugger;
@@ -27,20 +28,21 @@ const deserializeUser = (passport) => {
 
     user.findById()
       .then((response) => {
-        console.log('Deserializer response');
-        console.log(response);
+        logger.info('Deserializer response');
+        logger.info(response);
         const thisUser = user;
         done(null, thisUser);
       })
       .catch((err) => {
+        logger.error(err);
         done(err, null);
       });
   });
-}
+};
 
 /**
  * Signup to Metis
- * @param {*} passport 
+ * @param {*} passport
  */
 const metisSignup = (passport) => {
   passport.use('gravity-signup', new LocalStrategy({
@@ -55,7 +57,7 @@ const metisSignup = (passport) => {
       let user;
 
       eventEmitter.on('sent_jupiter_to_new_account', () => {
-        console.log('Saving new account data in Jupiter...');
+        logger.info('Saving new account data in Jupiter...');
 
         const data = {
           account,
@@ -85,12 +87,12 @@ const metisSignup = (passport) => {
                 parseInt(0.05 * 100000000, 10),
               );
             } catch (e) {
-              console.log(e);
+              logger.error(e);
               moneyTransfer = e;
             }
 
             if (!moneyTransfer.success) {
-              console.log('SendMoney was not completed');
+              logger.info('SendMoney was not completed');
             }
 
             return done(null, {
@@ -100,7 +102,7 @@ const metisSignup = (passport) => {
             }, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in.'));
           })
           .catch((err) => {
-            console.log(err);
+            logger.error(err);
             let errorMessage;
             if (err.verification_error !== undefined && err.verification_error === true) {
               err.errors.forEach((x) => {
@@ -121,7 +123,7 @@ const metisSignup = (passport) => {
 
 /**
  * Login to Metis
- * @param {*} passport 
+ * @param {*} passport
  */
 const metisLogin = (passport, jobs, io) => {
   passport.use('gravity-login', new LocalStrategy({
@@ -148,7 +150,6 @@ const metisLogin = (passport, jobs, io) => {
       accountData: gravity.encrypt(JSON.stringify(containedDatabase)),
       originalTime: Date.now(),
     };
-
     gravity.getUser(account, req.body.jupkey, containedDatabase)
       .then(async (response) => {
         if (response.error) {
@@ -167,6 +168,12 @@ const metisLogin = (passport, jobs, io) => {
           valid = false;
           return done(null, false, req.flash('loginMessage', 'Account is not registered'));
         }
+
+        if (!user.validEncryptionPassword(containedDatabase.encryptionPassword)) {
+          valid = false;
+          return done(true, null, req.send({ error: true, message: 'Wrong encryption password' }));
+        }
+
         if (!user.validPassword(accounthash)) {
           valid = false;
           return done(null, false, req.flash('loginMessage', 'Wrong hashphrase'));
@@ -186,13 +193,13 @@ const metisLogin = (passport, jobs, io) => {
             const fundingResponse = await gravity.setAcountProperty({
               recipient: user.record.account,
             });
-            console.log(fundingResponse);
+            logger.info(fundingResponse);
           }
 
           user.setAlias(req.body.jupkey)
             .then((aliasSetting) => {
               if (!aliasSetting.success) {
-                console.log(aliasSetting);
+                logger.info(aliasSetting);
               }
             })
             .catch(err => err);
@@ -207,11 +214,15 @@ const metisLogin = (passport, jobs, io) => {
           database: response.database,
           accountData: gravity.encrypt(JSON.stringify(containedDatabase)),
           id: user.data.id,
+          userData: {
+            alias: data.alias,
+            account: data.account,
+          },
         });
       })
       .catch((err) => {
-        console.log('Unable to query your user list. Please make sure you have a users table in your database.');
-        console.log(err);
+        logger.error('Unable to query your user list. Please make sure you have a users table in your database.');
+        logger.error(err);
         return done(null, false, req.flash('loginMessage', 'Login Error'));
       });
   }));
@@ -221,5 +232,5 @@ module.exports = {
   serializeUser,
   deserializeUser,
   metisSignup,
-  metisLogin 
+  metisLogin
 };
