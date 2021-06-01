@@ -8,9 +8,10 @@ const logger = require('../utils/logger')(module);
  * @param badgeCount Integer of updated badge count
  * @param payload Extra data
  * @param category Used to identify push on device
+ * @param delay delay on milliseconds for push notification
  * @returns {Promise}
  */
-async function sendPushNotification(tokens, alert, badgeCount, payload, category) {
+function sendPushNotification(tokens, alert, badgeCount, payload, category, delay = 1) {
   logger.info('[Notifications][sendPushNotification] -> Start');
 
   const apnProvider = new apn.Provider(APN_OPTIONS);
@@ -27,11 +28,12 @@ async function sendPushNotification(tokens, alert, badgeCount, payload, category
 
   notification.category = `metis.category.${category || 'default'}`;
 
-  // Send the actual notification
-  const result = await apnProvider.send(notification, tokens);
-
-  // Show the result of the send operation:
-  logger.info(JSON.stringify(result));
+  setTimeout(async () => {
+    // Send the actual notification
+    const result = await apnProvider.send(notification, tokens);
+    // Show the result of the send operation:
+    logger.info(JSON.stringify(result));
+  }, delay);
 }
 
 module.exports = {

@@ -6,16 +6,14 @@ import { messagesConfig } from '../config/constants';
 import Invite from '../models/invite';
 import Channel from '../models/channel';
 import Message from '../models/message';
+import { findNotificationInfoByAliasOrJupId } from '../services/notificationService';
 
 const connection = process.env.SOCKET_SERVER;
 const device = require('express-device');
-const Notifications = require('../models/notifications');
 const { sendPushNotification } = require('../config/notifications');
 const logger = require('../utils/logger')(module);
 
-const decryptUserData = (req) => {
-  return JSON.parse(gravity.decrypt(req.session.accessData));
-};
+const decryptUserData = req => JSON.parse(gravity.decrypt(req.session.accessData));
 
 const getPNTokensAndSendPushNotification = (
   members,
@@ -24,13 +22,28 @@ const getPNTokensAndSendPushNotification = (
   channel,
   message,
 ) => {
-  Notifications.find({ alias: { $in: members }, token: { $ne: '' } })
+  findNotificationInfoByAliasOrJupId(members, channel.id)
     .then((data) => {
       if (data && Array.isArray(data) && !_.isEmpty(data)) {
         const tokens = _.map(data, 'token');
-        const alert = `${message}`;
         const payload = { title: `${senderAlias} @ ${channelName}`, channel };
-        sendPushNotification(tokens, alert, 1, payload, 'channels');
+        sendPushNotification(tokens, message, 1, payload, 'channels');
+      }
+    })
+    .catch((error) => {
+      logger.error(JSON.stringify(error));
+    });
+};
+
+const getPNTokenAndSendInviteNotification = (senderAlias, recipientAliasOrJupId, channelName) => {
+  findNotificationInfoByAliasOrJupId([recipientAliasOrJupId])
+    .then((data) => {
+      if (data && Array.isArray(data) && !_.isEmpty(data)) {
+        const tokens = _.map(data, 'token');
+        const alert = `${senderAlias} invited you to the channel "${channelName}"`;
+        const payload = { title: 'Invitation', isInvitation: true };
+        const threeMinutesDelay = 180000;
+        sendPushNotification(tokens, alert, 1, payload, 'channels', threeMinutesDelay);
       }
     })
     .catch((error) => {
@@ -66,8 +79,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   });
 
   app.post('/reportUser', controller.isLoggedIn, (req, res) => {
-
-    let transporter = mailer.createTransport({
+    const transporter = mailer.createTransport({
       service: 'gmail',
       auth: {
         type: 'OAuth2',
@@ -169,20 +181,10 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     try {
       response = await invite.send();
-
-      Notifications.find({ alias: { $in: members }, token: { $ne: '' } })
-        .then((data) => {
-          if (data && Array.isArray(data) && !_.isEmpty(data)) {
-            const tokens = _.map(data, 'token');
-            const alert = `${message}`;
-            const payload = { title: `${senderAlias} @ ${channelName}`, channel };
-            sendPushNotification(tokens, alert, 1, payload, 'channels');
-          }
-        })
-        .catch((error) => {
-          logger.error(error);
-        });
-
+      const recipient = _.get(data, 'recipient', '');
+      const sender = _.get(data, 'senderAlias', '');
+      const channelName = _.get(data, 'channel.name', '');
+      getPNTokenAndSendInviteNotification(sender, recipient, channelName);
     } catch (e) {
       logger.error(e);
       response = e;
@@ -298,24 +300,23 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       try {
         const data = await message.sendMessage(userData, tableData, message.record);
         response = data;
-
-        if (Array.isArray(members)) {
+        if (Array.isArray(members) && members.length > 0) {
           members = members.filter(member => member !== message.record.name);
+          getPNTokensAndSendPushNotification(
+            members,
+            channelName,
+            message.record.name,
+            channel,
+            hasMessage,
+          );
         }
-        getPNTokensAndSendPushNotification(
-          members,
-          channelName,
-          message.record.name,
-          channel,
-          hasMessage,
-        );
       } catch (e) {
-        logger.error(e);
+        logger.error(JSON.stringify(e));
         response = { success: false, fullError: e };
       }
     } else {
-      response = { success: false, messages: [`Message exceeds allowable limit of ${maxMessageLength} characters`] };
-      logger.error(response);
+      response = { success: false, messages: [`Message is not valid or exceeds allowable limit of ${maxMessageLength} characters`] };
+      logger.error(JSON.stringify(response));
     }
     res.send(response);
   });
