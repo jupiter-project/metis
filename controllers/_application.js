@@ -262,11 +262,21 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     passport.authenticate('gravity-login', (err, userInfo) => {
       if (err) return next(err);
+      if (!userInfo) {
+        const errorMessage = 'There was an error in verifying the passphrase with the Blockchain';
+
+        logger.error(new Error(errorMessage));
+
+        return res.status(400).json({
+          success: false,
+          message: errorMessage,
+        });
+      }
 
       const accountData = JSON.parse(gravity.decrypt(userInfo.accountData));
 
       userInfo.publicKey = accountData.publicKey;
-      res.json(userInfo);
+      return res.json(userInfo);
     })(req, res, next);
   });
 
