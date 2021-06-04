@@ -257,28 +257,28 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   // used for the mobile app
   app.post('/appLogin', (req, res, next) => {
     logger.info('\n\n\nappLogin\n\n\n');
-
-    logger.info(req.headers);
-
+    logger.info(JSON.stringify(req.headers));
     logger.info('\n\n\nappLogin\n\n\n');
+
     passport.authenticate('gravity-login', (err, userInfo) => {
       if (err) return next(err);
+      if (!userInfo) {
+        const errorMessage = 'There was an error in verifying the passphrase with the Blockchain';
+
+        logger.error(new Error(errorMessage));
+
+        return res.status(400).json({
+          success: false,
+          message: errorMessage,
+        });
+      }
+
       const accountData = JSON.parse(gravity.decrypt(userInfo.accountData));
 
-      // {
-      //   "account":"JUP-H496-3XEM-94ZH-3R548",
-      //   "accounthash":"JUP-H496-3XEM-94ZH-3R548",
-      //   "encryptionPassword":"damn kitchen play help bare stone greet won wow mirror alas silently",
-      //   "passphrase":"damn kitchen play help bare stone greet won wow mirror alas silently",
-
-      //   "publicKey":"b8fbe029cd72e3a8ee96b6675bb19026f6b0a2bac6c99fccb36443247386ed15",
-      //   "originalTime":1616384679085
-      // }
-
       userInfo.publicKey = accountData.publicKey;
-      res.json(userInfo);
+      return res.json(userInfo);
     })(req, res, next);
-  })
+  });
 
   // ===============================================================================
   // GET PASSPHRASE

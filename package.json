@@ -18,7 +18,8 @@
     "gravity:app:balance": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.getBalance();\"",
     "gravity:app:scaffold": "plop scaffold",
     "gravity:app:model": "plop model",
-    "gravity:app:page": "plop page"
+    "gravity:app:page": "plop page",
+    "change-log": "git log --pretty=\"- %s\" > CHANGELOG.md"
   },
   "jest": {
     "setupFiles": [
