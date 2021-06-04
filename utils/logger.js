@@ -8,16 +8,15 @@ const path = require('path');
 
 const { hasJsonStructure } = require('../utils/utils');
 
-// TODO unable mongo logging for now, we're sending logs to solar winds
-// const mongoDbTransport = new transports.MongoDB({
-//   level: 'error',
-//   db: process.env.URL_DB,
-//   options: {
-//     useUnifiedTopology: true,
-//   },
-//   collection: 'metis-logs',
-//   format: format.combine(format.timestamp(), format.json()),
-// });
+const mongoDbTransport = new transports.MongoDB({
+  level: 'error',
+  db: process.env.URL_DB,
+  options: {
+    useUnifiedTopology: true,
+  },
+  collection: 'metis-logs',
+  format: format.combine(format.timestamp(), format.json()),
+});
 
 
 const transportsArray = [
@@ -41,10 +40,9 @@ const getLabel = (callingModule) => {
   return path.join(parts[parts.length - 2], parts.pop());
 };
 
-// TODO unable mongo logging for now, we're sending logs to solar winds
-// if (process.env.NODE_ENV === 'production') {
-//   transportsArray.push(mongoDbTransport);
-// }
+if (process.env.NODE_ENV === 'production') {
+  transportsArray.push(mongoDbTransport);
+}
 
 module.exports = function (callingModule) {
   return createLogger({
