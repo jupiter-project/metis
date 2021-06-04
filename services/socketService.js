@@ -56,6 +56,12 @@ const connection = function (socket) {
   socket.on('leaveChat', leaveChat);
   socket.on('createMessage', createMessage);
   socket.on('invites', invites);
+
+  socket.on('disconnect', (reason) => {
+    console.log(`reason: ${reason}`);
+    console.log(`${socket.name} has disconnected from the chat.${socket.id}`);
+
+  });
 };
 
 module.exports = { connection };
