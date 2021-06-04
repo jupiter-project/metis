@@ -23,6 +23,7 @@ const jobs = kue.createQueue({
   redis: {
     host: process.env.REDIS_HOST || 'localhost',
     port: process.env.REDIS_PORT || '6379',
+    auth: process.env.REDIS_AUTH || undefined,
   },
 });
 
@@ -101,6 +102,7 @@ app.use(session({
   store: new RedisStore({
     host: process.env.REDIS_HOST || 'localhost',
     port: process.env.REDIS_PORT || '6379',
+    auth: process.env.REDIS_AUTH || undefined,
   }),
   // @see https://stackoverflow.com/questions/16434893/node-express-passport-req-user-undefined
   cookie: { secure: (sslOptions.length) }, // use secure cookies if SSL env vars are present

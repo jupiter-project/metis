@@ -1,3 +1,3 @@
 module.exports = {
-  url: 'mongodb://localhost/gravity_data',
+  url:  process.env.URL_DB || 'mongodb://localhost/gravity_data',
 };
