@@ -24,8 +24,8 @@ module.exports = {
 
     return Notifications.find(filter);
   },
-  findMutedChannels: (alias, channelId) => {
-    const filter = { alias, mutedChannels: { $in: channelId } };
+  findMutedChannels: (alias) => {
+    const filter = { alias };
     return Notifications.find(filter)
       .select('mutedChannels');
   },
