@@ -34,7 +34,7 @@ module.exports = {
         : { $push: { mutedChannels: body.channelId } };
 
       findNotificationAndUpdate(filter, update)
-        .then(oldValue => res.json({ ok: true, oldValue }))
+        .then(notification => res.json({ ok: true, notification }))
         .catch((error) => {
           logger.error(error);
           res.status(400).json({ ok: false, error });
@@ -50,9 +50,9 @@ module.exports = {
     }
   },
   findMutedChannels: (req, res) => {
-    const { alias, channelId } = req.params;
+    const { alias } = req.params;
     if (alias) {
-      findMutedChannels(alias, channelId)
+      findMutedChannels(alias)
         .then(([response]) => {
           const { mutedChannels } = response || { mutedChannels: [] };
           res.json({
