@@ -9,8 +9,39 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        node-version: [10.x]
     steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm test
+
+      - name: Test failed notification Slack
+        if: failure()
+        uses: adamkdean/simple-slack-notify@master
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          channel: '#general'
+          text: 'Execution of unit tests has failed.'
+
+      - name: Test failed notification Telegram
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            The ${{ github.event_name }} Execution of unit tests has failed. This is only a notification test.
+
+      # Add the docker container and app digital ocean deployment here
+      #- name: executing remote deploment
+
+          
       - name: Channel specific notification Slack
         uses: adamkdean/simple-slack-notify@master
         env:
@@ -18,10 +49,11 @@ jobs:
         with:
           channel: '#general'
           text: 'A new version of metis has been deployed'
+
       - name: send custom message to Telegram
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            The ${{ github.event_name }} event triggered final step. This is only a test.
+            The ${{ github.event_name }} event triggered final step. This is only a notification test.
