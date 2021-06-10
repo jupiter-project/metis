@@ -33,7 +33,11 @@ If you want to start the system using docker, it is necessary to execute the fol
 1. Install **docker**
 2. Install **docker-compose**
 3. Clone the repository code https://github.com/jupiter-project/metis.git
-`git clone https://github.com/jupiter-project/metis.git`
-4. Inside the code folder execute the command `docker-compose up`
-5. This command will start a mongodb container, a redis container and a metis container.
-6. Open your browser and type in 127.0.0.1:4000
+	`git clone https://github.com/jupiter-project/metis.git`
+4. It is necessary to switch to the dev branch
+	`cd metis`
+	`git checkout dev`
+	`git pull`
+5. Inside the code folder execute the command `docker-compose up`
+6. This command will start a mongodb container, a redis container and a metis container.
+7. Open your browser and type in 127.0.0.1:4000
