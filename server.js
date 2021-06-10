@@ -188,6 +188,7 @@ mongoose.connect(process.env.URL_DB, mongoDBOptions, (err, resp) => {
 
 // Tells server to listen to port 4000 when app is initialized
 server.listen(port, () => {
+  logger.info(JSON.stringify(process.memoryUsage()));
   logger.info('');
   logger.info('_________________________________________________________________');
   logger.info(' ▄▄       ▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ ');
