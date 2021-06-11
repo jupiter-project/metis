@@ -27,3 +27,17 @@ To build your own local Metis instance to truly protect your communications!
 7. Open your browser and type in 127.0.0.1:4000
 
 This is a 100% local instance of Metis that talks to Jupiter's blockchain. Anyone can complete these steps and create their own private, encrypted, and shielded communications. Even though this is a local only instance, you can log into ANY Metis instance with your credentials and it will still work and have all your past conversations waiting for you! This is due to all your conversations being encrypted and stored on Jupiter's decentralized blockchain.
+
+If you want to start the system using docker, it is necessary to execute the following steps.
+
+1. Install **docker**
+2. Install **docker-compose**
+3. Clone the repository code https://github.com/jupiter-project/metis.git
+	`git clone https://github.com/jupiter-project/metis.git`
+4. It is necessary to switch to the dev branch
+	`cd metis`
+	`git checkout dev`
+	`git pull`
+5. Inside the code folder execute the command `docker-compose up --build`
+6. This command will start a mongodb container, a redis container and a metis container.
+7. Open your browser and type in 127.0.0.1:4000
