@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === 'production') {
   transportList.push(
     new transports.MongoDB({
       level: 'error',
-      db: process.env.NODE_ENV === 'production' ? process.env.URL_DB : 'http://localhost:27017',
+      db: process.env.URL_DB,
       options: {
         useUnifiedTopology: true,
       },
