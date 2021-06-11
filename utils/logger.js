@@ -5,31 +5,8 @@ const {
 } = require('winston');
 require('winston-mongodb');
 const path = require('path');
-
+//
 const { hasJsonStructure } = require('../utils/utils');
-
-const mongoDbTransport = new transports.MongoDB({
-  level: 'error',
-  db: process.env.URL_DB,
-  options: {
-    useUnifiedTopology: true,
-  },
-  collection: 'metis-logs',
-  format: format.combine(format.timestamp(), format.json()),
-});
-
-
-const transportsArray = [
-  new transports.File({
-    level: 'error',
-    maxsize: 5120000,
-    maxFiles: 5,
-    filename: '/var/log/metis/log-api.log',
-  }),
-  new transports.Console({
-    level: 'info',
-  }),
-];
 
 const getMessageFormat = message => (hasJsonStructure(message)
   ? JSON.stringify(message)
@@ -39,10 +16,26 @@ const getLabel = (callingModule) => {
   const parts = callingModule.filename.split(path.sep);
   return path.join(parts[parts.length - 2], parts.pop());
 };
+const transportList = [
+  new transports.Console({
+    level: 'info',
+  }),
+];
 
 if (process.env.NODE_ENV === 'production') {
-  transportsArray.push(mongoDbTransport);
+  transportList.push(
+    new transports.MongoDB({
+      level: 'error',
+      db: process.env.NODE_ENV === 'production' ? process.env.URL_DB : 'http://localhost:27017',
+      options: {
+        useUnifiedTopology: true,
+      },
+      collection: 'metis-logs',
+      format: format.combine(format.timestamp(), format.json()),
+    }),
+  );
 }
+
 
 module.exports = function (callingModule) {
   return createLogger({
@@ -51,6 +44,6 @@ module.exports = function (callingModule) {
       format.timestamp(),
       format.printf(info => `[${info.timestamp}] [${getLabel(callingModule)}] ${info.level} ${getMessageFormat(info.message)}`),
     ),
-    transports: transportsArray,
+    transports: transportList,
   });
 };
