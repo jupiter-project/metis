@@ -1,9 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
-class DataRow extends React.Component {
+class DataRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +23,7 @@ class DataRow extends React.Component {
   }
 }
 
-class DataCard extends React.Component {
+class DataCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -56,7 +56,7 @@ class DataCard extends React.Component {
   }
 }
 
-class DataComponent extends React.Component {
+class DataComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {

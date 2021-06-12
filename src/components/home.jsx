@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 
-export class HomeComponent extends React.Component {
+export class HomeComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
@@ -41,7 +41,7 @@ function getBalance(secret, address, apiKey, publicKey) {
   });
 }
 
-class TableComponent extends React.Component {
+class TableComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -180,7 +180,7 @@ class TableComponent extends React.Component {
   }
 }
 
-class AdminComponent extends React.Component {
+class AdminComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {

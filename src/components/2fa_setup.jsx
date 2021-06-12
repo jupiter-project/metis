@@ -1,10 +1,10 @@
-import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 import QRCode from 'qrcode';
 
-class TwoFAForm extends React.Component {
+class TwoFAForm extends Component {
   constructor(props) {
     super(props);
     this.state = {

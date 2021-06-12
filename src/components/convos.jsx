@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
@@ -10,7 +10,7 @@ import { urlencoded } from 'body-parser';
 
 const { maxMessageLength } = messagesConfig;
 
-class DataRow extends React.Component {
+class DataRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -69,7 +69,7 @@ class DataRow extends React.Component {
   }
 }
 
-class ConvosComponent extends React.Component {
+class ConvosComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {

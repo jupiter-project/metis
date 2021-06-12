@@ -1,9 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
-class UserListComponent extends React.Component {
+class UserListComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {

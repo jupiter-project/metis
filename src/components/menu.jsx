@@ -1,8 +1,8 @@
-import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 
 
-class MenuComponent extends React.Component {
+class MenuComponent extends Component {
   render() {
     return (
         <nav id="sideMenu">

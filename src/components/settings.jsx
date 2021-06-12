@@ -1,9 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
-class SettingsOptions extends React.Component {
+class SettingsOptions extends Component {
   constructor(props) {
     super(props);
     this.state = {

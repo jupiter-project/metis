@@ -1,8 +1,8 @@
-import React from 'react';
+import { Component } from 'react';
 import { gravity } from '../../config/gravity';
 import { thisExpression } from 'babel-types';
 
-export default class ApplicationLayout extends React.Component {
+export default class ApplicationLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {

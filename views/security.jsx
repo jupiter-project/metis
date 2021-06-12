@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 import ApplicationLayout from './layout/application.jsx';
 
-class SecurityPage extends React.Component {
+class SecurityPage extends Component {
   render() {
     return (
         <ApplicationLayout data={this.props}>

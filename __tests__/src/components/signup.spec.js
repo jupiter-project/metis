@@ -1,5 +1,4 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
 import axios from 'axios';
 import toastr from 'toastr';
 import { shallow } from 'enzyme';

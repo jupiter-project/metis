@@ -1,8 +1,8 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import toastr from 'toastr';
 
-class MobileChannelRow extends React.Component {
+class MobileChannelRow extends Component {
   constructor(props) {
     super(props);
     const channel = props.parent.props.channels[props.channel];
@@ -151,7 +151,7 @@ class MobileChannelRow extends React.Component {
   }
 }
 
-export default class MobileMenuContainer extends React.Component {
+export default class MobileMenuContainer extends Component {
   render() {
     const { props } = this;
     const self = this;

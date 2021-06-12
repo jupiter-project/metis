@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 import ApplicationLayout from '../layout/admin.jsx';
 
-class DataPage extends React.Component {
+class DataPage extends Component {
   constructor(props) {
     super(props);
     this.state = {};

@@ -1,9 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 import toastr from 'toastr';
 // import io from 'socket.io-client';
 
-class AppNotifications extends React.Component {
+class AppNotifications extends Component {
   constructor(props) {
     super(props);
     // this.socket = io(this.props.connection);

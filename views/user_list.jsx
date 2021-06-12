@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 import ApplicationLayout from './layout/application.jsx';
 
-class UserListPage extends React.Component {
+class UserListPage extends Component {
   render() {
     return (
         <ApplicationLayout data={this.props}>

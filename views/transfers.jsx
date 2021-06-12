@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 import ApplicationLayout from './layout/admin.jsx';
 
-class TransfersPage extends React.Component {
+class TransfersPage extends Component {
   render() {
     return (
         <ApplicationLayout data={this.props}>

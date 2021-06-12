@@ -1,9 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
-class DataRow extends React.Component {
+class DataRow extends Component {
   constructor(props) {
     super(props);
     const transfer = this.props.parent.state.transfers[this.props.transfer];
@@ -140,7 +140,7 @@ class DataRow extends React.Component {
   }
 }
 
-class TransfersComponent extends React.Component {
+class TransfersComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {

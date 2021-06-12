@@ -1,8 +1,8 @@
-import React from 'react';
+import { Component } from 'react';
 import ApplicationLayout from './layout/application.jsx';
 import { gravity } from '../config/gravity';
 
-class PublicHomePageView extends React.Component {
+class PublicHomePageView extends Component {
   render() {
     return (
       <ApplicationLayout data={this.props}>
