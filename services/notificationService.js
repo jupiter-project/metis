@@ -11,10 +11,10 @@ module.exports = {
   },
   findNotificationInfoByAliasOrJupId: (members, channelId = null) => {
     const filter = {
-      $or: [{
-        alias: { $in: members },
-        jupId: { $in: members },
-      }],
+      $or: [
+        { alias: { $in: members } },
+        { jupId: { $in: members } },
+      ],
       token: { $ne: '' },
     };
 
