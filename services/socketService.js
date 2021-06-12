@@ -2,7 +2,7 @@
 const logger = require('../utils/logger')(module);
 
 const joinChat = function (data, callback) {
-  const { room, event } = data;
+  const { room, event, user } = data;
   if (!room || !event) {
     return callback({
       error: true,
@@ -10,11 +10,14 @@ const joinChat = function (data, callback) {
     });
   }
 
+  this.name = user;
   this.join(room);
+
   // TODO enable these lines to know the number of connected users
-  // this.in(room).allSockets().then((result) => {
-  //   console.log('Rooom---->', result.size);
-  // });
+  this.in(room).allSockets().then((result) => {
+    logger.info(`The user ${user} joined to the room ${room}, and the number of user connected is: `, result.size);
+  });
+
   this.broadcast.to(room).emit(event, {});
 
   callback({
@@ -32,16 +35,20 @@ const leaveChat = function (data, callback) {
     });
   }
 
+  logger.info(`The user ${this.name} left the room ${room}`);
   this.leave(room);
 };
 
-const createMessage = function (data) {
-  const { room, message } = data;
-  if (room && message) {
-    this.broadcast.to(room).emit('createMessage', message);
+const createMessage = function (data, callback) {
+  const { room } = data;
+  if (!room) {
+    return callback({
+      error: true,
+      message: '[createMessage]: The Room is required',
+    });
   }
+  this.broadcast.to(room).emit('createMessage');
 };
-
 
 const invites = function (data) {
   const { room, message } = data;
@@ -58,9 +65,8 @@ const connection = function (socket) {
   socket.on('invites', invites);
 
   socket.on('disconnect', (reason) => {
-    console.log(`reason: ${reason}`);
-    console.log(`${socket.name} has disconnected from the chat.${socket.id}`);
-
+    logger.info(`reason: ${reason}`);
+    logger.info(`${socket.name} has disconnected from the chat.${socket.id}`);
   });
 };
 

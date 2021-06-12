@@ -15,7 +15,11 @@ require('babel-register')({
 const express = require('express');
 
 const app = express();
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 4000;
+
+const pingTimeout = 6000000;
+
+const pingInterval = 30000;
 
 // Loads job queue modules and variables
 
@@ -118,8 +122,12 @@ const server = Object.keys(sslOptions).length >= 2
 // Enables websocket
 const socketIO = require('socket.io');
 
-const io = socketIO(server);
-module.exports.io = socketIO(server);
+const socketOptioins = {
+  pingTimeout, // pingTimeout value to consider the connection closed
+  pingInterval, // how many ms before sending a new ping packet
+};
+const io = socketIO(server, socketOptioins);
+module.exports.io = socketIO(server, socketOptioins);
 require('./sockets/socket');
 const logger = require('./utils/logger')(module);
 
