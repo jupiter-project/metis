@@ -27,7 +27,7 @@ const getPNTokensAndSendPushNotification = (
       if (data && Array.isArray(data) && !_.isEmpty(data)) {
         const tokens = _.map(data, 'token');
         const payload = { title: `${senderAlias} @ ${channelName}`, channel };
-        sendPushNotification(tokens, message, 1, payload, 'channels');
+        sendPushNotification(tokens, message, 0, payload, 'channels');
       }
     })
     .catch((error) => {
@@ -43,7 +43,7 @@ const getPNTokenAndSendInviteNotification = (senderAlias, recipientAliasOrJupId,
         const alert = `${senderAlias} invited you to the channel "${channelName}"`;
         const payload = { title: 'Invitation', isInvitation: true };
         const threeMinutesDelay = 180000;
-        sendPushNotification(tokens, alert, 1, payload, 'channels', threeMinutesDelay);
+        sendPushNotification(tokens, alert, 0, payload, 'channels', threeMinutesDelay);
       }
     })
     .catch((error) => {
