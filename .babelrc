@@ -1,7 +1,9 @@
 {
     "presets": [
-        "react", "env", "stage-0"
-    ],
+        ["@babel/preset-react", {
+            "runtime": "automatic"
+        }]
+    ]
     "plugins": [
         "syntax-async-functions",
         "transform-regenerator",

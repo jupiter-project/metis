@@ -12,12 +12,14 @@ module.exports = {
     rules: [
       {
         test: /\.jsx$/,
-        loaders: 'babel-loader',
+        use: ["babel-loader"],
         exclude: /node_modules/,
       },
     ],
   },
-  node: {
-    fs: 'empty',
-  },
+    resolve: {
+      fallback: {
+        fs: false
+      }
+    }
 };

@@ -38,6 +38,9 @@ If you want to start the system using docker, it is necessary to execute the fol
 	`cd metis`
 	`git checkout dev`
 	`git pull`
-5. Inside the code folder execute the command `docker-compose up --build`
+5. Inside the code folder execute the commands
+   `docker-compose build --force-rm`
+   `docker-compose up`
+   
 6. This command will start a mongodb container, a redis container and a metis container.
 7. Open your browser and type in 127.0.0.1:4000

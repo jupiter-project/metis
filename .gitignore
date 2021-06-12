@@ -28,3 +28,8 @@ dev
 
 .idea
 /logs/log-api.log
+
+/build
+
+/data
+

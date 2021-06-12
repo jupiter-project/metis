@@ -1,6 +1,7 @@
 version: "3"
 services:
   mongo:
+    container_name: metis-mongo
     image: "mongo:3.6"
     volumes:
       - ./data/db:/data/db
@@ -8,16 +9,19 @@ services:
       - 27017:27017
       - 28017:28017
   redis:
+    container_name: metis-redis
     image: "redis"
     ports:
       - "6380:6379"
   metis:
+    container_name: metis-app
     build: .
+    image: metis:1.0
     depends_on:
       - mongo
       - redis
     ports:
-      - "4000:4000"
+      - "4001:4001"
     restart: always
     command: npm run dev
     volumes:
