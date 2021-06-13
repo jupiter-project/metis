@@ -1,9 +1,9 @@
-require('babel-polyfill');
+// require('babel-polyfill');
 
 const glob = require('glob');
 
 module.exports = {
-  entry: ['babel-polyfill', ...glob.sync('./src/components/*.jsx')],
+  entry: [...glob.sync('./src/components/*.jsx')],
   output: {
     path: `${__dirname}/public/`,
     filename: 'bundle.js',
@@ -12,14 +12,18 @@ module.exports = {
     rules: [
       {
         test: /\.jsx$/,
-        use: ["babel-loader"],
-        exclude: /node_modules/,
-      },
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      }
     ],
   },
     resolve: {
       fallback: {
-        fs: false
-      }
+        fs: false,
+        "crypto": require.resolve("crypto-browserify"),
+        "stream": require.resolve("stream-browserify"),
+        "zlib": require.resolve("browserify-zlib"),
+        "_stream_transform": false
+      },
     }
 };

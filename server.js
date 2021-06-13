@@ -1,18 +1,18 @@
-require('appoptics-apm');
-const kue = require('kue');
-const fs = require('fs');
+// require('appoptics-apm');
+const kue = import('kue');
+const fs = import('fs');
 
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').load();
+  import('dotenv').config();
 }
 
-require('babel-register')({
+import('babel-register')({
   presets: ['react'],
 });
 
 
 // Loads Express and creates app object
-const express = require('express');
+const express = import('express');
 
 const app = express();
 const port = process.env.PORT || 4000
@@ -30,34 +30,34 @@ const jobs = kue.createQueue({
 // const path = require('path');
 
 // Loads Body parser
-const bodyParser = require('body-parser');
+const bodyParser = import('body-parser');
 
 // Loads react libraries
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
+const React = import('react');
+const ReactDOMServer = import('react-dom/server');
 
 // Loads request library
 // const request = require('request')
 
 // Loads passport for authentication
-const passport = require('passport');
+const passport = import('passport');
 
-const flash = require('connect-flash');
+const flash = import('connect-flash');
 
 // Request logger
-const morgan = require('morgan');
+// const morgan = import('morgan');
 
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
+const cookieParser = import('cookie-parser');
+const session = import('express-session');
+const RedisStore = import('connect-redis')(session);
 
 // File and folder finding module
-const find = require('find');
+const find = import('find');
 
-const mongoose = require('mongoose');
+const mongoose = import('mongoose');
 
 
-app.use(morgan('dev')); // log every request to the console
+// app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for authentication)
 app.use(express.urlencoded({ extended: true })) // get information from html forms
 
@@ -77,7 +77,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Here is where we load the api routes. We put them here so passport deserializer
 // is not called everytime we make an api call to them
-require('./config/api.js')(app);
+import('./config/api.js')(app);
 
 // Sets public directory
 app.use(express.static(`${__dirname}/public`));
@@ -113,21 +113,21 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // If both cert and key files env vars exist use https,
 // otherwise use http
 const server = Object.keys(sslOptions).length >= 2
-  ? require('https').createServer(sslOptions, app)
-  : require('http').createServer(app);
+  ? import('https').createServer(sslOptions, app)
+  : import('http').createServer(app);
 // Enables websocket
-const socketIO = require('socket.io');
+const socketIO = import('socket.io');
 
 const io = socketIO(server);
 module.exports.io = socketIO(server);
-require('./sockets/socket');
-const logger = require('./utils/logger')(module);
+import('./sockets/socket');
+const logger = import('./utils/logger')(module);
 
 const mongoDBOptions = { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true };
 
 const {
   serializeUser, deserializeUser, metisSignup, metisLogin,
-} = require('./config/passport');
+} = import('./config/passport');
 
 serializeUser(passport); //  pass passport for configuration
 deserializeUser(passport); //  pass passport for configuration
@@ -136,7 +136,7 @@ metisLogin(passport, jobs, io); //  pass passport for configuration
 
 // Sets get routes. Files are converted to react elements
 find.fileSync(/\.js$/, `${__dirname}/controllers`).forEach((file) => {
-  require(file)(app, passport, React, ReactDOMServer, jobs);
+  import(file)(app, passport, React, ReactDOMServer, jobs);
 });
 
 // Route any invalid routes black to the root page
@@ -146,7 +146,7 @@ app.get('/*', (req, res) => {
 });
 
 // Gravity call to check app account properties
-const { gravity } = require('./config/gravity');
+const { gravity } = import('./config/gravity');
 
 gravity.getFundingMonitor()
   .then(async (monitorResponse) => {
@@ -162,7 +162,7 @@ gravity.getFundingMonitor()
   });
 
 // Worker methods
-const RegistrationWorker = require('./workers/registration.js');
+const RegistrationWorker = import('./workers/registration.js');
 // const TransferWorker = require('./workers/transfer.js');
 
 

@@ -1,5 +1,5 @@
 const axios = require('axios');
-const crypto = require('crypto');
+const cryptoDecprecated = require('crypto-es');
 const events = require('events');
 const _ = require('lodash');
 const methods = require('./_methods');
@@ -136,7 +136,7 @@ class Gravity {
   }
 
   encrypt(text, password = this.password) {
-    const cipher = crypto.createCipher(this.algorithm, password);
+    const cipher = cryptoDecprecated.createCipher(this.algorithm, password);
     let crypted = cipher.update(text, 'utf8', 'hex');
     crypted += cipher.final('hex');
 
@@ -144,7 +144,7 @@ class Gravity {
   }
 
   decrypt(text, password = this.password) {
-    const decipher = crypto.createDecipher(this.algorithm, password);
+    const decipher = cryptoDecprecated.createDecipher(this.algorithm, password);
     let dec = decipher.update(text, 'hex', 'utf8');
     dec += decipher.final('utf8');
 

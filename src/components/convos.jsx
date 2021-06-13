@@ -6,6 +6,7 @@ import MenuContainer from './CustomComponents/MenuContainer.jsx';
 import MobileMenuContainer from './CustomComponents/MobileMenuContainer.jsx';
 import { messagesConfig } from '../../config/constants';
 import { urlencoded } from 'body-parser';
+import {createHash} from "crypto";
 
 
 const { maxMessageLength } = messagesConfig;
@@ -22,8 +23,16 @@ class DataRow extends Component {
     const { props } = this;
     const record = props.parent.state.messages[props.message];
     const { data } = record;
-    const rand = require("crypto").createHash('md5').update(props.user.record.alias).digest("hex")
-    const oRand = require("crypto").createHash('md5').update(data.name).digest("hex")
+
+    const rand = createHash('md5')
+        .update(props.user.record.alias)
+        .digest('hex');
+    // const rand = require("crypto").createHash('md5').update(props.user.record.alias).digest("hex")
+
+    const oRand = createHash('md5')
+        .update(data.name)
+        .digest('hex');
+    // const oRand = require("crypto").createHash('md5').update(data.name).digest("hex")
     const identicon = "https://www.gravatar.com/avatar/"+rand+"?s=64&d=identicon"
     const oIdenticon = "https://www.gravatar.com/avatar/"+oRand+"?s=64&d=identicon"
 
@@ -585,7 +594,7 @@ class ConvosComponent extends Component {
                 style={{ float: 'left', clear: 'both', color: '#f0f0f0' }}
                 ref={(el) => { this.messageEnd = el; }}
               />
-            </div>   
+            </div>
           </div>
           <div className="convo-input-outer">
 
