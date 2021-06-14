@@ -28,3 +28,6 @@ dev
 
 .idea
 /logs/log-api.log
+/data
+/mongodb_data
+/.scannerwork

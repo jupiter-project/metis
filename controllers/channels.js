@@ -15,24 +15,20 @@ const logger = require('../utils/logger')(module);
 
 const decryptUserData = req => JSON.parse(gravity.decrypt(req.session.accessData));
 
-const getPNTokensAndSendPushNotification = (
-  members,
-  channelName,
-  senderAlias,
-  channel,
-  message,
-) => {
-  findNotificationInfoByAliasOrJupId(members, channel.id)
-    .then((data) => {
-      if (data && Array.isArray(data) && !_.isEmpty(data)) {
-        const tokens = _.map(data, 'token');
-        const payload = { title: `${senderAlias} @ ${channelName}`, channel };
-        sendPushNotification(tokens, message, 0, payload, 'channels');
-      }
-    })
-    .catch((error) => {
-      logger.error(JSON.stringify(error));
-    });
+const getPNTokensAndSendPushNotification = (members, senderAlias, channel, message, title) => {
+  if (members && Array.isArray(members) && !_.isEmpty(members)) {
+    findNotificationInfoByAliasOrJupId(members, channel.id)
+      .then((data) => {
+        if (data && Array.isArray(data) && !_.isEmpty(data)) {
+          const tokens = _.map(data, 'token');
+          const payload = { title, channel };
+          sendPushNotification(tokens, message, 0, payload, 'channels');
+        }
+      })
+      .catch((error) => {
+        logger.error(JSON.stringify(error));
+      });
+  }
 };
 
 const getPNTokenAndSendInviteNotification = (senderAlias, recipientAliasOrJupId, channelName) => {
@@ -293,6 +289,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       // accountData
       // const userData = decryptUserData(req);
       let members = _.get(req, 'body.members', []);
+      const mentions = _.get(req, 'body.mentions', []);
       const channel = _.get(req, 'body.channel', []);
       const channelName = _.get(tableData, 'name', 'a channel');
       const accessData = _.get(req, 'session.accessData', req.body.user.accountData);
@@ -301,17 +298,19 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         const data = await message.sendMessage(userData, tableData, message.record);
         response = data;
         if (Array.isArray(members) && members.length > 0) {
-          members = members.filter(member => member !== message.record.name);
-          getPNTokensAndSendPushNotification(
-            members,
-            channelName,
-            message.record.name,
-            channel,
-            hasMessage,
-          );
+          const senderName = message.record.name;
+          members = members.filter(member => member !== senderName && !mentions.includes(member));
+
+          // push notification for members
+          const pnTitle = `${senderName} @ ${channelName}`;
+          getPNTokensAndSendPushNotification(members, senderName, channel, hasMessage, pnTitle);
+
+          // Push notification for mentioned members
+          const pnmTitle = `${senderName} has tagged @ ${channelName}`;
+          getPNTokensAndSendPushNotification(mentions, senderName, channel, hasMessage, pnmTitle);
         }
       } catch (e) {
-        logger.error(JSON.stringify(e));
+        logger.error('[/data/messages]', JSON.stringify(e));
         response = { success: false, fullError: e };
       }
     } else {
