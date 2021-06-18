@@ -31,6 +31,8 @@ WORKDIR /apps/metis
 
 # copy from build image
 COPY --from=BUILD_IMAGE /apps/metis/ .
-RUN npm install -g concurrently nodemon webpack jest plop
+
+RUN npm install pm2 -g
+
 EXPOSE 4000
-CMD ["npm", "start"]
+CMD pm2-runtime server.js -- --max-old-space-size=4096 NODE_ENV=production --trace-warnings
