@@ -27,3 +27,6 @@ module.exports = {
       },
     }
 };
+
+
+// Utilities: path.resolve(__dirname, 'src/utilities/'),

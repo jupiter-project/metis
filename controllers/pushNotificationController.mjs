@@ -1,6 +1,7 @@
-const Notification = require('../services/pushNotificationTokenService');
+// const Notification = require('../services/pushNotificationTokenService.mjs');
+import Notification from '../services/pushNotificationTokenService.mjs';
 
-module.exports = (app) => {
+export default (app) => {
   app.post('/pn_token', Notification.addTokenNotification);
   app.put('/mute_channels', Notification.editMutedChannels);
   app.get('/mute_channels/:alias', Notification.findMutedChannels);

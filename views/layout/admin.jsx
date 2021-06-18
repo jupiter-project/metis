@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import {app} from '../../config.js';
 
 export default class ApplicationLayout extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class ApplicationLayout extends Component {
     const loggedHeader = (
       <nav className="navbar navbar-expand navbar-custom static-top">
         <a className="navbar-brand" href="/">
-          {process.env.APPNAME ? (
+          {app.name ? (
             <div>
               <i className="fas fa-fw fa-globe" alt="yourBrand" />
               {' '}
@@ -85,7 +86,7 @@ export default class ApplicationLayout extends Component {
       <nav className="navbar navbar-expand navbar-custom static-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="/gravity">
-            {process.env.APPNAME ? (
+            {app.name ? (
               <div>
                 <i className="fas fa-fw fa-globe" alt="yourBrand" />
                 {' '}

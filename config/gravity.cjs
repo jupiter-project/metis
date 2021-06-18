@@ -1,26 +1,27 @@
+// import cryptoDecprecated from 'crypto-es'
+const crypto = require('crypto');
 const axios = require('axios');
-const cryptoDecprecated = require('crypto-es');
 const events = require('events');
 const _ = require('lodash');
 const methods = require('./_methods');
 const logger = require('../utils/logger')(module);
-
-
-const addressBreakdown = process.env.APP_ACCOUNT_ADDRESS ? process.env.APP_ACCOUNT_ADDRESS.split('-') : [];
+const _config = require('../config.js');
+// const addressBreakdown = process.env.APP_ACCOUNT_ADDRESS ? process.env.APP_ACCOUNT_ADDRESS.split('-') : [];
 
 class Gravity {
-  constructor() {
-    this.algorithm = process.env.ENCRYPT_ALGORITHM;
-    this.password = process.env.ENCRYPT_PASSWORD;
-    this.sender = process.env.APP_ACCOUNT;
-    this.version = process.env.VERSION,
+  constructor(config) {
+    this.algorithm = config.encryptAlgorithm;
+    this.password = config.encryptPassword;
+    this.sender = config.app.passPhrase;
+    this.version = config.version;
+    this.config = config;
     this.jupiter_data = {
-      server: process.env.JUPITERSERVER,
-      feeNQT: 500,
-      deadline: 60,
-      minimumTableBalance: 50000,
-      minimumAppBalance: 100000,
-      moneyDecimals: 8,
+      server: config.jupiter.server,
+      feeNqt: config.jupiter.feeNqt,
+      deadline: config.jupiter.deadline,
+      minimumTableBalance: config.jupiter.minimumTableBalance,
+      minimumAppBalance: config.jupiter.minimumAppBalance,
+      moneyDecimals: config.jupiter.moneyDecimals
     };
     this.generate_passphrase = methods.generate_passphrase;
     this.appSchema = {
@@ -31,7 +32,7 @@ class Gravity {
       },
       tables: [],
     };
-    this.fundingProperty = `funding-${addressBreakdown[addressBreakdown.length - 1]}`;
+    this.fundingProperty = config.app.fundingProperty;
     this.data = {};
     this.tables = [];
   }
@@ -136,19 +137,43 @@ class Gravity {
   }
 
   encrypt(text, password = this.password) {
-    const cipher = cryptoDecprecated.createCipher(this.algorithm, password);
-    let crypted = cipher.update(text, 'utf8', 'hex');
-    crypted += cipher.final('hex');
 
-    return crypted;
+
+// First, we'll generate the key. The key length is dependent on the algorithm.
+// In this case for aes128, it is 16 bytes (128 bits).
+    crypto.scrypt(password, 'salt', 16, (err, key) => {
+      if (err) throw err;
+      // Then, we'll generate a random initialization vector
+      crypto.randomFill(new Uint8Array(16), (err, iv) => {
+        if (err) throw err;
+
+        const cipher = crypto.createCipheriv(this.algorithm, key, iv);
+
+        let encrypted = crypto.cipher.update(text, 'utf8', 'hex');
+        encrypted += crypto.cipher.final('hex');
+        console.log(encrypted);
+        return encrypted;
+      });
+    });
+
   }
 
   decrypt(text, password = this.password) {
-    const decipher = cryptoDecprecated.createDecipher(this.algorithm, password);
-    let dec = decipher.update(text, 'hex', 'utf8');
-    dec += decipher.final('utf8');
 
-    return dec;
+// Use the async `crypto.scrypt()` instead.
+    const key = crypto.scryptSync(password, 'salt', 16);
+// The IV is usually passed along with the ciphertext.
+    const iv = Buffer.alloc(16, 0); // Initialization vector.
+
+    const decipher = crypto.createDecipheriv(this.algorithm, key, iv);
+
+// Encrypted using same algorithm, key and iv.
+    let decrypted = crypto.decipher.update(text, 'hex', 'utf8');
+    decrypted += crypto.decipher.final('utf8');
+    console.log(decrypted);
+    return decrypted;
+// Prints: some clear text data
+
   }
 
   sortByDate(array, order = 'asc') {
@@ -293,10 +318,11 @@ class Gravity {
     const eventEmitter = new events.EventEmitter();
 
     const self = this;
-    let appname;
-    let server;
+    let server = this.config.jupiter.server;
+    let appPassPhrase = this.config.app.passPhrase;
+    let appAccountAddress = this.config.app.accountAddress;
+    let appName = this.config.app.name;
     let passphrase;
-    let account;
     // let decryption_password;
     // let decryption_algorithm;
     let records = [];
@@ -306,30 +332,35 @@ class Gravity {
     let hasUserTable = false;
 
     if (containedDatabase) {
-      server = process.env.JUPITERSERVER;
-      ({ account } = containedDatabase);
+      // server = process.env.JUPITERSERVER;
+      ({ account: appAccountAddress } = containedDatabase);
       ({ passphrase } = containedDatabase);
       password = containedDatabase.encryptionPassword;
-    } else if (process.env.APP_ACCOUNT) {
-      server = process.env.JUPITERSERVER;
-      passphrase = process.env.APP_ACCOUNT;
-      account = process.env.APP_ACCOUNT_ADDRESS;
+    } else if (appPassPhrase) {
+      // server = process.env.JUPITERSERVER;
+      // passphrase = process.env.APP_ACCOUNT;
+      // appAccountAddress = process.env.APP_ACCOUNT_ADDRESS;
       // decryption_password = process.env.ENCRYPT_PASSWORD;
       // decryption_algorithm = process.env.ENCRYPT_ALGORITHM;
-      appname = process.env.APPNAME;
+      // appName = process.env.APPNAME;
       ({ password } = self);
     } else {
-      const gravity = require('../.gravity.js');
-      server = gravity.JUPITERSERVER;
-      passphrase = gravity.APP_ACCOUNT;
-      account = gravity.APP_ACCOUNT_ADDRESS;
-      // decryption_password = gravity.ENCRYPT_PASSWORD;
-      // decryption_algorithm = gravity.ENCRYPT_ALGORITHM;
-      self.jupiter_data.server = server;
-      self.algorithm = gravity.ENCRYPT_ALGORITHM;
-      self.password = gravity.ENCRYPT_PASSWORD;
-      appname = gravity.APPNAME;
-      ({ password } = self);
+
+      throw Error('Jupiter configuration properties are incomplete');
+
+
+      // TODO I dont see a .gravity.js file in the source code.
+      // const gravity = require('../.gravity.js');
+      // server = gravity.JUPITERSERVER;
+      // passphrase = gravity.APP_ACCOUNT;
+      // appAccountAddress = gravity.APP_ACCOUNT_ADDRESS;
+      // // decryption_password = gravity.ENCRYPT_PASSWORD;
+      // // decryption_algorithm = gravity.ENCRYPT_ALGORITHM;
+      // self.jupiter_data.server = server;
+      // self.algorithm = gravity.ENCRYPT_ALGORITHM;
+      // self.password = gravity.ENCRYPT_PASSWORD;
+      // appName = gravity.APPNAME;
+      // ({ password } = self);
     }
 
     return new Promise((resolve, reject) => {
@@ -401,8 +432,8 @@ class Gravity {
           }
 
           self.appSchema.tables = tableData;
-          self.appSchema.appData.name = appname;
-          self.appSchema.address = account;
+          self.appSchema.appData.name = appName;
+          self.appSchema.address = appAccountAddress;
           responseMessage = {
             numberOfRecords,
             success: true,
@@ -413,7 +444,7 @@ class Gravity {
             userRecord,
           };
 
-          if (process.env.ENV === undefined || process.env.ENV === 'Development') {
+          if (this.config.isDevelopment) {
             // console.log(self.tables);
             // console.log(self.appSchema.tables);
           }
@@ -434,7 +465,7 @@ class Gravity {
         }
       });
 
-      self.getRecords(account, account, passphrase, { size: 'all', show_pending: null, show_unconfirmed: false }, password)
+      self.getRecords(appAccountAddress, appAccountAddress, passphrase, { size: 'all', show_pending: null, show_unconfirmed: false }, password)
         .then((response) => {
           ({ records } = response);
           if (containedDatabase) {
@@ -1015,20 +1046,21 @@ class Gravity {
   getUser(account, passphrase, containedDatabase = null) {
     const self = this;
     return new Promise((resolve, reject) => {
-      if (account === process.env.APP_ACCOUNT_ADDRESS) {
+      if (account === this.config.accountAddress) {
+      // if (account === process.env.APP_ACCOUNT_ADDRESS) {
         const userObject = {
           account,
-          id: process.env.APP_ACCOUNT_ID,
-          email: process.env.APP_EMAIL,
-          firstname: 'Admin',
-          lastname: '',
-          secret_key: null,
-          twofa_enabled: false,
-          twofa_completed: false,
-          public_key: process.env.APP_PUBLIC_KEY,
-          api_key: process.env.APP_API_KEY,
-          admin: true,
-          secret: process.env.APP_ACCOUNT,
+          id: this.config.app.accountId,
+          email: this.config.app.owner.email,
+          firstname: this.config.app.owner.firstName,
+          lastname: this.config.app.owner.lastName,
+          secret_key: this.config.app.owner.secretKey,
+          twofa_enabled: this.config.app.owner.twofa_enabled,
+          twofa_completed: this.config.app.owner.twofa_enabled,
+          public_key: this.config.app.publicKey,
+          api_key: this.config.app.apiKey,
+          admin: this.config.app.owner.isAdmin,
+          secret: this.config.app.passPhrase,
         };
         resolve({ user: JSON.stringify(userObject) });
       } else if (containedDatabase) {
@@ -1370,7 +1402,7 @@ class Gravity {
     });
   }
 
-  getBalance(address = 'undefined', accountId, jupServ = process.env.JUPITERSERVER) {
+  getBalance(address = 'undefined', accountId, jupServ = this.config.jupiter.server) {
     const self = this;
     const eventEmitter = new events.EventEmitter();
     let account;
@@ -1379,16 +1411,19 @@ class Gravity {
     let server;
 
     if (address === 'undefined') {
-      if (process.env.JUPITERSERVER === undefined || process.env.JUPITERSERVER == null) {
+      if (this.config.jupiter.server === undefined || this.config.jupiter.server == null) {
         const gravity = require('../.gravity.js');
         addressOwner = gravity.APP_ACCOUNT;
         server = gravity.JUPITERSERVER;
         terminalCalled = true;
       } else {
-        addressOwner = process.env.APP_ACCOUNT;
-        server = process.env.JUPITERSERVER;
+        addressOwner = this.config.app.passPhrase;
+        // addressOwner = process.env.APP_ACCOUNT;
+        server = this.config.jupiter.server;
+        // server = process.env.JUPITERSERVER;
       }
-    } else if (process.env.JUPITERSERVER === undefined || process.env.JUPITERSERVER == null) {
+    } else if (this.config.jupiter.server === undefined || this.config.jupiter.server == null) {
+    // } else if (process.env.JUPITERSERVER === undefined || process.env.JUPITERSERVER == null) {
       const gravity = require('../.gravity.js');
       addressOwner = address;
       server = gravity.JUPITERSERVER;
@@ -1465,14 +1500,17 @@ class Gravity {
       amount = this.jupiter_data.minimumAppBalance - feeNQT - tableCreation;
     }
 
-    if (this.sender == null || this.sender === undefined) {
-      const gravity = require('../.gravity.js');
-      senderAddress = gravity.APP_ACCOUNT;
-      server = gravity.JUPITERSERVER;
-    } else {
+
+    // TODO there is no .gravity.js file
+    // if (this.sender == null || this.sender === undefined) {
+    //   const gravity = require('../.gravity.js');
+    //   senderAddress = gravity.APP_ACCOUNT;
+    //   server = gravity.JUPITERSERVER;
+    // } else {
       senderAddress = sender;
-      server = process.env.JUPITERSERVER;
-    }
+      server = this.config.jupiter.server;
+      // server = process.env.JUPITERSERVER;
+    // }
 
     return new Promise((resolve, reject) => {
       axios.post(`${server}/nxt?requestType=sendMoney&secretPhrase=${senderAddress}&recipient=${recipient}&amountNQT=${amount}&feeNQT=${feeNQT}&deadline=60`)
@@ -1514,6 +1552,43 @@ class Gravity {
       }));
   }
 
+  // We use axios to make the connection to pimcore server
+  // https://risanb.com/code/axios-handle-error-response-with-200-status-code/
+  // https://www.intricatecloud.io/2020/03/how-to-handle-api-errors-in-your-web-app-using-axios/
+  // https://www.geeksforgeeks.org/reject-vs-throw-promises-in-javascript/
+  requestV2(method, url, data, callback) {
+
+    return axios({
+      url,
+      method,
+      data,
+    })
+        .then((response) => {
+          // logger.info('Gravity > requestV2() .then: ' + JSON.stringify(response) );
+          // If callback exists, it is executed with axios response as a param
+          if (typeof callback === "function") {
+            return callback(response.data);
+          }
+          return response.data;
+        })
+        .catch(error => {
+          logger.error('Gravity > requestV2() > axios  error: ' + error);
+          if (error.response) {
+            console.log("client received an error response (5xx, 4xx)");
+            // client received an error response (5xx, 4xx)
+          } else if (error.request) {
+            console.log("client never received a response, or request never left");
+            // client never received a response, or request never left
+          } else {
+            console.log("client received an error");
+            // anything else
+          }
+
+          throw error;
+        })
+  }
+
+
   jupiterURL(givenParams) {
     const params = givenParams;
     if (!params.deadline) {
@@ -1521,7 +1596,7 @@ class Gravity {
     }
 
     if (!params.feeNQT) {
-      params.feeNQT = this.jupiter_data.feeNQT;
+      params.feeNQT = this.jupiter_data.feeNqt;
     }
 
     const urlParams = Object.keys(params);
@@ -1537,16 +1612,24 @@ class Gravity {
       }
     }
 
+    logger.info('Gravity > jupiterURL() url: ' + url)
     return url;
   }
 
   async jupiterRequest(rtype, params, data = {}, callback) {
+    logger.info('gravity > jupiterRequest()');
     const url = this.jupiterURL(params);
 
     const response = await this.request(rtype, url, data, callback);
 
     return response;
   }
+
+  async jupiterRequestV2(rtype, params, data = {}, callback) {
+    const url = this.jupiterURL(params);
+    return this.requestV2(rtype, url, data, callback)
+  }
+
 
   async getAlias(aliasName) {
     const aliasCheckup = await this.jupiterRequest('get', {
@@ -1601,15 +1684,33 @@ class Gravity {
     });
   }
 
+  // async getFundingMonitor1(params = {}) {
+  //   return this.jupiterRequest('post', {
+  //     requestType: 'getFundingMonitor',
+  //     property: params.fundingProperty || this.fundingProperty,
+  //     secretPhrase: params.passphrase || process.env.APP_ACCOUNT,
+  //     includeMonitoredAccounts: params.includeAccounts || false,
+  //   });
+  // }
+
+
+
   async getFundingMonitor(params = {}) {
-    return this.jupiterRequest('post', {
+    logger.info('gravity > getFundingMonitor()');
+
+    return this.jupiterRequestV2('post', {
       requestType: 'getFundingMonitor',
       property: params.fundingProperty || this.fundingProperty,
-      secretPhrase: params.passphrase || process.env.APP_ACCOUNT,
+      secretPhrase: params.passphrase || this.config.app.passPhrase,
       includeMonitoredAccounts: params.includeAccounts || false,
+    }).then( response => {
+      return response;
+    }).catch( err => {
+      logger.error('gravity > getFundingMonitor > Error' + JSON.stringify(err));
+      throw err;
     });
-  }
 
+  }
 
   async stopFundingMonitor(params) {
     return this.jupiterRequest('post', {
@@ -1660,7 +1761,7 @@ class Gravity {
 
     return this.jupiterRequest('post', {
       requestType: 'setAccountProperty',
-      secretPhrase: params.passphrase || process.env.APP_ACCOUNT,
+      secretPhrase: params.passphrase || this.config.app.passPhrase,
       recipient: params.recipient,
       property: params.property || this.fundingProperty,
       feeNQT: params.feeNQT || 10,
@@ -1715,9 +1816,9 @@ class Gravity {
     }
 
     if (recipientPublicKey) {
-      callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&recipientPublicKey=${recipientPublicKey}&compressMessageToEncrypt=true`;
+      callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNqt}&deadline=${this.jupiter_data.deadline}&recipientPublicKey=${recipientPublicKey}&compressMessageToEncrypt=true`;
     } else {
-      callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&messageIsPrunable=true&compressMessageToEncrypt=true`;
+      callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNqt}&deadline=${this.jupiter_data.deadline}&messageIsPrunable=true&compressMessageToEncrypt=true`;
     }
 
     logger.info(callUrl);
@@ -1825,7 +1926,7 @@ class Gravity {
           JSON.stringify(tableListRecord),
           database.encryptionPassword,
         );
-        const callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${database.passphrase}&recipient=${database.account}&messageToEncrypt=${encryptedData}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${database.publicKey}&compressMessageToEncrypt=true`;
+        const callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${database.passphrase}&recipient=${database.account}&messageToEncrypt=${encryptedData}&feeNQT=${self.jupiter_data.feeNqt}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${database.publicKey}&compressMessageToEncrypt=true`;
 
         let response;
 
@@ -1838,7 +1939,7 @@ class Gravity {
 
         if (response.data.broadcasted && !response.error) {
           logger.info(`Table ${tableName} pushed to the blockchain and linked to your account.`);
-          const tableListUpdateUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${database.passphrase}&recipient=${database.account}&messageToEncrypt=${encryptedTableData}&feeNQT=${(self.jupiter_data.feeNQT / 2)}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${database.publicKey}&compressMessageToEncrypt=true`;
+          const tableListUpdateUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${database.passphrase}&recipient=${database.account}&messageToEncrypt=${encryptedTableData}&feeNQT=${(self.jupiter_data.feeNqt / 2)}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${database.publicKey}&compressMessageToEncrypt=true`;
 
           try {
             response = await axios.post(tableListUpdateUrl);
@@ -2095,7 +2196,7 @@ class Gravity {
     };
     let decryptedData;
     const encryptionPassword = filter.encryptionPassword || this.password;
-    const encryptionPassphrase = filter.encryptionPassphrase || process.env.APP_ACCOUNT;
+    const encryptionPassphrase = filter.encryptionPassphrase ||  this.config.app.passPhrase;
     let unEncryptedData;
     let encryptionLevel;
 
@@ -2153,7 +2254,7 @@ class Gravity {
         try {
           unEncryptedData = this.decrypt(
             decryptedData.decryptedMessage,
-            process.env.ENCRYPT_PASSWORD,
+            this.config.encryptPassword,
           );
           encryptionLevel = 'app';
         } catch (err) {
@@ -2334,7 +2435,7 @@ class Gravity {
         const encryptedData = self.encrypt(JSON.stringify(record));
         const encryptedTableData = self.encrypt(JSON.stringify(tableListRecord));
 
-        const callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encryptedData}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
+        const callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encryptedData}&feeNQT=${self.jupiter_data.feeNqt}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
 
 
         axios.post(callUrl)
@@ -2363,7 +2464,7 @@ class Gravity {
             reject({ success: false, message: 'There was an error', error: error.response });
           });
 
-        const tableListUpdateUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encryptedTableData}&feeNQT=${(self.jupiter_data.feeNQT / 2)}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
+        const tableListUpdateUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encryptedTableData}&feeNQT=${(self.jupiter_data.feeNqt / 2)}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
 
         axios.post(tableListUpdateUrl)
           .then((response) => {
@@ -2572,7 +2673,4 @@ class Gravity {
   }
 }
 
-
-module.exports = {
-  gravity: new Gravity(),
-};
+module.exports.gravity  = new Gravity(_config);

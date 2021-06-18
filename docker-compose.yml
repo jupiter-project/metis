@@ -12,7 +12,7 @@ services:
     container_name: metis-redis
     image: "redis"
     ports:
-      - "6380:6379"
+      - "6379:6379"
   metis:
     container_name: metis-app
     build: .
@@ -21,14 +21,9 @@ services:
       - mongo
       - redis
     ports:
-      - "4001:4001"
+      - "4000:4000"
     restart: always
     command: npm run dev
     volumes:
       - ./:/apps/metis
       - /apps/metis/node_modules
-    environment:
-      - MONGO_URL=mongodb://mongo:27017/metisPN
-      - URL_DB=mongodb://mongo:27017/metisPN
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379

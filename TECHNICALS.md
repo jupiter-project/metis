@@ -36,14 +36,14 @@ api.js: This file contains the general api endpoints that can be used to retriev
 controller.js: This file contains the routing rules that will be employed by the application. For example, they redirect the user 2FA screen when needed or prevent unlogged users to access pages that require authentication.
 gravity.js:  This is an extremely important file as it loads the app with all the functions the gravity site will use to record data into the blockchain as well as generating important files for development.
 _methods: This file contains certain methods used by the configuration files and that are too large to be placed in the other files without sacrificing code legibility.
-passport.js: This file contains the code related to the user authentication rules that the app will use. The package Passport handles most of the heavy lifting in the authentication process. This file contains all the logic involved in validating a user on login and storing user information at signup. Api calls to Jupiter are included during signup so to automatically store certain information in the blockchain and perform certain actions related to it (generating an alias for the user in the blockchain for example).
+passport.mjs: This file contains the code related to the user authentication rules that the app will use. The package Passport handles most of the heavy lifting in the authentication process. This file contains all the logic involved in validating a user on login and storing user information at signup. Api calls to Jupiter are included during signup so to automatically store certain information in the blockchain and perform certain actions related to it (generating an alias for the user in the blockchain for example).
 Models
 This folder contains the code related to the data that you will be storing in the blockchain. The types and number of files contained in this folder depend on the information that you will be storing, but each ‘type’ of record should be put in a separate file to keep information properly classified (More on model files in the ‘How to create a record’ section).  There are 3 files that will be in this folder by default though: 
 
 
-_model.js: This is the basic template that every model file is an extension of. BE CAUTIOUS when if editing this file as it will affect data retrieval and organization. 
-_validations.js: This file is used to provide validation rules of the data entered to the blockchain. Because data validation cannot be done at this moment at the blockchain level, validations rules are fed to the _model.js file which validates data before it is pushed to Jupiter. Do not edit unless your project needs specific validation rules.
-user.js: This is the default user model file. When a ‘users’ table is created (more on this in later sections), this file allows for an immediate way to record information from the users of the app such as name, lastname, email, JUP account and other information required such as keys for 2FA authentication.
+_model.mjs: This is the basic template that every model file is an extension of. BE CAUTIOUS when if editing this file as it will affect data retrieval and organization. 
+_validations.js: This file is used to provide validation rules of the data entered to the blockchain. Because data validation cannot be done at this moment at the blockchain level, validations rules are fed to the _model.mjs file which validates data before it is pushed to Jupiter. Do not edit unless your project needs specific validation rules.
+user.mjs: This is the default user model file. When a ‘users’ table is created (more on this in later sections), this file allows for an immediate way to record information from the users of the app such as name, lastname, email, JUP account and other information required such as keys for 2FA authentication.
 
 
 
@@ -116,9 +116,9 @@ Data recording in Gravity
 One important concept for data recording in the blockchain is that an address needs to be created for each data model that needs to be recorded. For example, a specific user address will be used to record User information, another one for payout information, and so on and on. Gravity records data by sending a JSON object from the model address to the address of the user the data belongs to. This JSON object is encrypted twice first using an encryption method set by the gravity app (more on ’Model files’ and Required environmental variables’ sections), and then by the blockchain itself. 
 As an app developer,  you will need to assign your app a Jupiter account address. This address will act as the main database of your app and will store the address/passphrase/public key information of the tables holding data of your models. More on this can be found in the ‘Gravity Commands’ section.
 
-The _model.js file
-The _model.js file is the main file responsible validating, sending, retrieving, processing, and updating data from the blockchain.  Each new model file that is created is or should be an extension of the above file. 
-Below is a partial screenshot of the _model.js file as of the writing of this guide:
+The _model.mjs file
+The _model.mjs file is the main file responsible validating, sending, retrieving, processing, and updating data from the blockchain.  Each new model file that is created is or should be an extension of the above file. 
+Below is a partial screenshot of the _model.mjs file as of the writing of this guide:
 
 
 
@@ -128,14 +128,14 @@ verify() is used to validate the data you wish to record before submitting it to
 create() and update() are pretty self-explanatory but it has to be indicated that update() works not by modifying the record created by create() but by copying the latest version of that record and updating its values before pushing it to the blockchain. This is done because the data in the blockchain cannot be deleted if not set to prunable data, so Gravity retrieves all versions of a record with a specific Id number and sorts from newest to oldest. This way we can accurately ‘update’ records and always work with the latest version available.
 create() creates the first instance of a specific record and pushes it to the Jupiter blockchain. The generateId() method is called inside to give the first record instance a unique id number. This id number if copied by the update() method which will push all newer versions of the original record.
 Currently, there is no way to delete data. Future versions of gravity, however, will provide a way for records to be ‘archived’ when they are no longer needed by the app.
-Edit this file only if you wish to add global model methods or modify existing methods. If is recommended, however, that you create new model (let’s say ‘new_model.js’) that works as an extension of _model.js and make your other model files an extension of this one.
+Edit this file only if you wish to add global model methods or modify existing methods. If is recommended, however, that you create new model (let’s say ‘new_model.js’) that works as an extension of _model.mjs and make your other model files an extension of this one.
 
 Model files and Data validation
-	Model files are files that represent what a single record in your database looks like and what types of data it holds. This files are extensions of the _model.js file we covered in the previous section and they connect to the Jupiter blockchain through that file.  Below is a copy of what our user model (which comes in all versions of gravity) file looks like by default in gravity.
+	Model files are files that represent what a single record in your database looks like and what types of data it holds. This files are extensions of the _model.mjs file we covered in the previous section and they connect to the Jupiter blockchain through that file.  Below is a copy of what our user model (which comes in all versions of gravity) file looks like by default in gravity.
 
  
 
-	As you can see, we load our _model.js file at the top. The extends Model part of the code next to the class name makes the file an extension of our main model file. The super() method is called to pass data to our _model.js file to set variables for the object.  Every model file needs to assign 4 pieces of data through the super method: model, table, model_params and data.  
+	As you can see, we load our _model.mjs file at the top. The extends Model part of the code next to the class name makes the file an extension of our main model file. The super() method is called to pass data to our _model.mjs file to set variables for the object.  Every model file needs to assign 4 pieces of data through the super method: model, table, model_params and data.  
 Model is simply the name of the model in form of a string; this is done to help customize error messages and other things with the actual name of the model. 
 Table represents the name of the table in the database (you app’s address); since all tables of your app are saved in your app address as part of a JSON object, gravity can locate your table by finding the key in the object that matches the string set in the table variable. 
 Model_params tells gravity exactly what fields are meant to be saved as part of your record. If you try to save an object that has a field not included  in the model_params list, it this field will not be recorded. 
@@ -162,7 +162,7 @@ More validation rules will be added as the Gravity project progresses.
 	Model files are automatically generated through the ‘run npm gravity:app:scaffold’ command as detailed in the ‘Gravity Commands’ section but they can be made manually by following the same structure detailed above.
 
 Authentication
-Gravity natively uses the node package Passport to handle user authentications inside your gravity app. The passport.js file inside the config folder contains your signup and login methods and has been customized to work alongside the Jupiter blockchain.
+Gravity natively uses the node package Passport to handle user authentications inside your gravity app. The passport.mjs file inside the config folder contains your signup and login methods and has been customized to work alongside the Jupiter blockchain.
 
 Routing
 Basic routes

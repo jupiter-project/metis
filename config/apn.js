@@ -1,14 +1,13 @@
 const { join } = require('path');
-
-const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const { isProduction, apnPassPhrase } = require('../config');
 
 const getApnOptions = () => ({
   pfx: join(__dirname, '../certificates', 'apn.p12'),
-  passphrase: process.env.APN_PASSPHRASE,
-  production: IS_PRODUCTION,
+  passphrase: apnPassPhrase,
+  production: isProduction,
 });
 
 module.exports = {
   APN_OPTIONS: getApnOptions(),
-  IS_PRODUCTION,
+  isProduction,
 };

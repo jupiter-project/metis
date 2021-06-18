@@ -1,9 +1,9 @@
 import axios from 'axios';
-import Model from './_model';
-import { gravity } from '../config/gravity';
+import Model from './_model.mjs';
+import { gravity } from '../config/gravity.cjs';
 
 
-class Message extends Model {
+export default class Message extends Model {
   constructor(data = { id: null }) {
     // Sets model name and table name
     super({
@@ -44,7 +44,7 @@ class Message extends Model {
         tableData.password,
       );
 
-      const callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${userData.passphrase}&recipient=${tableData.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${tableData.publicKey}&compressMessageToEncrypt=true`;
+      const callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${userData.passphrase}&recipient=${tableData.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNqt}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${tableData.publicKey}&compressMessageToEncrypt=true`;
       // console.log(self);
       axios.post(callUrl)
         .then((response) => {
@@ -63,4 +63,4 @@ class Message extends Model {
   }
 }
 
-module.exports = Message;
+// module.exports = Message;

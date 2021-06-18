@@ -1,7 +1,7 @@
-import Model from './_model';
-import { gravity } from '../config/gravity';
+import Model from './_model.mjs';
+import { gravity } from '../config/gravity.cjs';
 
-class Transfer extends Model {
+export default class Transfer extends Model {
   constructor(data = { id: null }) {
     // Sets model name and table name
     super({
@@ -91,4 +91,4 @@ class Transfer extends Model {
   }
 }
 
-module.exports = Transfer;
+// module.exports = Transfer;

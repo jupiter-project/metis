@@ -1,6 +1,5 @@
-import controller from '../config/controller';
-import metis from '../config/metis';
-
+const controller = require('../config/controller');
+const metis = require('../config/metis');
 const _ = require('lodash');
 const device = require('express-device');
 const logger = require('../utils/logger')(module);

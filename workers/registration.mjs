@@ -1,9 +1,9 @@
-import { gravity } from '../config/gravity';
-import Worker from './_worker';
-import User from '../models/user';
+import { gravity } from '../config/gravity.cjs';
+import Worker from './_worker.mjs';
+import User from '../models/user.mjs';
 
 
-class RegistrationWorker extends Worker {
+export default class RegistrationWorker extends Worker {
   async checkRegistration(workerData, jobId, done) {
     const data = workerData;
     const accessData = JSON.parse(gravity.decrypt(data.accountData));
@@ -173,4 +173,4 @@ class RegistrationWorker extends Worker {
   }
 }
 
-module.exports = RegistrationWorker;
+// module.exports = RegistrationWorker;

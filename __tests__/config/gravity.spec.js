@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { gravity } from '../../config/gravity';
+import { gravity } from '../../config/gravity.cjs';
 
 let gravityFile;
 

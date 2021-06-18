@@ -1,15 +1,18 @@
-import { findNotificationAndUpdate, findMutedChannels } from './notificationService';
+import notificationService from './notificationService.mjs';
+// import { findNotificationAndUpdate, findMutedChannels } from './notificationService.mjs';
 
-const logger = require('../utils/logger')(module);
+// const logger = require('../utils/logger')(module);
+import loggerPkg from '../utils/logger.js';
+const logger = loggerPkg(this);
 
-module.exports = {
+export default {
   addTokenNotification: (req, res) => {
     const { body } = req;
     if (body && body.alias && body.jupId) {
       const filter = { alias: body.alias };
       const update = { token: body.token || '', jupId: body.jupId || '' };
 
-      findNotificationAndUpdate(filter, update)
+      notificationService.findNotificationAndUpdate(filter, update)
         .then(oldValue => res.json({ ok: true, oldValue }))
         .catch((error) => {
           logger.error(error);
@@ -33,7 +36,7 @@ module.exports = {
         ? { $pull: { mutedChannels: body.channelId } }
         : { $push: { mutedChannels: body.channelId } };
 
-      findNotificationAndUpdate(filter, update)
+      notificationService.findNotificationAndUpdate(filter, update)
         .then(notification => res.json({ ok: true, notification }))
         .catch((error) => {
           logger.error(error);
@@ -52,7 +55,7 @@ module.exports = {
   findMutedChannels: (req, res) => {
     const { alias } = req.params;
     if (alias) {
-      findMutedChannels(alias)
+      notificationService.findMutedChannels(alias)
         .then(([response]) => {
           const { mutedChannels } = response || { mutedChannels: [] };
           res.json({

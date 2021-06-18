@@ -1,13 +1,23 @@
-import axios from 'axios';
-import { gravity } from '../config/gravity';
-import controller from '../config/controller';
-import User from '../models/user';
+const axios = require('axios');
+const gravity = require('../config/gravity.cjs');
+const controller = require('../config/controller');
+const {socketServer} = require('../config.js');
+
+
+// const User = require('../models/user.mjs');
+// import User from '../models/user.mjs';
+(async () => {
+  const User = await import('../models/user.mjs');
+})();
+
+
+
 
 const logger = require('../utils/logger')(module);
 
 module.exports = (app, passport, React, ReactDOMServer) => {
   let page;
-  const connection = process.env.SOCKET_SERVER;
+  const connection = socketServer;
 
   // ===========================================================
   // This constains constants needed to connect with Jupiter

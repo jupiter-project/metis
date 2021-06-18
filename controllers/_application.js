@@ -1,8 +1,11 @@
-import axios from 'axios';
-import { gravity } from '../config/gravity';
-import controller from '../config/controller';
-
+const axios = require('axios');
+// import axios from 'axios';
+// import { gravity } from '../config/gravity.cjs';
+const gravity = require('../config/gravity.cjs');
+// import controller from '../config/controller';
+const controller = require('../config/controller');
 const logger = require('../utils/logger')(module);
+const config = require('../config.js');
 
 // This files handles the app's different pages and how they are routed by the system
 
@@ -18,7 +21,17 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   // Loads Gravity module
   let page;
 
-  const connection = process.env.SOCKET_SERVER;
+  const connection = config.socketServer;
+  // const connection = process.env.SOCKET_SERVER;
+
+  const requirements = {
+    passphrase: config.app.passPhrase ? 'yes' : false,
+    address: config.app.accountAddress ? 'yes' : false,
+    public_key: config.app.publicKey ? 'yes' : false,
+    encryption: config.sessionSecret !== undefined ? 'defined' : 'undefined',
+    name: config.app.name,
+    version: config.version,
+  };
 
   app.get('/test', (req, res) => {
     res.send({ success: true });
@@ -81,14 +94,14 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     req.session.flash = null;
 
 
-    const requirements = {
-      passphrase: process.env.APP_ACCOUNT ? 'yes' : false,
-      address: process.env.APP_ACCOUNT_ADDRESS ? 'yes' : false,
-      public_key: process.env.APP_PUBLIC_KEY ? 'yes' : false,
-      encryption: process.env.SESSION_SECRET !== undefined ? 'defined' : 'undefined',
-      name: process.env.APPNAME,
-      version: process.env.VERSION,
-    };
+    // const requirements = {
+    //   passphrase: config.app.passPhrase ? 'yes' : false,
+    //   address: config.app.accountAddress ? 'yes' : false,
+    //   public_key: config.app.publicKey ? 'yes' : false,
+    //   encryption: config.sessionSecret !== undefined ? 'defined' : 'undefined',
+    //   name: config.app.name,
+    //   version: config.version,
+    // };
 
     // Loads gravity setup progress page
 
@@ -110,14 +123,14 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     const messages = req.session.flash;
     req.session.flash = null;
 
-    const requirements = {
-      passphrase: process.env.APP_ACCOUNT ? 'yes' : false,
-      address: process.env.APP_ACCOUNT_ADDRESS ? 'yes' : false,
-      public_key: process.env.APP_PUBLIC_KEY ? 'yes' : false,
-      encryption: process.env.SESSION_SECRET !== undefined ? 'defined' : 'undefined',
-      name: process.env.APPNAME,
-      version: process.env.VERSION,
-    };
+    // const requirements = {
+    //   passphrase: process.env.APP_ACCOUNT ? 'yes' : false,
+    //   address: process.env.APP_ACCOUNT_ADDRESS ? 'yes' : false,
+    //   public_key: process.env.APP_PUBLIC_KEY ? 'yes' : false,
+    //   encryption: process.env.SESSION_SECRET !== undefined ? 'defined' : 'undefined',
+    //   name: process.env.APPNAME,
+    //   version: process.env.VERSION,
+    // };
 
     // Loads public home page
 

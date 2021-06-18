@@ -1,11 +1,13 @@
-import find from 'find';
+// import find from 'find';
 
+const find = require('find');
 const controller = require('../config/controller.js');
-const { gravity } = require('../config/gravity.js');
+const gravity  = require('../config/gravity.cjs');
+const {sockerServer} = require('../config.js');
 const logger = require('../utils/logger')(module);
 
 module.exports = (app, passport, React, ReactDOMServer) => {
-  const connection = process.env.SOCKET_SERVER;
+  const connection = sockerServer;
   let page;
   // ===========================================================
   // This constains constants needed to connect with Jupiter

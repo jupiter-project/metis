@@ -1,17 +1,54 @@
-import _ from 'lodash';
-import mailer from 'nodemailer';
-import controller from '../config/controller';
-import { gravity } from '../config/gravity';
-import { messagesConfig } from '../config/constants';
-import Invite from '../models/invite';
-import Channel from '../models/channel';
-import Message from '../models/message';
-import { findNotificationInfoByAliasOrJupId } from '../services/notificationService';
+// import _ from 'lodash';
+// import mailer from 'nodemailer';
+// import controller from '../config/controller';
+// import { gravity } from '../config/gravity.cjs';
+// import { messagesConfig } from '../config/constants';
+// import Invite from '../models/invite';
+// import Channel from '../models/channel';
+// import Message from '../models/message';
+// import { findNotificationInfoByAliasOrJupId } from '../services/notificationService';
 
-const connection = process.env.SOCKET_SERVER;
-const device = require('express-device');
-const { sendPushNotification } = require('../config/notifications');
-const logger = require('../utils/logger')(module);
+
+import _ from 'lodash';
+// const _ = require('lodash');
+// const mailer  = require('nodemailer');
+import mailer from 'nodemailer';
+// const controller  = require( '../config/controller');
+import controller from '../config/controller.js'
+
+// const { gravity }  = require( '../config/gravity.cjs');
+import {gravity} from '../config/gravity.cjs';
+
+// const { messagesConfig }  = require( '../config/constants');
+import messagesConfig from '../config/constants.js';
+
+// const {Invite}  = require( '../models/invite.mjs');
+import Invite from '../models/invite.mjs';
+
+// const Channel  = require( '../models/channel.mjs');
+import Channel from '../models/channel.mjs';
+
+// const Message  = require( '../models/message.mjs');
+import Message from '../models/message.mjs';
+
+// const { findNotificationInfoByAliasOrJupId }  = require( '../services/notificationService');
+import findNotificationInfoByAliasOrJupId from '../services/notificationService.mjs'
+
+
+const connection = config.socketServer;
+// const connection = process.env.SOCKET_SERVER;
+// const device = require('express-device');
+import device from 'express-device';
+
+// const { sendPushNotification } = require('../config/notifications');
+import { sendPushNotification }  from '../config/notifications.js';
+
+// const logger = require('../utils/logger')(module);
+import loggerPkg from '../utils/logger.js';
+const logger = loggerPkg(this);
+
+import config from '../config.js'
+
 
 const decryptUserData = req => JSON.parse(gravity.decrypt(req.session.accessData));
 
@@ -51,7 +88,7 @@ const getPNTokenAndSendInviteNotification = (senderAlias, recipientAliasOrJupId,
     });
 };
 
-module.exports = (app, passport, React, ReactDOMServer) => {
+export default (app, passport, React, ReactDOMServer) => {
   app.use(device.capture());
   /**
    * Render Channels page
@@ -83,10 +120,10 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       service: 'gmail',
       auth: {
         type: 'OAuth2',
-        user: process.env.EMAIL,
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        refreshToken: process.env.REFRESH_TOKEN,
+        user: config.app.owner.email,
+        clientId: config.clientId,
+        clientSecret: config.clientSecret,
+        refreshToken: config.refreshToken,
       },
     });
 
@@ -104,7 +141,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       subject: `Report user: ${data.message.sender}`,
       html: body,
       to: 'info+report-a-user@sigwo.com',
-      from: process.env.EMAIL,
+      from: config.app.owner.email,
     }, (err, data) => {
       if (err != null) {
         res.send({ success: true });

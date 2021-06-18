@@ -1,6 +1,7 @@
-import controller from '../config/controller';
 
-const connection = process.env.SOCKET_SERVER;
+const controller = require('../config/controller');
+const {socketServer} = require('../config.js');
+// const connection = socketServer;
 
 module.exports = (app, passport, React, ReactDOMServer) => {
   app.get('/admin/transfers', controller.isAppAdmin, (req, res) => {
@@ -11,7 +12,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     const page = ReactDOMServer.renderToString(
       React.createElement(PageFile, {
-        connection,
+        socketServer,
         messages,
         name: 'Metis - Transfers',
         user: req.user,

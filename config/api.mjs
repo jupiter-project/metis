@@ -1,12 +1,12 @@
 import find from 'find';
-import { gravity } from './gravity';
 
-const logger = require('../utils/logger')(module);
-
+import gravityPkg from './gravity.cjs';
+const { gravity } = gravityPkg;
+import logger from '../utils/logger.js';
 
 // This file handles the app's different pages and how they are routed by the system
 
-module.exports = (app) => {
+export default (app) => {
   // let bcrypt = require('bcrypt-nodejs');
   // let session = require('express-session');
   // let flash = require('connect-flash');

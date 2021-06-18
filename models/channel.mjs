@@ -1,10 +1,10 @@
 import axios from 'axios';
 import events from 'events';
-import Model from './_model';
-import Methods from '../config/_methods';
-import { gravity } from '../config/gravity';
+import Model from './_model.mjs';
+import Methods from '../config/_methods.js';
+import { gravity } from '../config/gravity.cjs';
 
-class Channel extends Model {
+export default class Channel extends Model {
   constructor(data = { id: null }) {
     // Sets model name and table name
     super({
@@ -70,7 +70,7 @@ class Channel extends Model {
             accessLink.encryptionPassword,
           );
 
-          const callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.user.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.user.publicKey}&compressMessageToEncrypt=true`;
+          const callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.user.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNqt}&deadline=${gravity.jupiter_data.deadline}&recipientPublicKey=${self.user.publicKey}&compressMessageToEncrypt=true`;
 
           axios.post(callUrl)
             .then((response) => {
@@ -160,4 +160,4 @@ class Channel extends Model {
   }
 }
 
-module.exports = Channel;
+// module.exports = Channel;

@@ -3,14 +3,20 @@ const {
   format,
   transports,
 } = require('winston');
+
 require('winston-mongodb');
+
 const path = require('path');
 
 const { hasJsonStructure } = require('../utils/utils');
 
+const config = require('../config.js');
+
+console.log(config.mongo.url);
+
 const mongoDbTransport = new transports.MongoDB({
   level: 'error',
-  db: process.env.URL_DB,
+  db: config.mongo.url,
   options: {
     useUnifiedTopology: true,
   },
@@ -24,7 +30,7 @@ const transportsArray = [
     level: 'error',
     maxsize: 5120000,
     maxFiles: 5,
-    filename: '/var/log/metis/log-api.log',
+    filename: config.logFilePath,
   }),
   new transports.Console({
     level: 'info',
@@ -36,11 +42,13 @@ const getMessageFormat = message => (hasJsonStructure(message)
   : message);
 
 const getLabel = (callingModule) => {
-  const parts = callingModule.filename.split(path.sep);
-  return path.join(parts[parts.length - 2], parts.pop());
+
+  return '--getLabel--'
+  // const parts = callingModule.filename.split(path.sep);
+  // return path.join(parts[parts.length - 2], parts.pop());
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (config.isProduction) {
   transportsArray.push(mongoDbTransport);
 }
 

@@ -1,12 +1,19 @@
-import bcrypt from 'bcrypt-nodejs';
+// import bcrypt from 'bcrypt-nodejs';
+// const crypto = require('crypto');
+
+import crypto from 'crypto';
 import axios from 'axios';
-import Model from './_model';
-import methods from '../config/_methods';
-import { gravity } from '../config/gravity';
+import config from '../config.js';
+import Model from './_model.mjs';
+import * as methods from '../config/_methods.js';
+// import {generate_passphrase, generate_keywords} from '../config/_methods.js';
+// import methods from '../config/_methods';
+import { gravity } from '../config/gravity.cjs';
+// const gravity  = require('../config/gravity.cjs');
+// const logger = require('../utils/logger')(module);
+import logger from '../utils/logger.js';
 
-const logger = require('../utils/logger')(module);
-
-class User extends Model {
+export default class User extends Model {
   constructor(data, accessPass) {
     // Sets model name and table name
     super({
@@ -161,11 +168,28 @@ class User extends Model {
   }
 
   generateHash(accounthash) {
-    return bcrypt.hashSync(accounthash, bcrypt.genSaltSync(8), null);
+    // return bcrypt.hashSync(accounthash, bcrypt.genSaltSync(8), null);
+    // Calling createHash method
+    const hash = crypto.createHash(this.algorithm , accounthash)
+        // Encoding to be used
+        .digest('hex');
+    console.log(hash);
+
+    return hash;
+
   }
 
-  validPassword(accounthash) {
-    return bcrypt.compareSync(accounthash, this.record.accounthash);
+  //
+  // TODO: Please refactor. Follow this example:
+  // https://dev.to/farnabaz/hash-your-passwords-with-scrypt-using-nodejs-crypto-module-316k
+  //
+  validPassword(password) {
+    const storedUserPasswordHash = this.record.accounthash
+    const passwordHash = this.generateHash(password);
+
+    return storedUserPasswordHash == passwordHash;
+
+    // return bcrypt.compareSync(password, this.record.accounthash);
   }
 
   validEncryptionPassword(encryptionPassword) {
@@ -174,32 +198,34 @@ class User extends Model {
     return validFields && encryptionPassword === this.record.encryption_password;
   }
 
+  // Generate four random words and return its hash
   generateKey() {
-    const generatedPhrase = methods.generate_keywords();
-    const unfilteredKey = bcrypt.hashSync(generatedPhrase, bcrypt.genSaltSync(8), null);
+    return this.generateHash(methods.generate_keywords());
 
-    return unfilteredKey;
+    // const generatedPhrase = methods.generate_keywords();
+    // const unfilteredKey = bcrypt.hashSync(generatedPhrase, bcrypt.genSaltSync(8), null);
+    // return unfilteredKey;
   }
 
   findById() {
     const self = this;
     return new Promise(async (resolve, reject) => {
-      if (self.record && self.record.id === process.env.APP_ACCOUNT_ID) {
+      if (self.record && self.record.id === config.app.accountId) {
+
         self.record = {
-          id: process.env.APP_ACCOUNT_ID,
-          account: process.env.APP_ACCOUNT_ADDRESS,
-          email: process.env.APP_EMAIL,
-          alias: 'Admin',
-          firstname: 'Admin',
-          lastname: '',
-          secret_key: null,
-          twofa_enabled: false,
-          twofa_completed: false,
-          public_key: process.env.APP_PUBLIC_KEY,
-          api_key: process.env.APP_API_KEY,
-          admin: true,
-          secret: process.env.APP_ACCOUNT,
+          id: config.app.accountId,
+          email: config.app.owner.email,
+          firstname: config.app.owner.firstName,
+          lastname: config.app.owner.lastName,
+          secret_key: config.app.owner.secretKey,
+          twofa_enabled: config.app.owner.twofa_enabled,
+          twofa_completed: config.app.owner.twofa_enabled,
+          public_key: config.app.publicKey,
+          api_key: config.app.apiKey,
+          admin: config.app.owner.isAdmin,
+          secret: config.app.passPhrase,
         };
+
         resolve(true);
       } else if (
         self.accessData
@@ -255,7 +281,7 @@ class User extends Model {
           JSON.stringify(fullRecord),
           self.record.encryption_password,
         );
-        let callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNQT}&deadline=${gravity.jupiter_data.deadline}`;
+        let callUrl = `${gravity.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${recordTable.passphrase}&recipient=${self.record.account}&messageToEncrypt=${encryptedRecord}&feeNQT=${gravity.jupiter_data.feeNqt}&deadline=${gravity.jupiter_data.deadline}`;
 
         if (self.record.public_key) {
           callUrl += `&recipientPublicKey=${self.record.public_key}&compressMessageToEncrypt=true`;
@@ -289,4 +315,5 @@ class User extends Model {
   }
 }
 
-module.exports = User;
+// module.exports = User;
+

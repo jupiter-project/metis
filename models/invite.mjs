@@ -1,7 +1,7 @@
-import Model from './_model';
-import { gravity } from '../config/gravity';
+import Model from './_model.mjs';
+import {gravity} from '../config/gravity.cjs';
 
-class Invite extends Model {
+export default class Invite extends Model {
   constructor(data = { id: null }) {
     // Sets model name and table name
     super({
@@ -59,4 +59,4 @@ class Invite extends Model {
   }
 }
 
-module.exports = Invite;
+// module.exports = Invite;

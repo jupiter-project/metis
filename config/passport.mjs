@@ -1,11 +1,18 @@
 import events from 'events';
-import { gravity } from './gravity';
-import User from '../models/user';
-import RegistrationWorker from '../workers/registration';
+import { gravity } from './gravity.cjs';
+import User from '../models/user.mjs';
+import RegistrationWorker from '../workers/registration.mjs';
 
 // Loads up passport code
-const LocalStrategy = require('passport-local').Strategy;
-const logger = require('../utils/logger')(module);
+
+import passportLocal from "passport-local";
+
+const LocalStrategy = passportLocal.Strategy;
+// const LocalStrategy = require('passport-local').Strategy;
+
+// const logger = require('../utils/logger')(module);
+import logger from '../utils/logger.js';
+
 
 // Used to serialize the user for the session
 const serializeUser = (passport) => {
@@ -228,7 +235,7 @@ const metisLogin = (passport, jobs, io) => {
   }));
 };
 
-module.exports = {
+export {
   serializeUser,
   deserializeUser,
   metisSignup,

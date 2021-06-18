@@ -1,6 +1,8 @@
-const Notifications = require('../models/notifications');
+// const Notifications = require('../models/notifications.mjs');
 
-module.exports = {
+import Notifications from '../models/notifications.mjs';
+
+export  default {
   findNotificationAndUpdate: (filter, updateData) => {
     if (!filter || !updateData) {
       throw new Error('Filter and dat to update are required.');
@@ -28,5 +30,5 @@ module.exports = {
     const filter = { alias };
     return Notifications.find(filter)
       .select('mutedChannels');
-  },
+  }
 };
