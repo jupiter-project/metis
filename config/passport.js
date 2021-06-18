@@ -102,7 +102,7 @@ const metisSignup = (passport) => {
             }, req.flash('signupMessage', 'Your account has been created and is being saved into the blockchain. Please wait a couple of minutes before logging in.'));
           })
           .catch((err) => {
-            logger.error(err);
+            logger.error('USER CREATION FAILED', JSON.stringify(err));
             let errorMessage;
             if (err.verification_error !== undefined && err.verification_error === true) {
               err.errors.forEach((x) => {
@@ -112,7 +112,7 @@ const metisSignup = (passport) => {
             } else {
               errorMessage = err.errors;
             }
-            return done(null, false, req.flash('signupMessage', errorMessage));
+            return done(null, false, { message: errorMessage });
           });
       });
 
