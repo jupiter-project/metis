@@ -12,6 +12,7 @@ const connection = process.env.SOCKET_SERVER;
 const device = require('express-device');
 const { sendPushNotification } = require('../config/notifications');
 const logger = require('../utils/logger')(module);
+const { hasJsonStructure } = require('../utils/utils');
 
 const decryptUserData = req => JSON.parse(gravity.decrypt(req.session.accessData));
 
@@ -276,7 +277,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    */
   app.post('/data/messages', controller.isLoggedIn, async (req, res) => {
     const { maxMessageLength } = messagesConfig;
-    const hasMessage = _.get(req, 'body.data.message', null);
+    let hasMessage = _.get(req, 'body.data.message', null);
     let response;
 
     if (hasMessage && hasMessage.length <= maxMessageLength) {
@@ -300,6 +301,11 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         if (Array.isArray(members) && members.length > 0) {
           const senderName = message.record.name;
           members = members.filter(member => member !== senderName && !mentions.includes(member));
+
+          if (hasJsonStructure(hasMessage)) {
+            hasMessage = JSON.parse(hasMessage);
+            hasMessage = hasMessage.fromMsj || '';
+          }
 
           // push notification for members
           const pnTitle = `${senderName} @ ${channelName}`;
