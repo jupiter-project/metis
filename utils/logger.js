@@ -19,8 +19,8 @@ const getLabel = (callingModule) => {
 };
 
 const bucket = process.env.NODE_ENV === 'production'
-  ? process.env.S3_STREAM_BUCKET_DEV
-  : process.env.S3_STREAM_BUCKET_PROD;
+  ? process.env.S3_STREAM_BUCKET_PROD
+  : process.env.S3_STREAM_BUCKET_DEV;
 
 const s3Stream = new S3StreamLogger({
   bucket,
@@ -30,9 +30,9 @@ const s3Stream = new S3StreamLogger({
   access_key_id: process.env.S3_STREAM_KEY,
   secret_access_key: process.env.S3_STREAM_SECRET_KEY,
   tags: { type: 'errorLogs', project: 'Metis' },
-  rotate_every: 3600000,
-  max_file_size: 5120000,
-  upload_every: 30000,
+  rotate_every: 3600000, // each hour (default)
+  max_file_size: 5120000, // 5mb
+  upload_every: 20000, // 20 seconds (default)
 });
 
 // AWS transport files
