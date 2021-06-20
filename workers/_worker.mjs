@@ -1,9 +1,12 @@
 import axios from 'axios';
 import events from 'events';
+import config from '../config.js';
 
-const config = {
-  server: 'http://localhost:4001',
-};
+const url = `http://localhost:${config.jobQueue.port}`;
+
+// const config = {
+//   server: 'http://localhost:4001',
+// };
 
 export default class Worker {
   constructor(jobs, io) {
@@ -14,16 +17,14 @@ export default class Worker {
 
   loadWorkers(status, queueName = 'all') {
     return new Promise((resolve, reject) => {
-      let getUrl;
+      let path = `/jobs/${queueName}/${status}/0..10000/desc`;
       if (status === 'all' && status === 'all') {
-        getUrl = '/jobs/0..10000/desc';
+        path = '/jobs/0..10000/desc';
       } else if (queueName === 'all') {
-        getUrl = `/jobs/${status}/0..10000/desc`;
-      } else {
-        getUrl = `/jobs/${queueName}/${status}/0..10000/desc`;
+        path = `/jobs/${status}/0..10000/desc`;
       }
 
-      axios.get(config.server + getUrl)
+      axios.get(url + path)
         .then((response) => {
           // console.log(response.data)
           resolve(response.data);
@@ -102,7 +103,7 @@ export default class Worker {
 
   deleteWorker(workerId) {
     return new Promise((resolve, reject) => {
-      axios.delete(`${config.server}/job/${workerId}`)
+      axios.delete(`${url}/job/${workerId}`)
         .then((response) => {
           resolve(response);
         })

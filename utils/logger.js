@@ -1,18 +1,8 @@
-const {
-  createLogger,
-  format,
-  transports,
-} = require('winston');
-
+const { createLogger,  format, transports } = require('winston');
 require('winston-mongodb');
-
 const path = require('path');
-
 const { hasJsonStructure } = require('../utils/utils');
-
 const config = require('../config.js');
-
-console.log(config.mongo.url);
 
 const mongoDbTransport = new transports.MongoDB({
   level: 'error',
@@ -23,7 +13,6 @@ const mongoDbTransport = new transports.MongoDB({
   collection: 'metis-logs',
   format: format.combine(format.timestamp(), format.json()),
 });
-
 
 const transportsArray = [
   new transports.File({
@@ -43,7 +32,10 @@ const getMessageFormat = message => (hasJsonStructure(message)
 
 const getLabel = (callingModule) => {
 
-  return '--getLabel--'
+  if (typeof callingModule === 'string' || callingModule instanceof String) {
+    return callingModule;
+  }
+  return '---'
   // const parts = callingModule.filename.split(path.sep);
   // return path.join(parts[parts.length - 2], parts.pop());
 };
@@ -57,7 +49,8 @@ module.exports = function (callingModule) {
     format: format.combine(
       format.simple(),
       format.timestamp(),
-      format.printf(info => `[${info.timestamp}] [${getLabel(callingModule)}] ${info.level} ${getMessageFormat(info.message)}`),
+        format.colorize(),
+      format.printf(info => `[${info.timestamp}] [${getLabel(callingModule)}] ${info.level} : ${getMessageFormat(info.message)}`),
     ),
     transports: transportsArray,
   });

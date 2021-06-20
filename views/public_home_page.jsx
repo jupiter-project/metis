@@ -1,8 +1,13 @@
-import { Component } from 'react';
-import ApplicationLayout from './layout/application.jsx';
-import { gravity } from '../config/gravity.cjs';
 
-class PublicHomePageView extends Component {
+const React = require('react');
+const ApplicationLayout = require('./layout/application.jsx')
+const config = require('../config.js');
+
+// import { Component } from 'react';
+// import ApplicationLayout from './layout/application.jsx';
+
+
+class PublicHomePageView extends React.Component {
   render() {
     return (
       <ApplicationLayout data={this.props}>
@@ -20,7 +25,7 @@ class PublicHomePageView extends Component {
             </div>
             <div className="text-center mt-3">
               Returning user? Log in <a href="login">here</a>.
-              <div className="text-right">{gravity.version}</div>
+              <div className="text-right">{config.version}</div>
             </div>
           </div>
         </div>

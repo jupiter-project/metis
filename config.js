@@ -8,7 +8,7 @@ module.exports = {
     version : process.env.VERSION,
     environment : process.env.NODE_ENV,
     isProduction: process.env.NODE_ENV === 'production',
-    isDevelopment: process.env.NODE_ENV === 'Development' || process.env.NODE_ENV === undefined,
+    isDevelopment: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined,
     jupiter: {
         feeNqt : process.env.JUPITER_FEE_NQT,
         deadline: process.env.JUPITER_DEADLINE,

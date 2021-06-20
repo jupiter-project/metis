@@ -1,4 +1,4 @@
-// import dotenv from "dotenv"
+import dotenv from "dotenv"
 import express from 'express';
 import passport from 'passport';
 import flash from 'connect-flash';
@@ -9,7 +9,9 @@ import connectRedis from 'connect-redis';
 import bodyParser from 'body-parser';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server.js';
-import kue from 'kue';
+// import kue from 'kue';
+// var Queue = require('bull');
+import Queue from 'bull';
 import fs from 'fs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -21,21 +23,43 @@ import mongoose from 'mongoose';
 import { Server } from "socket.io";
 import { gravity } from './config/gravity.cjs';
 import RegistrationWorker from './workers/registration.mjs';
+import "core-js";
+import "regenerator-runtime";
+
+
+import events from 'events';
+// const EventEmitter = require('events').EventEmitter;
+import { EventEmitter } from "events";
+
 
 // if (process.env.NODE_ENV !== 'production') {
-//   dotenv.config();
+  dotenv.config();
 // }
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const RedisStore = connectRedis(session);
 // const port = config.app.port;
 const app = express();
-const jobs = kue.createQueue({
-  redis: {
-      host: config.redis.host,
-      port: config.redis.port,
-  },
-});
+
+
+EventEmitter.defaultMaxListeners = 0;
+
+
+const jobsQueue = new Queue(
+    'completeRegistration',
+    {
+      redis: {
+        host: config.redis.host,
+        port: config.redis.port
+      }
+    });
+
+// const jobs = kue.createQueue({
+//   redis: {
+//       host: config.redis.host,
+//       port: config.redis.port,
+//   },
+// });
 
 // import find from 'find';
 app.use(cookieParser()); // read cookies (needed for authentication)
@@ -127,28 +151,28 @@ import { serializeUser, deserializeUser, metisSignup, metisLogin  } from './conf
 serializeUser(passport); //  pass passport for configuration
 deserializeUser(passport); //  pass passport for configuration
 metisSignup(passport); //  pass passport for configuration
-metisLogin(passport, jobs, io); //  pass passport for configuration
+metisLogin(passport, jobsQueue, io); //  pass passport for configuration
 
 import _application from './controllers/_application.js';
-_application(app, passport, React, ReactDOMServer, jobs);
+_application(app, passport, React, ReactDOMServer, jobsQueue);
 
 import account from './controllers/account.js';
-account(app, passport, React, ReactDOMServer, jobs);
+account(app, passport, React, ReactDOMServer, jobsQueue);
 
 import admin from './controllers/admin.js';
-admin(app, passport, React, ReactDOMServer, jobs);
+admin(app, passport, React, ReactDOMServer, jobsQueue);
 
 import channels from './controllers/channels.mjs';
-channels(app, passport, React, ReactDOMServer, jobs);
+channels(app, passport, React, ReactDOMServer, jobsQueue);
 
 import members from './controllers/members.js';
-members(app, passport, React, ReactDOMServer, jobs);
+members(app, passport, React, ReactDOMServer, jobsQueue);
 
 import pushNotificationController from './controllers/pushNotificationController.mjs';
-pushNotificationController(app, passport, React, ReactDOMServer, jobs);
+pushNotificationController(app, passport, React, ReactDOMServer, jobsQueue);
 
 import transfers from './controllers/transfers.js';
-transfers(app, passport, React, ReactDOMServer, jobs);
+transfers(app, passport, React, ReactDOMServer, jobsQueue);
 
 // Route any invalid routes black to the root page
 app.get('/*', (req, res) => {
@@ -177,11 +201,38 @@ gravity.getFundingMonitor()
   });
 
 // Worker methods
-const registrationWorker = new RegistrationWorker(jobs, io);
+const registrationWorker = new RegistrationWorker(jobsQueue, io);
 
-jobs.process('completeRegistration', (job, done) => {
+// jobsQueue.process('completeRegistration', (job, done) => {
+//   logger.info('jobs - ' + job);
+//   registrationWorker.checkRegistration(job.data, job.id, done);
+// });
+
+jobsQueue.process(function(job, done){
+
   registrationWorker.checkRegistration(job.data, job.id, done);
+
+  // job.data contains the custom data passed when the job was created
+  // job.id contains id of this job.
+
+  // transcode video asynchronously and report progress
+  // job.progress(42);
+
+  // call done when finished
+  // done();
+
+  // or give a error if error
+  // done(new Error('error transcoding'));
+
+  // or pass it a result
+  // done(null, { framerate: 29.5 /* etc... */ });
+
+  // If the job throws an unhandled exception it is also handled correctly
+  // throw new Error('some unexpected error');
 });
+
+
+
 
 mongoose.connect(config.mongo.url, config.mongo.options, (err, resp) => {
   if (err) {
@@ -218,9 +269,9 @@ server.listen(config.app.port, () => {
 });
 
 // Kue is no longer maintained. Please see e.g. Bull as an alternative. Thank you!
-kue.app.listen(config.jobQueue.port, () => {
-  console.log(`Job queue server running on port ${config.jobQueue.port}`);
-});
+// kue.app.listen(config.jobQueue.port, () => {
+//   console.log(`Job queue server running on port ${config.jobQueue.port}`);
+// });
 
 
 

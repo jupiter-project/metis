@@ -1612,7 +1612,6 @@ class Gravity {
       }
     }
 
-    logger.info('Gravity > jupiterURL() url: ' + url)
     return url;
   }
 

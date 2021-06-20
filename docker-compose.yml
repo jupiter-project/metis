@@ -22,8 +22,9 @@ services:
       - redis
     ports:
       - "4000:4000"
+      - "4001:4001"
     restart: always
-    command: npm run dev
+    command: npm run ${NODE_RUN_SCRIPT}
     volumes:
       - ./:/apps/metis
       - /apps/metis/node_modules
