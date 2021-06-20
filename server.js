@@ -17,7 +17,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 4000;
 
-const pingTimeout = 6000000;
+const pingTimeout = 9000000;
 
 const pingInterval = 30000;
 
