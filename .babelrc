@@ -1,12 +1,3 @@
 {
-    "presets": [
-        ["@babel/preset-env"],
-        ["@babel/preset-react", {
-            "runtime": "automatic"
-        }]
-    ],
-    "plugins": [
-        "syntax-async-functions",
-        "transform-regenerator"
-    ]
+
 }

@@ -18,6 +18,7 @@ import { fileURLToPath } from 'url';
 import * as https from 'https';
 import * as http from 'http'
 import * as socketService from './services/socketService.js';
+// import config from 'config/config';
 import config from './config.js';
 import mongoose from 'mongoose';
 import { Server } from "socket.io";
@@ -25,7 +26,8 @@ import { gravity } from './config/gravity.cjs';
 import RegistrationWorker from './workers/registration.mjs';
 import "core-js";
 import "regenerator-runtime";
-
+// import "@babel/runtime-corejs3";
+// import "@babel/runtime";
 
 import events from 'events';
 // const EventEmitter = require('events').EventEmitter;

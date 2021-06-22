@@ -33,9 +33,34 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     version: config.version,
   };
 
-  app.get('/test', (req, res) => {
-    res.send({ success: true });
-  });
+  // app.get('/test', (req, res) => {
+  //   res.send({ success: true });
+  // });
+
+
+    app.get('/test', (req, res) => {
+        const messages = req.session.flash;
+        req.session.flash = null;
+
+        const PublicHomePage = require('../src/components/text.jsx');
+
+        page = ReactDOMServer.renderToString(
+            React.createElement(PublicHomePage, {
+                messages,
+                requirements,
+                name: 'Metis - Home',
+                user: req.user,
+                dashboard: false,
+            }),
+        );
+        res.send(page);
+    });
+
+
+
+
+
+
 
   // ===============================================================================
   // SIGNIN PAGE
@@ -118,6 +143,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
     );
     res.send(page);
   });
+
 
   app.get('/home', (req, res) => {
     const messages = req.session.flash;
