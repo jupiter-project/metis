@@ -31,3 +31,6 @@ dev
 /data
 /mongodb_data
 /.scannerwork
+
+
+/build

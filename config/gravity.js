@@ -1505,9 +1505,12 @@ class Gravity {
           }
           return res.data;
         }
-        return ({ error: true, message: 'There was an error with the request' });
+        const errorJson = { error: true, message: 'There was an error with the request' }
+        logger.info('gravity>request()  axios.then error: ' + errorJson);
+        // TODO we should be throwing an exception error. Let the caller deal with the error not here.
+        return (errorJson);
       })
-      .catch(error => ({
+      .catch(error => ({  // TODO we should just let the exception pass through to the caller. let the caller figure out what to do witht he error.
         error: true,
         message: 'There was an error making axios request',
         fullError: error,
