@@ -123,14 +123,14 @@ const server = Object.keys(sslOptions).length >= 2
   : require('http').createServer(app);
 // Enables websocket
 const socketIO = require('socket.io');
+const socketService = require('./services/socketService');
 
 const socketOptioins = {
   pingTimeout, // pingTimeout value to consider the connection closed
   pingInterval, // how many ms before sending a new ping packet
 };
 const io = socketIO(server, socketOptioins);
-module.exports.io = socketIO(server, socketOptioins);
-require('./sockets/socket');
+io.of('/metis/websocket').on('connection', socketService.connection.bind(this));
 const logger = require('./utils/logger')(module);
 
 const mongoDBOptions = { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true };
