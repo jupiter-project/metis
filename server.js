@@ -125,12 +125,14 @@ const server = Object.keys(sslOptions).length >= 2
 const socketIO = require('socket.io');
 const socketService = require('./services/socketService');
 
-const socketOptioins = {
+const socketOptions = {
   pingTimeout, // pingTimeout value to consider the connection closed
   pingInterval, // how many ms before sending a new ping packet
 };
-const io = socketIO(server, socketOptioins);
-io.of('/metis/websocket').on('connection', socketService.connection.bind(this));
+const io = socketIO(server, socketOptions);
+io.of('/chat').on('connection', socketService.connection.bind(this));
+// TODO uncomment this line once we implemented jupiter listener
+// io.of('/jupiter').on('connection', socketService.connection.bind(this));
 const logger = require('./utils/logger')(module);
 
 const mongoDBOptions = { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true };
