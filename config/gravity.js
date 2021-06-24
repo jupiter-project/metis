@@ -293,15 +293,14 @@ class Gravity {
     const eventEmitter = new events.EventEmitter();
 
     const self = this;
-    let appname;
-    let server;
-    let passphrase;
-    let account;
-    // let decryption_password;
-    // let decryption_algorithm;
+    let appname = process.env.APPNAME;
+    let server = process.env.JUPITERSERVER;
+    let passphrase = process.env.APP_ACCOUNT;
+    let account = process.env.APP_ACCOUNT_ADDRESS;
+
     let records = [];
     let numberOfRecords;
-    let password;
+    let { password } = self;
     let userRecord;
     let hasUserTable = false;
 
@@ -310,26 +309,6 @@ class Gravity {
       ({ account } = containedDatabase);
       ({ passphrase } = containedDatabase);
       password = containedDatabase.encryptionPassword;
-    } else if (process.env.APP_ACCOUNT) {
-      server = process.env.JUPITERSERVER;
-      passphrase = process.env.APP_ACCOUNT;
-      account = process.env.APP_ACCOUNT_ADDRESS;
-      // decryption_password = process.env.ENCRYPT_PASSWORD;
-      // decryption_algorithm = process.env.ENCRYPT_ALGORITHM;
-      appname = process.env.APPNAME;
-      ({ password } = self);
-    } else {
-      const gravity = require('../.gravity.js');
-      server = gravity.JUPITERSERVER;
-      passphrase = gravity.APP_ACCOUNT;
-      account = gravity.APP_ACCOUNT_ADDRESS;
-      // decryption_password = gravity.ENCRYPT_PASSWORD;
-      // decryption_algorithm = gravity.ENCRYPT_ALGORITHM;
-      self.jupiter_data.server = server;
-      self.algorithm = gravity.ENCRYPT_ALGORITHM;
-      self.password = gravity.ENCRYPT_PASSWORD;
-      appname = gravity.APPNAME;
-      ({ password } = self);
     }
 
     return new Promise((resolve, reject) => {
@@ -1374,29 +1353,9 @@ class Gravity {
     const self = this;
     const eventEmitter = new events.EventEmitter();
     let account;
-    let terminalCalled = false;
-    let addressOwner;
-    let server;
-
-    if (address === 'undefined') {
-      if (process.env.JUPITERSERVER === undefined || process.env.JUPITERSERVER == null) {
-        const gravity = require('../.gravity.js');
-        addressOwner = gravity.APP_ACCOUNT;
-        server = gravity.JUPITERSERVER;
-        terminalCalled = true;
-      } else {
-        addressOwner = process.env.APP_ACCOUNT;
-        server = process.env.JUPITERSERVER;
-      }
-    } else if (process.env.JUPITERSERVER === undefined || process.env.JUPITERSERVER == null) {
-      const gravity = require('../.gravity.js');
-      addressOwner = address;
-      server = gravity.JUPITERSERVER;
-      terminalCalled = true;
-    } else {
-      addressOwner = address;
-      server = jupServ;
-    }
+    const terminalCalled = false;
+    const addressOwner = process.env.APP_ACCOUNT;
+    const server = process.env.JUPITERSERVER;
 
     return new Promise((resolve, reject) => {
       eventEmitter.on('account_retrieved', () => {
@@ -1458,20 +1417,11 @@ class Gravity {
     const feeNQT = 100;
     const tableCreation = 500 + 250;
     let amount = transferAmount;
-    let senderAddress;
-    let server;
+    const senderAddress = process.env.APP_ACCOUNT;
+    const server = process.env.JUPITERSERVER;
 
     if (amount == null) {
       amount = this.jupiter_data.minimumAppBalance - feeNQT - tableCreation;
-    }
-
-    if (this.sender == null || this.sender === undefined) {
-      const gravity = require('../.gravity.js');
-      senderAddress = gravity.APP_ACCOUNT;
-      server = gravity.JUPITERSERVER;
-    } else {
-      senderAddress = sender;
-      server = process.env.JUPITERSERVER;
     }
 
     return new Promise((resolve, reject) => {
@@ -2290,7 +2240,9 @@ class Gravity {
 
   // This method creates a table
   createTable() {
-    const gravity = require('../.gravity.js');
+    const appAccount = process.env.APP_ACCOUNT;
+    const appAccountAddress = process.env.APP_ACCOUNT_ADDRESS;
+    const appPublickKey = process.env.APP_PUBLIC_KEY;
     const eventEmitter = new events.EventEmitter();
     const self = this;
     // let valid_table = true;
@@ -2334,7 +2286,7 @@ class Gravity {
         const encryptedData = self.encrypt(JSON.stringify(record));
         const encryptedTableData = self.encrypt(JSON.stringify(tableListRecord));
 
-        const callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encryptedData}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
+        const callUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${appAccount}&recipient=${appAccountAddress}&messageToEncrypt=${encryptedData}&feeNQT=${self.jupiter_data.feeNQT}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${appPublickKey}&compressMessageToEncrypt=true`;
 
 
         axios.post(callUrl)
@@ -2363,7 +2315,7 @@ class Gravity {
             reject({ success: false, message: 'There was an error', error: error.response });
           });
 
-        const tableListUpdateUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${gravity.APP_ACCOUNT}&recipient=${gravity.APP_ACCOUNT_ADDRESS}&messageToEncrypt=${encryptedTableData}&feeNQT=${(self.jupiter_data.feeNQT / 2)}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${gravity.APP_PUBLIC_KEY}&compressMessageToEncrypt=true`;
+        const tableListUpdateUrl = `${self.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${appAccount}&recipient=${appAccountAddress}&messageToEncrypt=${encryptedTableData}&feeNQT=${(self.jupiter_data.feeNQT / 2)}&deadline=${self.jupiter_data.deadline}&recipientPublicKey=${appPublickKey}&compressMessageToEncrypt=true`;
 
         axios.post(tableListUpdateUrl)
           .then((response) => {
@@ -2423,7 +2375,7 @@ class Gravity {
       });
 
       eventEmitter.on('verified_balance', () => {
-        if (gravity.APP_ACCOUNT === undefined || gravity.APP_ACCOUNT === '' || gravity.APP_ACCOUNT == null) {
+        if (appAccount === undefined || appAccount === '' || appAccount == null) {
           reject('Error: .gravity file does not contain seedphrase for app. Please provide one.');
         } else {
           self.loadAppData()

@@ -240,7 +240,6 @@ class Model {
     const finalList = [];
     let tableData;
     let user;
-
     return new Promise((resolve, reject) => {
       eventEmitter.on('tableData_loaded', () => {
         gravity.getRecords(
@@ -295,6 +294,7 @@ class Model {
             resolve({ success: true, records: finalList, records_found: finalList.length });
           })
           .catch((err) => {
+            logger.error('[getRecords]', err);
             reject(err);
           });
       });
@@ -307,7 +307,7 @@ class Model {
               eventEmitter.emit('tableData_loaded');
             })
             .catch((err) => {
-              logger.error(err);
+              logger.error(`[loadTable] ${JSON.stringify(err)}`);
               reject(err);
             });
         } else {
@@ -334,7 +334,7 @@ class Model {
             eventEmitter.emit('verified_request');
           })
           .catch((err) => {
-            logger.error(err);
+            logger.error('Gravity:[findById]', err);
             reject({ success: false, errors: 'There was an error in authentication of request/user validation' });
           });
       } else {

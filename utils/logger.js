@@ -59,7 +59,7 @@ const getMongoDBTransport = () => {
 };
 
 const getMessageFormat = message => (hasJsonStructure(message)
-  ? JSON.stringify(message)
+  ? JSON.parse(message)
   : message);
 
 const getLabel = (callingModule) => {
