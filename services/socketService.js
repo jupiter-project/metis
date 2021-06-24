@@ -63,7 +63,9 @@ const connection = function (socket) {
   socket.on('leaveChat', leaveChat);
   socket.on('createMessage', createMessage);
   socket.on('invites', invites);
-
+  socket.on('connect_error', (error) => {
+    logger.error(JSON.stringify(error));
+  });
   socket.on('disconnect', (reason) => {
     logger.info(`reason: ${reason}`);
     logger.info(`${socket.name} has disconnected from the chat.${socket.id}`);
