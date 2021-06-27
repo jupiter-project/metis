@@ -7,6 +7,7 @@ import Invite from '../models/invite';
 import Channel from '../models/channel';
 import Message from '../models/message';
 import { findNotificationInfoByAliasOrJupId } from '../services/notificationService';
+import metis from '../config/metis';
 
 const connection = process.env.SOCKET_SERVER;
 const device = require('express-device');
@@ -289,7 +290,13 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       message.record.sender = _.get(req, 'user.record.account', req.body.user.account);
       // accountData
       // const userData = decryptUserData(req);
-      let members = _.get(req, 'body.members', []);
+
+      let { members } = await metis.getMember({
+        channel: tableData.account,
+        account: tableData.publicKey,
+        password: tableData.password,
+      });
+
       const mentions = _.get(req, 'body.mentions', []);
       const channel = _.get(req, 'body.channel', []);
       const channelName = _.get(tableData, 'name', 'a channel');
