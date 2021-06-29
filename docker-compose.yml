@@ -8,6 +8,7 @@ services:
     ports:
       - 27017:27017
       - 28017:28017
+    command: --quiet
   redis:
     container_name: metis-redis
     image: "redis"

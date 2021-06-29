@@ -23,7 +23,7 @@ class Record extends React.Component {
       {{#ifCond this 'Boolean'}}
       {{@key}}: currentData.{{@key}},
       {{/ifCond}}
-      {{#ifCond this 'Text'}}
+      {{#ifCond this 'Test'}}
       {{@key}}: currentData.{{@key}},
       {{/ifCond}}
       {{#ifCond this 'Email'}}
@@ -50,7 +50,7 @@ class Record extends React.Component {
   {{#each attributes}}
   {{#ifCond this 'Boolean'}}
   {{@key}}Update(event) {
-    const new_value = !this.state.{{@key}};        
+    const new_value = !this.state.{{@key}};
     this.setState({ {{@key}}: new_value });
   }
   {{/ifCond}}
@@ -82,7 +82,7 @@ class Record extends React.Component {
       {{#ifCond this 'Boolean'}}
       {{@key}}: this.state.{{@key}},
       {{/ifCond}}
-      {{#ifCond this 'Text'}}
+      {{#ifCond this 'Test'}}
       {{@key}}: this.state.{{@key}},
       {{/ifCond}}
       {{#ifCond this 'Email'}}
@@ -96,7 +96,7 @@ class Record extends React.Component {
       public_key: this.props.public_key,
       user_address: this.props.user.record.account,
     };
-        
+
     axios.put('/api/{{records}}', { data: record })
     .then((response) => {
         if (response.data.success) {
@@ -148,7 +148,7 @@ class Record extends React.Component {
                                 {{#ifCond this 'String'}}
                                 <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
                                 {{/ifCond}}
-                                {{#ifCond this 'Text'}}
+                                {{#ifCond this 'Test'}}
                                 <textarea placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')}>
                                 </textarea><br />
                                 {{/ifCond}}
@@ -167,7 +167,7 @@ class Record extends React.Component {
                                         <input type="checkbox" onChange={this.{{@key}}Update.bind(this)} checked={this.state.{{@key}} === true ? true : false}  />
                                         <span className={"slider round"}></span>
                                     </label><br />
-                                </div>   
+                                </div>
                                 {{/ifCond}}
                             </div>
                             {{/each}}
@@ -175,7 +175,7 @@ class Record extends React.Component {
                         <div className="row p-3">
                             <div className="col-lg-12 col-md-12 col-xs-12 text-center">
                                 <button className="btn btn-danger" onClick={this.editMode.bind(this)}>Cancel</button><br /><br />
-                                <button className="btn btn-success" disabled={this.state.submitted} onClick={this.updateRecord.bind(this)}>{this.state.submitted ? 'Saving...':'Save'}</button>                                
+                                <button className="btn btn-success" disabled={this.state.submitted} onClick={this.updateRecord.bind(this)}>{this.state.submitted ? 'Saving...':'Save'}</button>
                             </div>
                         </div>
                     </div>
@@ -205,7 +205,7 @@ class Record extends React.Component {
                                                 {{#ifCond this 'String'}}
                                                 {{componentHelper ../model_variable_name @key }}
                                                 {{/ifCond}}
-                                                {{#ifCond this 'Text'}}
+                                                {{#ifCond this 'Test'}}
                                                 {{componentHelper ../model_variable_name @key }}
                                                 {{/ifCond}}
                                                 {{#ifCond this 'Cryptocurrency'}}
@@ -257,7 +257,7 @@ class {{component_name}}Component extends React.Component {
       {{#ifCond this 'Boolean'}}
       {{@key}}: true,
       {{/ifCond}}
-      {{#ifCond this 'Text'}}
+      {{#ifCond this 'Test'}}
       {{@key}}: '',
       {{/ifCond}}
       {{#ifCond this 'Email'}}
@@ -326,7 +326,7 @@ class {{component_name}}Component extends React.Component {
       .catch((error) => {
         console.log(error);
         toastr.error('There was an error');
-      });       
+      });
   }
 
   checkUpdates() {
@@ -363,7 +363,7 @@ class {{component_name}}Component extends React.Component {
 
     setInterval(() => {
         if (self.state.submitted || self.state.update_submitted) {
-            
+
         } else {
             self.checkUpdates();
         }
@@ -377,20 +377,20 @@ class {{component_name}}Component extends React.Component {
     if (aField === '{{@key}}') {
       this.setState({ {{@key}}: event.target.value});
     }
-    {{else}} 
+    {{else}}
     else if (aField === '{{@key}}') {
       this.setState({ {{@key}}: event.target.value});
     }
     {{/if}}
     {{/each}}
   }
-    
+
   createRecord(event) {
     event.preventDefault();
     this.setState({
       submitted: true,
     });
-        
+
     const page = this;
 
     const record = {
@@ -410,7 +410,7 @@ class {{component_name}}Component extends React.Component {
       {{#ifCond this 'Boolean'}}
       {{@key}}: this.state.{{@key}},
       {{/ifCond}}
-      {{#ifCond this 'Text'}}
+      {{#ifCond this 'Test'}}
       {{@key}}: this.state.{{@key}},
       {{/ifCond}}
       {{#ifCond this 'Email'}}
@@ -447,7 +447,7 @@ class {{component_name}}Component extends React.Component {
   {{#each attributes}}
   {{#ifCond this 'Boolean'}}
   {{@key}}Update(event) {
-    const newValue = !this.state.{{@key}};        
+    const newValue = !this.state.{{@key}};
     this.setState({ {{@key}}: newValue });
   }
   {{/ifCond}}
@@ -471,7 +471,7 @@ class {{component_name}}Component extends React.Component {
                                     {{#ifCond this 'String'}}
                                     <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')} /><br />
                                     {{/ifCond}}
-                                    {{#ifCond this 'Text'}}
+                                    {{#ifCond this 'Test'}}
                                     <textarea placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this,'{{@key}}')}>
                                     </textarea><br />
                                     {{/ifCond}}
@@ -490,7 +490,7 @@ class {{component_name}}Component extends React.Component {
                                             <input type="checkbox" onChange={this.{{@key}}Update.bind(this)} checked={this.state.{{@key}}==true ? true : false}  />
                                             <span className={"slider round"}></span>
                                         </label><br />
-                                    </div>   
+                                    </div>
                                     {{/ifCond}}
                                 </div>
                                 {{/each}}
@@ -503,7 +503,7 @@ class {{component_name}}Component extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
     );
 
     return (
@@ -528,16 +528,16 @@ const {{component_name}}Export = () => {
   if (document.getElementById('{{component_name}}Component') != null) {
     const element = document.getElementById('props');
     const props = JSON.parse(element.getAttribute('data-props'));
-    
+
     render(
       <{{component_name}}Component
       user={props.user}
       validation={props.validation}
-      public_key={props.public_key} 
-      />, 
+      public_key={props.public_key}
+      />,
       document.getElementById('{{component_name}}Component'),
     );
-  } 
+  }
 };
 
 module.exports = {{component_name}}Export();

@@ -1,4 +1,3 @@
-// import cryptoDecprecated from 'crypto-es'
 const crypto = require('crypto');
 const axios = require('axios');
 const events = require('events');
@@ -1557,14 +1556,10 @@ class Gravity {
   // https://www.intricatecloud.io/2020/03/how-to-handle-api-errors-in-your-web-app-using-axios/
   // https://www.geeksforgeeks.org/reject-vs-throw-promises-in-javascript/
   requestV2(method, url, data, callback) {
-
-    return axios({
-      url,
-      method,
-      data,
-    })
+    logger.info(' gravity>reuestV2 .then  url:' + url);
+    return axios({ url, method, data })
         .then((response) => {
-          // logger.info('Gravity > requestV2() .then: ' + JSON.stringify(response) );
+          logger.info('Gravity > requestV2() .then: ' + JSON.stringify(response) );
           // If callback exists, it is executed with axios response as a param
           if (typeof callback === "function") {
             return callback(response.data);

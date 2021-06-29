@@ -1,7 +1,12 @@
 import { Component } from 'react';
 import axios from 'axios';
 import toastr from 'toastr';
-import { createHash} from 'crypto';
+import crypto from 'crypto';
+// import { createHash } from 'crypto';
+// const {
+//   createHash,
+// } = await import('crypto');
+
 
 class ChannelRow extends Component {
   constructor(props) {
@@ -73,11 +78,10 @@ class ChannelRow extends Component {
     const { state } = this;
     const channelInfo = props.parent.props.channels[props.channel];
 
-    const rand = createHash('md5')
+    const rand = crypto.createHash('md5')
         .update(this.state.channelData.id)
         .digest('hex');
     // const rand = require("crypto").createHash('md5').update(this.state.channelData.id).digest("hex")
-
 
 
     const identicon = "https://www.gravatar.com/avatar/"+rand+"?s=64&d=identicon"

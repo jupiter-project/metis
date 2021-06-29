@@ -33,6 +33,10 @@ import events from 'events';
 // const EventEmitter = require('events').EventEmitter;
 import { EventEmitter } from "events";
 
+import loggerPkg from './utils/logger.js';
+
+
+const logger = loggerPkg(this);
 
 // if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
@@ -82,7 +86,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Here is where we load the api routes. We put them here so passport deserializer
 // is not called everytime we make an api call to them
+
 import api from './config/api.mjs';
+api(app);
+
 
 // Sets public directory
 app.use(express.static(`${__dirname}/public`));
@@ -134,16 +141,17 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // otherwise use http
 
 
-const server = Object.keys(sslOptions).length >= 2
+const httpServer = Object.keys(sslOptions).length >= 2
     ? https.createServer(sslOptions, app)
     : http.createServer(app);
 
-export const io = new Server(server, {});
+export const io = new Server(httpServer, {});
 
 io.on('connection', socketService.connection.bind(this));
 
-import loggerPkg from './utils/logger.js';
-const logger = loggerPkg(this);
+
+
+
 
 
 // const mongoDBOptions = { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true };
@@ -183,24 +191,24 @@ app.get('/*', (req, res) => {
 });
 
 // Gravity call to check app account properties
-gravity.getFundingMonitor()
-  .then(async (monitorResponse) => {
-    logger.info('Server > gravity.getFundingMonitor() > .then : ' + JSON.stringify(monitorResponse));
-    const { monitors } = monitorResponse;
-
-    if (monitors.length === 0) {
-      logger.info('Funding property not set for app. Setting it now...');
-      const fundingResponse = await gravity.setFundingProperty({
-        passphrase: config.app.passPhrase,
-      });
-
-      console.log(`Jupiter response: ${JSON.stringify(fundingResponse)}`);
-    }
-  })
-  .catch((error) => {
-    logger.error('server.mjs > getFundingMonitor: ' + JSON.stringify(error) );
-    throw error;
-  });
+// gravity.getFundingMonitor()
+//   .then(async (monitorResponse) => {
+//     logger.info('Server > gravity.getFundingMonitor() > .then : ' + JSON.stringify(monitorResponse));
+//     const { monitors } = monitorResponse;
+//
+//     if (monitors.length === 0) {
+//       logger.info('Funding property not set for app. Setting it now...');
+//       const fundingResponse = await gravity.setFundingProperty({
+//         passphrase: config.app.passPhrase,
+//       });
+//
+//       console.log(`Jupiter response: ${JSON.stringify(fundingResponse)}`);
+//     }
+//   })
+//   .catch((error) => {
+//     logger.error('server.mjs > getFundingMonitor: ' + JSON.stringify(error) );
+//     throw error;
+//   });
 
 // Worker methods
 const registrationWorker = new RegistrationWorker(jobsQueue, io);
@@ -250,7 +258,7 @@ mongoose.connect(config.mongo.url, config.mongo.options, (err, resp) => {
 
 
 
-server.listen(config.app.port, () => {
+httpServer.listen(config.app.port, () => {
   console.log('');
   console.log('_________________________________________________________________');
   console.log(' ▄▄       ▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ ');

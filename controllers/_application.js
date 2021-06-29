@@ -42,7 +42,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
         const messages = req.session.flash;
         req.session.flash = null;
 
-        const PublicHomePage = require('../src/components/text.jsx');
+        const PublicHomePage = require('../src/components/test.jsx');
 
         page = ReactDOMServer.renderToString(
             React.createElement(PublicHomePage, {

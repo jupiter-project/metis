@@ -24,7 +24,7 @@ class DataRow extends React.Component {
       {{#ifCond this 'Boolean'}}
       {{@key}}: record.{{@key}},
       {{/ifCond}}
-      {{#ifCond this 'Text'}}
+      {{#ifCond this 'Test'}}
       {{@key}}: record.{{@key}},
       {{/ifCond}}
       {{#ifCond this 'Email'}}
@@ -83,7 +83,7 @@ class DataRow extends React.Component {
       {{#ifCond this 'Boolean'}}
       {{@key}}: this.state.{{@key}},
       {{/ifCond}}
-      {{#ifCond this 'Text'}}
+      {{#ifCond this 'Test'}}
       {{@key}}: this.state.{{@key}},
       {{/ifCond}}
       {{#ifCond this 'Email'}}
@@ -141,7 +141,7 @@ class DataRow extends React.Component {
                 {{#ifCond this 'String'}}
                 <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this, '{{@key}}')} /><br />
                 {{/ifCond}}
-                {{#ifCond this 'Text'}}
+                {{#ifCond this 'Test'}}
                 <textarea placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this, '{{@key}}')}>
                 </textarea><br />
                 {{/ifCond}}
@@ -180,7 +180,7 @@ class DataRow extends React.Component {
           {{#ifCond this 'String'}}
           <td>{{componentHelper ../model_variable_name @key }}</td>
           {{/ifCond}}
-          {{#ifCond this 'Text'}}
+          {{#ifCond this 'Test'}}
           <td>{{componentHelper ../model_variable_name @key }}</td>
           {{/ifCond}}
           {{#ifCond this 'Cryptocurrency'}}
@@ -223,7 +223,7 @@ class {{component_name}}Component extends React.Component {
       {{#ifCond this 'Boolean'}}
       {{@key}}: true,
       {{/ifCond}}
-      {{#ifCond this 'Text'}}
+      {{#ifCond this 'Test'}}
       {{@key}}: '',
       {{/ifCond}}
       {{#ifCond this 'Email'}}
@@ -352,7 +352,7 @@ class {{component_name}}Component extends React.Component {
       {{#ifCond this 'Boolean'}}
       {{@key}}: this.state.{{@key}},
       {{/ifCond}}
-      {{#ifCond this 'Text'}}
+      {{#ifCond this 'Test'}}
       {{@key}}: this.state.{{@key}},
       {{/ifCond}}
       {{#ifCond this 'Email'}}
@@ -384,7 +384,7 @@ class {{component_name}}Component extends React.Component {
             {{#ifCond this 'Boolean'}}
             {{@key}}: true,
             {{/ifCond}}
-            {{#ifCond this 'Text'}}
+            {{#ifCond this 'Test'}}
             {{@key}}: '',
             {{/ifCond}}
             {{#ifCond this 'Email'}}
@@ -449,7 +449,7 @@ class {{component_name}}Component extends React.Component {
                                     {{#ifCond this 'String'}}
                                     <input placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this, '{{@key}}')} /><br />
                                     {{/ifCond}}
-                                    {{#ifCond this 'Text'}}
+                                    {{#ifCond this 'Test'}}
                                     <textarea placeholder="" value={this.state.{{@key}} } className="form-control" onChange={this.handleChange.bind(this, '{{@key}}')}>
                                     </textarea><br />
                                     {{/ifCond}}
