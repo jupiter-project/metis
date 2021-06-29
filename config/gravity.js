@@ -2472,7 +2472,7 @@ class Gravity {
                     APP_ACCOUNT: passphrase,
                     APP_ACCOUNT_ADDRESS: address,
                     APP_PUBLIC_KEY: publicKey,
-                    ENCRYPT_ALGORITHM: 'aes-128-cbc',
+                    ENCRYPT_ALGORITHM: 'aes-256-cbc',
                     ENCRYPT_PASSWORD: password,
                     APP_ACCOUNT_ID: publicKey,
                   };
