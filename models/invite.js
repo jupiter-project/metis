@@ -1,5 +1,6 @@
 import Model from './_model';
 import { gravity } from '../config/gravity';
+import { encryptAndSendMessage } from '../services/gravityService';
 
 class Invite extends Model {
   constructor(data = { id: null }) {
@@ -46,16 +47,15 @@ class Invite extends Model {
     const messageData = this.record;
     messageData.dataType = 'channelInvite';
     let response;
-
     try {
-      response = await gravity.sendMessage(
-        JSON.stringify(messageData), this.user.passphrase, messageData.recipient,
-      );
+      const data = JSON.stringify(messageData);
+      const recipient = messageData.recipient;
+      response = await encryptAndSendMessage(data, this.user.passphrase, recipient);
+      return response
     } catch (e) {
-      response = e;
+      //TODO should throw exception!
+      return response = e;
     }
-
-    return response;
   }
 }
 

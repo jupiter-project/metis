@@ -11,4 +11,15 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 
-RUN npm install -g concurrently nodemon webpack jest plop webpack-cli
+RUN npm build
+
+FROM node:10-alpine
+
+WORKDIR /apps/metis
+
+# copy from build image
+COPY --from=BUILD_IMAGE /apps/metis/ .
+RUN npm install -g concurrently nodemon webpack jest plop
+
+EXPOSE 4000
+CMD ["npm", "start"]

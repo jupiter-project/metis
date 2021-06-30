@@ -20,9 +20,6 @@ services:
       - "4000:4000"
     restart: always
     command: npm run dev
-    volumes:
-      - ./:/apps/metis
-      - /apps/metis/node_modules
     environment:
       - MONGO_URL=mongodb://mongo:27017/metisPN
       - URL_DB=mongodb://mongo:27017/metisPN

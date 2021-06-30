@@ -1,4 +1,4 @@
-require('appoptics-apm');
+
 const kue = require('kue');
 const fs = require('fs');
 

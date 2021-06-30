@@ -1683,56 +1683,56 @@ class Gravity {
     return hasFundingProperty;
   }
 
-  async sendMessage(
-    data,
-    passphrase,
-    recipientRS,
-    recipientPublicKey,
-    config = { appEncryption: false, specialEncryption: false },
-  ) {
-    let dataToBeSent;
-    let callUrl;
-    let response;
-
-    if (config.appEncryption) {
-      dataToBeSent = this.encrypt(data);
-    } else {
-      dataToBeSent = data;
-    }
-    let recipient;
-    let aliasResponse;
-
-    if (!recipientRS.toLowerCase().includes('jup-')) {
-      aliasResponse = (await this.getAlias(recipientRS));
-      logger.info(aliasResponse);
-      recipient = aliasResponse.accountRS;
-    } else {
-      recipient = recipientRS;
-    }
-
-    if (!recipient) {
-      return { error: true, message: 'Incorrect recipient', fullError: aliasResponse };
-    }
-
-    if (recipientPublicKey) {
-      callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&recipientPublicKey=${recipientPublicKey}&compressMessageToEncrypt=true`;
-    } else {
-      callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&messageIsPrunable=true&compressMessageToEncrypt=true`;
-    }
-
-    logger.info(callUrl);
-
-    try {
-      response = await axios.post(callUrl);
-
-      if (response.data.broadcasted && response.data.broadcasted === true) {
-        return ({ success: true, message: 'Message sent' });
-      }
-      return ({ error: true, fullError: response.data });
-    } catch (e) {
-      return ({ error: true, fullError: e });
-    }
-  }
+  // async sendMessage(
+  //   data,
+  //   passphrase,
+  //   recipientRS,
+  //   recipientPublicKey,
+  //   config = { appEncryption: false, specialEncryption: false },
+  // ) {
+  //   let dataToBeSent;
+  //   let callUrl;
+  //   let response;
+  //
+  //   if (config.appEncryption) {
+  //     dataToBeSent = this.encrypt(data);
+  //   } else {
+  //     dataToBeSent = data;
+  //   }
+  //   let recipient;
+  //   let aliasResponse;
+  //
+  //   if (!recipientRS.toLowerCase().includes('jup-')) {
+  //     aliasResponse = (await this.getAlias(recipientRS));
+  //     logger.info(aliasResponse);
+  //     recipient = aliasResponse.accountRS;
+  //   } else {
+  //     recipient = recipientRS;
+  //   }
+  //
+  //   if (!recipient) {
+  //     return { error: true, message: 'Incorrect recipient', fullError: aliasResponse };
+  //   }
+  //
+  //   if (recipientPublicKey) {
+  //     callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&recipientPublicKey=${recipientPublicKey}&compressMessageToEncrypt=true`;
+  //   } else {
+  //     callUrl = `${this.jupiter_data.server}/nxt?requestType=sendMessage&secretPhrase=${passphrase}&recipient=${recipient}&messageToEncrypt=${dataToBeSent}&feeNQT=${this.jupiter_data.feeNQT}&deadline=${this.jupiter_data.deadline}&messageIsPrunable=true&compressMessageToEncrypt=true`;
+  //   }
+  //
+  //   logger.info(callUrl);
+  //
+  //   try {
+  //     response = await axios.post(callUrl);
+  //
+  //     if (response.data.broadcasted && response.data.broadcasted === true) {
+  //       return ({ success: true, message: 'Message sent' });
+  //     }
+  //     return ({ error: true, fullError: response.data });
+  //   } catch (e) {
+  //     return ({ error: true, fullError: e });
+  //   }
+  // }
 
   createNewAddress(passphrase) {
     const self = this;
