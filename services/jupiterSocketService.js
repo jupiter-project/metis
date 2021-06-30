@@ -23,8 +23,10 @@ const connection = function (ws) {
       try {
           const parsedMessage = JSON.parse(filtered);
           console.log(parsedMessage);
+          logger.info(parsedMessage);
       } catch(e) {
         console.log('Cannot parsed', e);
+        logger.info('Cannot parsed');
         return;
       }
   });
