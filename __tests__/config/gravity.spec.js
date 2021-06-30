@@ -11,7 +11,7 @@ try {
     APP_ACCOUNT: 'test',
     APP_ACCOUNT_ADDRESS: 'JUP-ABCD-EFG-HIJK-LMNOP',
     APP_PUBLIC_KEY: 'private-key',
-    ENCRYPT_ALGORITHM: 'aes-128-cbc',
+    ENCRYPT_ALGORITHM: 'aes-256-cbc',
     ENCRYPT_PASSWORD: 'test1234',
     APP_ACCOUNT_ID: 'private-key',
     SESSION_SECRET: 'session_secret_key_here',
@@ -23,7 +23,7 @@ try {
 
 let encryptedText;
 let decryptedText;
-gravity.algorithm = 'aes-128-cbc';
+gravity.algorithm = 'aes-256-cbc';
 gravity.password = 'testpassword123';
 gravity.sender = 'JUP-MZW8-TTER-P7BV-DW9XK';
 
