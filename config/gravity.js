@@ -293,7 +293,7 @@ class Gravity {
     const eventEmitter = new events.EventEmitter();
 
     const self = this;
-    let appname = process.env.APPNAME;
+    const appname = process.env.APPNAME;
     let server = process.env.JUPITERSERVER;
     let passphrase = process.env.APP_ACCOUNT;
     let account = process.env.APP_ACCOUNT_ADDRESS;
@@ -1349,24 +1349,24 @@ class Gravity {
     });
   }
 
-  getBalance(address = 'undefined', accountId, jupServ = process.env.JUPITERSERVER) {
+  getBalance(address, accountId, jupServ) {
     const self = this;
     const eventEmitter = new events.EventEmitter();
     let account;
-    const terminalCalled = false;
-    const addressOwner = process.env.APP_ACCOUNT;
-    const server = process.env.JUPITERSERVER;
+    const addressOwner = address || process.env.APP_ACCOUNT;
+    const server = jupServ || process.env.JUPITERSERVER;
 
     return new Promise((resolve, reject) => {
+      if (!addressOwner || !server) {
+        return reject({ success: false, message: 'Missing parameters' });
+      }
+
       eventEmitter.on('account_retrieved', () => {
         axios.post(`${server}/nxt?requestType=getBalance&account=${account}`)
           .then((response) => {
             if (response.data.errorDescription) {
               reject(response.data);
             } else {
-              if (terminalCalled) {
-                logger.info(`Balance: ${(parseFloat(response.data.balanceNQT) / (10 ** self.jupiter_data.moneyDecimals))} JUP.`);
-              }
               let minimumAppBalance = false;
               let minimumTableBalance = false;
 
@@ -1411,32 +1411,33 @@ class Gravity {
     });
   }
 
-  sendMoney(recipient, transferAmount = null, sender = this.sender) {
+  sendMoney(recipient, transferAmount, sender) {
     // This is the variable that will be used to send Jupiter from the app address to the address
     // that will be used as a database table or will serve a purpose in the Gravity infrastructure
     const feeNQT = 100;
-    const tableCreation = 500 + 250;
+    const tableCreation = 750;
     let amount = transferAmount;
-    const senderAddress = process.env.APP_ACCOUNT;
+    const senderAddress = sender || process.env.APP_ACCOUNT;
     const server = process.env.JUPITERSERVER;
-
-    if (amount == null) {
+    if (!amount) {
       amount = this.jupiter_data.minimumAppBalance - feeNQT - tableCreation;
     }
 
     return new Promise((resolve, reject) => {
-      axios.post(`${server}/nxt?requestType=sendMoney&secretPhrase=${senderAddress}&recipient=${recipient}&amountNQT=${amount}&feeNQT=${feeNQT}&deadline=60`)
+      if (!recipient) {
+        return reject({ error: true, data: 'recipient missing' });
+      }
+
+      return axios.post(`${server}/nxt?requestType=sendMoney&secretPhrase=${senderAddress}&recipient=${recipient}&amountNQT=${amount}&feeNQT=${feeNQT}&deadline=60`)
         .then((response) => {
           if (response.data.signatureHash != null) {
-            resolve({ success: true, data: response.data });
-          } else {
-            logger.info('Cannot send Jupiter to new account, Jupiter issuer has insufficient balance!');
-            reject({ error: true, data: response.data });
+            return resolve({ success: true, data: response.data });
           }
+
+          logger.info('Cannot send Jupiter to new account, Jupiter issuer has insufficient balance!');
+          return reject({ error: true, data: response.data });
         })
-        .catch((error) => {
-          reject({ error: true, fullError: error });
-        });
+        .catch(error => reject({ error: true, fullError: error }));
     });
   }
 
@@ -2376,7 +2377,7 @@ class Gravity {
 
       eventEmitter.on('verified_balance', () => {
         if (appAccount === undefined || appAccount === '' || appAccount == null) {
-          reject('Error: .gravity file does not contain seedphrase for app. Please provide one.');
+          reject('Error: The .env file does not contain APP_ACCOUNT. Please provide one.');
         } else {
           self.loadAppData()
             .then(async (response) => {
