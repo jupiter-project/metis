@@ -14,15 +14,23 @@ const disconnect = (ws, reason) => {
     ws.terminate()
 }
 
-const connection = function (wss) {
+const connection = function (ws) {
   logger.info('jupiter connected');
-  console.log("connecting chatWss...");
+  console.log("connecting jupiterWss...");
   ws.connectionTimeout = setTimeout(() => {
       console.log('connectionTimeout');
       disconnect(ws, "connection time exceeds 5 minutes")
   }, 300000);
   ws.on('message', (message) => {
-      console.log('chatWss:',message);
+      console.log('jupiterWss:',message);
+      const filtered = message.slice(20);
+      try {
+          const parsedMessage = JSON.parse(filtered);
+          console.log(parsedMessage);
+      } catch(e) {
+        console.log('Cannot parsed', e);
+        return;
+      }
   });
   ws.on('close', () => {
       console.log('connection closed');

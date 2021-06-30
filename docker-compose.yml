@@ -19,7 +19,7 @@ services:
     ports:
       - "4000:4000"
     restart: always
-    command: npm run dev
+    command: pm2-runtime server.js -- --max-old-space-size=4096 NODE_ENV=production --trace-warnings
     volumes:
       - ./:/apps/metis
       - /apps/metis/node_modules
@@ -28,3 +28,4 @@ services:
       - URL_DB=mongodb://mongo:27017/metisPN
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - BUCKET_NAME=metis_s3
