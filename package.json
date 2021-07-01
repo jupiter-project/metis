@@ -10,7 +10,7 @@
     "eslint-folders": "eslint --ext .js --ext .jsx . --ignore-pattern public/ | grep /home",
     "gulp": "gulp",
     "dev": "npx concurrently \"npx nodemon server.js NODE_ENV=dev\" \"npx webpack -p --watch\"",
-    "start": "node --max-old-space-size=4096 server.js --trace-warnings",
+    "start": "pm2-runtime server.js -- --max-old-space-size=4096 --trace-warnings",
     "build": "npx webpack -p",
     "gravity:db": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.loadTables('console');\"",
     "gravity:db:create": "node -e \"require(process.env.PWD+'/config/gravity.js').gravity.createAppDatabase();\"",
