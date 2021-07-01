@@ -19,7 +19,7 @@ services:
     ports:
       - "4000:4000"
     restart: always
-    command: pm2-runtime server.js -- --max-old-space-size=4096 NODE_ENV=production --trace-warnings
+    command: npm run dev
     volumes:
       - ./:/apps/metis
       - /apps/metis/node_modules
