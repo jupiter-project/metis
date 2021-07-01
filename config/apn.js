@@ -1,6 +1,6 @@
 const { join } = require('path');
 
-const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const IS_PRODUCTION = ['qa', 'staging', 'production'].includes(process.env.NODE_ENV);
 
 const getApnOptions = () => ({
   pfx: join(__dirname, '../certificates', 'apn.p12'),

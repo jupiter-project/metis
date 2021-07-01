@@ -1,12 +1,13 @@
-name: Build and publish Metis
+name: Build and publish Metis Dev
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ dev ]
   workflow_dispatch:
 
 jobs:
   build_and_push:
+    environment: dev
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
@@ -25,14 +26,13 @@ jobs:
         run: docker push ${{ secrets.DIGITALOCEAN_REGISTRY }}:${{ secrets.DIGITALOCEAN_APP_TAG }}
       - name: Launch image
         run: doctl apps create-deployment ${{ secrets.DIGITALOCEAN_APP_ID }} --wait
-
       - name: Channel specific notification Slack
         uses: adamkdean/simple-slack-notify@master
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
           channel: '#general'
-          text: 'A new version of metis has been deployed'
+          text: 'A new version of Metis Dev has been deployed'
 #      - name: send custom message to Telegram
 #        uses: appleboy/telegram-action@master
 #        with:

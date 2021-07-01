@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 
-RUN npm build
+RUN npm run build
 
 # remove development dependencies
 RUN npm prune --production
@@ -35,4 +35,5 @@ COPY --from=BUILD_IMAGE /apps/metis/ .
 RUN npm install pm2 -g
 
 EXPOSE 4000
-CMD pm2-runtime server.js -- --max-old-space-size=4096 NODE_ENV=production --trace-warnings
+# CMD pm2-runtime server.js -- --max-old-space-size=4096 --trace-warnings
+CMD npm start
