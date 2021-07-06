@@ -1,10 +1,10 @@
+require('dotenv').config();
 const axios = require('axios');
 const crypto = require('crypto');
 const events = require('events');
 const _ = require('lodash');
 const methods = require('./_methods');
 const logger = require('../utils/logger')(module);
-
 
 const addressBreakdown = process.env.APP_ACCOUNT_ADDRESS ? process.env.APP_ACCOUNT_ADDRESS.split('-') : [];
 
@@ -13,7 +13,7 @@ class Gravity {
     this.algorithm = process.env.ENCRYPT_ALGORITHM;
     this.password = process.env.ENCRYPT_PASSWORD;
     this.sender = process.env.APP_ACCOUNT;
-    this.version = process.env.VERSION,
+    this.version = process.env.VERSION;
     this.jupiter_data = {
       server: process.env.JUPITERSERVER,
       feeNQT: 500,
@@ -21,6 +21,7 @@ class Gravity {
       minimumTableBalance: 50000,
       minimumAppBalance: 100000,
       moneyDecimals: 8,
+      version: process.env.VERSION
     };
     this.generate_passphrase = methods.generate_passphrase;
     this.appSchema = {
@@ -93,7 +94,8 @@ class Gravity {
             logger.info('If you wish to show table details, run "npm run gravity:db"');
             logger.info('If you wish to add a new table, run "npm run gravity:db:add"');
           }
-          resolve(response.tables);
+          resolve(0);
+
         })
         .catch((error) => {
           logger.error(error);
@@ -526,6 +528,7 @@ class Gravity {
     show_unconfirmed: false,
     recipientOnly: false,
   }, password = this.password) {
+    logger.info('[Gravity: getRecords()]');
     const eventEmitter = new events.EventEmitter();
     const self = this;
 
@@ -720,12 +723,16 @@ class Gravity {
         eventEmitter.emit('records_retrieved');
       });
 
-      axios.get(`${self.jupiter_data.server}/nxt?requestType=getBlockchainTransactions&account=${userAddress}&withMessage=true&type=1`)
+      const port = process.env.JUPITER_PORT ? `:${process.env.JUPITER_PORT}` : '';
+      const url = `${self.jupiter_data.server}${port}/nxt?requestType=getBlockchainTransactions&account=${userAddress}&withMessage=true&type=1`;
+      axios.get(url)
         .then((response) => {
+          logger.info('Getting blockchain transactions: Response');
           database = response.data.transactions;
           eventEmitter.emit('database_retrieved');
         })
         .catch((error) => {
+          logger.info('Error getting transactions');
           logger.error(error);
           resolve({ success: false, errors: error });
         });
@@ -1367,6 +1374,7 @@ class Gravity {
             if (response.data.errorDescription) {
               reject(response.data);
             } else {
+              logger.info(`Balance: ${(parseFloat(response.data.balanceNQT) / (10 ** self.jupiter_data.moneyDecimals))} JUP.`);
               let minimumAppBalance = false;
               let minimumTableBalance = false;
 
@@ -2456,7 +2464,7 @@ class Gravity {
             'Jupiter server': server,
           };
           logger.info('Please verify the data you entered:');
-          logger.info(currentData);
+          logger.info(JSON.stringify(currentData));
           logger.info('');
           rl.question("You are about to create a Jupiter account which will hold your Gravity app's data. Is the information provided above accurate? If so, press ENTER. If not, press CTRL+C to cancel and rerun command.\n", () => {
             passphrase = methods.generate_passphrase();
@@ -2482,30 +2490,19 @@ class Gravity {
                   envVariables.SESSION_SECRET = 'session_secret_key_here';
 
                   const fs = require('fs');
-
-                  // We prepare the string that will be used to create the .gravity file
-                  const objectInString = `module.exports=${JSON.stringify(configuration)}`;
-                  const moduleInString = objectInString.replace(/={/g, '={\n').replace(/","/g, '",\n"').replace(/"}/g, '"\n}');
-
                   // We prepare the string that will be used to create the .env file
                   Object.keys(envVariables).forEach((key) => {
                     envVariablesInString = `${envVariablesInString + key.toUpperCase()}='${envVariables[key]}'\n`;
                   });
 
-                  fs.writeFile('.gravity.js', moduleInString, (err) => {
-                    if (err) {
-                      return logger.error(err);
+                  fs.writeFile('.env', envVariablesInString, (error) => {
+                    if (error) {
+                      return logger.error(error);
                     }
-                    fs.writeFile('.env', envVariablesInString, (error) => {
-                      if (error) {
-                        return logger.error(err);
-                      }
-                      logger.info('\nSuccess! .gravity.js and .env files generated!');
-                      logger.info('\nPlease write down the 12-word passphrase and account address assigned to your app as well as the password assigned for encryption (See .env or .gravity.js files). If you lose your passphrase or your encryption password, you will lose access to all saved data.');
-                      logger.info('\nIn order to begin saving information into the Jupiter blockchain, you will need to obtain Jupiter tokens from https://exchange.darcr.us.');
-                      rl.close();
-                      return null;
-                    });
+                    logger.info('\nSuccess! .env file generated!');
+                    logger.info('\nPlease write down the 12-word passphrase and account address assigned to your app as well as the password assigned for encryption (See .env or .gravity.js files). If you lose your passphrase or your encryption password, you will lose access to all saved data.');
+                    logger.info('\nIn order to begin saving information into the Jupiter blockchain, you will need to obtain Jupiter tokens from https://exchange.darcr.us.');
+                    rl.close();
                     return null;
                   });
                 } else {
