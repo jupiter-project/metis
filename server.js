@@ -1,4 +1,3 @@
-require('appoptics-apm');
 const url = require('url');
 const kue = require('kue');
 const fs = require('fs');
