@@ -1,4 +1,4 @@
-import { S3StreamLogger } from 's3-streamlogger';
+const { S3StreamLogger } = require('s3-streamlogger');
 
 const {
   createLogger,
