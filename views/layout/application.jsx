@@ -57,42 +57,42 @@ export default class ApplicationLayout extends React.Component {
             </a>
           </li> */}
           <li className="nav-item">
-            <a className="nav-link" href="/account" data-toggle="tooltip" 
+            <a className="nav-link" href="/account" data-toggle="tooltip"
             title={this.state.user_exists ? this.state.user.record.alias : 'Alias'}>
               {/* <span>
                 Hello, {this.state.user_exists ? this.state.user.record.alias : 'Alias'}
               </span> */}
                 {' '}
                 {/* <span>Profile |</span> */}
-                <i className="fas fa-fw fa-user" /> 
+                <i className="fas fa-fw fa-user" />
             </a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/channels" data-toggle="tooltip" title="Chats">
               {' '}
               {/* <span>Chats |</span> */}
-              <i className="fas fa-fw fa-comments" /> 
+              <i className="fas fa-fw fa-comments" />
             </a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/invites" data-toggle="tooltip" title="Invites">
               {' '}
               {/* <span>Invites |</span> */}
-              <i className="fas fa-fw fa-envelope" /> 
+              <i className="fas fa-fw fa-envelope" />
             </a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/security" data-toggle="tooltip" title="Security">
                 {' '}
                 {/* <span>Security</span> */}
-                <i className="fas fa-fw fa-lock" /> 
+                <i className="fas fa-fw fa-lock" />
             </a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
                 {' '}
                 {/* <span>Log Out</span> */}
-                <i className="fas fa-fw fa-sign-out-alt" data-toggle="tooltip" title="Logout"/> 
+                <i className="fas fa-fw fa-sign-out-alt" data-toggle="tooltip" title="Logout"/>
               </a>
           </li>
           <li className="nav-item">
@@ -399,7 +399,8 @@ export default class ApplicationLayout extends React.Component {
 
           <link href="/css/sb-admin.css" rel="stylesheet" />
         </head>
-        <script src="//rum-static.pingdom.net/pa-608f5d35365abb0011000313.js" async></script>
+        {/* TODO uncomment this line in case we implement solarwinds monitoring */}
+        {/* <script src="//rum-static.pingdom.net/pa-608f5d35365abb0011000313.js" async /> */}
         <body className="p-0">
           <span id="toastrMessages" />
           <div

@@ -6,25 +6,42 @@ import { messagesConfig } from '../config/constants';
 import Invite from '../models/invite';
 import Channel from '../models/channel';
 import Message from '../models/message';
+import { findNotificationInfoByAliasOrJupId } from '../services/notificationService';
+import metis from '../config/metis';
 
 const connection = process.env.SOCKET_SERVER;
 const device = require('express-device');
-const Notifications = require('../models/notifications');
 const { sendPushNotification } = require('../config/notifications');
 const logger = require('../utils/logger')(module);
+const { hasJsonStructure } = require('../utils/utils');
 
-const decryptUserData = (req) => {
-  return JSON.parse(gravity.decrypt(req.session.accessData));
+const decryptUserData = req => JSON.parse(gravity.decrypt(req.session.accessData));
+
+const getPNTokensAndSendPushNotification = (members, senderAlias, channel, message, title) => {
+  if (members && Array.isArray(members) && !_.isEmpty(members)) {
+    findNotificationInfoByAliasOrJupId(members, channel.id)
+      .then((data) => {
+        if (data && Array.isArray(data) && !_.isEmpty(data)) {
+          const tokens = _.map(data, 'token');
+          const payload = { title, channel };
+          sendPushNotification(tokens, message, 0, payload, 'channels');
+        }
+      })
+      .catch((error) => {
+        logger.error(JSON.stringify(error));
+      });
+  }
 };
 
-const getPNTokensAndSendPushNotification = (members, channelName, senderAlias) => {
-  Notifications.find({ alias: { $in: members }, token: { $ne: '' } })
+const getPNTokenAndSendInviteNotification = (senderAlias, recipientAliasOrJupId, channelName) => {
+  findNotificationInfoByAliasOrJupId([recipientAliasOrJupId])
     .then((data) => {
       if (data && Array.isArray(data) && !_.isEmpty(data)) {
         const tokens = _.map(data, 'token');
-        const alert = `${senderAlias} has sent a message to '${channelName}' channel`;
-        const payload = { title: 'New Message' };
-        sendPushNotification(tokens, alert, 1, payload, 'channels');
+        const alert = `${senderAlias} invited you to the channel "${channelName}"`;
+        const payload = { title: 'Invitation', isInvitation: true };
+        const threeMinutesDelay = 180000;
+        sendPushNotification(tokens, alert, 0, payload, 'channels', threeMinutesDelay);
       }
     })
     .catch((error) => {
@@ -60,8 +77,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
   });
 
   app.post('/reportUser', controller.isLoggedIn, (req, res) => {
-
-    let transporter = mailer.createTransport({
+    const transporter = mailer.createTransport({
       service: 'gmail',
       auth: {
         type: 'OAuth2',
@@ -163,6 +179,10 @@ module.exports = (app, passport, React, ReactDOMServer) => {
 
     try {
       response = await invite.send();
+      const recipient = _.get(data, 'recipient', '');
+      const sender = _.get(data, 'senderAlias', '');
+      const channelName = _.get(data, 'channel.name', '');
+      getPNTokenAndSendInviteNotification(sender, recipient, channelName);
     } catch (e) {
       logger.error(e);
       response = e;
@@ -258,7 +278,7 @@ module.exports = (app, passport, React, ReactDOMServer) => {
    */
   app.post('/data/messages', controller.isLoggedIn, async (req, res) => {
     const { maxMessageLength } = messagesConfig;
-    const hasMessage = _.get(req, 'body.data.message', null);
+    let hasMessage = _.get(req, 'body.data.message', null);
     let response;
 
     if (hasMessage && hasMessage.length <= maxMessageLength) {
@@ -270,25 +290,45 @@ module.exports = (app, passport, React, ReactDOMServer) => {
       message.record.sender = _.get(req, 'user.record.account', req.body.user.account);
       // accountData
       // const userData = decryptUserData(req);
-      let members = _.get(req, 'body.members', []);
+
+      let { members } = await metis.getMember({
+        channel: tableData.account,
+        account: tableData.publicKey,
+        password: tableData.password,
+      });
+
+      const mentions = _.get(req, 'body.mentions', []);
+      const channel = _.get(req, 'body.channel', []);
       const channelName = _.get(tableData, 'name', 'a channel');
       const accessData = _.get(req, 'session.accessData', req.body.user.accountData);
       const userData = JSON.parse(gravity.decrypt(accessData));
       try {
         const data = await message.sendMessage(userData, tableData, message.record);
         response = data;
+        if (Array.isArray(members) && members.length > 0) {
+          const senderName = message.record.name;
+          members = members.filter(member => member !== senderName && !mentions.includes(member));
 
-        if (Array.isArray(members)) {
-          members = members.filter(member => member !== message.record.name);
+          if (hasJsonStructure(hasMessage)) {
+            hasMessage = JSON.parse(hasMessage);
+            hasMessage = hasMessage.fromMsj || '';
+          }
+
+          // push notification for members
+          const pnTitle = `${senderName} @ ${channelName}`;
+          getPNTokensAndSendPushNotification(members, senderName, channel, hasMessage, pnTitle);
+
+          // Push notification for mentioned members
+          const pnmTitle = `${senderName} has tagged @ ${channelName}`;
+          getPNTokensAndSendPushNotification(mentions, senderName, channel, hasMessage, pnmTitle);
         }
-        getPNTokensAndSendPushNotification(members, channelName, message.record.name);
       } catch (e) {
-        logger.error(e);
+        logger.error('[/data/messages]', JSON.stringify(e));
         response = { success: false, fullError: e };
       }
     } else {
-      response = { success: false, messages: [`Message exceeds allowable limit of ${maxMessageLength} characters`] };
-      logger.error(response);
+      response = { success: false, messages: [`Message is not valid or exceeds allowable limit of ${maxMessageLength} characters`] };
+      logger.error(JSON.stringify(response));
     }
     res.send(response);
   });

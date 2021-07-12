@@ -1,5 +1,12 @@
 version: "3"
 services:
+  mongo:
+    image: "mongo:3.6"
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - 27017:27017
+      - 28017:28017
   redis:
     image: "redis"
     ports:
@@ -7,6 +14,7 @@ services:
   metis:
     build: .
     depends_on:
+      - mongo
       - redis
     ports:
       - "4000:4000"
@@ -16,5 +24,8 @@ services:
       - ./:/apps/metis
       - /apps/metis/node_modules
     environment:
+      - MONGO_URL=mongodb://mongo:27017/metisPN
+      - URL_DB=mongodb://mongo:27017/metisPN
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - BUCKET_NAME=metis_s3
