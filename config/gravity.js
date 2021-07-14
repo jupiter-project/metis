@@ -21,7 +21,7 @@ class Gravity {
       minimumTableBalance: 50000,
       minimumAppBalance: 100000,
       moneyDecimals: 8,
-      version: process.env.VERSION
+      version: process.env.VERSION,
     };
     this.generate_passphrase = methods.generate_passphrase;
     this.appSchema = {
@@ -94,8 +94,7 @@ class Gravity {
             logger.info('If you wish to show table details, run "npm run gravity:db"');
             logger.info('If you wish to add a new table, run "npm run gravity:db:add"');
           }
-          resolve(0);
-
+          resolve(response.tables);
         })
         .catch((error) => {
           logger.error(error);

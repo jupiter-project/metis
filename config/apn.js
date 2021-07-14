@@ -5,7 +5,7 @@ const IS_PRODUCTION = ['qa', 'staging', 'production'].includes(process.env.NODE_
 const getApnOptions = () => ({
   pfx: join(__dirname, '../certificates', 'apn.p12'),
   passphrase: process.env.APN_PASSPHRASE,
-  production: false,
+  production: IS_PRODUCTION,
 });
 
 module.exports = {
