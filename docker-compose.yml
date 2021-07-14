@@ -24,6 +24,8 @@ services:
       - ./:/apps/metis
       - /apps/metis/node_modules
     environment:
+      - MONGO_URL=mongodb://mongo:27017/metisPN
+      - URL_DB=mongodb://mongo:27017/metisPN
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - BUCKET_NAME=metis_s3
