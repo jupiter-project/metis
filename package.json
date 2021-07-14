@@ -48,7 +48,6 @@
   "dependencies": {
     "ajv": "^6.5.4",
     "apn": "^2.2.0",
-    "appoptics-apm": "^10.0.1",
     "axios": "^0.16.2",
     "babel-core": "^6.25.0",
     "babel-es6-polyfill": "^1.1.0",
